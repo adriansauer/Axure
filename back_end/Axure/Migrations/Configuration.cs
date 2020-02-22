@@ -1,5 +1,6 @@
 namespace Axure.Migrations
 {
+    using Axure.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
