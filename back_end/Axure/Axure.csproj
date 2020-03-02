@@ -167,18 +167,54 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Module_Stock\ComprobantePurchaseDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\ComprobantePurchasesController.cs" />
+    <Compile Include="Controllers\Module_Stock\DepositsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
+    <Compile Include="Controllers\Module_Stock\MovementDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\MovementMotivesController.cs" />
+    <Compile Include="Controllers\Module_Stock\MovementsController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductComponentsController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductionOrderDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductionStatesController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductTypesController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProvidersController.cs" />
+    <Compile Include="Controllers\Module_Stock\StocksController.cs" />
+    <Compile Include="Controllers\Module_Stock\TransferDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
+    <Compile Include="Controllers\Module_Stock\TransferTypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002211749289_Initial.cs" />
-    <Compile Include="Migrations\202002211749289_Initial.Designer.cs">
-      <DependentUpon>202002211749289_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003021628128_Initial.cs" />
+    <Compile Include="Migrations\202003021628128_Initial.Designer.cs">
+      <DependentUpon>202003021628128_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
     <Compile Include="Models\MyAuthorizationServerProvider.cs" />
+    <Compile Include="Models\Module_Stock\ComprobantePurchase.cs" />
+    <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
+    <Compile Include="Models\Module_Stock\Deposit.cs" />
+    <Compile Include="Models\Module_Stock\Employee.cs" />
+    <Compile Include="Models\Module_Stock\Movement.cs" />
+    <Compile Include="Models\Module_Stock\MovementDetail.cs" />
+    <Compile Include="Models\Module_Stock\MovementMotive.cs" />
+    <Compile Include="Models\Module_Stock\Product.cs" />
+    <Compile Include="Models\Module_Stock\ProductComponent.cs" />
+    <Compile Include="Models\Module_Stock\ProductionOrder.cs" />
+    <Compile Include="Models\Module_Stock\ProductionOrderDetail.cs" />
+    <Compile Include="Models\Module_Stock\ProductionState.cs" />
+    <Compile Include="Models\Module_Stock\ProductType.cs" />
+    <Compile Include="Models\Module_Stock\Provider.cs" />
+    <Compile Include="Models\Module_Stock\Stock.cs" />
+    <Compile Include="Models\Module_Stock\Transfer.cs" />
+    <Compile Include="Models\Module_Stock\TransferDetail.cs" />
+    <Compile Include="Models\Module_Stock\TransferType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserMasterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -244,8 +280,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002211749289_Initial.resx">
-      <DependentUpon>202002211749289_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003021628128_Initial.resx">
+      <DependentUpon>202003021628128_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
