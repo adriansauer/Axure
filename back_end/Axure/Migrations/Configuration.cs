@@ -1,6 +1,7 @@
 namespace Axure.Migrations
 {
     using Axure.Models;
+    using Axure.Models.Module_Stock;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,12 +16,10 @@ namespace Axure.Migrations
 
         protected override void Seed(Axure.Models.AxureContext context)
         {
-            context.Users.AddOrUpdate(x => x.Id,
-                 new User { Id = 1, UserName = "Admin", Role = "user", Password = "pass", Status = false }
-                 );
-            context.Users.AddOrUpdate(x => x.Id,
-                 new User { Id = 1, UserName = "Admin2", Role = "user", Password = "pass", Status = false }
-                 );
+            /*context.Users.AddOrUpdate(x => x.Id,
+                 new User { Id = 1, UserName = "User", Role = "user", Password = "pass", Status = false },
+                 new User { Id = 2, UserName = "Admin", Role = "admin", Password = "pass", Status = false }
+                 );       */
         }
     }
 }
