@@ -1,41 +1,38 @@
 import React from 'react';
-/**librerias de redux */
-import {Provider} from 'react-redux';
-import store from './store.js';
-/**librerias de redact Router */
-import {BrowserRouter,Route} from 'react-router-dom';
 
 /**importando componentes */
-import Login from './Login.js';
-import Registro from './Registro.js';
-import Home from './Home.js';
-/**import Error404 from './Error404.js'; */
+import './Componentes/style.css'
+import Body from './Componentes/Body.js';
+
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-
-    }
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+  
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
  
   render(){
   return (
     
-    <Provider store={store}>
-     
-     <BrowserRouter>
-    <React.Fragment>
-      <Route exact path='/registro' component={Registro}/>
-      <Route exact path='/home' component={Home}/>
-      <Route exact path='/login' component={Login}/>
-      
-     
-    </React.Fragment>
-    </BrowserRouter>
-     
-    </Provider>
+    <div className='App' style={{height:this.state.height,width:this.state.width-15}}>
     
+              <Body/>
+
+    </div>
   );
   }
 }

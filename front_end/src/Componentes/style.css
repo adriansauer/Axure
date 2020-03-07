@@ -1,0 +1,25 @@
+
+
+.Body{
+    height: 100%;
+    width: 100%;
+}
+.Header{
+  
+    height: 10%;
+}
+.Box{
+ 
+    height: 90%;  
+}
+.Menu{
+    background-color:rgb(108,117,125);
+      
+}
+.Aside{
+    background-color:rgb(108,117,125);
+}
+.btn{
+    margin-top: 10%;
+    margin-bottom: 3%;
+}
