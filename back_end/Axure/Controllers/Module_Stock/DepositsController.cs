@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class DepositsController : ApiController
+    public class DepositsController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/Deposits
-        public IQueryable<Deposit> GetDeposits()
+        // GET: Deposits
+        public ActionResult Index()
         {
-            return db.Deposits;
+            return View();
         }
 
-        // GET: api/Deposits/5
-        [ResponseType(typeof(Deposit))]
-        public async Task<IHttpActionResult> GetDeposit(int id)
+        // GET: Deposits/Details/5
+        public ActionResult Details(int id)
         {
-            Deposit deposit = await db.Deposits.FindAsync(id);
-            if (deposit == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(deposit);
+            return View();
         }
 
-        // PUT: api/Deposits/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDeposit(int id, Deposit deposit)
+        // GET: Deposits/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != deposit.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(deposit).State = EntityState.Modified;
-
+        // POST: Deposits/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DepositExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/Deposits
-        [ResponseType(typeof(Deposit))]
-        public async Task<IHttpActionResult> PostDeposit(Deposit deposit)
+        // GET: Deposits/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Deposits.Add(deposit);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = deposit.Id }, deposit);
+            return View();
         }
 
-        // DELETE: api/Deposits/5
-        [ResponseType(typeof(Deposit))]
-        public async Task<IHttpActionResult> DeleteDeposit(int id)
+        // POST: Deposits/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            Deposit deposit = await db.Deposits.FindAsync(id);
-            if (deposit == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.Deposits.Remove(deposit);
-            await db.SaveChangesAsync();
-
-            return Ok(deposit);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: Deposits/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool DepositExists(int id)
+        // POST: Deposits/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.Deposits.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

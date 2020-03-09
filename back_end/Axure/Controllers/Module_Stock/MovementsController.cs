@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class MovementsController : ApiController
+    public class MovementsController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/Movements
-        public IQueryable<Movement> GetMovements()
+        // GET: Movements
+        public ActionResult Index()
         {
-            return db.Movements;
+            return View();
         }
 
-        // GET: api/Movements/5
-        [ResponseType(typeof(Movement))]
-        public async Task<IHttpActionResult> GetMovement(int id)
+        // GET: Movements/Details/5
+        public ActionResult Details(int id)
         {
-            Movement movement = await db.Movements.FindAsync(id);
-            if (movement == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(movement);
+            return View();
         }
 
-        // PUT: api/Movements/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutMovement(int id, Movement movement)
+        // GET: Movements/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != movement.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(movement).State = EntityState.Modified;
-
+        // POST: Movements/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MovementExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/Movements
-        [ResponseType(typeof(Movement))]
-        public async Task<IHttpActionResult> PostMovement(Movement movement)
+        // GET: Movements/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Movements.Add(movement);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = movement.Id }, movement);
+            return View();
         }
 
-        // DELETE: api/Movements/5
-        [ResponseType(typeof(Movement))]
-        public async Task<IHttpActionResult> DeleteMovement(int id)
+        // POST: Movements/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            Movement movement = await db.Movements.FindAsync(id);
-            if (movement == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.Movements.Remove(movement);
-            await db.SaveChangesAsync();
-
-            return Ok(movement);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: Movements/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool MovementExists(int id)
+        // POST: Movements/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.Movements.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

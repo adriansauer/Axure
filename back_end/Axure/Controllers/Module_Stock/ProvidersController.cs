@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProvidersController : ApiController
+    public class ProvidersController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/Providers
-        public IQueryable<Provider> GetProviders()
+        // GET: Providers
+        public ActionResult Index()
         {
-            return db.Providers;
+            return View();
         }
 
-        // GET: api/Providers/5
-        [ResponseType(typeof(Provider))]
-        public async Task<IHttpActionResult> GetProvider(int id)
+        // GET: Providers/Details/5
+        public ActionResult Details(int id)
         {
-            Provider provider = await db.Providers.FindAsync(id);
-            if (provider == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(provider);
+            return View();
         }
 
-        // PUT: api/Providers/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProvider(int id, Provider provider)
+        // GET: Providers/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != provider.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(provider).State = EntityState.Modified;
-
+        // POST: Providers/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProviderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/Providers
-        [ResponseType(typeof(Provider))]
-        public async Task<IHttpActionResult> PostProvider(Provider provider)
+        // GET: Providers/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Providers.Add(provider);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = provider.Id }, provider);
+            return View();
         }
 
-        // DELETE: api/Providers/5
-        [ResponseType(typeof(Provider))]
-        public async Task<IHttpActionResult> DeleteProvider(int id)
+        // POST: Providers/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            Provider provider = await db.Providers.FindAsync(id);
-            if (provider == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.Providers.Remove(provider);
-            await db.SaveChangesAsync();
-
-            return Ok(provider);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: Providers/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool ProviderExists(int id)
+        // POST: Providers/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.Providers.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ComprobantePurchaseDetailsController : ApiController
+    public class ComprobantePurchaseDetailsController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/ComprobantePurchaseDetails
-        public IQueryable<ComprobantePurchaseDetail> GetComprobantePurchaseDetails()
+        // GET: ComprobantePurchaseDetails
+        public ActionResult Index()
         {
-            return db.ComprobantePurchaseDetails;
+            return View();
         }
 
-        // GET: api/ComprobantePurchaseDetails/5
-        [ResponseType(typeof(ComprobantePurchaseDetail))]
-        public async Task<IHttpActionResult> GetComprobantePurchaseDetail(int id)
+        // GET: ComprobantePurchaseDetails/Details/5
+        public ActionResult Details(int id)
         {
-            ComprobantePurchaseDetail comprobantePurchaseDetail = await db.ComprobantePurchaseDetails.FindAsync(id);
-            if (comprobantePurchaseDetail == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(comprobantePurchaseDetail);
+            return View();
         }
 
-        // PUT: api/ComprobantePurchaseDetails/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutComprobantePurchaseDetail(int id, ComprobantePurchaseDetail comprobantePurchaseDetail)
+        // GET: ComprobantePurchaseDetails/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != comprobantePurchaseDetail.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(comprobantePurchaseDetail).State = EntityState.Modified;
-
+        // POST: ComprobantePurchaseDetails/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ComprobantePurchaseDetailExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/ComprobantePurchaseDetails
-        [ResponseType(typeof(ComprobantePurchaseDetail))]
-        public async Task<IHttpActionResult> PostComprobantePurchaseDetail(ComprobantePurchaseDetail comprobantePurchaseDetail)
+        // GET: ComprobantePurchaseDetails/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ComprobantePurchaseDetails.Add(comprobantePurchaseDetail);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = comprobantePurchaseDetail.Id }, comprobantePurchaseDetail);
+            return View();
         }
 
-        // DELETE: api/ComprobantePurchaseDetails/5
-        [ResponseType(typeof(ComprobantePurchaseDetail))]
-        public async Task<IHttpActionResult> DeleteComprobantePurchaseDetail(int id)
+        // POST: ComprobantePurchaseDetails/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            ComprobantePurchaseDetail comprobantePurchaseDetail = await db.ComprobantePurchaseDetails.FindAsync(id);
-            if (comprobantePurchaseDetail == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.ComprobantePurchaseDetails.Remove(comprobantePurchaseDetail);
-            await db.SaveChangesAsync();
-
-            return Ok(comprobantePurchaseDetail);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: ComprobantePurchaseDetails/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool ComprobantePurchaseDetailExists(int id)
+        // POST: ComprobantePurchaseDetails/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.ComprobantePurchaseDetails.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

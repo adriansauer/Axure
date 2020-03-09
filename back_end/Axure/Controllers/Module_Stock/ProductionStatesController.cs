@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProductionStatesController : ApiController
+    public class ProductionStatesController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/ProductionStates
-        public IQueryable<ProductionState> GetProductionStates()
+        // GET: ProductionStates
+        public ActionResult Index()
         {
-            return db.ProductionStates;
+            return View();
         }
 
-        // GET: api/ProductionStates/5
-        [ResponseType(typeof(ProductionState))]
-        public async Task<IHttpActionResult> GetProductionState(int id)
+        // GET: ProductionStates/Details/5
+        public ActionResult Details(int id)
         {
-            ProductionState productionState = await db.ProductionStates.FindAsync(id);
-            if (productionState == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(productionState);
+            return View();
         }
 
-        // PUT: api/ProductionStates/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProductionState(int id, ProductionState productionState)
+        // GET: ProductionStates/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != productionState.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(productionState).State = EntityState.Modified;
-
+        // POST: ProductionStates/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductionStateExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/ProductionStates
-        [ResponseType(typeof(ProductionState))]
-        public async Task<IHttpActionResult> PostProductionState(ProductionState productionState)
+        // GET: ProductionStates/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ProductionStates.Add(productionState);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = productionState.Id }, productionState);
+            return View();
         }
 
-        // DELETE: api/ProductionStates/5
-        [ResponseType(typeof(ProductionState))]
-        public async Task<IHttpActionResult> DeleteProductionState(int id)
+        // POST: ProductionStates/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            ProductionState productionState = await db.ProductionStates.FindAsync(id);
-            if (productionState == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.ProductionStates.Remove(productionState);
-            await db.SaveChangesAsync();
-
-            return Ok(productionState);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: ProductionStates/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool ProductionStateExists(int id)
+        // POST: ProductionStates/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.ProductionStates.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

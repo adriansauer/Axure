@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProductionOrdersController : ApiController
+    public class ProductionOrdersController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/ProductionOrders
-        public IQueryable<ProductionOrder> GetProductionOrders()
+        // GET: ProductionOrders
+        public ActionResult Index()
         {
-            return db.ProductionOrders;
+            return View();
         }
 
-        // GET: api/ProductionOrders/5
-        [ResponseType(typeof(ProductionOrder))]
-        public async Task<IHttpActionResult> GetProductionOrder(int id)
+        // GET: ProductionOrders/Details/5
+        public ActionResult Details(int id)
         {
-            ProductionOrder productionOrder = await db.ProductionOrders.FindAsync(id);
-            if (productionOrder == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(productionOrder);
+            return View();
         }
 
-        // PUT: api/ProductionOrders/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProductionOrder(int id, ProductionOrder productionOrder)
+        // GET: ProductionOrders/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != productionOrder.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(productionOrder).State = EntityState.Modified;
-
+        // POST: ProductionOrders/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductionOrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/ProductionOrders
-        [ResponseType(typeof(ProductionOrder))]
-        public async Task<IHttpActionResult> PostProductionOrder(ProductionOrder productionOrder)
+        // GET: ProductionOrders/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ProductionOrders.Add(productionOrder);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = productionOrder.Id }, productionOrder);
+            return View();
         }
 
-        // DELETE: api/ProductionOrders/5
-        [ResponseType(typeof(ProductionOrder))]
-        public async Task<IHttpActionResult> DeleteProductionOrder(int id)
+        // POST: ProductionOrders/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            ProductionOrder productionOrder = await db.ProductionOrders.FindAsync(id);
-            if (productionOrder == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.ProductionOrders.Remove(productionOrder);
-            await db.SaveChangesAsync();
-
-            return Ok(productionOrder);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: ProductionOrders/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool ProductionOrderExists(int id)
+        // POST: ProductionOrders/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.ProductionOrders.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
