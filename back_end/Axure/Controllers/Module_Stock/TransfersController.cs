@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class TransfersController : ApiController
+    public class TransfersController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/Transfers
-        public IQueryable<Transfer> GetTransfers()
+        // GET: Transfers
+        public ActionResult Index()
         {
-            return db.Transfers;
+            return View();
         }
 
-        // GET: api/Transfers/5
-        [ResponseType(typeof(Transfer))]
-        public async Task<IHttpActionResult> GetTransfer(int id)
+        // GET: Transfers/Details/5
+        public ActionResult Details(int id)
         {
-            Transfer transfer = await db.Transfers.FindAsync(id);
-            if (transfer == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(transfer);
+            return View();
         }
 
-        // PUT: api/Transfers/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutTransfer(int id, Transfer transfer)
+        // GET: Transfers/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != transfer.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(transfer).State = EntityState.Modified;
-
+        // POST: Transfers/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TransferExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/Transfers
-        [ResponseType(typeof(Transfer))]
-        public async Task<IHttpActionResult> PostTransfer(Transfer transfer)
+        // GET: Transfers/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Transfers.Add(transfer);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = transfer.Id }, transfer);
+            return View();
         }
 
-        // DELETE: api/Transfers/5
-        [ResponseType(typeof(Transfer))]
-        public async Task<IHttpActionResult> DeleteTransfer(int id)
+        // POST: Transfers/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            Transfer transfer = await db.Transfers.FindAsync(id);
-            if (transfer == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.Transfers.Remove(transfer);
-            await db.SaveChangesAsync();
-
-            return Ok(transfer);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: Transfers/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool TransferExists(int id)
+        // POST: Transfers/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.Transfers.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

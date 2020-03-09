@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProductComponentsController : ApiController
+    public class ProductComponentsController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/ProductComponents
-        public IQueryable<ProductComponent> GetProductComponents()
+        // GET: ProductComponents
+        public ActionResult Index()
         {
-            return db.ProductComponents;
+            return View();
         }
 
-        // GET: api/ProductComponents/5
-        [ResponseType(typeof(ProductComponent))]
-        public async Task<IHttpActionResult> GetProductComponent(int id)
+        // GET: ProductComponents/Details/5
+        public ActionResult Details(int id)
         {
-            ProductComponent productComponent = await db.ProductComponents.FindAsync(id);
-            if (productComponent == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(productComponent);
+            return View();
         }
 
-        // PUT: api/ProductComponents/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProductComponent(int id, ProductComponent productComponent)
+        // GET: ProductComponents/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != productComponent.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(productComponent).State = EntityState.Modified;
-
+        // POST: ProductComponents/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductComponentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/ProductComponents
-        [ResponseType(typeof(ProductComponent))]
-        public async Task<IHttpActionResult> PostProductComponent(ProductComponent productComponent)
+        // GET: ProductComponents/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.ProductComponents.Add(productComponent);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = productComponent.Id }, productComponent);
+            return View();
         }
 
-        // DELETE: api/ProductComponents/5
-        [ResponseType(typeof(ProductComponent))]
-        public async Task<IHttpActionResult> DeleteProductComponent(int id)
+        // POST: ProductComponents/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            ProductComponent productComponent = await db.ProductComponents.FindAsync(id);
-            if (productComponent == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.ProductComponents.Remove(productComponent);
-            await db.SaveChangesAsync();
-
-            return Ok(productComponent);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: ProductComponents/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool ProductComponentExists(int id)
+        // POST: ProductComponents/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.ProductComponents.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

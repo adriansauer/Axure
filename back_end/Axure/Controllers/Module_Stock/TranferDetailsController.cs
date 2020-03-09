@@ -6,27 +6,27 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class MovementDetailsController : Controller
+    public class TranferDetailsController : Controller
     {
-        // GET: MovementDetails
+        // GET: TranferDetails
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: MovementDetails/Details/5
+        // GET: TranferDetails/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: MovementDetails/Create
+        // GET: TranferDetails/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: MovementDetails/Create
+        // POST: TranferDetails/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -42,13 +42,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // GET: MovementDetails/Edit/5
+        // GET: TranferDetails/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: MovementDetails/Edit/5
+        // POST: TranferDetails/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -64,13 +64,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // GET: MovementDetails/Delete/5
+        // GET: TranferDetails/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: MovementDetails/Delete/5
+        // POST: TranferDetails/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

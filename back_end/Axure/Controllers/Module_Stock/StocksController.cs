@@ -1,120 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Axure.Models;
-using Axure.Models.Module_Stock;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class StocksController : ApiController
+    public class StocksController : Controller
     {
-        private AxureContext db = new AxureContext();
-
-        // GET: api/Stocks
-        public IQueryable<Stock> GetStocks()
+        // GET: Stocks
+        public ActionResult Index()
         {
-            return db.Stocks;
+            return View();
         }
 
-        // GET: api/Stocks/5
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> GetStock(int id)
+        // GET: Stocks/Details/5
+        public ActionResult Details(int id)
         {
-            Stock stock = await db.Stocks.FindAsync(id);
-            if (stock == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(stock);
+            return View();
         }
 
-        // PUT: api/Stocks/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStock(int id, Stock stock)
+        // GET: Stocks/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            return View();
+        }
 
-            if (id != stock.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(stock).State = EntityState.Modified;
-
+        // POST: Stocks/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
             try
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StockExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                // TODO: Add insert logic here
 
-            return StatusCode(HttpStatusCode.NoContent);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // POST: api/Stocks
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> PostStock(Stock stock)
+        // GET: Stocks/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Stocks.Add(stock);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = stock.Id }, stock);
+            return View();
         }
 
-        // DELETE: api/Stocks/5
-        [ResponseType(typeof(Stock))]
-        public async Task<IHttpActionResult> DeleteStock(int id)
+        // POST: Stocks/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            Stock stock = await db.Stocks.FindAsync(id);
-            if (stock == null)
+            try
             {
-                return NotFound();
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
             }
-
-            db.Stocks.Remove(stock);
-            await db.SaveChangesAsync();
-
-            return Ok(stock);
+            catch
+            {
+                return View();
+            }
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: Stocks/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
 
-        private bool StockExists(int id)
+        // POST: Stocks/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            return db.Stocks.Count(e => e.Id == id) > 0;
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

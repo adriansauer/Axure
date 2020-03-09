@@ -183,7 +183,7 @@
     <Compile Include="Controllers\Module_Stock\ProductTypesController.cs" />
     <Compile Include="Controllers\Module_Stock\ProvidersController.cs" />
     <Compile Include="Controllers\Module_Stock\StocksController.cs" />
-    <Compile Include="Controllers\Module_Stock\TransferDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\TranferDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
     <Compile Include="Controllers\Module_Stock\TransferTypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -262,6 +262,26 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DataBase\Module_Stock\" />
+    <Folder Include="DTO\Module_Stock\" />
+    <Folder Include="Views\ComprobantePurchaseDetails\" />
+    <Folder Include="Views\ComprobantePurchases\" />
+    <Folder Include="Views\Deposits\" />
+    <Folder Include="Views\Employees\" />
+    <Folder Include="Views\MovementDetails\" />
+    <Folder Include="Views\MovementMotives\" />
+    <Folder Include="Views\Movements\" />
+    <Folder Include="Views\ProductComponents\" />
+    <Folder Include="Views\ProductionOrderDetails\" />
+    <Folder Include="Views\ProductionOrders\" />
+    <Folder Include="Views\ProductionStates\" />
+    <Folder Include="Views\Products\" />
+    <Folder Include="Views\ProductTypes\" />
+    <Folder Include="Views\Providers\" />
+    <Folder Include="Views\Stocks\" />
+    <Folder Include="Views\TranferDetails\" />
+    <Folder Include="Views\Transfers\" />
+    <Folder Include="Views\TransferTypes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
