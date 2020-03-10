@@ -1,7 +1,9 @@
 
 .App{
+    
     overflow-y: hidden;
-	 overflow-x: hidden;
+     overflow-x: hidden;
+   
 }
 .Body{
     height: 100%;
