@@ -38,6 +38,8 @@ namespace Axure.Models.Module_Stock
         //Observaciones que puede tener el traslado.
         [StringLength(200)]
         public string Observation { get; set; }
-        
+        //Numero de trans1ferencia
+        [Required]
+        public int Number { get; set; }
     }
 }
