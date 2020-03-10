@@ -10,7 +10,7 @@ const requestHelper=axios.create(
 export default {
     productos:{
         get:()=>requestHelper({
-            url:'api/Cars',
+            url:'Cars',
             method:'get',
 
         }),

@@ -21,5 +21,8 @@ export const getProductos=()=>async(dispatch)=>{
 export const postProductos=createAction('postProductos');
 
 
-/**Modificar la vista del section */
+/**Modificar la vista del section y el home*/
 export const setSectionShow=createAction('setSectionShow');
+export const homeVisible=createAction('homeVisible');
+
+

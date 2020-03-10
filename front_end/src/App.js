@@ -28,7 +28,7 @@ class App extends React.Component {
   render(){
   return (
     
-    <div className='App' style={{height:this.state.height,width:this.state.width-15}}>
+    <div className='App' style={{height:this.state.height,width:this.state.width}}>
     
               <Body/>
 

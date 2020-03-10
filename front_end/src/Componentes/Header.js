@@ -4,6 +4,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import './style.css';
 import HomeIcon from '@material-ui/icons/Home';
+import {connect} from 'react-redux';
+import {homeVisible} from '../Redux/actions.js';
 class Header extends Component {
     constructor(props){
         super(props);
@@ -16,7 +18,7 @@ class Header extends Component {
             <Toolbar>
                 <Typography variant="title" color="inherit">
                 AXure
-                <HomeIcon/> 
+                <HomeIcon className='homeIcono' onClick={()=>this.props.homeVisible(true)}/> 
               
                 </Typography>
             </Toolbar>
@@ -25,4 +27,10 @@ class Header extends Component {
     );
     }
 }
-export default Header;
+const mapStateToProps=state=>{
+    return{}
+}
+const mapDispatchToProps={
+homeVisible,
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Header);
