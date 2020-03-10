@@ -1,13 +1,12 @@
 import React from 'react';
 /**librerias de redux */
 import {connect} from 'react-redux';
-/**Librerias de axios */
-import axios from 'axios';
-import qs from "qs";
 /**template */
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 /**react router */
 import {withRouter} from 'react-router';
+
+
 
 class Login extends React.Component {
   constructor(props){
@@ -18,18 +17,10 @@ class Login extends React.Component {
       passwordtxt:''
     }
   }
-  /**esta funcion se llama cuando se da click en boton login */
-logear(){
-  const data = qs.stringify({ username: this.state.userNametxt, password: this.state.passwordtxt, grant_type: 'password' });
-axios.post('http://localhost:53049/token', data).then(t=>{
-  console.log(t);
-  this.props.history.push('/home');
-})
-  
-}
+
 /**renderizar la pagina de logeo */
   render(){
-     
+     console.log(this.props.login(654));
 return (
 <MDBContainer>
   <MDBRow>
@@ -48,7 +39,7 @@ return (
         </label>
         <input value={this.state.passwordtxt} onChange={e=>this.setState({passwordtxt:e.target.value})} type="password" id="defaultFormLoginPasswordEx" className="form-control" />
         <div className="text-center mt-4">
-          <MDBBtn onClick={()=>this.logear()} color="indigo" >Login</MDBBtn><MDBBtn color="indigo" onClick={()=>this.props.history.push('/registro')}>Registrarse</MDBBtn>
+          <MDBBtn color="indigo" >Login</MDBBtn>
         </div>
       </form>
     </MDBCol>
@@ -63,13 +54,7 @@ return (
 const mapStateToProps=state=>({
     url:state.url
 })
-const MapDispatchToProps=dispatch=>({
-  /**Action que se utiliza una vez el usuario se haya logeado para guardar sus datos */
-    login(user){
-      dispatch({
-        type:'LOGIN',
-        user
-      })
-    }
-})
+const MapDispatchToProps={
+
+}
 export default connect(mapStateToProps,MapDispatchToProps)(withRouter(Login))

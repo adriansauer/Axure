@@ -1,0 +1,56 @@
+
+.App{
+    
+    overflow-y: hidden;
+     overflow-x: hidden;
+   
+}
+.Body{
+    height: 100%;
+    width: 100%;
+}
+.Header{
+  
+    height: 10%;
+}
+
+.Box{
+ 
+    height: 100%;  
+}
+.Menu{
+    width: 10%;
+   height: 90%;
+    background-color:rgb(108,117,125);
+      
+}
+.Section{
+    width: 90%;
+    height: 100%;
+    
+}
+.Aside{
+    width: 10%;
+    height: 100%;
+    background-color:rgb(108,117,125);
+}
+.btnAsideP1{
+    margin-bottom: 100%;
+}
+.botonMenu1{
+    
+    margin-bottom: 100%;
+   
+}
+.homeHeader{
+    width: 100%;
+    height: 5%;
+}
+.filaHome{
+    height: 45%;
+    width: 90%;
+}
+.homeIcono:hover{
+    background: #318aac;
+    color: #fff !important;
+}
