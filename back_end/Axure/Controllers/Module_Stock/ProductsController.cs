@@ -40,10 +40,10 @@ namespace Axure.Controllers.Module_Stock
         }
 
         // GET: Todos los prodductos existentes en un deposito en especifico.
-        [Route("OfDeposit/{deposit}")]
-        public JsonResult OfDeposit(string deposit)
+        [Route("OfDeposit/{data}")]
+        public JsonResult OfDeposit(string data)
         {
-            return Json(new { R = deposit }, JsonRequestBehavior.AllowGet);
+            return Json(this.productsDB.ProductosPorDeposito(data), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Products/Details/5
