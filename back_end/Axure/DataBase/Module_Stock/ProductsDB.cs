@@ -17,14 +17,14 @@ namespace Axure.DTO.Module_Stock
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
-        public List<ProductDTO> ObtenerTodosProductos()
+        public List<Product> ObtenerTodosProductos()
         {
             using(var db = new AxureContext())
             {
                 var respuesta = db.Products
-                    .Select(x => new { Nombre = x.NameP, Descripcion =x.DescriprionP, Costo = x.Cost, CantidadMinima= x.QuantityMin, CodigoBarra = x.Barcode})
+                    .Select(x => new {Id= x.Id, Nombre = x.NameP, Descripcion =x.DescriprionP, Costo = x.Cost, CantidadMinima= x.QuantityMin, CodigoBarra = x.Barcode})
                     .ToList()
-                    .Select(y => new ProductDTO() {NameP = y.Nombre, DescriprionP = y.Descripcion, Cost=y.Costo, QuantityMin=y.CantidadMinima, Barcode=y.CodigoBarra })
+                    .Select(y => new Product() {Id=y.Id,NameP = y.Nombre, DescriprionP = y.Descripcion, Cost=y.Costo, QuantityMin=y.CantidadMinima, Barcode=y.CodigoBarra })
                     .ToList();
                 return respuesta;
             }

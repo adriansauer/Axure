@@ -49,10 +49,9 @@ namespace Axure.Migrations
                 );
             //Productos informaticos.
             context.Products.AddOrUpdate(x => x.Id,
-                //En el deposito de materia prima
-                new Product { Id = 1, NameP = "Monitor 22", DescriprionP = "22 pulg. ACER", Cost = 700000, IdProductType = 1, QuantityMin = 1, Barcode = "001" },
-                new Product { Id = 2, NameP = "Monitor 12", DescriprionP = "12 pulg. ACER", Cost = 300000, IdProductType = 1, QuantityMin = 1, Barcode = "002" },
-                new Product { Id = 3, NameP = "Monitor 42", DescriprionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 1, QuantityMin = 1, Barcode = "003" },
+                new Product { Id = 1, NameP = "Monitor 22", DescriprionP = "22 pulg. ACER", Cost = 700000, IdProductType = 1, QuantityMin = 3, Barcode = "001" },
+                new Product { Id = 2, NameP = "Monitor 12", DescriprionP = "12 pulg. ACER", Cost = 300000, IdProductType = 1, QuantityMin = 3, Barcode = "002" },
+                new Product { Id = 3, NameP = "Monitor 42", DescriprionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 1, QuantityMin = 3, Barcode = "003" },
                 new Product { Id = 4, NameP = "Teclado", DescriprionP = "Gammer", Cost = 150000, IdProductType = 1, QuantityMin = 2, Barcode = "004" },
                 new Product { Id = 5, NameP = "Teclado", DescriprionP = "ACER", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "005" },
                 new Product { Id = 6, NameP = "Mouse", DescriprionP = "Logitech B100", Cost = 45000, IdProductType = 1, QuantityMin = 2, Barcode = "006" },
@@ -60,7 +59,6 @@ namespace Axure.Migrations
                 new Product { Id = 8, NameP = "Teclado", DescriprionP = "Convencional", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "008" },
                 new Product { Id = 9, NameP = "Teclado", DescriprionP = "Inalambrico", Cost = 80000, IdProductType = 1, QuantityMin = 2, Barcode = "009" },
                 new Product { Id = 10, NameP = "Mouse", DescriprionP = "Inalambrico Logitech M220 Silent", Cost = 120000, IdProductType = 1, QuantityMin = 2, Barcode = "010" },
-                //En el deposito de produccion
                 new Product { Id = 11, NameP = "Placa Principal", DescriprionP = "ASUS", Cost = 350000, IdProductType = 2, QuantityMin = 2, Barcode = "011" },
                 new Product { Id = 12, NameP = "Microprocesador", DescriprionP = "Intel Core i5-9400F", Cost = 988149, IdProductType = 2, QuantityMin = 2, Barcode = "012" },
                 new Product { Id = 13, NameP = "Placa Principal", DescriprionP = "MSI", Cost = 338000, IdProductType = 2, QuantityMin = 1, Barcode = "013" },
@@ -70,28 +68,42 @@ namespace Axure.Migrations
                 new Product { Id = 17, NameP = "Placa Principal", DescriprionP = "ASUS Prime H310M-D", Cost = 445000, IdProductType = 2, QuantityMin = 1, Barcode = "017" },
                 new Product { Id = 18, NameP = "Microprocesador", DescriprionP = "AMD ATHLON", Cost = 500000, IdProductType = 2, QuantityMin = 2, Barcode = "018" },
                 new Product { Id = 19, NameP = "Microprocesador", DescriprionP = "AMD Ryzen", Cost = 250000, IdProductType = 2, QuantityMin = 2, Barcode = "019" },
-                new Product { Id = 20, NameP = "Placa Principal", DescriprionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" },
-                //Para la venta
-                new Product { Id = 21, NameP = "Monitor 22", DescriprionP = "22 pulg. ACER", Cost = 700000, IdProductType = 3, QuantityMin = 3, Barcode = "001" },
-                new Product { Id = 22, NameP = "Monitor 12", DescriprionP = "12 pulg. ACER", Cost = 300000, IdProductType = 3, QuantityMin = 3, Barcode = "002" },
-                new Product { Id = 23, NameP = "Monitor 42", DescriprionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 3, QuantityMin = 3, Barcode = "003" },
-                new Product { Id = 24, NameP = "Teclado", DescriprionP = "Gammer", Cost = 150000, IdProductType = 3, QuantityMin = 3, Barcode = "004" },
-                new Product { Id = 25, NameP = "Teclado", DescriprionP = "ACER", Cost = 50000, IdProductType = 3, QuantityMin = 3, Barcode = "005" },
-                new Product { Id = 26, NameP = "Mouse", DescriprionP = "Logitech B100", Cost = 45000, IdProductType = 3, QuantityMin = 2, Barcode = "006" },
-                new Product { Id = 27, NameP = "Mouse", DescriprionP = "Inalambrico Logitech M185", Cost = 75000, IdProductType = 3, QuantityMin = 2, Barcode = "007" },
-                new Product { Id = 28, NameP = "Teclado", DescriprionP = "Convencional", Cost = 50000, IdProductType = 3, QuantityMin = 2, Barcode = "008" },
-                new Product { Id = 29, NameP = "Teclado", DescriprionP = "Inalambrico", Cost = 80000, IdProductType = 3, QuantityMin = 2, Barcode = "009" },
-                new Product { Id = 30, NameP = "Mouse", DescriprionP = "Inalambrico Logitech M220 Silent", Cost = 120000, IdProductType = 3, QuantityMin = 2, Barcode = "010" }
+                new Product { Id = 20, NameP = "Placa Principal", DescriprionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" }
                 );
             //El motivo por el cual se realiza el traslado.
             context.TransferTypes.AddOrUpdate(x => x.Id,
                 new TransferType { Id = 1, TypeP = "Para produccion" }
                 );
-            //
-            //context.Transfers.AddOrUpdate(x => x.Id);
+            //Transferir productos de un deposito a otro.
+            context.Transfers.AddOrUpdate(x => x.Id,
+                new Transfer { Id = 1, IdDepositOrigin = 1, IdDepositDestination = 2, IdTransferType = 1, DateT = new DateTime(2020, 03, 10), Observation = "Para ensamblaje" });
             //context.TransferDetails.AddOrUpdate(x => x.Id);
             context.Stocks.AddOrUpdate(x => x.Id,
-                new Stock { Id = 1, IdProduct = 1, IdDeposit = 1, Quantity = 10 });
+                //Deposito de materia prima.
+                new Stock { Id = 1, IdProduct = 1, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 2, IdProduct = 3, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 3, IdProduct = 4, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 4, IdProduct = 5, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 5, IdProduct = 6, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 6, IdProduct = 7, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 7, IdProduct = 8, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 8, IdProduct = 9, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 9, IdProduct = 10, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 10, IdProduct = 11, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 11, IdProduct = 13, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 12, IdProduct = 14, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 13, IdProduct = 15, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 14, IdProduct = 16, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 15, IdProduct = 17, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 16, IdProduct = 18, IdDeposit = 1, Quantity = 10 },
+                new Stock { Id = 17, IdProduct = 20, IdDeposit = 1, Quantity = 10 },
+                //Deposito de venta.
+                new Stock { Id = 18, IdProduct = 1, IdDeposit = 3, Quantity = 3 },
+                new Stock { Id = 19, IdProduct = 2, IdDeposit = 3, Quantity = 3 },
+                new Stock { Id = 20, IdProduct = 3, IdDeposit = 3, Quantity = 3 },
+                new Stock { Id = 21, IdProduct = 5, IdDeposit = 3, Quantity = 2 },
+                new Stock { Id = 22, IdProduct = 9, IdDeposit = 3, Quantity = 2 }
+                );
             //context.Providers.AddOrUpdate(x => x.Id);
             //context.ProductComponents.AddOrUpdate(x => x.Id);
             context.Employees.AddOrUpdate(x => x.Id,
