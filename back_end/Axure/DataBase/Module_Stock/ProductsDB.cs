@@ -37,6 +37,10 @@ namespace Axure.DTO.Module_Stock
         {
             using (var db = new AxureContext())
             {
+                Deposit dep = db.Deposits.Single(x => x.Code.Equals(deposito));
+                var stock = db.Stocks.Where(x => x.IdDeposit==dep.Id).ToList();
+
+
                 var respuesta = db.Products
                     .Select(x => new { Nombre = x.NameP, Descripcion = x.DescriprionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                     .ToList()

@@ -9,7 +9,7 @@ namespace Axure.Models.Module_Stock
 {
     public class Stock
     {
-        //
+        //Id
         public int Id { get; set; }
         //
         [Required]

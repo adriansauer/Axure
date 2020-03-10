@@ -90,7 +90,8 @@ namespace Axure.Migrations
             //
             //context.Transfers.AddOrUpdate(x => x.Id);
             //context.TransferDetails.AddOrUpdate(x => x.Id);
-            //context.Stocks.AddOrUpdate(x => x.Id);
+            context.Stocks.AddOrUpdate(x => x.Id,
+                new Stock { Id = 1, IdProduct = 1, IdDeposit = 1, Quantity = 10 });
             //context.Providers.AddOrUpdate(x => x.Id);
             //context.ProductComponents.AddOrUpdate(x => x.Id);
             context.Employees.AddOrUpdate(x => x.Id,
