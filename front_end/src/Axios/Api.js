@@ -14,8 +14,8 @@ export default {
             method:'get',
 
         }),
-        post:(data)=>requestHelper({
-            url:'products',
+        create:(data)=>requestHelper({
+            url:'Products',
             method:'post',
             data
         })
