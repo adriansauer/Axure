@@ -222,8 +222,6 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.resources.dl
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
-C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
-C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\Axure.dll.config
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\Axure.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\Axure.pdb

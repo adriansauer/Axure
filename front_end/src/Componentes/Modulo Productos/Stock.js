@@ -1,16 +1,28 @@
 import React,{Component} from 'react';
 import './styleMProductos.css';
+
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import {getProductos} from '../../Redux/actions.js';
+import {connect} from 'react-redux';
 class Stock extends Component{
 constructor(props){
     super(props);
     this.state={
         nombreBtn:'Todos',
+       
+            
     }
-}
+  
+    }
+    componentDidMount(){
+        this.props.getProductos();
+       
+    }
+    
     render(){
+     
         return(
             <div className='stock'>
                 <div className='StockCabecera row '>
@@ -44,138 +56,45 @@ constructor(props){
                     <div className='StockBody'>
                         
                     <table className="table table-hover table-dark">
-  <thead className='tableHeader'>
+  <thead className='tableHeader' >
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Marca</th>
-      <th scope="col">Codigo</th>
-      <th scope="col">Tipo</th>
+     
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Costo</th>
+      <th scope="col">Cantidad Minima</th>
+      <th scope="col">Codigo de barra</th>
       <th scope="col"></th>
       
      
     </tr>
   </thead>
   <tbody className='tableBody'>
-  <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-      
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>Intel</td>
-      <td>1111000101010100101</td>
-      <td>Procesador i5</td>
-      <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
-
-    </tr>
+           
+            {
+              
+              (this.props.productos !==[]) ? 
+              this.props.productos.map(p=>
+         
+                <tr >
+                  
+                    <td>{p.NameP}</td>
+                    <td>{p.DescriprionP}</td>
+                    <td>{p.Cost}</td>
+                    <td>{p.QuantityMin}</td>
+                    <td>{p.Barcode}</td>
+                    <td><EditIcon className='icono'/><DeleteIcon className='icono' /><ThumbDownIcon className='icono'/></td>
+              
+                </tr>
+                
+                ) 
+              :
+              null
+              
+            }      
+                    
+                
+           
   </tbody>
 </table>
                     </div>
@@ -186,5 +105,13 @@ constructor(props){
         );
     }
 }
+const mapStateToProps=state=>{
+  return{
+    productos:state.productos,
+  }
+}
+const mapDispatchToProps={
+getProductos,
 
-export default Stock;
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Stock);

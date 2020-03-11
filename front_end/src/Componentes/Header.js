@@ -11,7 +11,9 @@ class Header extends Component {
         super(props);
         this.state={}
     }
+    
     render(){
+      
     return(
         <div className="Header row">
         <AppBar position="static">
@@ -19,7 +21,7 @@ class Header extends Component {
                 <Typography variant="title" color="inherit">
                 AXure
                 <HomeIcon className='homeIcono' onClick={()=>this.props.homeVisible(true)}/> 
-              
+
                 </Typography>
             </Toolbar>
         </AppBar>
@@ -28,9 +30,12 @@ class Header extends Component {
     }
 }
 const mapStateToProps=state=>{
-    return{}
+    return{
+      
+    }
 }
 const mapDispatchToProps={
 homeVisible,
+
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Header);
