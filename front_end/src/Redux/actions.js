@@ -10,7 +10,9 @@ export const getProductos=()=>async(dispatch)=>{
     try {
         const request=await api.productos.get();
        
-        dispatch(getProductosSuccess(request.data))
+        dispatch(getProductosSuccess(request.data));
+       
+        
     } catch (error) {
        
         dispatch(handleError(error));
