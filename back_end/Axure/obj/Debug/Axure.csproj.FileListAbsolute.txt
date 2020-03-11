@@ -331,7 +331,7 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System.Web.WebPages.resources.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.pdb
+C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 /*
  * Clase  ProductsDB
@@ -22,9 +23,9 @@ namespace Axure.DTO.Module_Stock
             using(var db = new AxureContext())
             {
                 var respuesta = db.Products
-                    .Select(x => new {Id= x.Id, Nombre = x.NameP, Descripcion =x.DescriprionP, Costo = x.Cost, CantidadMinima= x.QuantityMin, CodigoBarra = x.Barcode})
+                    .Select(x => new {Id= x.Id, Nombre = x.NameP, Description =x.DescriptionP, Costo = x.Cost, CantidadMinima= x.QuantityMin, CodigoBarra = x.Barcode})
                     .ToList()
-                    .Select(y => new Product() {Id=y.Id,NameP = y.Nombre, DescriprionP = y.Descripcion, Cost=y.Costo, QuantityMin=y.CantidadMinima, Barcode=y.CodigoBarra })
+                    .Select(y => new Product() {Id=y.Id,NameP = y.Nombre, DescriptionP = y.Description, Cost=y.Costo, QuantityMin=y.CantidadMinima, Barcode=y.CodigoBarra })
                     .ToList();
                 return respuesta;
             }
@@ -33,21 +34,102 @@ namespace Axure.DTO.Module_Stock
         /*
          * 
         */
-        public List<ProductDTO> ProductosPorDeposito(string deposito)
+        public List<Product> ProductosPorDeposito(int deposito)
         {
             using (var db = new AxureContext())
             {
-                Deposit dep = db.Deposits.Single(x => x.Code.Equals(deposito));
-                var stock = db.Stocks.Where(x => x.IdDeposit==dep.Id).ToList();
-
-
-                var respuesta = db.Products
-                    .Select(x => new { Nombre = x.NameP, Descripcion = x.DescriprionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                Deposit dep = db.Deposits.Single(x => x.Id == deposito);
+                var resp = db.Stocks.Include("Products").Where(x => x.IdDeposit==dep.Id)
+                    .Select(x => new { Id = x.Product.Id, Nombre = x.Product.NameP, Description = x.Product.DescriptionP, Costo = x.Product.Cost, CantidadMinima = x.Product.QuantityMin, CodigoBarra = x.Product.Barcode })
                     .ToList()
-                    .Select(y => new ProductDTO() { NameP = y.Nombre, DescriprionP = y.Descripcion, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                    .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                    .ToList();
+                return resp;
+            }
+        }
+
+        public List<Product> DetalleProducto(int id)
+        {
+            using (var db = new AxureContext())
+            {
+                var respuesta = db.Products.Where(x => x.Id == id)
+                    .Select(x => new { Id = x.Id, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                    .ToList()
+                    .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                     .ToList();
                 return respuesta;
             }
         }
+
+
+        public bool Agregar(string NameP, int IdProductType, string DescriptionP, int Cost, int QuantityMin, string Barcode)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    db.Products.Add(new Product() { NameP = NameP, IdProductType = IdProductType, DescriptionP = DescriptionP, Cost = Cost, QuantityMin = QuantityMin, Barcode = Barcode });
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool Editar(int id, string NameP, int IdProductType, string DescriptionP, int Cost, int QuantityMin, string Barcode)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    Product producto = db.Products.FirstOrDefault(x => x.Id == id);
+                    producto.NameP = NameP;
+                    producto.IdProductType = IdProductType;
+                    producto.DescriptionP = DescriptionP;
+                    producto.Cost = Cost;
+                    producto.QuantityMin = QuantityMin;
+                    producto.Barcode = Barcode;
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool Eliminar(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    Product prod = db.Products.Single(x => x.Id == id);
+                    if(null == prod) { return true; }
+                    db.Products.Remove(prod);
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }
