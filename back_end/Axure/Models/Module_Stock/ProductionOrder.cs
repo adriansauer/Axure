@@ -32,6 +32,9 @@ namespace Axure.Models.Module_Stock
         //
         [Required]
         public int Quantity { get; set; }
-       
+        //Codigo de identificacion de orden de produccion
+        [Required]
+        [StringLength(50)]
+        public string Code { get; set; }
     }
 }

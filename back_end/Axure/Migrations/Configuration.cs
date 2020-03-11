@@ -68,7 +68,12 @@ namespace Axure.Migrations
                 new Product { Id = 17, NameP = "Placa Principal", DescriprionP = "ASUS Prime H310M-D", Cost = 445000, IdProductType = 2, QuantityMin = 1, Barcode = "017" },
                 new Product { Id = 18, NameP = "Microprocesador", DescriprionP = "AMD ATHLON", Cost = 500000, IdProductType = 2, QuantityMin = 2, Barcode = "018" },
                 new Product { Id = 19, NameP = "Microprocesador", DescriprionP = "AMD Ryzen", Cost = 250000, IdProductType = 2, QuantityMin = 2, Barcode = "019" },
-                new Product { Id = 20, NameP = "Placa Principal", DescriprionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" }
+                new Product { Id = 20, NameP = "Placa Principal", DescriprionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" },
+                //Creacion de CPU   
+                new Product { Id = 21, NameP = "Computadora PC1", DescriprionP = "Gama Baja", Cost = 2000000, IdProductType = 3, QuantityMin = 1, Barcode = "021" },
+                new Product { Id = 22, NameP = "Computadora PC2", DescriprionP = "Gama Media", Cost = 2500000, IdProductType = 3, QuantityMin = 1, Barcode = "022" },
+                new Product { Id = 23, NameP = "Computadora PC3", DescriprionP = "Gama Alta", Cost = 3000000, IdProductType = 3, QuantityMin = 2, Barcode = "023" }
+
                 );
             //El motivo por el cual se realiza el traslado.
             context.TransferTypes.AddOrUpdate(x => x.Id,
@@ -104,8 +109,30 @@ namespace Axure.Migrations
                 new Stock { Id = 21, IdProduct = 5, IdDeposit = 3, Quantity = 2 },
                 new Stock { Id = 22, IdProduct = 9, IdDeposit = 3, Quantity = 2 }
                 );
+
             //context.Providers.AddOrUpdate(x => x.Id);
-            //context.ProductComponents.AddOrUpdate(x => x.Id);
+            context.ProductComponents.AddOrUpdate(x => x.Id,
+                //Gama BAja
+                new ProductComponent { Id = 1, IdProduct = 21, IdProductComponent = 2, Quantity = 1 },
+                new ProductComponent { Id = 2, IdProduct = 21, IdProductComponent = 5, Quantity = 1 },
+                new ProductComponent { Id = 3, IdProduct = 21, IdProductComponent = 10, Quantity = 1 },
+                new ProductComponent { Id = 4, IdProduct = 21, IdProductComponent = 15, Quantity = 1 },
+                new ProductComponent { Id = 5, IdProduct = 21, IdProductComponent = 20, Quantity = 1 },
+                //Gama Media
+                new ProductComponent { Id = 6, IdProduct = 22, IdProductComponent = 1, Quantity = 1 },
+                new ProductComponent { Id = 7, IdProduct = 22, IdProductComponent = 5, Quantity = 1 },
+                new ProductComponent { Id = 8, IdProduct = 22, IdProductComponent = 10, Quantity = 1 },
+                new ProductComponent { Id = 9, IdProduct = 22, IdProductComponent = 12, Quantity = 1 },
+                new ProductComponent { Id = 10, IdProduct = 22, IdProductComponent = 17, Quantity = 1 },
+                //Gama Alta
+                new ProductComponent { Id = 11, IdProduct = 23, IdProductComponent = 3, Quantity = 1 },
+                new ProductComponent { Id = 12, IdProduct = 23, IdProductComponent = 4, Quantity = 1 },
+                new ProductComponent { Id = 13, IdProduct = 23, IdProductComponent = 10, Quantity = 1 },
+                new ProductComponent { Id = 14, IdProduct = 23, IdProductComponent = 14, Quantity = 1 },
+                new ProductComponent { Id = 15, IdProduct = 23, IdProductComponent = 16, Quantity = 1 }
+
+                );
+
             context.Employees.AddOrUpdate(x => x.Id,
                 new Employee { Id = 1, NameE = "Juan Sanchez", CI="1.236.526", Direction="Carmen del Parana", RUC="1.236.526-5", Phone="0761 582 975" },
                 new Employee { Id = 2, NameE = "Sonia Ramos", CI = "5.632.789", Direction = "Carmen del Parana", RUC = "5.632.789-3", Phone = "0761 888 975" },
@@ -114,12 +141,20 @@ namespace Axure.Migrations
                 new Employee { Id = 5, NameE = "Julio Barrosa", CI = "2.683.256", Direction = "Coronel Bogado", RUC = "2.683.256-4", Phone = "0761 769 542" }
                 );
             context.ProductionStates.AddOrUpdate(x => x.Id,
-                new ProductionState { Id = 1, StateP = "Materia prima o Producto terminado" },
-                new ProductionState { Id = 2, StateP = "Materia prima" },
-                new ProductionState { Id = 3, StateP = "Producto terminado" }
+                new ProductionState { Id = 1, StateP = "Pendiente" },
+                new ProductionState { Id = 2, StateP = "En Proceso" },
+                new ProductionState { Id = 3, StateP = "Terminado" }
                 );
-            //context.ProductionOrders.AddOrUpdate(x => x.Id);
-            //context.ProductionOrderDetails.AddOrUpdate(x => x.Id);
+            context.ProductionOrders.AddOrUpdate(x => x.Id,
+                new ProductionOrder { Id = 1, IdProductionState = 1, IdProduct = 23, IdEmployee = 3, DateT = new DateTime(2020,03,10), Quantity = 1, Code = "0001"}
+                );
+            context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
+                new ProductionOrderDetail { Id = 1, IdProductionOrder = 1, IdProductComponent = 11, Quantity = 1 },
+                new ProductionOrderDetail { Id = 2, IdProductionOrder = 1, IdProductComponent = 12, Quantity = 1 },
+                new ProductionOrderDetail { Id = 3, IdProductionOrder = 1, IdProductComponent = 13, Quantity = 1 },
+                new ProductionOrderDetail { Id = 4, IdProductionOrder = 1, IdProductComponent = 14, Quantity = 1 },
+                new ProductionOrderDetail { Id = 5, IdProductionOrder = 1, IdProductComponent = 15, Quantity = 1 }
+                );
             context.MovementMotives.AddOrUpdate(x => x.Id,
                 new MovementMotive { Id = 1, Motive = "Para ensamblaje" },
                 new MovementMotive { Id = 2, Motive = "Para venta" },

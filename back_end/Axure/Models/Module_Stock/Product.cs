@@ -21,6 +21,13 @@ namespace Axure.Models.Module_Stock
         public int IdProductType { get; set; }
         [ForeignKey("IdProductType")]
         public ProductType ProductType { get; set; }
+
+        //FK de la marca del producto
+        [Required]
+        public int IdProductBrand { get; set; }
+        [ForeignKey("IdProductBrand")]
+        public ProductBrand ProductBrand { get; set; }
+
         //Nombre del producto.
         [Required]
         [StringLength(200)]
@@ -36,7 +43,6 @@ namespace Axure.Models.Module_Stock
         [Required]
         public int QuantityMin { get; set; }
         //Codigo de barra del producto.
-        [Required]
         [StringLength(15)]
         public string Barcode { get; set; }
     }

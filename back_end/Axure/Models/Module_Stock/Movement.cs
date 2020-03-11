@@ -24,5 +24,8 @@ namespace Axure.Models.Module_Stock
         //
         [Required]
         public DateTime DateM { get; set; }
+        //Numero de Movimiento
+        [Required]
+        public int Number { get; set; }
     }
 }

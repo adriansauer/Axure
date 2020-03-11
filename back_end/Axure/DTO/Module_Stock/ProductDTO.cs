@@ -23,7 +23,6 @@ namespace Axure.DTO.Module_Stock
         [Required]
         public int QuantityMin { get; set; }
         //Codigo de barra del producto.
-        [Required]
         [StringLength(15)]
         public string Barcode { get; set; }
     }

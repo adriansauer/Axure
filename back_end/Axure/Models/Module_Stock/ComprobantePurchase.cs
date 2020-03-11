@@ -24,7 +24,10 @@ namespace Axure.Models.Module_Stock
         public int IdEmployee { get; set; }
         [ForeignKey("IdEmployee")]
         public Employee Employee { get; set; }
-
+        //Codigo de identificacion de Comprobante de Compra
+        [Required]
+        [StringLength(50)]
+        public string Code { get; set; }
 
     }
 }
