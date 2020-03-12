@@ -4,7 +4,7 @@ import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import { getProductos } from "../../Redux/actions.js";
+import { getProductos,deleteProducto } from "../../Redux/actions.js";
 import { connect } from "react-redux";
 class Stock extends Component {
   constructor(props) {
@@ -110,7 +110,7 @@ class Stock extends Component {
                       <td>{p.Barcode}</td>
                       <td>
                         <EditIcon className="icono" />
-                        <DeleteIcon className="icono" />
+                        <DeleteIcon onClick={()=>this.props.deleteProducto(p.Id)} className="icono" />
                         <ThumbDownIcon className="icono" />
                       </td>
                     </tr>
@@ -130,6 +130,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = {
-  getProductos
+  getProductos,
+  deleteProducto
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);
