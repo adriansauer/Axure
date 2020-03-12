@@ -199,7 +199,6 @@
     <Compile Include="Models\Module_Stock\MovementDetail.cs" />
     <Compile Include="Models\Module_Stock\MovementMotive.cs" />
     <Compile Include="Models\Module_Stock\Product.cs" />
-    <Compile Include="Models\Module_Stock\ProductBrand.cs" />
     <Compile Include="Models\Module_Stock\ProductComponent.cs" />
     <Compile Include="Models\Module_Stock\ProductionOrder.cs" />
     <Compile Include="Models\Module_Stock\ProductionOrderDetail.cs" />

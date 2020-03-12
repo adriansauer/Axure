@@ -21,6 +21,7 @@ namespace Axure.Models.Module_Stock
         public int IdProduct { get; set; }
         [ForeignKey("IdProduct")]
         public Product Product { get; set; }
+        public List<Product> Products { get; set; }
         //
         [Required]
         public int Quantity { get; set; }
