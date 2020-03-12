@@ -21,13 +21,6 @@ namespace Axure.Models.Module_Stock
         public int IdProductType { get; set; }
         [ForeignKey("IdProductType")]
         public ProductType ProductType { get; set; }
-
-        //FK de la marca del producto
-        [Required]
-        public int IdProductBrand { get; set; }
-        [ForeignKey("IdProductBrand")]
-        public ProductBrand ProductBrand { get; set; }
-
         //Nombre del producto.
         [Required]
         [StringLength(200)]
@@ -35,7 +28,7 @@ namespace Axure.Models.Module_Stock
         //Descripcion del producto.
         [Required]
         [StringLength(200)]
-        public string DescriprionP { get; set; }
+        public string DescriptionP { get; set; }
         //El costo del producto.
         [Required]
         public int Cost { get; set; }
