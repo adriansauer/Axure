@@ -9,7 +9,7 @@ class ProductosBaja extends Component{
                        
                 </div>
                 <div className='productosBajaBody'>
-                <table class="table table-hover table-dark">
+                <table className="table table-hover table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
