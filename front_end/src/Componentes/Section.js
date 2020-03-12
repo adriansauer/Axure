@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './style.css';
 import {connect} from 'react-redux';
-import {getProductos,postProductos} from '../Redux/actions.js';
+import {getProductos} from '../Redux/actions.js';
 /**importar componentes  */
 import Stock from './Modulo Productos/Stock';
 import AgregarProducto from './Modulo Productos/AgregarProducto';
@@ -39,6 +39,5 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=({
     getProductos,
-    postProductos,
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Section);

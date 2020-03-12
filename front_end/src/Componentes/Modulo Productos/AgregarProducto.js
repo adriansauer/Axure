@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import {createProducto} from '../../Redux/actions.js';
+import { createProducto } from "../../Redux/actions.js";
 class AgregarProducto extends Component {
   constructor(props) {
     super(props);
@@ -12,10 +12,11 @@ class AgregarProducto extends Component {
       descripciontxt: "",
       costotxt: 0,
       codigoBarratxt: "",
-      cantidadMin: 0
+      cantidadMin: 0,
+      tipoProducto: 1
     };
   }
-  
+
   aumentarCantidadMinima() {
     this.setState({ cantidadMin: this.state.cantidadMin + 1 });
   }
@@ -31,30 +32,36 @@ class AgregarProducto extends Component {
       this.state.costotxt !== "" &&
       this.state.codigoBarratxt !== ""
     ) {
-        return true;
+      return true;
     }
     return false;
   }
-  enviarProducto(){
-      if(this.verificarCampos()){
-         
-          this.props.createProducto({
-          'NombreP':this.state.nombretxt,
-          'DescriprionP':this.state.descripciontxt,
-          'Cost':this.state.costotxt,
-          'QuantityMin':this.state.cantidadMin,
-          'Barcode':this.state.codigoBarratxt
+  enviarProducto() {
+    if (this.verificarCampos()) {
+      this.props.createProducto({
+        NombreP: this.state.nombretxt,
+        DescriprionP: this.state.descripciontxt,
+        Cost: this.state.costotxt,
+        QuantityMin: this.state.cantidadMin,
+        Barcode: this.state.codigoBarratxt
       });
-      }else{
-          console.log('Rellene todos los campos');
-      }
-      
+    } else {
+      console.log("Rellene todos los campos");
+    }
   }
   handleSubmit = event => {
     event.preventDefault();
     this.enviarProducto();
-  }
+  };
+
   render() {
+      /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
+    const listaMateriaPrima = (
+      <div>
+        <h3>Agregue los productos necesarios</h3>
+      </div>
+    );
+
     return (
       <div className="agregarProducto">
         <form onSubmit={this.handleSubmit}>
@@ -113,8 +120,60 @@ class AgregarProducto extends Component {
                   this.setState({ codigoBarratxt: e.target.value });
                 }}
               />
+              {/**TIPO DEL PRODUCTO, -MATERIA PRIMA O -PRODUCTO TERMINADO O AMBOS */}
+              <div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="1"
+                      checked={this.state.tipoProducto === 1}
+                      onChange={e => {
+                        this.setState({ tipoProducto: 1 });
+                      }}
+                    />
+                    Materia Prima
+                  </label>
+                </div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="2"
+                      checked={this.state.tipoProducto === 2}
+                      onChange={e => {
+                        this.setState({ tipoProducto: 2 });
+                      }}
+                    />
+                    Producto Terminado
+                  </label>
+                </div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="3"
+                      checked={this.state.tipoProducto === 3}
+                      onChange={e => {
+                        this.setState({ tipoProducto: 3 });
+                      }}
+                    />
+                    Ambos
+                  </label>
+                </div>
+              </div>
+              {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
+              {this.state.tipoProducto === 2 ? (
+                /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
+                listaMateriaPrima
+              ) : /**EN CASO CONTRARIO NO HACER NADA */
+              null}
               {/**BOTON PARA AGREGAR PRODUCTO*/}
-              <input className="btn btn-primary" type="submit" value="Agregar"/>
+              <input
+                className="btn btn-primary"
+                type="submit"
+                value="Agregar"
+              />
             </div>
           </div>
         </form>
@@ -122,12 +181,10 @@ class AgregarProducto extends Component {
     );
   }
 }
-const mapStateToProps=state=>{
-    return{
-
-    }
-}
-const mapDispatchToProps={
-    createProducto,
-}
-export default connect(mapStateToProps,mapDispatchToProps)(AgregarProducto);
+const mapStateToProps = state => {
+  return {};
+};
+const mapDispatchToProps = {
+  createProducto
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AgregarProducto);
