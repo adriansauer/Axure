@@ -48,7 +48,7 @@ namespace Axure.Migrations
                 new ProductType { Id = 3, TypeP = "Producto Terminado" }
                 );
             //Productos informaticos.
-            context.Products.AddOrUpdate(x => x.Id,
+           /* context.Products.AddOrUpdate(x => x.Id,
                 new Product { Id = 1, NameP = "Monitor 22", DescriptionP = "22 pulg. ACER", Cost = 700000, IdProductType = 1, QuantityMin = 3, Barcode = "001" },
                 new Product { Id = 2, NameP = "Monitor 12", DescriptionP = "12 pulg. ACER", Cost = 300000, IdProductType = 1, QuantityMin = 3, Barcode = "002" },
                 new Product { Id = 3, NameP = "Monitor 42", DescriptionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 1, QuantityMin = 3, Barcode = "003" },
@@ -74,7 +74,7 @@ namespace Axure.Migrations
                 new Product { Id = 22, NameP = "Computadora PC2", DescriptionP = "Gama Media", Cost = 2500000, IdProductType = 3, QuantityMin = 1, Barcode = "022" },
                 new Product { Id = 23, NameP = "Computadora PC3", DescriptionP = "Gama Alta", Cost = 3000000, IdProductType = 3, QuantityMin = 2, Barcode = "023" }
 
-                );
+                );*/
             //El motivo por el cual se realiza el traslado.
             context.TransferTypes.AddOrUpdate(x => x.Id,
                 new TransferType { Id = 1, TypeP = "Para produccion" }

@@ -104,7 +104,7 @@ class Stock extends Component {
                     <tr key={p.Id}>
                       <td>{p.Id}</td>
                       <td>{p.NameP}</td>
-                      <td>{p.DescriprionP}</td>
+                      <td>{p.DescriptionP}</td>
                       <td>{p.Cost}</td>
                       <td>{p.QuantityMin}</td>
                       <td>{p.Barcode}</td>
@@ -119,7 +119,7 @@ class Stock extends Component {
             </tbody>
           </table>
         </div>
-        <div className="StockFooter">Este es el Footer</div>
+        <div className="StockFooter"></div>
       </div>
     );
   }

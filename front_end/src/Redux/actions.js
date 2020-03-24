@@ -22,21 +22,28 @@ export const getProductos = () => async dispatch => {
   } catch (error) {
 console.log('Error de conexion')  }
 };
-/**agrega un producto y vuelve a solicitar todos los productos de la api */
-export const createProducto = data => async dispatch => {
-  try {
-    const request = await api.productos.create(data);
-    dispatch(getProductosSuccess());
-  } catch (error) {
-    dispatch(handleError(error));
-  }
-};
+
 /**eliminar un producto y volver a solicitar todos los productos */
 
 export const deleteProducto=(id)=>async dispatch=>{
   
     const request=await api.productos.delete(id);
+    if(request.status===200){
       dispatch(getProductos());
-      console.log('Esta es la respuesta de la api'+request);
+      console.log('respuesta: ',request);
+    }else{
+      console.log('Error al intentar eliminar el producto');
+    }
+      
     
+}
+/**agregar un producto y volver a solicitar todos los productos para actualizar el estado */
+
+export const createProducto=(data)=>async dispatch=>{
+  const request=await api.productos.create(data);
+  
+    
+    console.log('respuesta del create producto:',request);
+ 
+  
 }

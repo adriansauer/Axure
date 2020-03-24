@@ -39,11 +39,12 @@ class AgregarProducto extends Component {
   enviarProducto() {
     if (this.verificarCampos()) {
       this.props.createProducto({
-        NombreP: this.state.nombretxt,
-        DescriprionP: this.state.descripciontxt,
-        Cost: this.state.costotxt,
-        QuantityMin: this.state.cantidadMin,
-        Barcode: this.state.codigoBarratxt
+        'NombreP': this.state.nombretxt,
+        'DescriptionP': this.state.descripciontxt,
+        'Cost': this.state.costotxt,
+        'IdProductType': this.state.tipoProducto,
+        'QuantityMin': this.state.cantidadMin,
+        'Barcode': this.state.codigoBarratxt
       });
     } else {
       console.log("Rellene todos los campos");
@@ -173,6 +174,7 @@ class AgregarProducto extends Component {
                 className="btn btn-primary"
                 type="submit"
                 value="Agregar"
+                onClick={()=>this.enviarProducto()}
               />
             </div>
           </div>
