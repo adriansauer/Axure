@@ -48,33 +48,33 @@ namespace Axure.Migrations
                 new ProductType { Id = 3, TypeP = "Producto Terminado" }
                 );
             //Productos informaticos.
-            context.Products.AddOrUpdate(x => x.Id,
-                new Product { Id = 1, NameP = "Monitor 22", DescriprionP = "22 pulg. ACER", Cost = 700000, IdProductType = 1, QuantityMin = 3, Barcode = "001" },
-                new Product { Id = 2, NameP = "Monitor 12", DescriprionP = "12 pulg. ACER", Cost = 300000, IdProductType = 1, QuantityMin = 3, Barcode = "002" },
-                new Product { Id = 3, NameP = "Monitor 42", DescriprionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 1, QuantityMin = 3, Barcode = "003" },
-                new Product { Id = 4, NameP = "Teclado", DescriprionP = "Gammer", Cost = 150000, IdProductType = 1, QuantityMin = 2, Barcode = "004" },
-                new Product { Id = 5, NameP = "Teclado", DescriprionP = "ACER", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "005" },
-                new Product { Id = 6, NameP = "Mouse", DescriprionP = "Logitech B100", Cost = 45000, IdProductType = 1, QuantityMin = 2, Barcode = "006" },
-                new Product { Id = 7, NameP = "Mouse", DescriprionP = "Inalambrico Logitech M185", Cost = 75000, IdProductType = 1, QuantityMin = 2, Barcode = "007" },
-                new Product { Id = 8, NameP = "Teclado", DescriprionP = "Convencional", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "008" },
-                new Product { Id = 9, NameP = "Teclado", DescriprionP = "Inalambrico", Cost = 80000, IdProductType = 1, QuantityMin = 2, Barcode = "009" },
-                new Product { Id = 10, NameP = "Mouse", DescriprionP = "Inalambrico Logitech M220 Silent", Cost = 120000, IdProductType = 1, QuantityMin = 2, Barcode = "010" },
-                new Product { Id = 11, NameP = "Placa Principal", DescriprionP = "ASUS", Cost = 350000, IdProductType = 2, QuantityMin = 2, Barcode = "011" },
-                new Product { Id = 12, NameP = "Microprocesador", DescriprionP = "Intel Core i5-9400F", Cost = 988149, IdProductType = 2, QuantityMin = 2, Barcode = "012" },
-                new Product { Id = 13, NameP = "Placa Principal", DescriprionP = "MSI", Cost = 338000, IdProductType = 2, QuantityMin = 1, Barcode = "013" },
-                new Product { Id = 14, NameP = "Microprocesador", DescriprionP = "Intel Core i7-9700", Cost = 2174000, IdProductType = 2, QuantityMin = 2, Barcode = "014" },
-                new Product { Id = 15, NameP = "Microprocesador", DescriprionP = "Intel Core i3-9100F", Cost = 539895, IdProductType = 2, QuantityMin = 2, Barcode = "015" },
-                new Product { Id = 16, NameP = "Placa Principal", DescriprionP = "MSI B360M Gaming", Cost = 545000, IdProductType = 2, QuantityMin = 1, Barcode = "016" },
-                new Product { Id = 17, NameP = "Placa Principal", DescriprionP = "ASUS Prime H310M-D", Cost = 445000, IdProductType = 2, QuantityMin = 1, Barcode = "017" },
-                new Product { Id = 18, NameP = "Microprocesador", DescriprionP = "AMD ATHLON", Cost = 500000, IdProductType = 2, QuantityMin = 2, Barcode = "018" },
-                new Product { Id = 19, NameP = "Microprocesador", DescriprionP = "AMD Ryzen", Cost = 250000, IdProductType = 2, QuantityMin = 2, Barcode = "019" },
-                new Product { Id = 20, NameP = "Placa Principal", DescriprionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" },
+           /* context.Products.AddOrUpdate(x => x.Id,
+                new Product { Id = 1, NameP = "Monitor 22", DescriptionP = "22 pulg. ACER", Cost = 700000, IdProductType = 1, QuantityMin = 3, Barcode = "001" },
+                new Product { Id = 2, NameP = "Monitor 12", DescriptionP = "12 pulg. ACER", Cost = 300000, IdProductType = 1, QuantityMin = 3, Barcode = "002" },
+                new Product { Id = 3, NameP = "Monitor 42", DescriptionP = "42 pulg. ACER", Cost = 1500000, IdProductType = 1, QuantityMin = 3, Barcode = "003" },
+                new Product { Id = 4, NameP = "Teclado", DescriptionP = "Gammer", Cost = 150000, IdProductType = 1, QuantityMin = 2, Barcode = "004" },
+                new Product { Id = 5, NameP = "Teclado", DescriptionP = "ACER", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "005" },
+                new Product { Id = 6, NameP = "Mouse", DescriptionP = "Logitech B100", Cost = 45000, IdProductType = 1, QuantityMin = 2, Barcode = "006" },
+                new Product { Id = 7, NameP = "Mouse", DescriptionP = "Inalambrico Logitech M185", Cost = 75000, IdProductType = 1, QuantityMin = 2, Barcode = "007" },
+                new Product { Id = 8, NameP = "Teclado", DescriptionP = "Convencional", Cost = 50000, IdProductType = 1, QuantityMin = 2, Barcode = "008" },
+                new Product { Id = 9, NameP = "Teclado", DescriptionP = "Inalambrico", Cost = 80000, IdProductType = 1, QuantityMin = 2, Barcode = "009" },
+                new Product { Id = 10, NameP = "Mouse", DescriptionP = "Inalambrico Logitech M220 Silent", Cost = 120000, IdProductType = 1, QuantityMin = 2, Barcode = "010" },
+                new Product { Id = 11, NameP = "Placa Principal", DescriptionP = "ASUS", Cost = 350000, IdProductType = 2, QuantityMin = 2, Barcode = "011" },
+                new Product { Id = 12, NameP = "Microprocesador", DescriptionP = "Intel Core i5-9400F", Cost = 988149, IdProductType = 2, QuantityMin = 2, Barcode = "012" },
+                new Product { Id = 13, NameP = "Placa Principal", DescriptionP = "MSI", Cost = 338000, IdProductType = 2, QuantityMin = 1, Barcode = "013" },
+                new Product { Id = 14, NameP = "Microprocesador", DescriptionP = "Intel Core i7-9700", Cost = 2174000, IdProductType = 2, QuantityMin = 2, Barcode = "014" },
+                new Product { Id = 15, NameP = "Microprocesador", DescriptionP = "Intel Core i3-9100F", Cost = 539895, IdProductType = 2, QuantityMin = 2, Barcode = "015" },
+                new Product { Id = 16, NameP = "Placa Principal", DescriptionP = "MSI B360M Gaming", Cost = 545000, IdProductType = 2, QuantityMin = 1, Barcode = "016" },
+                new Product { Id = 17, NameP = "Placa Principal", DescriptionP = "ASUS Prime H310M-D", Cost = 445000, IdProductType = 2, QuantityMin = 1, Barcode = "017" },
+                new Product { Id = 18, NameP = "Microprocesador", DescriptionP = "AMD ATHLON", Cost = 500000, IdProductType = 2, QuantityMin = 2, Barcode = "018" },
+                new Product { Id = 19, NameP = "Microprocesador", DescriptionP = "AMD Ryzen", Cost = 250000, IdProductType = 2, QuantityMin = 2, Barcode = "019" },
+                new Product { Id = 20, NameP = "Placa Principal", DescriptionP = "MSI PRO-VH", Cost = 443000, IdProductType = 2, QuantityMin = 1, Barcode = "020" },
                 //Creacion de CPU   
-                new Product { Id = 21, NameP = "Computadora PC1", DescriprionP = "Gama Baja", Cost = 2000000, IdProductType = 3, QuantityMin = 1, Barcode = "021" },
-                new Product { Id = 22, NameP = "Computadora PC2", DescriprionP = "Gama Media", Cost = 2500000, IdProductType = 3, QuantityMin = 1, Barcode = "022" },
-                new Product { Id = 23, NameP = "Computadora PC3", DescriprionP = "Gama Alta", Cost = 3000000, IdProductType = 3, QuantityMin = 2, Barcode = "023" }
+                new Product { Id = 21, NameP = "Computadora PC1", DescriptionP = "Gama Baja", Cost = 2000000, IdProductType = 3, QuantityMin = 1, Barcode = "021" },
+                new Product { Id = 22, NameP = "Computadora PC2", DescriptionP = "Gama Media", Cost = 2500000, IdProductType = 3, QuantityMin = 1, Barcode = "022" },
+                new Product { Id = 23, NameP = "Computadora PC3", DescriptionP = "Gama Alta", Cost = 3000000, IdProductType = 3, QuantityMin = 2, Barcode = "023" }
 
-                );
+                );*/
             //El motivo por el cual se realiza el traslado.
             context.TransferTypes.AddOrUpdate(x => x.Id,
                 new TransferType { Id = 1, TypeP = "Para produccion" }

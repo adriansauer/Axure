@@ -1,4 +1,6 @@
 ﻿using Axure.DTO.Module_Stock;
+using Axure.Models;
+using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,92 +31,75 @@ namespace Axure.Controllers.Module_Stock
         [Route("Index")]
         public JsonResult Index()
         {
-            return Json(new {Nombre = "Nombre", Descripcion = "Descripcion", Costo= "Costo", CantiddadMinima= "CantiddadMinima", CodigoBarra = "CodigoBarra" }, JsonRequestBehavior.AllowGet);
+            return Json(new {Id = "False", IdProductType = "True", NameP= "True", DescriptionP= "True", Cost = "True", Quantity = "True", Barcode = "False" }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Todos los prodductos existentes.
-        [Route("Everybody")]
-        public JsonResult Everybody()
+        [Route("List")]
+        public JsonResult List()
         {
             return Json(this.productsDB.ObtenerTodosProductos(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Todos los prodductos existentes en un deposito en especifico.
-        [Route("OfDeposit/{data}")]
-        public JsonResult OfDeposit(string data)
+        [Route("OfDeposit/{id}")]
+        public JsonResult OfDeposit(int id)
         {
-            return Json(this.productsDB.ProductosPorDeposito(data), JsonRequestBehavior.AllowGet);
+            return Json(this.productsDB.ProductosPorDeposito(id), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int id)
+        [Route("Details/{id}")]
+        public JsonResult Details(int id)
         {
-            return View();
-        }
-
-        // GET: Products/Create
-        public ActionResult Create()
-        {
-            return View();
+            return Json(this.productsDB.DetalleProducto(id), JsonRequestBehavior.AllowGet);
         }
 
         // POST: Products/Create
         [HttpPost]
+        [Route("Create")]
         public ActionResult Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                this.productsDB.Agregar(collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]);
+                return new HttpStatusCodeResult(200);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
 
-        // GET: Products/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
         // POST: Products/Edit/5
-        [HttpPost]
+        [HttpPut]
+        [Route("Edit/{id}")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                this.productsDB.Editar(id, collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]);
+                return new HttpStatusCodeResult(200);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
-        }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: Products/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                this.productsDB.Eliminar(id);
+                return new HttpStatusCodeResult(200);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
     }

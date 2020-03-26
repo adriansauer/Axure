@@ -15,7 +15,7 @@ namespace Axure.DTO.Module_Stock
         //Descripcion del producto.
         [Required]
         [StringLength(200)]
-        public string DescriprionP { get; set; }
+        public string DescriptionP { get; set; }
         //El costo del producto.
         [Required]
         public int Cost { get; set; }
