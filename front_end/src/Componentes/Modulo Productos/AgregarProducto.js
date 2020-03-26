@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
 import { connect } from "react-redux";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { createProducto } from "../../Redux/actions.js";
 class AgregarProducto extends Component {
   constructor(props) {
@@ -10,21 +8,14 @@ class AgregarProducto extends Component {
     this.state = {
       nombretxt: "",
       descripciontxt: "",
-      costotxt: 0,
+      costotxt: '',
       codigoBarratxt: "",
-      cantidadMin: 0,
+      cantidadMintxt: '',
       tipoProducto: 1
     };
   }
 
-  aumentarCantidadMinima() {
-    this.setState({ cantidadMin: this.state.cantidadMin + 1 });
-  }
-  disminuirCantidadMinima() {
-    if (this.state.cantidadMin > 0) {
-      this.setState({ cantidadMin: this.state.cantidadMin - 1 });
-    }
-  }
+  
   verificarCampos() {
     if (
       this.state.nombretxt !== "" &&
@@ -101,15 +92,14 @@ class AgregarProducto extends Component {
                 }}
               />
               {/**CANTIDAD MINIMA DEL PRODUCTO*/}
-              <label>Cantidad minima:{this.state.cantidadMin}</label>
-              {/**ICONOS PARA AUMENTAR Y DISMINUIR LA CANTIDAD MINIMA*/}
-              <ArrowUpwardIcon
-                onClick={() => this.aumentarCantidadMinima()}
-                className="icono"
-              />
-              <ArrowDownwardIcon
-                onClick={() => this.disminuirCantidadMinima()}
-                className="icono"
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Cantidad Minima"
+                value={this.state.cantidadMintxt}
+                onChange={e => {
+                  this.setState({ cantidadMintxt: e.target.value });
+                }}
               />
               {/**CODIGO DE BARRA DEL PRODUCTO*/}
               <input
