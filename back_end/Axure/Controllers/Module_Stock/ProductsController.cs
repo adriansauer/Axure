@@ -55,6 +55,13 @@ namespace Axure.Controllers.Module_Stock
             return Json(this.productsDB.DetalleProducto(id), JsonRequestBehavior.AllowGet);
         }
 
+        // GET: Products/SumDeposit/5
+        [Route("SumDeposit/{id}")]
+        public JsonResult SumDeposit(int id)
+        {
+            return Json(new { Sum = this.productsDB.SumaPrecioProductoDeposito(id) }, JsonRequestBehavior.AllowGet);
+        }
+
         // POST: Products/Create
         [HttpPost]
         [Route("Create")]
@@ -94,7 +101,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                this.productsDB.Eliminar(id);
+                this.productsDB.darDeBaja(id);
                 return new HttpStatusCodeResult(200);
             }
             catch
