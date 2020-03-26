@@ -4,20 +4,23 @@ import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import { getProductos,deleteProducto } from "../../Redux/actions.js";
+import { getProductos, deleteProducto } from "../../Redux/actions.js";
 import { connect } from "react-redux";
 class Stock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nombreBtn: "Todos"
+      nombreBtn: "Todos",
+      total: 0
     };
   }
-  componentDidMount() {
+  
+
+componentDidMount() {
     this.props.getProductos();
   }
-
   render() {
+  
     return (
       <div className="stock">
         <div className="StockCabecera row ">
@@ -99,8 +102,11 @@ class Stock extends Component {
               </tr>
             </thead>
             <tbody className="tableBody">
-              {this.props.productos !== []
-                ? this.props.productos.map(p => (
+              {(() => {
+                if (this.props.productos !== []) {
+                  
+
+                  return this.props.productos.map(p => (
                     <tr key={p.Id}>
                       <td>{p.Id}</td>
                       <td>{p.NameP}</td>
@@ -110,16 +116,23 @@ class Stock extends Component {
                       <td>{p.Barcode}</td>
                       <td>
                         <EditIcon className="icono" />
-                        <DeleteIcon onClick={()=>this.props.deleteProducto(p.Id)} className="icono" />
+                        <DeleteIcon
+                          onClick={() => this.props.deleteProducto(p.Id)}
+                          className="icono"
+                        />
                         <ThumbDownIcon className="icono" />
                       </td>
                     </tr>
-                  ))
-                : null}
+                  ));
+                }
+              })()}
+         
             </tbody>
           </table>
         </div>
-        <div className="StockFooter"></div>
+        <div className="StockFooter">
+         
+          Capital total:{this.state.total}</div>
       </div>
     );
   }
