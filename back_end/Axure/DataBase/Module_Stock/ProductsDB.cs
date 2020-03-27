@@ -1,5 +1,7 @@
-﻿using Axure.Models;
+﻿using Axure.DataBase.Module_Stock;
+using Axure.Models;
 using Axure.Models.Module_Stock;
+using Axure.Models.Module_Stock.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,12 @@ namespace Axure.DTO.Module_Stock
 {
     public class ProductsDB
     {
+        ComponentDB componentDB;
+
+        public ProductsDB()
+        {
+            this.componentDB = new ComponentDB();
+        }
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
@@ -66,25 +74,43 @@ namespace Axure.DTO.Module_Stock
             using (var db = new AxureContext())
             {
                 Deposit dep = db.Deposits.Single(x => x.Id == id);
-                var resp = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id)
-                    .Select(x => new { Id = x.Product.Id, Costo = x.Product.Cost })
-                    .ToList()
-                    .Select(y => new Product() { Id = y.Id, Cost = y.Costo })
-                    .ToList();
-                return 14;
+                var resp = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id && x.Product.Delete == false).Sum(z => z.Product.Cost * z.Quantity);
+                return resp;
             }
 
         }
 
 
-        public bool Agregar(string NameP, int IdProductType, string DescriptionP, int Cost, int QuantityMin, string Barcode)
+        public bool Agregar(Pc pc)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Products.Add(new Product() { NameP = NameP, IdProductType = IdProductType, DescriptionP = DescriptionP, Cost = Cost, QuantityMin = QuantityMin, Barcode = Barcode, Delete = false });
+                    db.Products.Add(new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false });
                     db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool AgregarPcComponentes(Pc pc)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    Product nuevo = new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false };
+                    db.Products.Add(nuevo);
+                    db.SaveChanges();
+                    for (int i = 0; i < pc.listaComponentes.Count; i++)
+                    {
+                        this.componentDB.agregar(new ProductComponent() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
+                    }
                     return false;
                 }
             }
