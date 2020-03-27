@@ -16,16 +16,8 @@ export default {
             method:'get',
 
         }), 
-        getMateriaPrima:()=>requestHelper({
-            url:'Products/OfDeposit/1',
-            method:'get',
-        }),
-        getProductoTerminado:()=>requestHelper({
-            url:'Products/OfDeposit/3',
-            method:'get',
-        }),
-        getProductoEnProduccion:()=>requestHelper({
-            url:'Products/OfDeposit/2',
+        getDeposito:(deposito)=>requestHelper({
+            url:'Products/OfDeposit/'+deposito,
             method:'get',
         }),
         create:(data)=>requestHelper({
@@ -44,6 +36,11 @@ export default {
             url:'Products/Edit/'+id,
             method:'put',
             data
+        }),
+        getCapital:(deposito)=>requestHelper({
+            url:'Products/SumDeposit/1',
+            methot:'get',
+
         })
     }
 

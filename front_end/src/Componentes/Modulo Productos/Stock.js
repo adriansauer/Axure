@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import { getProductos, deleteProducto,getMateriasPrimas,getProductosTerminados,getProductosEnProduccion } from "../../Redux/actions.js";
+import {getCapitalTotal,getCapitalDeposito, getProductos, deleteProducto,getMateriasPrimas,getProductosTerminados,getProductosEnProduccion } from "../../Redux/actions.js";
 import { connect } from "react-redux";
 class Stock extends Component {
   constructor(props) {
@@ -13,6 +12,7 @@ class Stock extends Component {
       nombreBtn: "Todos",
       productos: this.props.productos,
       buscador:'',
+      capitalTotal:0,
     };
   }
 
@@ -21,24 +21,32 @@ class Stock extends Component {
   await  this.props.getMateriasPrimas();
   await  this.props.getProductosTerminados();
   await  this.props.getProductosEnProduccion();
-
-    this.setState({productos:this.props.productos});
+  await this.props.getCapitalTotal()
+  this.setState({productos:this.props.productos});
+  this.setState({capitalTotal:this.props.capitalTotal});
   }
- mostrarTodos(){
+mostrarTodos(){
 this.setState({nombreBtn:'Todos'});
 this.setState({productos:this.props.productos});
+
  }
- mostrarMateriasPrimas(){
+async mostrarMateriasPrimas(){
+  await this.props.getCapitalDeposito(1)
 this.setState({nombreBtn:'Materia Prima'});
 this.setState({productos:this.props.materias_primas});
+this.setState({capitalDeposito:this.props.capitalDeposito});
  }
  mostrarProductosTerminados(){
 this.setState({nombreBtn:'Terminados'});
 this.setState({productos:this.props.productos_terminados});
+
+
  }
  mostrarProductosEnProduccion(){
   this.setState({nombreBtn:'En Produccion'});
   this.setState({productos:this.props.productos_en_produccion});
+
+
  }
  
  
@@ -154,7 +162,9 @@ this.setState({productos:this.props.productos_terminados});
             </tbody>
           </table>
         </div>
-        <div className="StockFooter"></div>
+        <div className="StockFooter">
+          Capital total: {this.state.capitalTotal}
+        </div>
       </div>
     );
   }
@@ -164,7 +174,9 @@ const mapStateToProps = state => {
     productos: state.productos,
     materias_primas: state.materias_primas,
     productos_terminados: state.productos_terminados,
-    productos_en_produccion: state.productos_en_produccion
+    productos_en_produccion: state.productos_en_produccion,
+    capitalTotal:state.capitalTotal,
+    capitalDeposito:state.capitalDeposito,
   };
 };
 const mapDispatchToProps = {
@@ -172,6 +184,8 @@ const mapDispatchToProps = {
   deleteProducto,
   getMateriasPrimas,
   getProductosTerminados,
-  getProductosEnProduccion
+  getProductosEnProduccion,
+  getCapitalTotal,
+  getCapitalDeposito,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);

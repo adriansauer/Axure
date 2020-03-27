@@ -11,7 +11,7 @@ class Aside extends Component{
         
         return(
 
-            <AsideProducto/>      
+                    <AsideProducto/>
 
         );
     }
