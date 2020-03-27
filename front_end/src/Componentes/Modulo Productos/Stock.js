@@ -3,7 +3,15 @@ import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import {getCapitalTotal,getCapitalDeposito, getProductos, deleteProducto,getMateriasPrimas,getProductosTerminados,getProductosEnProduccion } from "../../Redux/actions.js";
+import {
+  getCapitalTotal,
+  getCapitalDeposito,
+  getProductos,
+  deleteProducto,
+  getMateriasPrimas,
+  getProductosTerminados,
+  getProductosEnProduccion
+} from "../../Redux/actions.js";
 import { connect } from "react-redux";
 class Stock extends Component {
   constructor(props) {
@@ -11,48 +19,74 @@ class Stock extends Component {
     this.state = {
       nombreBtn: "Todos",
       productos: this.props.productos,
-      buscador:'',
-      capitalTotal:0,
+      buscador: "",
+      capitalTotal: 0
     };
   }
 
   async componentDidMount() {
-  await  this.props.getProductos();
-  await  this.props.getMateriasPrimas();
-  await  this.props.getProductosTerminados();
-  await  this.props.getProductosEnProduccion();
-  await this.props.getCapitalTotal()
-  this.setState({productos:this.props.productos});
-  this.setState({capitalTotal:this.props.capitalTotal});
+    await this.props.getProductos();
+    await this.props.getMateriasPrimas();
+    await this.props.getProductosTerminados();
+    await this.props.getProductosEnProduccion();
+    await this.props.getCapitalTotal();
+    this.setState({ productos: this.props.productos });
+    this.setState({ capitalTotal: this.props.capitalTotal });
   }
-mostrarTodos(){
-this.setState({nombreBtn:'Todos'});
-this.setState({productos:this.props.productos});
+  mostrarTodos() {
+    this.setState({ nombreBtn: "Todos" });
+    this.setState({ productos: this.props.productos });
+    this.setState({ capitalTotal: this.props.capitalTotal });
+  }
+  async mostrarMateriasPrimas() {
+    await this.props.getCapitalDeposito(1);
+    this.setState({ nombreBtn: "Materia Prima" });
+    this.setState({ productos: this.props.materias_primas });
+    this.setState({ capitalTotal: this.props.capitalDeposito });
+  }
+  async mostrarProductosTerminados() {
+    await this.props.getCapitalDeposito(3);
+    this.setState({ nombreBtn: "Terminados" });
+    this.setState({ productos: this.props.productos_terminados });
+    this.setState({ capitalTotal: this.props.capitalDeposito });
+  }
+  async mostrarProductosEnProduccion() {
+    await this.props.getCapitalDeposito(2);
+    this.setState({ nombreBtn: "En Produccion" });
+    this.setState({ productos: this.props.productos_en_produccion });
+    this.setState({ capitalTotal: this.props.capitalDeposito });
+  }
 
- }
-async mostrarMateriasPrimas(){
-  await this.props.getCapitalDeposito(1)
-this.setState({nombreBtn:'Materia Prima'});
-this.setState({productos:this.props.materias_primas});
-this.setState({capitalDeposito:this.props.capitalDeposito});
- }
- mostrarProductosTerminados(){
-this.setState({nombreBtn:'Terminados'});
-this.setState({productos:this.props.productos_terminados});
+  async eliminarProducto(id) {
+    await this.props.deleteProducto(id);
+    await this.props.getProductos();
+    await this.props.getMateriasPrimas();
+    await this.props.getProductosTerminados();
+    await this.props.getProductosEnProduccion();
+    await this.props.getCapitalTotal();
+    if(this.state.nombreBtn==='Todos'){
+      this.setState({ productos: this.props.productos });
+      this.setState({ capitalTotal: this.props.capitalTotal });
 
+    }else if(this.state.nombreBtn==='Materia Prima'){
+      await this.props.getCapitalDeposito(1);
+      this.setState({ productos: this.props.materias_primas });
+      this.setState({ capitalTotal: this.props.capitalDeposito });
 
- }
- mostrarProductosEnProduccion(){
-  this.setState({nombreBtn:'En Produccion'});
-  this.setState({productos:this.props.productos_en_produccion});
+    }else if(this.state.nombreBtn==='Terminados'){
+      await this.props.getCapitalDeposito(3);
+      this.setState({ productos: this.props.productos_terminados });
+      this.setState({ capitalTotal: this.props.capitalDeposito });
 
+    }else if(this.state.nombreBtn==='En Produccion'){
+      await this.props.getCapitalDeposito(2);
+      this.setState({ productos: this.props.productos_en_produccion });
+      this.setState({ capitalTotal: this.props.capitalDeposito });
 
- }
- 
- 
+    }
+  }
 
   render() {
-   
     return (
       <div className="stock">
         <div className="StockCabecera row ">
@@ -74,37 +108,26 @@ this.setState({productos:this.props.productos_terminados});
                 aria-labelledby="dropdownMenuButton"
               >
                 <p
-                  onClick={() =>
-                    this.mostrarTodos()
-                  }
+                  onClick={() => this.mostrarTodos()}
                   className="dropdown-item"
                   href="#todos"
                 >
                   Todos
                 </p>
                 <p
-                  onClick={() =>(
-                    this.mostrarMateriasPrimas()
-                   
-                  )
-                    
-                  }
+                  onClick={() => this.mostrarMateriasPrimas()}
                   className="dropdown-item"
                 >
                   Materia prima
                 </p>
                 <p
-                  onClick={() =>
-                    this.mostrarProductosEnProduccion()
-                  }
+                  onClick={() => this.mostrarProductosEnProduccion()}
                   className="dropdown-item"
                 >
                   En produccion
                 </p>
                 <p
-                  onClick={() =>
-                    this.mostrarProductosTerminados()
-                  }
+                  onClick={() => this.mostrarProductosTerminados()}
                   className="dropdown-item"
                 >
                   Productos terminados
@@ -119,8 +142,9 @@ this.setState({productos:this.props.productos_terminados});
               placeholder="Search"
               aria-label="Search"
               value={this.state.buscador}
-              onChange={e=>{this.setState({buscador:e.target.value})}}
-            
+              onChange={e => {
+                this.setState({ buscador: e.target.value });
+              }}
             />
           </div>
         </div>
@@ -138,32 +162,29 @@ this.setState({productos:this.props.productos_terminados});
               </tr>
             </thead>
             <tbody className="tableBody">
-              {
-                   this.state.productos.map(p => (
-                    <tr key={p.Id}>
-                      <td>{p.Id}</td>
-                      <td>{p.NameP}</td>
-                      <td>{p.DescriptionP}</td>
-                      <td>{p.Cost}</td>
-                      <td>{p.QuantityMin}</td>
-                      <td>{p.Barcode}</td>
-                      <td>
-                        <EditIcon className="icono" />
-                        <DeleteIcon
-                          onClick={() => this.props.deleteProducto(p.Id)}
-                          className="icono"
-                        />
-                        <ThumbDownIcon className="icono" />
-                      </td>
-                    </tr>
-                  ))
-              }
-             
+              {this.state.productos.map(p => (
+                <tr key={p.Id}>
+                  <td>{p.Id}</td>
+                  <td>{p.NameP}</td>
+                  <td>{p.DescriptionP}</td>
+                  <td>{p.Cost}</td>
+                  <td>{p.QuantityMin}</td>
+                  <td>{p.Barcode}</td>
+                  <td>
+                    <EditIcon className="icono" />
+                    <DeleteIcon
+                      onClick={() => this.eliminarProducto(p.Id)}
+                      className="icono"
+                    />
+                    <ThumbDownIcon className="icono" />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         <div className="StockFooter">
-          Capital total: {this.state.capitalTotal}
+          Capital total: {this.state.capitalTotal}GS
         </div>
       </div>
     );
@@ -175,8 +196,8 @@ const mapStateToProps = state => {
     materias_primas: state.materias_primas,
     productos_terminados: state.productos_terminados,
     productos_en_produccion: state.productos_en_produccion,
-    capitalTotal:state.capitalTotal,
-    capitalDeposito:state.capitalDeposito,
+    capitalTotal: state.capitalTotal,
+    capitalDeposito: state.capitalDeposito
   };
 };
 const mapDispatchToProps = {
@@ -186,6 +207,6 @@ const mapDispatchToProps = {
   getProductosTerminados,
   getProductosEnProduccion,
   getCapitalTotal,
-  getCapitalDeposito,
+  getCapitalDeposito
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);

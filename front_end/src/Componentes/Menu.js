@@ -7,6 +7,7 @@ class Menu extends Component {
   render() {
     return (
       <div className="Menu btn-group-vertical col-md-2">
+           
         <button
           onClick={() => this.props.homeVisible(false)}
           type="button"

@@ -10,8 +10,9 @@ class Aside extends Component{
     render(){
         
         return(
-
-                    <AsideProducto/>
+           
+            
+            <AsideProducto/>
 
         );
     }
@@ -19,6 +20,7 @@ class Aside extends Component{
 const mapStateToProps=state=>{
     return{
         codigo:state.sectionShow,
+        modulo:state.modulo,
     }
 }
 const mapDispatchToProps=({
