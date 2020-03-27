@@ -39,7 +39,8 @@ class Body extends Component {
 }
 const mapStateToProps = state => {
   return {
-    estado: state.homeVisible
+    estado: state.homeVisible,
+    modulo:state.modulo
   };
 };
 const mapDispatchToProps = {};
