@@ -2,15 +2,17 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 /**importando acciones */
 import {setSectionShow} from '../Redux/actions';
-import './style.css';
 import AsideProducto from './Modulo Productos/AsideProducto.js';
+import './style.css';
 class Aside extends Component{
 
 
     render(){
         
         return(
-            <AsideProducto/>
+
+            <AsideProducto/>      
+
         );
     }
 }

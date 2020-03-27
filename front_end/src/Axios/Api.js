@@ -3,21 +3,30 @@ import axios from 'axios';
 const requestHelper=axios.create(
     {
         baseURL:'http://localhost:53049/',
-        /**  headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-    */
-  
+      
      
     }
 )
 
 export default {
     productos:{
+       
         get:()=>requestHelper({
             url:'Products/List',
             method:'get',
 
+        }), 
+        getMateriaPrima:()=>requestHelper({
+            url:'Products/OfDeposit/1',
+            method:'get',
+        }),
+        getProductoTerminado:()=>requestHelper({
+            url:'Products/OfDeposit/3',
+            method:'get',
+        }),
+        getProductoEnProduccion:()=>requestHelper({
+            url:'Products/OfDeposit/2',
+            method:'get',
         }),
         create:(data)=>requestHelper({
             url:'/Products/Create',
