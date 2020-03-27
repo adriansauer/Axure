@@ -8,14 +8,15 @@ import "./style.css";
 import { connect } from "react-redux";
 
 class Body extends Component {
+  
   render() {
+    
+     
+     
+    
     if (this.props.estado[0]) {
       return (
-        <div className={`
-        Body
-        ${this.props.modulo === 60 ? 'producto' : ''}
-        
-      `}>
+        <div className="Body">
           <Header />
           <div className="Box row">
             <Menu />

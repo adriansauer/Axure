@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./style.css";
-import { homeVisible } from "../Redux/actions.js";
+import { homeVisible ,setModuloSuccess} from "../Redux/actions.js";
 
 class Menu extends Component {
+  clickProducto(){
+    this.props.homeVisible(false);
+    document.getElementsByClassName("Body")[0].classList.add("producto");
+  }
   render() {
     return (
       <div className="Menu btn-group-vertical col-md-2">
            
         <button
-          onClick={() => this.props.homeVisible(false)}
+          onClick={() => this.clickProducto()}
           type="button"
           className="btn btn-secondary botonMenu"
         >
@@ -44,6 +48,7 @@ const mapStateToProps = state => {
   return {};
 };
 const mapDispatchToProps = {
-  homeVisible
+  homeVisible,
+  setModuloSuccess,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
