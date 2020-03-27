@@ -21,10 +21,10 @@ export default {
             method:'get',
         }),
         create:(data)=>requestHelper({
-            url:'/Products/Create',
+            url:'Products/Create',
             method:'post',
             data: data,
-            config: { headers: { "Content-Type": "multipart/form-data" } }
+           
         }),
         delete:(id)=>requestHelper({
            
@@ -38,7 +38,7 @@ export default {
             data
         }),
         getCapital:(deposito)=>requestHelper({
-            url:'Products/SumDeposit/1',
+            url:'Products/SumDeposit/3',
             methot:'get',
 
         })

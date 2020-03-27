@@ -11,7 +11,11 @@ class Body extends Component {
   render() {
     if (this.props.estado[0]) {
       return (
-        <div className="Body">
+        <div className={`
+        Body
+        ${this.props.modulo === 60 ? 'producto' : ''}
+        
+      `}>
           <Header />
           <div className="Box row">
             <Menu />
