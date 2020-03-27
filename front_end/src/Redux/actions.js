@@ -5,6 +5,9 @@ import api from "../Axios/Api.js";
 export const handleError = createAction("handleError");
 /**Obtener todos los productos */
 export const getProductosSuccess = createAction("getProductosSuccess");
+export const getMateriasPrimasSuccess = createAction("getMateriasPrimasSuccess");
+export const getProductosEnProduccionSuccess = createAction("getProductosEnProduccionSuccess");
+export const getProductosTerminadosSuccess = createAction("getProductosTerminadosSuccess");
 
 
 /**Modificar la vista del section y el home*/
@@ -22,6 +25,34 @@ export const getProductos = () => async dispatch => {
   } catch (error) {
 console.log('Error de conexion')  }
 };
+/**devuelve todos los productos que son materia prima de la api */
+export const getMateriasPrimas=()=>async dispatch=>{
+  try {
+    const request = await api.productos.getMateriaPrima();
+
+    dispatch(getMateriasPrimasSuccess(request.data));
+  } catch (error) {
+    console.log('Error de conexion') 
+  }
+}
+/**devuelve todos los productos que son productos terminados */
+export const getProductosTerminados=()=>async dispatch=>{
+  try {
+    const request=await api.productos.getProductoTerminado();
+    dispatch(getProductosTerminadosSuccess(request.data));
+  } catch (error) {
+    console.log('Error de conexion')
+  }
+}
+/**devuelve todos los productos que estan en produccion */
+export const getProductosEnProduccion=()=>async dispatch=>{
+  try {
+    const request=await api.productos.getProductoEnProduccion();
+    dispatch(getProductosEnProduccionSuccess(request.data));
+  } catch (error) {
+    console.log('Error de conexion')
+  }
+}
 
 /**eliminar un producto y volver a solicitar todos los productos */
 
