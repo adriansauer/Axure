@@ -1,6 +1,7 @@
 ﻿using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
+using Axure.Models.Module_Stock.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,14 +63,23 @@ namespace Axure.Controllers.Module_Stock
             return Json(new { Sum = this.productsDB.SumaPrecioProductoDeposito(id) }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Products/Create
+          // POST: Products/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Pc pc)
         {
             try
             {
-                this.productsDB.Agregar(collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]);
+                if(null == pc.listaComponentes)
+                {
+                    if(this.productsDB.Agregar(pc))
+                        return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    if(this.productsDB.AgregarPcComponentes(pc))
+                        return new HttpStatusCodeResult(406);
+                }
                 return new HttpStatusCodeResult(200);
             }
             catch

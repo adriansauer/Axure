@@ -183,6 +183,7 @@
     <Compile Include="Controllers\Module_Stock\ProvidersController.cs" />
     <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
@@ -199,6 +200,8 @@
     <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
+    <Compile Include="Models\Module_Stock\Models\Pc.cs" />
+    <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
     <Compile Include="Models\Module_Stock\Movement.cs" />
     <Compile Include="Models\Module_Stock\MovementDetail.cs" />
     <Compile Include="Models\Module_Stock\MovementMotive.cs" />
