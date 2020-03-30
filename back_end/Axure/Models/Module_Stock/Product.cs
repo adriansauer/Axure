@@ -38,6 +38,7 @@ namespace Axure.Models.Module_Stock
         //Codigo de barra del producto.
         [StringLength(15)]
         public string Barcode { get; set; }
+        //Si es que el producto esta eliminado.
         [Required]
         public bool Delete { get; set; }
     }

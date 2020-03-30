@@ -1,4 +1,5 @@
-﻿using Axure.DTO.Module_Stock;
+﻿using Axure.DataBase;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using Axure.Models.Module_Stock.Models;
@@ -19,8 +20,8 @@ namespace Axure.Controllers.Module_Stock
     public class ProductsController : Controller
     {
         //Atributos.
-        public ProductsDB productsDB;
-        
+        private ProductsDB productsDB;
+
         //Constructor de la clase.
         public ProductsController()
         {
@@ -30,23 +31,56 @@ namespace Axure.Controllers.Module_Stock
         // GET: Datos del modelo producto.
         //[Authorize(Roles = "user, admin")]
         [Route("Index")]
-        public JsonResult Index()
+        public ActionResult Index()
         {
-            return Json(new {Id = "False", IdProductType = "True", NameP= "True", DescriptionP= "True", Cost = "True", Quantity = "True", Barcode = "False" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                return Json(new { Id = "False", IdProductType = "True", NameP = "True", DescriptionP = "True", Cost = "True", Quantity = "True", Barcode = "False" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(202);
+            }
         }
 
         // GET: Todos los prodductos existentes.
         [Route("List")]
-        public JsonResult List()
+        public ActionResult List()
         {
-            return Json(this.productsDB.ObtenerTodosProductos(), JsonRequestBehavior.AllowGet);
+            try
+            {
+                var lista = this.productsDB.ObtenerTodosProductos();
+                if(null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+           
         }
 
         // GET: Todos los prodductos existentes en un deposito en especifico.
         [Route("OfDeposit/{id}")]
-        public JsonResult OfDeposit(int id)
+        public ActionResult OfDeposit(int id)
         {
-            return Json(this.productsDB.ProductosPorDeposito(id), JsonRequestBehavior.AllowGet);
+            try
+            {
+                var lista = this.productsDB.ProductosPorDeposito(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+            
         }
 
         // GET: Products/Details/5
@@ -62,7 +96,7 @@ namespace Axure.Controllers.Module_Stock
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(202);
                 }
             }
             catch
@@ -113,11 +147,11 @@ namespace Axure.Controllers.Module_Stock
         // POST: Products/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ProductDTO prod)
         {
             try
             {
-                if(this.productsDB.Editar(id, collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]))
+                if (this.productsDB.Editar(id, prod))
                 {
                     return new HttpStatusCodeResult(406);
                 }
