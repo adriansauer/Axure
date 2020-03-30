@@ -11,7 +11,8 @@ class AgregarProducto extends Component {
       costotxt: '',
       codigoBarratxt: "",
       cantidadMintxt: '',
-      tipoProducto: 1
+      tipoProducto: 1,
+      componentes:[],
     };
   }
 
@@ -27,16 +28,20 @@ class AgregarProducto extends Component {
     }
     return false;
   }
+  
   enviarProducto() {
     if (this.verificarCampos()) {
       this.props.createProducto({
-        'NombreP': this.state.nombretxt,
-        'DescriptionP': this.state.descripciontxt,
-        'Cost': this.state.costotxt,
-        'IdProductType': this.state.tipoProducto,
-        'QuantityMin': this.state.cantidadMin,
-        'Barcode': this.state.codigoBarratxt
-      });
+        
+          "NameP": this.state.nombretxt,
+          "IdProductType": this.state.tipoProducto,
+          "DescriptionP": this.state.descripciontxt,
+          "Cost": this.state.costotxt,
+          "QuantityMin": this.state.cantidadMintxt,
+          "Barcode": this.state.codigoBarratxt,
+          "listaComponentes": []
+          }
+        );
     } else {
       console.log("Rellene todos los campos");
     }
@@ -44,13 +49,46 @@ class AgregarProducto extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.enviarProducto();
+    this.setState({
+      nombretxt: "",
+      descripciontxt: "",
+      costotxt: '',
+      codigoBarratxt: "",
+      cantidadMintxt: '',
+      tipoProducto: 1,
+      componentes:[],
+
+    });
+  
   };
 
   render() {
       /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
     const listaMateriaPrima = (
-      <div>
-        <h3>Agregue los productos necesarios</h3>
+      <div className="StockBody MateriaPima row">
+        
+        <table className="table table-hover table-dark">
+            <thead className="tableHeader">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Codigo de barra</th>
+              </tr>
+            </thead>
+            <tbody className="tableBody">
+              {this.props.materiaPrima.map(p => (
+                <tr key={p.Id} onClick={()=>this.agregarComponente(p.Id)}>
+                  <td>{p.Id}</td>
+                  <td>{p.NameP}</td>
+                  <td>{p.DescriptionP}</td>
+                  <td>{p.Barcode}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+        
       </div>
     );
 
@@ -58,7 +96,7 @@ class AgregarProducto extends Component {
       <div className="agregarProducto">
         <form onSubmit={this.handleSubmit}>
           <div className="form-row">
-            <div className="col">
+            <div className="col-md-6">
               {/**NOMBRE DEL PRODUCTO*/}
               <input
                 type="text"
@@ -70,7 +108,7 @@ class AgregarProducto extends Component {
                 }}
               />
             </div>
-            <div className="col">
+            <div className="col-md-6">
               {/**DESCRIPCION DEL PRODUCTO*/}
               <input
                 type="text"
@@ -81,6 +119,8 @@ class AgregarProducto extends Component {
                   this.setState({ descripciontxt: e.target.value });
                 }}
               />
+              </div>
+              <div className="col-md-6">
               {/**COSTO DEL PRODUCTO*/}
               <input
                 type="text"
@@ -91,6 +131,8 @@ class AgregarProducto extends Component {
                   this.setState({ costotxt: e.target.value });
                 }}
               />
+              </div>
+              <div className="col-md-6">
               {/**CANTIDAD MINIMA DEL PRODUCTO*/}
               <input
                 type="text"
@@ -101,6 +143,8 @@ class AgregarProducto extends Component {
                   this.setState({ cantidadMintxt: e.target.value });
                 }}
               />
+              </div>
+              <div className="col-md-6">
               {/**CODIGO DE BARRA DEL PRODUCTO*/}
               <input
                 type="text"
@@ -111,6 +155,8 @@ class AgregarProducto extends Component {
                   this.setState({ codigoBarratxt: e.target.value });
                 }}
               />
+              </div>
+              <div className="col-md-12">
               {/**TIPO DEL PRODUCTO, -MATERIA PRIMA O -PRODUCTO TERMINADO O AMBOS */}
               <div>
                 <div className="radio">
@@ -153,20 +199,29 @@ class AgregarProducto extends Component {
                   </label>
                 </div>
               </div>
+               {/**BOTON PARA AGREGAR PRODUCTO*/}
+               <input
+                className="btn btn-primary"
+                type="submit"
+                value="Agregar"
+                
+              />
+              </div>
+              <div className="col-md-6">
               {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
               {this.state.tipoProducto === 2 ? (
                 /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
                 listaMateriaPrima
               ) : /**EN CASO CONTRARIO NO HACER NADA */
               null}
-              {/**BOTON PARA AGREGAR PRODUCTO*/}
-              <input
-                className="btn btn-primary"
-                type="submit"
-                value="Agregar"
-                onClick={()=>this.enviarProducto()}
-              />
-            </div>
+             </div>
+             <div className='col-md-6'>
+                {this.state.componentes.map(c=>(
+                  <h6 >{c}</h6>
+                )
+                  
+                )}
+             </div>
           </div>
         </form>
       </div>
@@ -174,7 +229,9 @@ class AgregarProducto extends Component {
   }
 }
 const mapStateToProps = state => {
-  return {};
+  return {
+    materiaPrima:state.materias_primas,
+  };
 };
 const mapDispatchToProps = {
   createProducto

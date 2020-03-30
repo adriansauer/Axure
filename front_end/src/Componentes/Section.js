@@ -35,6 +35,7 @@ const mapStateToProps=state=>{
     return {
         productos:state.productos,
         sectionShow:state.sectionShow,
+        modulo:state.modulo,
     };
 }
 const mapDispatchToProps=({
