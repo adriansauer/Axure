@@ -37,9 +37,9 @@ class AgregarProducto extends Component {
           "IdProductType": this.state.tipoProducto,
           "DescriptionP": this.state.descripciontxt,
           "Cost": this.state.costotxt,
-          "QuantityMin": this.state.cantidadMin,
+          "QuantityMin": this.state.cantidadMintxt,
           "Barcode": this.state.codigoBarratxt,
-          "listaComponentes": ['hola','paosid','aksjdhfk' ]
+          "listaComponentes": []
           }
         );
     } else {
@@ -48,7 +48,18 @@ class AgregarProducto extends Component {
   }
   handleSubmit = event => {
     event.preventDefault();
-    
+    this.enviarProducto();
+    this.setState({
+      nombretxt: "",
+      descripciontxt: "",
+      costotxt: '',
+      codigoBarratxt: "",
+      cantidadMintxt: '',
+      tipoProducto: 1,
+      componentes:[],
+
+    });
+  
   };
 
   render() {
@@ -193,7 +204,7 @@ class AgregarProducto extends Component {
                 className="btn btn-primary"
                 type="submit"
                 value="Agregar"
-                onClick={()=>this.enviarProducto()}
+                
               />
               </div>
               <div className="col-md-6">
