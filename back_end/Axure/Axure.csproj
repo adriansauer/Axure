@@ -172,6 +172,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ControllerError.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Module_Stock\ComprobantePurchasesController.cs" />
     <Compile Include="Controllers\Module_Stock\DepositsController.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Controllers\Module_Stock\ProvidersController.cs" />
     <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DataBase\DataBaseError.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
