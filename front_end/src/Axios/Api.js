@@ -35,7 +35,7 @@ export default {
         edit:(id,data)=>requestHelper({
             url:'Products/Edit/'+id,
             method:'put',
-            data
+            data:data,
         }),
         getCapital:(deposito)=>requestHelper({
             url:'Products/SumDeposit/3',

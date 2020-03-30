@@ -1,5 +1,5 @@
 import { createAction } from "redux-actions";
-
+import modal from './actionModals.js';
 import api from "../Axios/Api.js";
 
 export const handleError = createAction("handleError");
@@ -32,7 +32,7 @@ export const getProductos = () => async dispatch => {
 
     dispatch(getProductosSuccess(request.data));
   } catch (error) {
-    console.log("Error de conexion");
+    
   }
 };
 /**devuelve todos los productos que son materia prima de la api */
@@ -42,7 +42,7 @@ export const getMateriasPrimas = () => async dispatch => {
 
     dispatch(getMateriasPrimasSuccess(request.data));
   } catch (error) {
-    console.log("Error de conexion");
+    
   }
 };
 /**devuelve todos los productos que son productos terminados */
@@ -51,7 +51,7 @@ export const getProductosTerminados = () => async dispatch => {
     const request = await api.productos.getDeposito(3);
     dispatch(getProductosTerminadosSuccess(request.data));
   } catch (error) {
-    console.log("Error de conexion");
+   
   }
 };
 /**devuelve todos los productos que estan en produccion */
@@ -60,7 +60,7 @@ export const getProductosEnProduccion = () => async dispatch => {
     const request = await api.productos.getDeposito(2);
     dispatch(getProductosEnProduccionSuccess(request.data));
   } catch (error) {
-    console.log("Error de conexion");
+   
   }
 };
 
@@ -71,7 +71,7 @@ export const deleteProducto = id => async dispatch => {
 
   if (request.status === 200) {
   } else {
-    console.log("Error al intentar eliminar el producto");
+    
   }
 };
 /**devuelve el capital total de los productos de un deposito especifico */
@@ -84,7 +84,7 @@ export const getCapitalTotal = () => async dispatch => {
 
     dispatch(getCapitalTotalSuccess(request));
   } catch (error) {
-    console.log("Error de conexion");
+   
   }
 };
 /**devuelve el capital de todos los productos de un deposito en especifico */
@@ -94,20 +94,36 @@ export const getCapitalDeposito = deposito => async dispatch => {
 
     dispatch(getCapitalDepositoSuccess(request.data.Sum));
   } catch (error) {
-    console.log("Error de conexion");
+    
   }
 };
 /**agregar un producto y volver a solicitar todos los productos para actualizar el estado */
 
 export const createProducto = data => async dispatch => {
-  const request = await api.productos.create(data);
+  try {
+    const request = await api.productos.create(data);
   if (request.status === 200) {
     dispatch(getProductos);
     dispatch(getMateriasPrimas);
     dispatch(getProductosTerminados);
+
   }
+  } catch (error) {
+    
+  }
+  
 };
-/*modificar el modulo en el cual se encuantra*/
-export const setModulo = () => async dispatch => {
-  dispatch(setModuloSuccess);
-};
+/**Permite editar un producto */
+export const editProducto=(id,data)=>async dispatch=>{
+  try {
+    const request=await api.productos.edit(id,data);
+    if (request.status === 200) {
+      dispatch(getProductos);
+      dispatch(getMateriasPrimas);
+      dispatch(getProductosTerminados); 
+      
+    }
+  } catch (error) {
+    console.log('no funciona');
+  }
+}

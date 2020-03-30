@@ -11,9 +11,6 @@ class Body extends Component {
   
   render() {
     
-     
-     
-    
     if (this.props.estado[0]) {
       return (
         <div className="Body">

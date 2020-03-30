@@ -8,6 +8,18 @@ class Menu extends Component {
     this.props.homeVisible(false);
     document.getElementsByClassName("Body")[0].classList.add("producto");
   }
+  clickVenta(){
+    this.props.homeVisible(false);
+    document.getElementsByClassName("Body")[0].classList.add("venta");
+  }
+  clickCompra(){
+    this.props.homeVisible(false);
+    document.getElementsByClassName("Body")[0].classList.add("compra");
+  }
+  clickContabilidad(){
+    this.props.homeVisible(false);
+    document.getElementsByClassName("Body")[0].classList.add("contabilidad");
+  }
   render() {
     return (
       <div className="Menu btn-group-vertical col-md-2">
@@ -20,21 +32,21 @@ class Menu extends Component {
           Productos
         </button>
         <button
-          onClick={() => this.props.homeVisible(false)}
+          onClick={() => this.clickVenta()}
           type="button"
           className="btn btn-secondary botonMenu"
         >
           Venta
         </button>
         <button
-          onClick={() => this.props.homeVisible(false)}
+          onClick={() => this.clickCompra()}
           type="button"
           className="btn btn-secondary botonMenu"
         >
           Compra
         </button>
         <button
-          onClick={() => this.props.homeVisible(false)}
+          onClick={() => this.clickContabilidad()}
           type="button"
           className="btn btn-secondary botonMenu1"
         >
