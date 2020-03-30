@@ -51,16 +51,38 @@ namespace Axure.Controllers.Module_Stock
 
         // GET: Products/Details/5
         [Route("Details/{id}")]
-        public JsonResult Details(int id)
+        public ActionResult Details(int id)
         {
-            return Json(this.productsDB.DetalleProducto(id), JsonRequestBehavior.AllowGet);
+            try
+            {
+                var dato = this.productsDB.DetalleProducto(id);
+                if (null != dato)
+                {
+                    return Json(dato, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
         }
 
         // GET: Products/SumDeposit/5
         [Route("SumDeposit/{id}")]
-        public JsonResult SumDeposit(int id)
+        public ActionResult SumDeposit(int id)
         {
-            return Json(new { Sum = this.productsDB.SumaPrecioProductoDeposito(id) }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                return Json(new { Sum = this.productsDB.SumaPrecioProductoDeposito(id) }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
         }
 
           // POST: Products/Create
@@ -95,8 +117,14 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                this.productsDB.Editar(id, collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]);
-                return new HttpStatusCodeResult(200);
+                if(this.productsDB.Editar(id, collection["NameP"], Int32.Parse(collection["IdProductType"]), collection["DescriptionP"], Int32.Parse(collection["Cost"]), Int32.Parse(collection["QuantityMin"]), collection["Barcode"]))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
             }
             catch
             {
@@ -111,8 +139,15 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                this.productsDB.darDeBaja(id);
-                return new HttpStatusCodeResult(200);
+                if (this.productsDB.darDeBaja(id))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+                
             }
             catch
             {

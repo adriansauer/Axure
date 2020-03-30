@@ -58,15 +58,23 @@ namespace Axure.DTO.Module_Stock
 
         public List<Product> DetalleProducto(int id)
         {
-            using (var db = new AxureContext())
+            try
             {
-                var respuesta = db.Products.Where(x => x.Id == id)
-                    .Select(x => new { Id = x.Id, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
-                    .ToList()
-                    .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
-                    .ToList();
-                return respuesta;
+                using (var db = new AxureContext())
+                {
+                    var respuesta = db.Products.Where(x => x.Id == id)
+                        .Select(x => new { Id = x.Id, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                        .ToList()
+                        .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                        .ToList();
+                    return respuesta;
+                }
             }
+            catch
+            {
+                return null;
+            }
+           
         }
 
         public int SumaPrecioProductoDeposito(int id)
@@ -74,8 +82,16 @@ namespace Axure.DTO.Module_Stock
             using (var db = new AxureContext())
             {
                 Deposit dep = db.Deposits.Single(x => x.Id == id);
-                var resp = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id && x.Product.Delete == false).Sum(z => z.Product.Cost * z.Quantity);
-                return resp;
+                int suma = 0;
+                try
+                {
+                    suma = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id && x.Product.Delete == false).Sum(z => z.Product.Cost * z.Quantity);
+                    return suma;
+                }
+                catch
+                {
+                    return suma;
+                }
             }
 
         }
