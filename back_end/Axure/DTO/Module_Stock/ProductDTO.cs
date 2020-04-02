@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Axure.Models.Module_Stock;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,8 +9,10 @@ namespace Axure.DTO.Module_Stock
 {
     public class ProductDTO
     {
-        //FK de lo que se espera hacer con el producto, Ej.: materia prima, venta, etc.
-        public int IdProductType { get; set; }
+        //Id.
+        public int Id { get; set; }
+        //El tipo de producto, Ej.: materia prima, venta, etc.
+        public ProductType ProductType { get; set; }
         //Nombre del producto.
         [Required]
         [StringLength(200)]
@@ -27,7 +30,5 @@ namespace Axure.DTO.Module_Stock
         //Codigo de barra del producto.
         [StringLength(15)]
         public string Barcode { get; set; }
-        //Si es que el producto esta eliminado.
-        public bool Delete { get; set; }
     }
 }
