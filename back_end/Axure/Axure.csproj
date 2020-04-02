@@ -174,24 +174,31 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ControllerError.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\Module_Stock\ComprobantePurchasesController.cs" />
     <Compile Include="Controllers\Module_Stock\DamagedProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\DepositsController.cs" />
     <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
     <Compile Include="Controllers\Module_Stock\MovementsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductComponentsController.cs" />
+=======
+>>>>>>> master
     <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
-    <Compile Include="Controllers\Module_Stock\ProvidersController.cs" />
-    <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
+    <Compile Include="Controllers\Module_Stock\StocksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\DataBaseError.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
     <Compile Include="DataBase\Module_Stock\DamagedProductsDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
+<<<<<<< HEAD
     <Compile Include="DTO\Module_Stock\DamagedProductDTO.cs" />
+=======
+    <Compile Include="DataBase\Module_Stock\StockDB.cs" />
+>>>>>>> master
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
+    <Compile Include="DTO\Module_Stock\StockDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

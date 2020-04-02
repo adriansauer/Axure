@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ModalFooter, ModalBody, Modal, ModalHeader, Alert } from "reactstrap";
+import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -35,7 +35,6 @@ class Stock extends Component {
       barcodeProductoActual: "",
       nombreProductoActual: "",
       costoProductoActual: "",
-      tipoProductoActual: 0,
       /**El deposito actual en el que nos encontramos, Todos, Materia prima, En produccion o productos terminados */
       nombreBtn: "Todos",
       /**guarda todos los productos que nos trae la api */
@@ -46,7 +45,8 @@ class Stock extends Component {
       capitalTotal: 0,
       /**permite hacer visible u ocultar las alertas y modals */
       editarModalVisible: false,
-      eliminarModalVisible: false
+      eliminarModalVisible: false,
+      darBajaModalVisible: false
     };
   }
   /**Cuando se renderiza el componente actualizo todos los datos con la api */
@@ -124,12 +124,10 @@ class Stock extends Component {
   async editarProducto() {
     await this.props.editProducto(this.state.IdProductoActual, {
       NameP: this.state.nombreProductoActual,
-      IdProductType: this.state.tipoProductoActual,
       DescriptionP: this.state.descripcionProductoActual,
       Cost: this.state.costoProductoActual,
       QuantityMin: this.state.cantidadMinProductoActual,
-      Barcode: this.state.barcodeProductoActual.editProducto,
-      listaComponentes: []
+      Barcode: this.state.barcodeProductoActual
     });
     /**actualizo los cambios */
     this.actualizar();
@@ -137,7 +135,30 @@ class Stock extends Component {
     this.setState({ editarModalVisible: false });
   }
   render() {
-    /**Alerta para preguntar si desea eliminar el producto */
+    /*Modal para preguntar cuantos productos desea dar de baja*/
+    const darBajaModal = (
+      <Modal isOpen={this.state.darBajaModalVisible} centered>
+        <ModalHeader>Cantidad a dar de baja</ModalHeader>
+        <ModalBody>
+          {/**INPUT PARA INGRESAR LA CANTIDAD DE PRODUCTOS QUE SE QUIERE DAR DE BAJA*/}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Cantidad a dar de baja"
+          />
+        </ModalBody>
+        <ModalFooter>
+          <button onClick={() => this.setState({ darBajaModalVisible: false })}>
+            Aceptar
+          </button>
+          <button onClick={() => this.setState({ darBajaModalVisible: false })}>
+            Cancelar
+          </button>
+        </ModalFooter>
+      </Modal>
+    );
+
+    /**Modal para preguntar si desea eliminar el producto */
     const eliminarAlert = (
       <Modal isOpen={this.state.eliminarModalVisible} centered>
         <ModalHeader>
@@ -246,6 +267,7 @@ class Stock extends Component {
         {/**Los modals y las alertas en estado visible=false, con acciones se modificara dicho estado */}
         {editarModal}
         {eliminarAlert}
+        {darBajaModal}
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
           <div className="col-md-3"></div>
@@ -324,50 +346,68 @@ class Stock extends Component {
             </thead>
             {/**Mapeo el arreglo de productos que nos proporciona la api y muestro los productos en la tabla */}
             <tbody className="tableBody">
-              {this.state.productos.map(p => (
-                <tr key={p.Id}>
-                  <td>{p.Id}</td>
-                  <td>{p.NameP}</td>
-                  <td>{p.DescriptionP}</td>
-                  <td>{p.Cost}</td>
-                  <td>{p.QuantityMin}</td>
-                  <td>{p.Barcode}</td>
-                  <td>
-                    {/**Iconos para editar dicho producto, eliminarlo o darlo de baja */}
-                    <EditIcon
-                      className="icono"
-                      onClick={() =>
-                        this.setState({
-                          nombreProductoActual: p.NameP,
-                          descripcionProductoActual: p.DescriptionP,
-                          IdProductoActual: p.Id,
-                          costoProductoActual: p.Cost,
-                          cantidadMinProductoActual: p.QuantityMin,
-                          barcodeProductoActual: p.Barcode,
-                          tipoProductoActual: p.IdProductType,
-                          editarModalVisible: true
-                        })
-                      }
-                    />
-                    <DeleteIcon
-                      onClick={() =>
-                        this.setState({
-                          nombreProductoActual: p.NameP,
-                          descripcionProductoActual: p.DescriptionP,
-                          IdProductoActual: p.Id,
-                          costoProductoActual: p.Cost,
-                          cantidadMinProductoActual: p.QuantityMin,
-                          barcodeProductoActual: p.Barcode,
-                          tipoProductoActual: p.IdProductType,
-                          eliminarModalVisible: true
-                        })
-                      }
-                      className="icono"
-                    />
-                    <ThumbDownIcon className="icono" />
-                  </td>
-                </tr>
-              ))}
+              {this.state.productos
+                .filter(
+                  producto =>
+                    producto.NameP.toLowerCase().indexOf(
+                      this.state.buscador.toLowerCase()
+                    ) !== -1
+                )
+                .map(p => (
+                  <tr key={p.Id}>
+                    <td>{p.Id}</td>
+                    <td>{p.NameP}</td>
+                    <td>{p.DescriptionP}</td>
+                    <td>{p.Cost}</td>
+                    <td>{p.QuantityMin}</td>
+                    <td>{p.Barcode}</td>
+                    <td>
+                      {/**Iconos para editar dicho producto, eliminarlo o darlo de baja */}
+                      <EditIcon
+                        className="icono"
+                        onClick={() =>
+                          this.setState({
+                            nombreProductoActual: p.NameP,
+                            descripcionProductoActual: p.DescriptionP,
+                            IdProductoActual: p.Id,
+                            costoProductoActual: p.Cost,
+                            cantidadMinProductoActual: p.QuantityMin,
+                            barcodeProductoActual: p.Barcode,
+                            editarModalVisible: true
+                          })
+                        }
+                      />
+                      <DeleteIcon
+                        onClick={() =>
+                          this.setState({
+                            nombreProductoActual: p.NameP,
+                            descripcionProductoActual: p.DescriptionP,
+                            IdProductoActual: p.Id,
+                            costoProductoActual: p.Cost,
+                            cantidadMinProductoActual: p.QuantityMin,
+                            barcodeProductoActual: p.Barcode,
+                            eliminarModalVisible: true
+                          })
+                        }
+                        className="icono"
+                      />
+                      <ThumbDownIcon
+                        onClick={() =>
+                          this.setState({
+                            darBajaModalVisible: true,
+                            nombreProductoActual: p.NameP,
+                            descripcionProductoActual: p.DescriptionP,
+                            IdProductoActual: p.Id,
+                            costoProductoActual: p.Cost,
+                            cantidadMinProductoActual: p.QuantityMin,
+                            barcodeProductoActual: p.Barcode
+                          })
+                        }
+                        className="icono"
+                      />
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

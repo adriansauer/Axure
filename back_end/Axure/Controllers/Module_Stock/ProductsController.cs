@@ -35,7 +35,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Id = "False", IdProductType = "True", NameP = "True", DescriptionP = "True", Cost = "True", Quantity = "True", Barcode = "False" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", ProductType = "True", NameP = "True", DescriptionP = "True", Cost = "True", Quantity = "True", Barcode = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -147,7 +147,7 @@ namespace Axure.Controllers.Module_Stock
         // POST: Products/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, ProductDTO prod)
+        public ActionResult Edit(int id, Product prod)
         {
             try
             {
