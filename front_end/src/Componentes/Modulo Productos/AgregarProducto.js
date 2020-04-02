@@ -14,7 +14,7 @@ class AgregarProducto extends Component {
       cantidadMintxt: "",
       tipoProducto: 1,
       /**todas las materias primas que tienen cantidad mayor a 0 */
-      componentes: []
+      componentes: this.props.materiaPrima
     };
   }
   componentDidMount() {
@@ -35,7 +35,7 @@ class AgregarProducto extends Component {
   }
   /**enviar el producto a la api */
   enviarProducto() {
-    if (this.verificarCampos()) {
+   
       this.props.createProducto({
         NameP: this.state.nombretxt,
         IdProductType: this.state.tipoProducto,
@@ -45,13 +45,12 @@ class AgregarProducto extends Component {
         Barcode: this.state.codigoBarratxt,
         listaComponentes: this.state.componentes
       });
-    } else {
-      console.log("Rellene todos los campos");
-    }
+    
   }
   /**agrega el producto, y setea todos los estados a null */
   handleSubmit = event => {
     event.preventDefault();
+    if (this.verificarCampos()) {
     this.enviarProducto();
     this.setState({
       nombretxt: "",
@@ -62,11 +61,22 @@ class AgregarProducto extends Component {
       tipoProducto: 1,
       componentes: this.state.componentes.filter(c => c.Cantidad !== 0)
     });
+  } else {
+    console.log("Rellene todos los campos");
+  }
   };
   /**Agrega todas las materias primas al estado componentes */
 
   agregarComponentes() {
-  
+  this.state.componentes.map(p=>{
+    return{
+      'NameP':p.NameP,
+      'DescriptionP':p.DescriptionP,
+      'Id':p.Id,
+      'Cantidad':0
+    }
+    
+  })
 }
   render() {
     /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
@@ -221,7 +231,7 @@ class AgregarProducto extends Component {
                 value="Agregar"
               />
             </div>
-            <div className="col-md-12">
+            <div className="col-md-8">
               {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
               {this.state.tipoProducto === 2
                 ? /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */

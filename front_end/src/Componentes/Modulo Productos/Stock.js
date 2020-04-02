@@ -35,6 +35,7 @@ class Stock extends Component {
       barcodeProductoActual: "",
       nombreProductoActual: "",
       costoProductoActual: "",
+      tipoProductoActual:0,
       /**El deposito actual en el que nos encontramos, Todos, Materia prima, En produccion o productos terminados */
       nombreBtn: "Todos",
       /**guarda todos los productos que nos trae la api */
@@ -127,7 +128,8 @@ class Stock extends Component {
       DescriptionP: this.state.descripcionProductoActual,
       Cost: this.state.costoProductoActual,
       QuantityMin: this.state.cantidadMinProductoActual,
-      Barcode: this.state.barcodeProductoActual
+      Barcode: this.state.barcodeProductoActual,
+      IdProductType:1,
     });
     /**actualizo los cambios */
     this.actualizar();
@@ -373,6 +375,7 @@ class Stock extends Component {
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
                             barcodeProductoActual: p.Barcode,
+                            tipoProductoActual:p.IdProductType,
                             editarModalVisible: true
                           })
                         }
@@ -386,7 +389,8 @@ class Stock extends Component {
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
                             barcodeProductoActual: p.Barcode,
-                            eliminarModalVisible: true
+                            eliminarModalVisible: true,
+                            tipoProductoActual:p.IdProductType,
                           })
                         }
                         className="icono"
@@ -400,7 +404,8 @@ class Stock extends Component {
                             IdProductoActual: p.Id,
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
-                            barcodeProductoActual: p.Barcode
+                            barcodeProductoActual: p.Barcode,
+                            tipoProductoActual:p.IdProductType,
                           })
                         }
                         className="icono"
