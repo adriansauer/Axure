@@ -24,19 +24,20 @@ namespace Axure.DTO.Module_Stock
         {
             this.componentDB = new ComponentDB();
         }
+
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
-        public List<Product> ObtenerTodosProductos()
+        public List<ProductDTO> ObtenerTodosProductos()
         {
             try
             {
                 using (var db = new AxureContext())
                 {            
-                    var respuesta = db.Products.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                    var respuesta = db.Products.Include("ProductTypes").Where(x => x.Delete == false)
+                        .Select(x => new { Id = x.Id,ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                         .ToList()
-                        .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                        .Select(y => new ProductDTO() { Id = y.Id,ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                         .ToList();
                     return respuesta;                      
                 }
@@ -50,19 +51,22 @@ namespace Axure.DTO.Module_Stock
         /*
          * 
         */
-        public List<Product> ProductosPorDeposito(int deposito)
+        public List<ProductDTO> ProductosPorDeposito(int deposito)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit dep = db.Deposits.Single(x => x.Id == deposito);
-                    var resp = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id && x.Product.Delete == false)
-                        .Select(x => new { Id = x.Product.Id, Nombre = x.Product.NameP, Description = x.Product.DescriptionP, Costo = x.Product.Cost, CantidadMinima = x.Product.QuantityMin, CodigoBarra = x.Product.Barcode })
+                    Deposit depos = db.Deposits.Single(x => x.Id == deposito);
+                    var stocks = db.Stocks.Include("Products").Where(x => x.IdDeposit == depos.Id).Select(x => new {Id = x.Product.Id }).ToList();
+                    List<Product> listaProductos = new List<Product>();
+                    stocks.ForEach(x => listaProductos.Add(db.Products.Include("ProductType").Single(w => w.Id == x.Id && w.Delete == false)));
+                    var productos = listaProductos
+                        .Select(x => new { Id = x.Id, ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                         .ToList()
-                        .Select(y => new Product() { Id = y.Id, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                        .Select(y => new ProductDTO() { Id = y.Id, ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                         .ToList();
-                    return resp;
+                    return productos;
                 }
             }
             catch
@@ -72,15 +76,15 @@ namespace Axure.DTO.Module_Stock
             
         }
 
-        public Product DetalleProducto(int id)
+        public ProductDTO DetalleProducto(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var respuesta = db.Products.FirstOrDefault(x => x.Id == id);
+                    var p = db.Products.Include("ProductType").FirstOrDefault(x => x.Id == id && x.Delete == false);
                        
-                    return respuesta;
+                    return new ProductDTO() { Id = p.Id, ProductType = p.ProductType, NameP = p.NameP, DescriptionP = p.DescriptionP, Cost = p.Cost, QuantityMin = p.QuantityMin, Barcode = p.Barcode };
                 }
             }
             catch
@@ -149,7 +153,7 @@ namespace Axure.DTO.Module_Stock
             }
         }
 
-        public bool Editar(int id, ProductDTO prod)
+        public bool Editar(int id, Product prod)
         {
             try
             {
@@ -208,16 +212,5 @@ namespace Axure.DTO.Module_Stock
                 return true;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
