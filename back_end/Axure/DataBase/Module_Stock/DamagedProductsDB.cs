@@ -64,17 +64,19 @@ namespace Axure.DTO.DataBase.Module_Stock
         }
 
         //Dar de Baja un Producto
-        public bool DarDeBaja(Product producto, int cant, string motivo)
+        public bool DarDeBaja(Product producto,int idDep, int cant, string motivo)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     db.DamagedProducts.Add(new DamagedProduct() { DateD = System.DateTime.Today, IdProduct = producto.Id, Quantity = cant, Reason = motivo});
-
+                    Stock stock = db.Stocks.FirstOrDefault(x => x.Id == idDep);
                     //implementar descuento del stock
-                  /*  Product prodEdit = db.Products.FirstOrDefault(x => x.Id == producto.Id);
-                    Stock stock */
+                    if (stock.IdProduct == producto.Id && stock.Quantity >=cant)
+                    {
+                        
+                    }
                     db.SaveChanges();
                     return true;
                 }
