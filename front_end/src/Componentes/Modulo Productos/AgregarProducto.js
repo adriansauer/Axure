@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
+import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import { connect } from "react-redux";
 import { createProducto } from "../../Redux/actions.js";
+
 class AgregarProducto extends Component {
   constructor(props) {
     super(props);
@@ -14,13 +16,13 @@ class AgregarProducto extends Component {
       cantidadMintxt: "",
       tipoProducto: 1,
       /**todas las materias primas que tienen cantidad mayor a 0 */
-      componentes: this.props.materiaPrima
+      componentes: [],
+
+      /**estado visible de los modales */
+      listarMateriaPrimaVisible: false
     };
   }
-  componentDidMount() {
-    /**Agrega todas las materias primas al estado componentes */
-    this.agregarComponentes();
-  }
+
   /**Verifica si todos los campos de han rellenado */
   verificarCampos() {
     if (
@@ -35,90 +37,119 @@ class AgregarProducto extends Component {
   }
   /**enviar el producto a la api */
   enviarProducto() {
-   
-      this.props.createProducto({
-        NameP: this.state.nombretxt,
-        IdProductType: this.state.tipoProducto,
-        DescriptionP: this.state.descripciontxt,
-        Cost: this.state.costotxt,
-        QuantityMin: this.state.cantidadMintxt,
-        Barcode: this.state.codigoBarratxt,
-        listaComponentes: this.state.componentes
-      });
-    
+    this.props.createProducto({
+      NameP: this.state.nombretxt,
+      IdProductType: this.state.tipoProducto,
+      DescriptionP: this.state.descripciontxt,
+      Cost: this.state.costotxt,
+      QuantityMin: this.state.cantidadMintxt,
+      Barcode: this.state.codigoBarratxt,
+      listaComponentes: this.state.componentes
+    });
+  }
+  /**Agrega todas las materias primas al estado componentes */
+
+  agregarComponentes(materiaPrima) {
+    this.setState({
+      listarMateriaPrimaVisible: false,
+      componentes: materiaPrima
+        .filter(p => p.Cantidad !== "0")
+        .map(p => {
+          return {
+            IdProductComponent: p.Id,
+            Quantity: p.Cantidad
+          };
+        })
+    });
   }
   /**agrega el producto, y setea todos los estados a null */
   handleSubmit = event => {
     event.preventDefault();
+    console.log(this.state.componentes);
     if (this.verificarCampos()) {
-    this.enviarProducto();
-    this.setState({
-      nombretxt: "",
-      descripciontxt: "",
-      costotxt: "",
-      codigoBarratxt: "",
-      cantidadMintxt: "",
-      tipoProducto: 1,
-      componentes: this.state.componentes.filter(c => c.Cantidad !== 0)
-    });
-  } else {
-    console.log("Rellene todos los campos");
-  }
-  };
-  /**Agrega todas las materias primas al estado componentes */
-
-  agregarComponentes() {
-  this.state.componentes.map(p=>{
-    return{
-      'NameP':p.NameP,
-      'DescriptionP':p.DescriptionP,
-      'Id':p.Id,
-      'Cantidad':0
+      this.enviarProducto();
+      this.setState({
+        nombretxt: "",
+        descripciontxt: "",
+        costotxt: "",
+        codigoBarratxt: "",
+        cantidadMintxt: "",
+        tipoProducto: 1,
+        componentes: this.state.componentes
+      });
+    } else {
+      console.log("Rellene todos los campos");
     }
-    
-  })
-}
-  render() {
-    /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
-    const listaMateriaPrima = (
-      <div className="StockBody MateriaPima row">
-        <table className="table table-hover table-dark">
-          <thead className="tableHeader">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Cantidad</th>
-            </tr>
-          </thead>
-          <tbody className="tableBody">
-            {this.state.componentes.map(p => (
-              <tr key={p.Id}>
-                <td>{p.Id}</td>
-                <td>{p.NameP}</td>
-                <td>{p.DescriptionP}</td>
+  };
 
-                {/**obtiene la cantidad de este componente que se utilizara para el producto terminado */}
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Cantidad"
-                    value={p.Cantidad}
-                    onClick={e => {
-                      console.log("hola");
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+  render() {
+    /**guardo la materia prima
+     * {
+     * id
+     * nombre
+     * descripcion
+     * cantidad(cuantos de estos componentes tendra el producto terminado)
+     * }
+     */
+   
+   const materiaPrima  = this.props.materiaPrima.map(p => {
+      
+      return {
+        NameP: p.NameP,
+        DescriptionP: p.DescriptionP,
+        Id: p.Id,
+        Cantidad: '0'
+      };
+    });
+    /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
+    const listarMateriaPrima = (
+      <Modal isOpen={this.state.listarMateriaPrimaVisible} centered>
+        <ModalHeader>Lista de componentes</ModalHeader>
+        <ModalBody>
+          <div className="StockBody MateriaPima row">
+            <table className="table table-hover table-dark">
+              <thead className="tableHeader">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody className="tableBody">
+                {materiaPrima.map(p => (
+                  <tr key={p.Id}>
+                    <td>{p.Id}</td>
+                    <td>{p.NameP}</td>
+                    <td>{p.DescriptionP}</td>
+
+                    {/**obtiene la cantidad de este componente que se utilizara para el producto terminado */}
+                    <td>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Cantidad"
+                        onChange={e => (p.Cantidad = e.target.value)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <button onClick={() => this.agregarComponentes(materiaPrima)}>
+            Listo!
+          </button>
+        </ModalFooter>
+      </Modal>
     );
 
     return (
       <div className="agregarProducto">
+        {/**Modales  */}
+        {listarMateriaPrima}
         <form onSubmit={this.handleSubmit}>
           <div className="form-row">
             <div className="col-md-6">
@@ -231,14 +262,21 @@ class AgregarProducto extends Component {
                 value="Agregar"
               />
             </div>
-            <div className="col-md-8">
-              {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
-              {this.state.tipoProducto === 2
-                ? /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
-                  listaMateriaPrima
-                : /**EN CASO CONTRARIO NO HACER NADA */
-                  null}
-            </div>
+
+            {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
+            {this.state.tipoProducto === 2 ? (
+              /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() =>
+                  this.setState({ listarMateriaPrimaVisible: true })
+                }
+              >
+                Listar componentes
+              </button>
+            ) : /**EN CASO CONTRARIO NO HACER NADA */
+            null}
           </div>
         </form>
       </div>
