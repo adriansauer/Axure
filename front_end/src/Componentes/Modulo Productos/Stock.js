@@ -35,6 +35,9 @@ class Stock extends Component {
       barcodeProductoActual: "",
       nombreProductoActual: "",
       costoProductoActual: "",
+      tipoProductoActual: 0,
+      nombreTipoProductoActual: "",
+      listaComponentes:[],
       /**El deposito actual en el que nos encontramos, Todos, Materia prima, En produccion o productos terminados */
       nombreBtn: "Todos",
       /**guarda todos los productos que nos trae la api */
@@ -46,7 +49,8 @@ class Stock extends Component {
       /**permite hacer visible u ocultar las alertas y modals */
       editarModalVisible: false,
       eliminarModalVisible: false,
-      darBajaModalVisible: false
+      darBajaModalVisible: false,
+      detallesModalVisible: false
     };
   }
   /**Cuando se renderiza el componente actualizo todos los datos con la api */
@@ -88,6 +92,22 @@ class Stock extends Component {
     this.setState({ productos: this.props.productos_en_produccion });
     this.setState({ capitalTotal: this.props.capitalDeposito });
   }
+  /**setea los estados para ver los detalles del producto seleccionado */
+  mostrarDetallesProducto(p){
+    this.setState({
+      nombreProductoActual: p.NameP,
+      descripcionProductoActual: p.DescriptionP,
+      IdProductoActual: p.Id,
+      costoProductoActual: p.Cost,
+      cantidadMinProductoActual: p.QuantityMin,
+      barcodeProductoActual: p.Barcode,
+      tipoProductoActual: p.ProductType.Id,
+      nombreTipoProductoActual: p.ProductType.TypeP,
+      detallesModalVisible: true,
+      listaComponentes:p.listaComponentes,
+
+    })
+  }
   async actualizar() {
     await this.props.getProductos();
     await this.props.getMateriasPrimas();
@@ -127,7 +147,8 @@ class Stock extends Component {
       DescriptionP: this.state.descripcionProductoActual,
       Cost: this.state.costoProductoActual,
       QuantityMin: this.state.cantidadMinProductoActual,
-      Barcode: this.state.barcodeProductoActual
+      Barcode: this.state.barcodeProductoActual,
+      IdProductType: this.state.tipoProductoActual
     });
     /**actualizo los cambios */
     this.actualizar();
@@ -135,6 +156,35 @@ class Stock extends Component {
     this.setState({ editarModalVisible: false });
   }
   render() {
+    /**Modal que permite ver los detalles de un producto seleccionado */
+    const detallesModal = (
+      <Modal isOpen={this.state.detallesModalVisible} centered>
+        <ModalHeader>Detalles del Producto</ModalHeader>
+        <ModalBody>
+          <b> Nombre:</b> {this.state.nombreProductoActual}
+          <br />
+          <b>Descripcion:</b> {this.state.descripcionProductoActual}
+          <br />
+          <b>Cantidad Minima:</b> {this.state.cantidadMinProductoActual}
+          <br />
+          <b>Codigo de Barra:</b> {this.state.barcodeProductoActual}
+          <br />
+          <b>Tipo de Producto:</b> {this.state.nombreTipoProductoActual}
+          <br />
+          <b>Costo:</b> {this.state.costoProductoActual}
+          <br />
+          
+          <textarea className="form-control detalles" rows="3">{this.state.listaComponentes}</textarea>
+        </ModalBody>
+        <ModalFooter>
+          <button
+            onClick={() => this.setState({ detallesModalVisible: false })}
+          >
+            Cerrar
+          </button>
+        </ModalFooter>
+      </Modal>
+    );
     /*Modal para preguntar cuantos productos desea dar de baja*/
     const darBajaModal = (
       <Modal isOpen={this.state.darBajaModalVisible} centered>
@@ -268,6 +318,7 @@ class Stock extends Component {
         {editarModal}
         {eliminarAlert}
         {darBajaModal}
+        {detallesModal}
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
           <div className="col-md-3"></div>
@@ -354,13 +405,18 @@ class Stock extends Component {
                     ) !== -1
                 )
                 .map(p => (
-                  <tr key={p.Id}>
+                  <tr
+                    key={p.Id}
+                    
+                  >
+                  
                     <td>{p.Id}</td>
-                    <td>{p.NameP}</td>
-                    <td>{p.DescriptionP}</td>
-                    <td>{p.Cost}</td>
-                    <td>{p.QuantityMin}</td>
-                    <td>{p.Barcode}</td>
+                    <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.NameP}</td>
+                    <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.DescriptionP}</td>
+                    <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.Cost}</td>
+                    <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.QuantityMin}</td>
+                    <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.Barcode}</td>
+                   
                     <td>
                       {/**Iconos para editar dicho producto, eliminarlo o darlo de baja */}
                       <EditIcon
@@ -373,7 +429,11 @@ class Stock extends Component {
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
                             barcodeProductoActual: p.Barcode,
-                            editarModalVisible: true
+                            tipoProductoActual: p.ProductType.Id,
+                            nombreTipoProductoActual: p.ProductType.TypeP,
+                            editarModalVisible: true,
+                            listaComponentes:p.listaComponentes,
+
                           })
                         }
                       />
@@ -386,7 +446,11 @@ class Stock extends Component {
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
                             barcodeProductoActual: p.Barcode,
-                            eliminarModalVisible: true
+                            eliminarModalVisible: true,
+                            nombreTipoProductoActual: p.ProductType.TypeP,
+                            tipoProductoActual: p.ProductType.Id,
+                            listaComponentes:p.listaComponentes,
+
                           })
                         }
                         className="icono"
@@ -400,7 +464,11 @@ class Stock extends Component {
                             IdProductoActual: p.Id,
                             costoProductoActual: p.Cost,
                             cantidadMinProductoActual: p.QuantityMin,
-                            barcodeProductoActual: p.Barcode
+                            barcodeProductoActual: p.Barcode,
+                            nombreTipoProductoActual: p.ProductType.TypeP,
+                            tipoProductoActual: p.ProductType.Id,
+                            listaComponentes:p.listaComponentes,
+
                           })
                         }
                         className="icono"

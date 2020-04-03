@@ -45,6 +45,12 @@
 	overflow-x: hidden;
     
 }
+.detalles{
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+	overflow-x: hidden;
+}
 .carta{
     margin:3%;
     width: 100%;

@@ -33,7 +33,8 @@ namespace Axure.DTO.Module_Stock
             try
             {
                 using (var db = new AxureContext())
-                {            
+                {   
+                    
                     var respuesta = db.Products.Include("ProductTypes").Where(x => x.Delete == false)
                         .Select(x => new { Id = x.Id,ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                         .ToList()
