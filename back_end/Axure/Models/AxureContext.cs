@@ -51,6 +51,12 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductionOrderDetail> ProductionOrderDetails { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.DamagedProduct> DamagedProducts { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.EntSalType> EntSalTypes { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.EntSalProduct> EntSalProducts { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.EntSalProductDetail> EntSalProductDetails { get; set; }
+
+
     }
 }
