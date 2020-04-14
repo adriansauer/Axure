@@ -174,7 +174,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ControllerError.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\Module_Stock\DamagedProductsController.cs" />
+=======
+    <Compile Include="Controllers\Module_Stock\EntSalProductDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\EntSalProductsController.cs" />
+>>>>>>> master
     <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductTypesController.cs" />
@@ -182,13 +187,21 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\DataBaseError.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
+<<<<<<< HEAD
     <Compile Include="DataBase\Module_Stock\DamagedProductsDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductTypeDB.cs" />
     <Compile Include="DTO\Module_Stock\DamagedProductDTO.cs" />
+=======
+    <Compile Include="DataBase\Module_Stock\EntSalProductDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\EntSalProductDetailDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
+>>>>>>> master
     <Compile Include="DataBase\Module_Stock\StockDB.cs" />
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
+    <Compile Include="DTO\Module_Stock\EntSalProductDetailDTO.cs" />
+    <Compile Include="DTO\Module_Stock\EntSalProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionOrderDTO.cs" />
     <Compile Include="DTO\Module_Stock\StockDTO.cs" />
@@ -203,9 +216,11 @@
     <Compile Include="Models\AxureContext.cs" />
     <Compile Include="Models\Module_Stock\ComprobantePurchase.cs" />
     <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
-    <Compile Include="Models\Module_Stock\DamagedProduct.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
+    <Compile Include="Models\Module_Stock\EntSalProduct.cs" />
+    <Compile Include="Models\Module_Stock\EntSalProductDetail.cs" />
+    <Compile Include="Models\Module_Stock\EntSalType.cs" />
     <Compile Include="Models\Module_Stock\Models\Pc.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
     <Compile Include="Models\Module_Stock\Movement.cs" />
@@ -272,9 +287,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\ComprobantePurchaseDetails\" />
     <Folder Include="Views\ComprobantePurchases\" />
-    <Folder Include="Views\DamagedProducts\" />
     <Folder Include="Views\Deposits\" />
     <Folder Include="Views\Employees\" />
+    <Folder Include="Views\EntSalProductDetails\" />
+    <Folder Include="Views\EntSalProducts\" />
     <Folder Include="Views\MovementDetails\" />
     <Folder Include="Views\MovementMotives\" />
     <Folder Include="Views\Movements\" />

@@ -160,6 +160,13 @@ namespace Axure.Migrations
                 new MovementMotive { Id = 2, Motive = "Para venta" },
                 new MovementMotive { Id = 3, Motive = "Para desensamblar" }
                 );
+
+            //Datos de la tabla EntSalType
+            context.EntSalTypes.AddOrUpdate(x => x.Id,
+                new EntSalType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
+                new EntSalType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
+                );
+
             //context.Movements.AddOrUpdate(x => x.Id);
             //context.MovementDetails.AddOrUpdate(x => x.Id);
             //context.ComprobantePurchases.AddOrUpdate(x => x.Id);
