@@ -4,8 +4,6 @@ import { getMateriasPrimasSuccess, handleError } from "../actions";
 export default handleActions(
   {
     [getMateriasPrimasSuccess]: (state, action) => {
-     
-
       return action.payload;
     },
     [handleError]: (state, action) => {

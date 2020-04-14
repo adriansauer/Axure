@@ -1,5 +1,5 @@
 ﻿using Axure.DataBase;
-using Axure.DTO.Module_Stock;
+using Axure.DataBase.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using Axure.Models.Module_Stock.Models;
