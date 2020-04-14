@@ -26,7 +26,6 @@
 .agregarProducto{
     height: 100%;
     width: 100%;
-    background-color: lightskyblue;
 }
 .generarOrdenBaja{
     height: 100%;
@@ -36,7 +35,6 @@
 .generarOrdenProduccion{
     height: 100%;
     width: 100%;
-    background-color: lightskyblue;
 }
 .ordenesProduccionProducto{
     height: 100%;

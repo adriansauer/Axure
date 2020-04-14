@@ -409,7 +409,7 @@ class Stock extends Component {
                     key={p.Id}
                     
                   >
-                  
+                  {console.log(p)}
                     <td>{p.Id}</td>
                     <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.NameP}</td>
                     <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.DescriptionP}</td>
