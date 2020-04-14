@@ -8,25 +8,25 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProductionOrdersController : Controller
+    [RoutePrefix("ProductComponents")]
+    public class ProductComponentsController : Controller
     {
-
         //Atributos.
-        private ProductionOrderDB productionOrderDB;
+        private ComponentDB componentDB;
 
         //Constructor de la clase.
-        public ProductionOrdersController()
+        public ProductComponentsController()
         {
-            this.productionOrderDB = new ProductionOrderDB();
+            this.componentDB = new ComponentDB();
         }
 
-        // GET: ProductionOrders
+        // GET: ProductComponents
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", IdProductionState = "True", IdProduct = "True", IdEmployee = "True", DateT = "True", Quantity = "True", Code = "True", ListDetails = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", NameE = "True", CI = "True", Direction = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -39,7 +39,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var lista = this.productionOrderDB.ObtenerTodasOrdenesProduccion();
+                var lista = this.componentDB.ObtenerTodosLosComponentes();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -52,13 +52,32 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // GET: ProductionOrders/Details/5
+        [Route("OfProduct/{id}")]
+        public ActionResult OfProduct(int id)
+        {
+            try
+            {
+                var lista = this.componentDB.ObtenerTodosLosComponentesDeUnProducto(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+
+        }
+
+        // GET: ProductComponents/Details/5
         [Route("Details/{id}")]
         public ActionResult Details(int id)
         {
             try
             {
-                var dato = this.productionOrderDB.DetalleOrdenProduccion(id);
+                var dato = this.componentDB.DetalleDelComponente(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
@@ -73,15 +92,15 @@ namespace Axure.Controllers.Module_Stock
                 return new HttpStatusCodeResult(406);
             }
         }
-        
-        // POST: ProductionOrders/Create
+
+        // POST: ProductComponents/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(ProductionOrderDTO po)
+        public ActionResult Create(ProductComponentDTO pct)
         {
             try
             {
-                if (this.productionOrderDB.Agregar(po))
+                if (this.componentDB.Agregar(pct))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -96,14 +115,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: ProductionOrders/Edit/5
+        // POST: ProductComponents/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, ProductionOrderDTO po)
+        public ActionResult Edit(int id, ProductComponentDTO pct)
         {
             try
             {
-                if (this.productionOrderDB.Editar(id, po))
+                if (this.componentDB.Editar(id, pct))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -118,14 +137,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // DELETE: ProductionOrders/Delete/5
+        // DELETE: ProductComponents/Delete/5
         [HttpDelete]
         [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                if (this.productionOrderDB.darDeBaja(id))
+                if (this.componentDB.darDeBaja(id))
                 {
                     return new HttpStatusCodeResult(406);
                 }

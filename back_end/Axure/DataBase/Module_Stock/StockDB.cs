@@ -105,6 +105,5 @@ namespace Axure.DataBase.Module_Stock
         }
 
 
-
     }
 }

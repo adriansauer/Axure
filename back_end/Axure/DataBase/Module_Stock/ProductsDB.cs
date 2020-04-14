@@ -1,5 +1,6 @@
 ﻿using Axure.Controllers;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using Axure.Models.Module_Stock.Models;
@@ -14,7 +15,7 @@ using System.Web.Mvc;
  * Creado el 10-03-2020 por Victor Ciceia.
  * Clase encargada de realizar peticiones a la base de datos enfocado a los productos.
  */
-namespace Axure.DTO.Module_Stock
+namespace Axure.DataBase.Module_Stock
 {
     public class ProductsDB
     {
@@ -143,7 +144,7 @@ namespace Axure.DTO.Module_Stock
                     db.SaveChanges();
                     for (int i = 0; i < pc.listaComponentes.Count; i++)
                     {
-                        this.componentDB.agregar(new ProductComponent() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
+                        this.componentDB.Agregar(new ProductComponentDTO() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
                     }
                     return false;
                 }

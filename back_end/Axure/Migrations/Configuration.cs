@@ -37,15 +37,15 @@ namespace Axure.Migrations
 
             //Depositos en donde se guardaran los productos.
             context.Deposits.AddOrUpdate(x => x.Id,
-                new Deposit { Id = 1, NameD = "Deposito de Materia Prima", Code="001" },
-                new Deposit { Id = 2, NameD = "Deposito de Ensamblaje", Code = "002" },
-                new Deposit { Id = 3, NameD = "Deposito de Productos Terminados", Code = "003" }
+                new Deposit { Id = 1, NameD = "Deposito de Materia Prima", Code="001", Delete = false },
+                new Deposit { Id = 2, NameD = "Deposito de Ensamblaje", Code = "002", Delete = false },
+                new Deposit { Id = 3, NameD = "Deposito de Productos Terminados", Code = "003", Delete = false }
                 );
             //Tipo de producto, lo que se espera hacer con el producto.
             context.ProductTypes.AddOrUpdate(x => x.Id,
-                new ProductType { Id = 1, TypeP = "Materia Prima o Producto Terminado" },
-                new ProductType { Id = 2, TypeP = "Materia Prima" },
-                new ProductType { Id = 3, TypeP = "Producto Terminado" }
+                new ProductType { Id = 1, TypeP = "Materia Prima o Producto Terminado", Delete = false },
+                new ProductType { Id = 2, TypeP = "Materia Prima", Delete = false },
+                new ProductType { Id = 3, TypeP = "Producto Terminado", Delete = false }
                 );
             //Productos informaticos.
            context.Products.AddOrUpdate(x => x.Id,
@@ -113,40 +113,41 @@ namespace Axure.Migrations
             //context.Providers.AddOrUpdate(x => x.Id);
             context.ProductComponents.AddOrUpdate(x => x.Id,
                 //Gama BAja
-                new ProductComponent { Id = 1, IdProduct = 21, IdProductComponent = 2, Quantity = 1 },
-                new ProductComponent { Id = 2, IdProduct = 21, IdProductComponent = 5, Quantity = 1 },
-                new ProductComponent { Id = 3, IdProduct = 21, IdProductComponent = 10, Quantity = 1 },
-                new ProductComponent { Id = 4, IdProduct = 21, IdProductComponent = 15, Quantity = 1 },
-                new ProductComponent { Id = 5, IdProduct = 21, IdProductComponent = 20, Quantity = 1 },
+                new ProductComponent { Id = 1, IdProduct = 21, IdProductComponent = 2, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 2, IdProduct = 21, IdProductComponent = 5, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 3, IdProduct = 21, IdProductComponent = 10, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 4, IdProduct = 21, IdProductComponent = 15, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 5, IdProduct = 21, IdProductComponent = 20, Quantity = 1, Delete = false },
                 //Gama Media
-                new ProductComponent { Id = 6, IdProduct = 22, IdProductComponent = 1, Quantity = 1 },
-                new ProductComponent { Id = 7, IdProduct = 22, IdProductComponent = 5, Quantity = 1 },
-                new ProductComponent { Id = 8, IdProduct = 22, IdProductComponent = 10, Quantity = 1 },
-                new ProductComponent { Id = 9, IdProduct = 22, IdProductComponent = 12, Quantity = 1 },
-                new ProductComponent { Id = 10, IdProduct = 22, IdProductComponent = 17, Quantity = 1 },
+                new ProductComponent { Id = 6, IdProduct = 22, IdProductComponent = 1, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 7, IdProduct = 22, IdProductComponent = 5, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 8, IdProduct = 22, IdProductComponent = 10, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 9, IdProduct = 22, IdProductComponent = 12, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 10, IdProduct = 22, IdProductComponent = 17, Quantity = 1, Delete = false },
                 //Gama Alta
-                new ProductComponent { Id = 11, IdProduct = 23, IdProductComponent = 3, Quantity = 1 },
-                new ProductComponent { Id = 12, IdProduct = 23, IdProductComponent = 4, Quantity = 1 },
-                new ProductComponent { Id = 13, IdProduct = 23, IdProductComponent = 10, Quantity = 1 },
-                new ProductComponent { Id = 14, IdProduct = 23, IdProductComponent = 14, Quantity = 1 },
-                new ProductComponent { Id = 15, IdProduct = 23, IdProductComponent = 16, Quantity = 1 }
+                new ProductComponent { Id = 11, IdProduct = 23, IdProductComponent = 3, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 12, IdProduct = 23, IdProductComponent = 4, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 13, IdProduct = 23, IdProductComponent = 10, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 14, IdProduct = 23, IdProductComponent = 14, Quantity = 1, Delete = false },
+                new ProductComponent { Id = 15, IdProduct = 23, IdProductComponent = 16, Quantity = 1, Delete = false }
 
                 );
 
             context.Employees.AddOrUpdate(x => x.Id,
-                new Employee { Id = 1, NameE = "Juan Sanchez", CI="1.236.526", Direction="Carmen del Parana", RUC="1.236.526-5", Phone="0761 582 975" },
-                new Employee { Id = 2, NameE = "Sonia Ramos", CI = "5.632.789", Direction = "Carmen del Parana", RUC = "5.632.789-3", Phone = "0761 888 975" },
-                new Employee { Id = 3, NameE = "Clara Pinto", CI = "5.689.425", Direction = "Fram", RUC = "5.689.425-5", Phone = "0761 586 111" },
-                new Employee { Id = 4, NameE = "Oscar Sandoval", CI = "6.524.879", Direction = "La Paz", RUC = "6.524.879-3", Phone = "0761 889 777" },
-                new Employee { Id = 5, NameE = "Julio Barrosa", CI = "2.683.256", Direction = "Coronel Bogado", RUC = "2.683.256-4", Phone = "0761 769 542" }
+                new Employee { Id = 1, NameE = "Juan Sanchez", CI="1.236.526", Direction="Carmen del Parana", RUC="1.236.526-5", Phone="0761 582 975", Delete=false },
+                new Employee { Id = 2, NameE = "Sonia Ramos", CI = "5.632.789", Direction = "Carmen del Parana", RUC = "5.632.789-3", Phone = "0761 888 975", Delete = false },
+                new Employee { Id = 3, NameE = "Clara Pinto", CI = "5.689.425", Direction = "Fram", RUC = "5.689.425-5", Phone = "0761 586 111", Delete = false },
+                new Employee { Id = 4, NameE = "Oscar Sandoval", CI = "6.524.879", Direction = "La Paz", RUC = "6.524.879-3", Phone = "0761 889 777", Delete = false },
+                new Employee { Id = 5, NameE = "Julio Barrosa", CI = "2.683.256", Direction = "Coronel Bogado", RUC = "2.683.256-4", Phone = "0761 769 542", Delete = false }
                 );
             context.ProductionStates.AddOrUpdate(x => x.Id,
-                new ProductionState { Id = 1, StateP = "Pendiente" },
-                new ProductionState { Id = 2, StateP = "En Proceso" },
-                new ProductionState { Id = 3, StateP = "Terminado" }
+                new ProductionState { Id = 1, StateP = "Pendiente", Delete = false },
+                new ProductionState { Id = 2, StateP = "En Proceso", Delete = false },
+                new ProductionState { Id = 3, StateP = "Terminado", Delete = false },
+                new ProductionState { Id = 4, StateP = "Cancelado", Delete = false }
                 );
             context.ProductionOrders.AddOrUpdate(x => x.Id,
-                new ProductionOrder { Id = 1, IdProductionState = 1, IdProduct = 23, IdEmployee = 3, DateT = new DateTime(2020,03,10), Quantity = 1, Code = "0001"}
+                new ProductionOrder { Id = 1, IdProductionState = 1, IdProduct = 23, IdEmployee = 3, DateT = new DateTime(2020,03,10), Quantity = 1, Code = "0001", Delete = false }
                 );
             context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
                 new ProductionOrderDetail { Id = 1, IdProductionOrder = 1, IdProductComponent = 11, Quantity = 1 },
@@ -160,6 +161,13 @@ namespace Axure.Migrations
                 new MovementMotive { Id = 2, Motive = "Para venta" },
                 new MovementMotive { Id = 3, Motive = "Para desensamblar" }
                 );
+
+            //Datos de la tabla EntSalType
+            context.EntSalTypes.AddOrUpdate(x => x.Id,
+                new EntSalType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
+                new EntSalType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
+                );
+
             //context.Movements.AddOrUpdate(x => x.Id);
             //context.MovementDetails.AddOrUpdate(x => x.Id);
             //context.ComprobantePurchases.AddOrUpdate(x => x.Id);
