@@ -212,7 +212,7 @@ class Stock extends Component {
     const eliminarAlert = (
       <Modal isOpen={this.state.eliminarModalVisible} centered>
         <ModalHeader>
-          Desea eliminar el producto {this.state.barcodeProductoActual}?
+    Desea eliminar el producto {this.state.barcodeProductoActual}-{this.state.nombreProductoActual}?
         </ModalHeader>
         <ModalFooter>
           <button onClick={() => this.eliminarProducto()}>Si</button>

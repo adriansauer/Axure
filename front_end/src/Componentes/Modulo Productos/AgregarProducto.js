@@ -37,6 +37,7 @@ class AgregarProducto extends Component {
   }
   /**enviar el producto a la api */
   enviarProducto() {
+  
     this.props.createProducto({
       NameP: this.state.nombretxt,
       IdProductType: this.state.tipoProducto,
@@ -65,7 +66,7 @@ class AgregarProducto extends Component {
   /**agrega el producto, y setea todos los estados a null */
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.componentes);
+
     if (this.verificarCampos()) {
       this.enviarProducto();
       this.setState({
@@ -74,7 +75,7 @@ class AgregarProducto extends Component {
         costotxt: "",
         codigoBarratxt: "",
         cantidadMintxt: "",
-        tipoProducto: 1,
+        tipoProducto: this.state.tipoProducto,
         componentes: this.state.componentes
       });
     } else {
@@ -110,6 +111,7 @@ class AgregarProducto extends Component {
             <table className="table table-hover table-dark">
               <thead className="tableHeader">
                 <tr>
+                 
                   <th scope="col">#</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Descripcion</th>
@@ -259,7 +261,7 @@ class AgregarProducto extends Component {
               <input
                 className="btn btn-primary"
                 type="submit"
-                value="Agregar"
+                value="Crear Producto"
               />
             </div>
 
@@ -273,7 +275,7 @@ class AgregarProducto extends Component {
                   this.setState({ listarMateriaPrimaVisible: true })
                 }
               >
-                Listar componentes
+                Agregar Componentes
               </button>
             ) : /**EN CASO CONTRARIO NO HACER NADA */
             null}

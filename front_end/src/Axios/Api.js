@@ -45,5 +45,17 @@ export default {
         url: "Products/SumDeposit/" + deposito,
         methot: "get"
       })
+  },
+  ordenProduccion:{
+    get:()=>requestHelper({
+
+      methot: "get"
+    }),
+    create:(data)=>requestHelper({
+      methot: "post"
+    }),
+    cancel:(id)=>requestHelper({
+      methot: "delete"
+    })
   }
 };

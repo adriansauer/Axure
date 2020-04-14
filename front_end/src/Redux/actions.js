@@ -101,7 +101,7 @@ export const getCapitalDeposito = deposito => async dispatch => {
 export const createProducto = data => async dispatch => {
   try {
     const request = await api.productos.create(data);
-    console.log(api.productos.create(data));
+   
   if (request.status === 200) {
     dispatch(getProductos);
     dispatch(getMateriasPrimas);
