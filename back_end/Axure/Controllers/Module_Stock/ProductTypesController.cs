@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
+using Axure.Models.Module_Stock;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,83 +9,139 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
+    [RoutePrefix("ProductTypes")]
     public class ProductTypesController : Controller
     {
-        // GET: ProductTypes
+        //Atributos.
+        private ProductTypeDB productTypeDB;
+
+        //Constructor de la clase.
+        public ProductTypesController()
+        {
+            this.productTypeDB = new ProductTypeDB();
+        }
+
+        // GET: Datos del modelo producto.
+        //[Authorize(Roles = "user, admin")]
+        [Route("Index")]
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return Json(new { Id = "True", TypeP = "True"}, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(202);
+            }
+        }
+
+        // GET: Todos los tipos de productos existentes.
+        [Route("List")]
+        public ActionResult List()
+        {
+            try
+            {
+                var lista = this.productTypeDB.ObtenerTodosTiposProductos();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+
         }
 
         // GET: ProductTypes/Details/5
+        [Route("Details/{id}")]
         public ActionResult Details(int id)
         {
-            return View();
-        }
-
-        // GET: ProductTypes/Create
-        public ActionResult Create()
-        {
-            return View();
+            try
+            {
+                var dato = this.productTypeDB.DetalleTipoProducto(id);
+                if (null != dato)
+                {
+                    return Json(dato, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(202);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
         }
 
         // POST: ProductTypes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [Route("Create")]
+        public ActionResult Create(ProductTypeDTO pt)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (this.productTypeDB.Agregar(pt))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }                
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
-        }
-
-        // GET: ProductTypes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
         }
 
         // POST: ProductTypes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpPut]
+        [Route("Edit/{id}")]
+        public ActionResult Edit(int id, ProductType pt)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (this.productTypeDB.Editar(id, pt))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
-        }
-
-        // GET: ProductTypes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: ProductTypes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (this.productTypeDB.darDeBaja(id))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
 
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
     }

@@ -21,5 +21,7 @@ namespace Axure.Models.Module_Stock
         [Required]
         [StringLength(50)]
         public string TypeP { get; set; }
+        [Required]
+        public bool Delete { get; set; }
     }
 }

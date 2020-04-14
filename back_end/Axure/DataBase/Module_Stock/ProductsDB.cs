@@ -144,7 +144,7 @@ namespace Axure.DataBase.Module_Stock
                     db.SaveChanges();
                     for (int i = 0; i < pc.listaComponentes.Count; i++)
                     {
-                        this.componentDB.agregar(new ProductComponent() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
+                        this.componentDB.Agregar(new ProductComponentDTO() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
                     }
                     return false;
                 }
