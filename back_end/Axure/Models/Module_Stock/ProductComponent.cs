@@ -24,5 +24,7 @@ namespace Axure.Models.Module_Stock
         //
         [Required]
         public int Quantity { get; set; }
+        [Required]
+        public bool Delete { get; set; }
     }
 }

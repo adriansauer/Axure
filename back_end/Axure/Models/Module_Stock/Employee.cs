@@ -35,5 +35,7 @@ namespace Axure.Models.Module_Stock
         //El numero de celular o telefono del empleado.
         [StringLength(20)]
         public string Phone { get; set; }
+        [Required]
+        public bool Delete { get; set; }
     }
 }
