@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,81 +10,134 @@ namespace Axure.Controllers.Module_Stock
 {
     public class ProductionOrdersController : Controller
     {
+
+        //Atributos.
+        private ProductionOrderDB productionOrderDB;
+
+        //Constructor de la clase.
+        public ProductionOrdersController()
+        {
+            this.productionOrderDB = new ProductionOrderDB();
+        }
+
         // GET: ProductionOrders
+        [Route("Index")]
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return Json(new { Id = "True", IdProductionState = "True", IdProduct = "True", IdEmployee = "True", DateT = "True", Quantity = "True", Code = "True", ListDetails = "True" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(202);
+            }
+        }
+
+        [Route("List")]
+        public ActionResult List()
+        {
+            try
+            {
+                var lista = this.productionOrderDB.ObtenerTodasOrdenesProduccion();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
         }
 
         // GET: ProductionOrders/Details/5
+        [Route("Details/{id}")]
         public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: ProductionOrders/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductionOrders/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                var dato = this.productionOrderDB.DetalleOrdenProduccion(id);
+                if (null != dato)
+                {
+                    return Json(dato, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(202);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
-
-        // GET: ProductionOrders/Edit/5
-        public ActionResult Edit(int id)
+        
+        // POST: ProductionOrders/Create
+        [HttpPost]
+        [Route("Create")]
+        public ActionResult Create(ProductionOrderDTO po)
         {
-            return View();
+            try
+            {
+                if (this.productionOrderDB.Agregar(po))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
         }
 
         // POST: ProductionOrders/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpPut]
+        [Route("Edit/{id}")]
+        public ActionResult Edit(int id, ProductionOrderDTO po)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (this.productionOrderDB.Editar(id, po))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
 
-        // GET: ProductionOrders/Delete/5
+        // DELETE: ProductionOrders/Delete/5
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: ProductionOrders/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add delete logic here
+                if (this.productionOrderDB.darDeBaja(id))
+                {
+                    return new HttpStatusCodeResult(406);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(200);
+                }
 
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(406);
             }
         }
     }
