@@ -174,14 +174,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ControllerError.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\Module_Stock\DamagedProductsController.cs" />
-=======
     <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
     <Compile Include="Controllers\Module_Stock\EntSalProductDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\EntSalProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductComponentsController.cs" />
->>>>>>> master
     <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductionStatesController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
@@ -196,16 +192,11 @@
     <Compile Include="DataBase\Module_Stock\ProductionOrderDetailDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionStateDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
-<<<<<<< HEAD
-    <Compile Include="DTO\Module_Stock\DamagedProductDTO.cs" />
     <Compile Include="DataBase\Module_Stock\StockDB.cs" />
-=======
     <Compile Include="DataBase\Module_Stock\ProductTypeDB.cs" />
     <Compile Include="DataBase\Module_Stock\EntSalProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\EntSalProductDetailDAO.cs" />
-    <Compile Include="DataBase\Module_Stock\StockDB.cs" />
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
->>>>>>> master
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
     <Compile Include="DTO\Module_Stock\EmployeeDTO.cs" />
     <Compile Include="DTO\Module_Stock\EntSalProductDetailDTO.cs" />

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
 import { connect } from "react-redux";
-import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
+import { ModalFooter, ModalBody, Modal, ModalHeader, Col,Container,Row } from "reactstrap";
 
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
