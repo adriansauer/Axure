@@ -147,7 +147,7 @@ namespace Axure.Migrations
                 new ProductionState { Id = 4, StateP = "Cancelado", Delete = false }
                 );
             context.ProductionOrders.AddOrUpdate(x => x.Id,
-                new ProductionOrder { Id = 1, IdProductionState = 1, IdProduct = 23, IdEmployee = 3, DateT = new DateTime(2020,03,10), Quantity = 1, Code = "0001"}
+                new ProductionOrder { Id = 1, IdProductionState = 1, IdProduct = 23, IdEmployee = 3, DateT = new DateTime(2020,03,10), Quantity = 1, Code = "0001", Delete = false }
                 );
             context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
                 new ProductionOrderDetail { Id = 1, IdProductionOrder = 1, IdProductComponent = 11, Quantity = 1 },

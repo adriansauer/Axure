@@ -24,6 +24,6 @@ namespace Axure.DTO.Module_Stock
         //Codigo de identificacion de orden de produccion
         public string Code { get; set; }
         //
-        public List<ProductionOrderDetail> ListaComponentes { get; set; }
+        public List<ProductionOrderDetailDTO> ListDetails { get; set; }
     }
 }

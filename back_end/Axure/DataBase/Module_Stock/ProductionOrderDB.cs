@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
+using Axure.Models.Module_Stock;
 
 namespace Axure.DataBase.Module_Stock
 {
@@ -20,19 +22,20 @@ namespace Axure.DataBase.Module_Stock
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
-        public List<ProductionOrderDB> ObtenerTodosProductos()
+        public List<ProductionOrderDTO> ObtenerTodasOrdenesProduccion()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-
-                    /*   var respuesta = db.Products.Include("ProductTypes").Where(x => x.Delete == false)
-                           .Select(x => new { Id = x.Id, ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                    ProductionOrderDetailDB productionOrderDetailDB = new ProductionOrderDetailDB();
+                    var opList = db.ProductionOrders.Where(x => x.Delete == false)
+                           .Select(x => new { Id = x.Id, IdProductionState = x.IdProductionState, IdProduct  = x.IdProduct, IdEmployee = x.IdEmployee, DateT = x.DateT , Quantity = x.Quantity, Code = x.Code })
                            .ToList()
-                           .Select(y => new ProductDTO() { Id = y.Id, ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                           .Select(y => new ProductionOrderDTO() { Id=y.Id, IdProductionState = y.IdProductionState, IdProduct = y.IdProduct, IdEmployee = y.IdEmployee, DateT = y.DateT, Quantity = y.Quantity, Code = y.Code})
                            .ToList();
-                       return respuesta;*/
+                    opList.ForEach(x => x.ListDetails = productionOrderDetailDB.ObtenerTodosLosDetallesDeUnaOrden(x.Id));
+                       return opList;
                     return null;
                 }
             }
@@ -42,26 +45,15 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        /*
-         * 
-        */
-        public List<ProductionOrderDB> ProductosPorEstado(int deposito)
+        public ProductionOrderDTO DetalleOrdenProduccion(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    /*Deposit depos = db.Deposits.Single(x => x.Id == deposito);
-                    var stocks = db.Stocks.Include("Products").Where(x => x.IdDeposit == depos.Id).Select(x => new { Id = x.Product.Id }).ToList();
-                    List<Product> listaProductos = new List<Product>();
-                    stocks.ForEach(x => listaProductos.Add(db.Products.Include("ProductType").Single(w => w.Id == x.Id && w.Delete == false)));
-                    var productos = listaProductos
-                        .Select(x => new { Id = x.Id, ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
-                        .ToList()
-                        .Select(y => new ProductDTO() { Id = y.Id, ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
-                        .ToList();
-                    return productos;*/
-                    return null;
+                    ProductionOrderDetailDB productionOrderDetailDB = new ProductionOrderDetailDB();
+                    var po = db.ProductionOrders.FirstOrDefault(x => x.Id == id && x.Delete == false);
+                    return new ProductionOrderDTO() { Id = po.Id, IdProductionState = po.IdProductionState, IdProduct = po.IdProduct, IdEmployee = po.IdEmployee, DateT = po.DateT, Quantity = po.Quantity, Code = po.Code, ListDetails = productionOrderDetailDB.ObtenerTodosLosDetallesDeUnaOrden(id) };
                 }
             }
             catch
@@ -71,55 +63,20 @@ namespace Axure.DataBase.Module_Stock
 
         }
 
-        public ProductionOrderDB DetalleOrdenProduccion(int id)
+        public bool Agregar(ProductionOrderDTO orden)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                   // var p = db.Products.Include("ProductType").FirstOrDefault(x => x.Id == id && x.Delete == false);
-
-                    //return new ProductDTO() { Id = p.Id, ProductType = p.ProductType, NameP = p.NameP, DescriptionP = p.DescriptionP, Cost = p.Cost, QuantityMin = p.QuantityMin, Barcode = p.Barcode };
-                    return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
-        }
-
-        public bool AgregarOrdenSinComponentes(ProductionOrderDB orden)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                   // db.Products.Add(new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false });
-                   // db.SaveChanges();
-                    return false;
-                }
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        public bool AgregarOrdenConComponentes(ProductionOrderDB orden)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                   /* Product nuevo = new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false };
-                    db.Products.Add(nuevo);
+                    ProductionOrder nuevo = new ProductionOrder() { IdProductionState = orden.IdProductionState, IdProduct = orden.IdProduct, IdEmployee = orden.IdEmployee, DateT = new DateTime(2020, 03, 10), Quantity = orden.Quantity, Code = orden.Code, Delete = false };
+                    db.ProductionOrders.Add(nuevo);
                     db.SaveChanges();
-                    for (int i = 0; i < pc.listaComponentes.Count; i++)
+                    ProductionOrderDetailDB productionOrderDetailDB = new ProductionOrderDetailDB();
+                    for (int i = 0; i < orden.ListDetails.Count; i++)
                     {
-                        this.componentDB.agregar(new ProductComponent() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
-                    }*/
+                        productionOrderDetailDB.Agregar(new ProductionOrderDetail() { IdProductComponent = orden.ListDetails[i].IdProductComponent, IdProductionOrder = orden.ListDetails[i].IdProductionOrder, Quantity = orden.ListDetails[i].Quantity});
+                    }
                     return false;
                 }
             }
@@ -129,20 +86,20 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Editar(int id, ProductionOrderDB prod)
+        public bool Editar(int id, ProductionOrderDTO po)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    /*Product producto = db.Products.FirstOrDefault(x => x.Id == id);
-                    producto.NameP = prod.NameP;
-                    producto.IdProductType = prod.IdProductType;
-                    producto.DescriptionP = prod.DescriptionP;
-                    producto.Cost = prod.Cost;
-                    producto.QuantityMin = prod.QuantityMin;
-                    producto.Barcode = prod.Barcode;
-                    db.SaveChanges();*/
+                    ProductionOrder poEditado = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
+                    poEditado.IdProduct = po.IdProduct;
+                    poEditado.IdProductionState = po.IdProductionState;
+                    poEditado.IdEmployee = po.IdEmployee;
+                    poEditado.Quantity = po.Quantity;
+                    poEditado.DateT = po.DateT;
+                    poEditado.Code = po.Code;
+                    db.SaveChanges();
                     return false;
                 }
             }
@@ -158,9 +115,9 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    /*Product bajar = db.Products.FirstOrDefault(x => x.Id == id);
+                    ProductionOrder bajar = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
                     bajar.Delete = true;
-                    db.SaveChanges();*/
+                    db.SaveChanges();
                     return false;
                 }
             }
@@ -176,10 +133,10 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                   /* Product prod = db.Products.Single(x => x.Id == id);
-                    if (null == prod) { return true; }
-                    db.Products.Remove(prod);
-                    db.SaveChanges();*/
+                    ProductionOrder po = db.ProductionOrders.Single(x => x.Id == id);
+                    if (null == po) { return true; }
+                    db.ProductionOrders.Remove(po);
+                    db.SaveChanges();
                     return false;
                 }
             }

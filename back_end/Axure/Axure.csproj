@@ -189,6 +189,7 @@
     <Compile Include="DataBase\Module_Stock\DepositDB.cs" />
     <Compile Include="DataBase\Module_Stock\EmployeeDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDB.cs" />
+    <Compile Include="DataBase\Module_Stock\ProductionOrderDetailDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionStateDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductTypeDB.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="DTO\Module_Stock\EntSalProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
+    <Compile Include="DTO\Module_Stock\ProductionOrderDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionOrderDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionStateDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductTypeDTO.cs" />
