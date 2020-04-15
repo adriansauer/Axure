@@ -1,0 +1,191 @@
+*{
+    box-sizing: border-box;
+}
+html, body, .row{
+    padding: 0;
+    margin: 0 !important;
+}
+html{
+    font-size: 16px;
+}
+.App{
+    width: 100vw;
+    height: 100vh;
+}
+.Body{
+    width: 100vw;
+    height: 100vh;
+    .Body--Box{
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        background-color: #fcfcfc;
+    }
+    .Aside{
+        display: none;
+    }
+}
+#Header{
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 4rem;
+    background-color: #1A689E;
+}
+#Menu{
+    z-index: 900;
+    .navbar{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 16.667vw;
+        min-width: 220px;
+        height: 4rem;
+        min-height: 4rem;
+        padding: 0 1rem;
+        padding-top: 1rem;
+        background-image: url(../img/menuBack.png);
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+        align-items: flex-start;
+        &:before{
+            content:"";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: 0.15);
+        }
+        transition: all 0.6s ease-in-out;
+        &.active{
+            height: 100vh;
+            min-height: 600px;
+            &:before{
+                content: none;
+            }
+        }
+        .navbar-brand{
+            color: #fff;
+            font-size: 2rem;
+            line-height: 2rem;
+            font-weight: 500;
+            padding: 0;
+            transition: all 0.3s ease-in-out;
+            z-index: 950;
+            &:hover{
+                transform: scale(1.05);
+            }
+        }
+        .navbar-toggler{
+            padding: 0;
+            outline: none;
+            .navbar-toggler-icon{
+                background-image: url(../img/bars-solid.svg);
+                opacity: 0.75;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+
+.shadow-effect {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+  
+.shadow-effect:after {
+    content: "";
+    border-radius: 5px;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+  
+.shadow-effect:hover {
+    -webkit-transform: scale(1.25, 1.25);
+    transform: scale(1.05, 1.05);
+}
+  
+.shadow-effect:hover:after {
+      opacity: 1;
+}
+
+
+/* 
+.App{
+    
+    overflow-y: hidden;
+     overflow-x: hidden;
+   
+}
+.Body{
+    height: 100%;
+    width: 100%;
+}
+.Header{
+  
+    height: 10%;
+}
+
+.Box{
+ 
+    height: 100%;  
+}
+.Menu{
+    width: 10%;
+   height: 90%;
+    background-color:rgb(108,117,125);
+      
+}
+.Section{
+    width: 90%;
+    height: 100%;
+    
+}
+.Aside{
+    width: 10%;
+    height: 100%;
+    background-color:rgb(108,117,125);
+}
+.btnAsideP1{
+    margin-bottom: 100%;
+}
+.botonMenu1{
+    
+    margin-bottom: 100%;
+   
+}
+.homeHeader{
+    width: 100%;
+    height: 5%;
+}
+.filaHome{
+    height: 45%;
+    width: 90%;
+}
+.homeIcono:hover{
+    background: #318aac;
+    color: #fff !important;
+} */

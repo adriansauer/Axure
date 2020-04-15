@@ -15,7 +15,7 @@ class Body extends Component {
       return (
         <div className="Body">
           <Header />
-          <div className="Box row">
+          <div className="Body--Box">
             <Menu />
             <Home />
           </div>
@@ -25,7 +25,7 @@ class Body extends Component {
       return (
         <div className="Body">
           <Header />
-          <div className="Box row">
+          <div className="Body--Box">
             <Menu />
             <Section />
             <Aside />
