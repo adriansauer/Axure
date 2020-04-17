@@ -15,20 +15,20 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    [RoutePrefix("EntSalProducts")]
-    public class EntSalProductsController : Controller
+    [RoutePrefix("MovementProducts")]
+    public class MovementProductsController : Controller
     {
-        private EntSalProductDAO espDAO;
+        private MovementProductDAO espDAO;
 
-        public EntSalProductsController()
+        public MovementProductsController()
         {
-            this.espDAO = new EntSalProductDAO();
+            this.espDAO = new MovementProductDAO();
         }
 
-        // POST: EntSalProduct/Agregar
+        // POST: MovementProducts/Agregar
         [HttpPost]
         [Route("Agregar")]
-        public ActionResult Agregar(EntSalProduct esp)
+        public ActionResult Agregar(MovementProduct esp)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Axure.Controllers.Module_Stock
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, EntSalProduct esp)
+        public ActionResult Edit(int id, MovementProduct esp)
         {
             try
             {
@@ -72,12 +72,12 @@ namespace Axure.Controllers.Module_Stock
         }
 
         //Todas las cabeceras de Entrada y Salida por deposito
-        [Route("EntSalDeposito/{id}")]
-        public ActionResult EntSalDeposito(int id)
+        [Route("MovementDeposito/{id}")]
+        public ActionResult MovementDeposito(int id)
         {
             try
             {
-                var lista = this.espDAO.EntSalDeposito(id);
+                var lista = this.espDAO.MovementDeposito(id);
                 if (lista != null)
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(202);

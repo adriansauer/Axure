@@ -12,18 +12,18 @@ using System.Web;
 
 namespace Axure.Models.Module_Stock
 {
-    public class EntSalProduct
+    public class MovementProduct
     {
         //Id
         public int Id { get; set; }
 
         //Numero de Entrada Salida
         [Required]
-        public int EntSalNumber { get; set; }
+        public int Number { get; set; }
 
         //Fecha
         [Required]
-        public DateTime DateP { get; set; }
+        public DateTime Date { get; set; }
 
         //Costo total
         public int TotalCost { get; set; }
@@ -35,20 +35,20 @@ namespace Axure.Models.Module_Stock
 
         //FK del encargado
         [Required]
-        public int IdEmployee { get; set; }
-        [ForeignKey("IdEmployee")]
+        public int EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
         public Employee employee { get; set; }
 
         //Deposito de salida o deposito destino
         [Required]
-        public int IdDeposit { get; set; }
-        [ForeignKey("IdDeposit")]
+        public int DepositId { get; set; }
+        [ForeignKey("DepositId")]
         public Deposit deposit { get; set; }
 
         //FK Entrada o Salida
-        [Required]
-        public int IdEntSalType { get; set; }
-        [ForeignKey("IdEntSalType")]
-        public EntSalType entSalType { get; set; }
+        [Required]//cambiar nombre movent
+        public int MovementTypeId { get; set; }
+        [ForeignKey("MovementTypeId")]
+        public MovementType MovementType { get; set; }
     }
 }

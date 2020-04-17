@@ -1,29 +1,33 @@
-﻿using Axure.Models.Module_Stock;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Axure.DTO.Module_Stock
+/*
+ * Creado por Enzo Ramirez
+ * 09/04/2020
+ */
+
+namespace Axure.Models.Module_Stock
 {
-    public class EntSalProductDetailDTO
+    public class MovementProductDetail
     {
         //Id
         public int Id { get; set; }
-       
+
         //FK producto
         [Required]
-        public int IdProduct { get; set; }
-        [ForeignKey("IdProduct")]
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product product { get; set; }
 
         //FK Cabecera de Entrada Salida 
         [Required]
-        public int IdEntSalProduct { get; set; }
-        [ForeignKey("IdEntSalProduct")]
-        public EntSalProduct entSalProduct { get; set; }
+        public int MovementProductId { get; set; }
+        [ForeignKey("MovementProductId")]
+        public MovementProduct movementProduct { get; set; }
 
         //Cantidad de productos
         [Required]
@@ -31,6 +35,9 @@ namespace Axure.DTO.Module_Stock
 
         //Costo total
         public int TotalCost { get; set; }
+
+        //costo unitario
+        public int Cost { get; set; }
 
         //Observacion
         [StringLength(50)]

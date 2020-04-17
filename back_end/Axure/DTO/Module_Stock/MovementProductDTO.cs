@@ -8,43 +8,31 @@ using System.Web;
 
 namespace Axure.DTO.Module_Stock
 {
-    public class EntSalProductDTO
+    public class MovementProductDTO
     {
         //Id
         public int Id { get; set; }
 
         //Numero de Entrada Salida
-        [Required]
-        public int EntSalNumber { get; set; }
+        public int Number { get; set; }
 
         //Fecha
-        [Required]
-        public DateTime DateP { get; set; }
+        public DateTime Date { get; set; }
 
         //Costo total
         public int TotalCost { get; set; }
 
         //Razon de Entrada Salida
-        [Required]
         [StringLength(5)]
         public String Reason { get; set; }
 
         //FK del encargado
-        [Required]
-        public int IdEmployee { get; set; }
-        [ForeignKey("IdEmployee")]
-        public Employee employee { get; set; }
+        public int EmployeeId { get; set; }
 
         //Deposito de salida o deposito destino
-        [Required]
-        public int IdDeposit { get; set; }
-        [ForeignKey("IdDeposit")]
-        public Deposit deposit { get; set; }
+        public int DepositId { get; set; }
 
         //FK Entrada o Salida
-        [Required]
-        public int IdEntSalType { get; set; }
-        [ForeignKey("IdEntSalType")]
-        public EntSalType entSalType { get; set; }
+        public int MovementTypeId { get; set; }
     }
 }
