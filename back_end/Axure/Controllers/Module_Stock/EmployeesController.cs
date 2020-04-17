@@ -8,25 +8,26 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Stock
 {
-    public class ProductionOrdersController : Controller
+    [RoutePrefix("Employees")]
+    public class EmployeesController : Controller
     {
-
         //Atributos.
-        private ProductionOrderDB productionOrderDB;
+        private EmployeeDB employeeDB;
 
         //Constructor de la clase.
-        public ProductionOrdersController()
+        public EmployeesController()
         {
-            this.productionOrderDB = new ProductionOrderDB();
+            this.employeeDB = new EmployeeDB();
         }
 
-        // GET: ProductionOrders
+        // GET: Datos del modelo de un empleado.
+        //[Authorize(Roles = "user, admin")]
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", IdProductionState = "True", IdProduct = "True", IdEmployee = "True", DateT = "True", Quantity = "True", Code = "True", ListDetails = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", NameE = "True", CI = "True", Direction = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -34,12 +35,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
+        // GET: Todos los tipos de productos existentes.
         [Route("List")]
         public ActionResult List()
         {
             try
             {
-                var lista = this.productionOrderDB.ObtenerTodasOrdenesProduccion();
+                var lista = this.employeeDB.ObtenerTodosLosEmpleados();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -50,15 +52,16 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
+
         }
 
-        // GET: ProductionOrders/Details/5
+        // GET: Employees/Details/5
         [Route("Details/{id}")]
         public ActionResult Details(int id)
         {
             try
             {
-                var dato = this.productionOrderDB.DetalleOrdenProduccion(id);
+                var dato = this.employeeDB.DetalleDelEmpleado(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
@@ -73,15 +76,15 @@ namespace Axure.Controllers.Module_Stock
                 return new HttpStatusCodeResult(406);
             }
         }
-        
-        // POST: ProductionOrders/Create
+
+        // POST: Employees/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(ProductionOrderDTO po)
+        public ActionResult Create(EmployeeDTO e)
         {
             try
             {
-                if (this.productionOrderDB.Agregar(po))
+                if (this.employeeDB.Agregar(e))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -96,14 +99,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: ProductionOrders/Edit/5
+        // POST: Employees/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, ProductionOrderDTO po)
+        public ActionResult Edit(int id, EmployeeDTO e)
         {
             try
             {
-                if (this.productionOrderDB.Editar(id, po))
+                if (this.employeeDB.Editar(id, e))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -118,14 +121,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // DELETE: ProductionOrders/Delete/5
+        // DELETE: Employees/Delete/5
         [HttpDelete]
         [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                if (this.productionOrderDB.darDeBaja(id))
+                if (this.employeeDB.darDeBaja(id))
                 {
                     return new HttpStatusCodeResult(406);
                 }
