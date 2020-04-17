@@ -89,6 +89,7 @@ namespace Axure.DataBase.Module_Stock
                     pr.DepositId    = esp.DepositId;
                     pr.EmployeeId   = esp.EmployeeId;
                     pr.Reason       = esp.Reason;
+                    //no deberia
                     pr.TotalCost    = esp.TotalCost;
 
                     db.SaveChanges();
