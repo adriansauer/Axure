@@ -31,6 +31,7 @@ namespace Axure.Models.Module_Stock
         //Razon de Entrada Salida
         [Required]
         [StringLength(100)]
+        //hacer fk
         public String Reason { get; set; }
 
         //FK del encargado
