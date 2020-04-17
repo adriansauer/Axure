@@ -174,10 +174,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ControllerError.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
+    <Compile Include="Controllers\Module_Stock\MovementProductDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\MovementProductsController.cs" />
+=======
     <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
     <Compile Include="Controllers\Module_Stock\EntSalProductDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\EntSalProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductComponentsController.cs" />
+>>>>>>> master
     <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductionStatesController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
@@ -186,6 +191,11 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\DataBaseError.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
+<<<<<<< HEAD
+    <Compile Include="DataBase\Module_Stock\MovementProductDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\MovementProductDetailDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
+=======
     <Compile Include="DataBase\Module_Stock\DepositDB.cs" />
     <Compile Include="DataBase\Module_Stock\EmployeeDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDB.cs" />
@@ -195,13 +205,19 @@
     <Compile Include="DataBase\Module_Stock\ProductTypeDB.cs" />
     <Compile Include="DataBase\Module_Stock\EntSalProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\EntSalProductDetailDAO.cs" />
+>>>>>>> master
     <Compile Include="DataBase\Module_Stock\StockDB.cs" />
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\DepositDTO.cs" />
+<<<<<<< HEAD
+    <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
+    <Compile Include="DTO\Module_Stock\MovementProductDTO.cs" />
+=======
     <Compile Include="DTO\Module_Stock\EmployeeDTO.cs" />
     <Compile Include="DTO\Module_Stock\EntSalProductDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\EntSalProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductComponentDTO.cs" />
+>>>>>>> master
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionOrderDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionOrderDTO.cs" />
@@ -221,9 +237,9 @@
     <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
-    <Compile Include="Models\Module_Stock\EntSalProduct.cs" />
-    <Compile Include="Models\Module_Stock\EntSalProductDetail.cs" />
-    <Compile Include="Models\Module_Stock\EntSalType.cs" />
+    <Compile Include="Models\Module_Stock\MovementProduct.cs" />
+    <Compile Include="Models\Module_Stock\MovementProductDetail.cs" />
+    <Compile Include="Models\Module_Stock\MovementType.cs" />
     <Compile Include="Models\Module_Stock\Models\Pc.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
     <Compile Include="Models\Module_Stock\Movement.cs" />

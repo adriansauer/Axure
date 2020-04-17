@@ -14,26 +14,26 @@ using System.Web;
 
 namespace Axure.DataBase.Module_Stock
 {
-    public class EntSalProductDAO
+    public class MovementProductDAO
     {
         //Constructor
-        public EntSalProductDAO() { }
+        public MovementProductDAO() { }
 
         //Agregar datos a la Cabecera de Entrada y Salida de Productos
-        public bool Agregar(EntSalProduct esp)
+        public bool Agregar(MovementProduct esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.EntSalProducts.Add(new EntSalProduct() { 
-                        EntSalNumber = esp.EntSalNumber, 
-                        DateP = esp.DateP,
+                    db.MovementProducts.Add(new MovementProduct() { 
+                        Number = esp.Number, 
+                        Date = esp.Date,
                         TotalCost = esp.TotalCost,
                         Reason = esp.Reason,
-                        IdDeposit = esp.IdDeposit,
-                        IdEmployee = esp.IdEmployee,
-                        IdEntSalType = esp.IdEntSalType});
+                        DepositId = esp.DepositId,
+                        EmployeeId = esp.EmployeeId,
+                        MovementTypeId = esp.MovementTypeId});
                     db.SaveChanges();
                     return true;
                 }
@@ -51,12 +51,12 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    EntSalProduct esp = db.EntSalProducts.Single(x => x.Id == id);
+                    MovementProduct esp = db.MovementProducts.Single(x => x.Id == id);
                     if (null == esp) return true;
 
                     //Todos los detalles de una cabecera
-                    var produc = db.EntSalProductDetails
-                        .Where(x => x.IdEntSalProduct == esp.Id)
+                    var produc = db.MovementProductDetails
+                        .Where(x => x.MovementProductId == esp.Id)
                         .ToList();
 
                     if (produc == null) return true;
@@ -64,10 +64,10 @@ namespace Axure.DataBase.Module_Stock
                     //Elimina primero los detalles
                     for (int i = 0; i < produc.Count; i++)
                     {
-                        db.EntSalProductDetails.Remove(produc[i]);
+                        db.MovementProductDetails.Remove(produc[i]);
                     }
                     //Luego elimina la cabecera
-                    db.EntSalProducts.Remove(esp);// db.EntSalProducts.Single(x=> x.Id == id));
+                    db.MovementProducts.Remove(esp);// db.EntSalProducts.Single(x=> x.Id == id));
                     db.SaveChanges();
                     return true;
                 }
@@ -78,16 +78,16 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Editar(int id, EntSalProduct esp)
+        public bool Editar(int id, MovementProduct esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    EntSalProduct pr = db.EntSalProducts.FirstOrDefault(x => x.Id == id);
+                    MovementProduct pr = db.MovementProducts.FirstOrDefault(x => x.Id == id);
 
-                    pr.IdDeposit    = esp.IdDeposit;
-                    pr.IdEmployee   = esp.IdEmployee;
+                    pr.DepositId    = esp.DepositId;
+                    pr.EmployeeId   = esp.EmployeeId;
                     pr.Reason       = esp.Reason;
                     pr.TotalCost    = esp.TotalCost;
 
@@ -101,22 +101,22 @@ namespace Axure.DataBase.Module_Stock
             }
         }        
 
-        public List<EntSalProductDTO> EntSalDeposito(int deposito)
+        public List<MovementProductDTO> MovementDeposito(int deposito)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     Deposit dp = db.Deposits.Single(x => x.Id == deposito);
-                    var entSal = db.EntSalProducts.Where(x => x.IdDeposit == dp.Id).ToList();
-                    List<EntSalProduct> lista = new List<EntSalProduct>();
-                    entSal.ForEach( x=> lista.Add(db.EntSalProducts.Single(y => y.Id == x.Id)));
+                    var movement = db.MovementProducts.Where(x => x.DepositId == dp.Id).ToList();
+                    List<MovementProduct> lista = new List<MovementProduct>();
+                    movement.ForEach( x=> lista.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
 
-                    var listaEntSal = lista.Select(x => new { Id = x.Id, EntSalNumber = x.EntSalNumber, DateP = x.DateP, TotalCost = x.TotalCost, Reason = x.Reason, IdEmployee = x.IdEmployee, IdDeposit = x.IdDeposit, IdEntSalType = x.IdEntSalType })
+                    var listaMov = lista.Select(x => new { Id = x.Id, Number = x.Number, Date = x.Date, TotalCost = x.TotalCost, Reason = x.Reason, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId })
                         .ToList()
-                        .Select(y => new EntSalProductDTO(){ Id = y.Id, EntSalNumber = y.EntSalNumber, DateP = y.DateP, TotalCost = y.TotalCost, Reason = y.Reason, IdEmployee = y.IdEmployee, IdDeposit = y.IdDeposit, IdEntSalType = y.IdEntSalType})
+                        .Select(y => new MovementProductDTO(){ Id = y.Id, Number = y.Number, Date = y.Date, TotalCost = y.TotalCost, Reason = y.Reason, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId})
                         .ToList();
-                    return listaEntSal;
+                    return listaMov;
                 }
             }
             catch
@@ -125,16 +125,16 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public List<EntSalProductDTO> Obtener()
+        public List<MovementProductDTO> Obtener()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var lista = db.EntSalProducts.Where(x => x.TotalCost > 0)
-                        .Select(x => new { Id = x.Id, EntSalNumber = x.EntSalNumber, DateP = x.DateP, TotalCost = x.TotalCost, Reason = x.Reason, IdEmployee = x.IdEmployee, IdDeposit = x.IdDeposit, IdEntSalType = x.IdEntSalType })
+                    var lista = db.MovementProducts.Where(x => x.TotalCost > 0)
+                        .Select(x => new { Id = x.Id, Number = x.Number, Date = x.Date, TotalCost = x.TotalCost, Reason = x.Reason, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId })
                         .ToList()
-                        .Select(y => new EntSalProductDTO { Id = y.Id, EntSalNumber = y.EntSalNumber, DateP = y.DateP, TotalCost = y.TotalCost, Reason = y.Reason, IdEmployee = y.IdEmployee, IdDeposit = y.IdDeposit, IdEntSalType = y.IdEntSalType })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Number = y.Number, Date = y.Date, TotalCost = y.TotalCost, Reason = y.Reason, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId })
                         .ToList();
                     return lista;
                 }

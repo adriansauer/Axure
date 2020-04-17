@@ -11,7 +11,7 @@ using System.Web;
 
 namespace Axure.Models.Module_Stock
 {
-    public class EntSalType
+    public class MovementType
     {
         //Id
         public int Id { get; set; }
