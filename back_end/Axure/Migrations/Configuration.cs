@@ -163,9 +163,9 @@ namespace Axure.Migrations
                 );
 
             //Datos de la tabla EntSalType
-            context.EntSalTypes.AddOrUpdate(x => x.Id,
-                new EntSalType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
-                new EntSalType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
+            context.MovementTypes.AddOrUpdate(x => x.Id,
+                new MovementType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
+                new MovementType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
                 );
 
             //context.Movements.AddOrUpdate(x => x.Id);
