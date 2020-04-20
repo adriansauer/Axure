@@ -5,37 +5,43 @@ using System.Linq;
 using System.Web;
 
 /*
- *Clase Employee
- * Creado el 1 de marzo de 2020 por Victor Ciceia.
- * Modelo de los datos que posee un empleado de la empresa,
- * este modelo es utilizado por la base de datos.
+ * Employee class
+ * Created March 1, 2020 by Victor Ciceia.
+ * Company employees.
  */
 namespace Axure.Models.Module_Stock
 {
     public class Employee
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //Nombre del empleado.
+
+        //Employee name.
         [Required]
-        [StringLength(200)]
-        public string NameE { get; set; }
-        //Ceddula de identidad.
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        //Employee identity card.
         [Required]
         [StringLength(20)]
         public string CI { get; set; }
-        //La direccion del empleado.
+
+        //Employee address.
         [Required]
         [StringLength(200)]
-        public string Direction { get; set; }
-        //El RUC del empleado.
+        public string Address { get; set; }
+
+        //Employee RUC.
         [Required]
         [StringLength(20)]
         public string RUC { get; set; }
-        //El numero de celular o telefono del empleado.
+
+        //Employee phone.
         [StringLength(20)]
         public string Phone { get; set; }
+
+        //Used to remove idle.
         [Required]
-        public bool Delete { get; set; }
+        public bool Deleted { get; set; }
     }
 }

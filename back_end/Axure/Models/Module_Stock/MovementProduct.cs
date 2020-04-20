@@ -25,14 +25,8 @@ namespace Axure.Models.Module_Stock
         [Required]
         public DateTime Date { get; set; }
 
-        //Costo total
-        public int TotalCost { get; set; }
-
-        //Razon de Entrada Salida
         [Required]
-        [StringLength(100)]
-        //hacer fk
-        public String Reason { get; set; }
+        public int TotalCost { get; set; }
 
         //FK del encargado
         [Required]
@@ -48,8 +42,8 @@ namespace Axure.Models.Module_Stock
 
         //FK Entrada o Salida
         [Required]//cambiar nombre movent
-        public int MovementTypeId { get; set; }
-        [ForeignKey("MovementTypeId")]
-        public MovementType MovementType { get; set; }
+        public int MovementMotiveId { get; set; }
+        [ForeignKey("MovementMotiveId")]
+        public MovementMotive MovementMotive { get; set; }
     }
 }

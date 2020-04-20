@@ -25,9 +25,9 @@ namespace Axure.DataBase.Module_Stock
                 {
 
                     var respuesta = db.Deposits.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, NameD = x.NameD, Code = x.Code})
+                        .Select(x => new { Id = x.Id, NameD = x.NameD})
                         .ToList()
-                        .Select(y => new DepositDTO() { Id = y.Id, NameD = y.NameD, Code = y.Code})
+                        .Select(y => new DepositDTO() { Id = y.Id, NameD = y.NameD})
                         .ToList();
                     return respuesta;
                 }
@@ -45,7 +45,7 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     var d = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    return new DepositDTO() { Id = d.Id, NameD = d.NameD, Code = d.Code };
+                    return new DepositDTO() { Id = d.Id, NameD = d.NameD};
                 }
             }
             catch

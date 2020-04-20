@@ -33,15 +33,15 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Employee> Employees { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Movement> Movements { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProduction> Movements { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementDetail> MovementDetails { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Provider> Providers { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ComprobantePurchase> ComprobantePurchases { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProofPurchase> ComprobantePurchases { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ComprobantePurchaseDetail> ComprobantePurchaseDetails { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProofPurchaseDetail> ComprobantePurchaseDetails { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductionState> ProductionStates { get; set; }
 
@@ -53,7 +53,7 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementType> MovementTypes { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProduct> MovementProducts { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProductionType> MovementProducts { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProductDetail> MovementProductDetails { get; set; }
 

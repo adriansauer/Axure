@@ -217,7 +217,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
-    <Compile Include="Models\Module_Stock\ComprobantePurchase.cs" />
+    <Compile Include="Models\Module_Stock\ProofPurchase.cs" />
     <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />

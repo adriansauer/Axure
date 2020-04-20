@@ -20,13 +20,13 @@ namespace Axure.DataBase.Module_Stock
         public MovementProductDAO() { }
 
         //Agregar datos a la Cabecera de Entrada y Salida de Productos
-        public bool Agregar(MovementProduct esp)
+        public bool Agregar(MovementProductionType esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.MovementProducts.Add(new MovementProduct() { 
+                    db.MovementProducts.Add(new MovementProductionType() { 
                         Number = esp.Number, 
                         Date = esp.Date,
                         TotalCost = esp.TotalCost,
@@ -51,7 +51,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    MovementProduct esp = db.MovementProducts.Single(x => x.Id == id);
+                    MovementProductionType esp = db.MovementProducts.Single(x => x.Id == id);
                     if (null == esp) return true;
 
                     //Todos los detalles de una cabecera
@@ -78,13 +78,13 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Editar(int id, MovementProduct esp)
+        public bool Editar(int id, MovementProductionType esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    MovementProduct pr = db.MovementProducts.FirstOrDefault(x => x.Id == id);
+                    MovementProductionType pr = db.MovementProducts.FirstOrDefault(x => x.Id == id);
 
                     pr.DepositId    = esp.DepositId;
                     pr.EmployeeId   = esp.EmployeeId;
@@ -110,7 +110,7 @@ namespace Axure.DataBase.Module_Stock
                 {
                     Deposit dp = db.Deposits.Single(x => x.Id == deposito);
                     var movement = db.MovementProducts.Where(x => x.DepositId == dp.Id).ToList();
-                    List<MovementProduct> lista = new List<MovementProduct>();
+                    List<MovementProductionType> lista = new List<MovementProductionType>();
                     movement.ForEach( x=> lista.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
 
                     var listaMov = lista.Select(x => new { Id = x.Id, Number = x.Number, Date = x.Date, TotalCost = x.TotalCost, Reason = x.Reason, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId })

@@ -18,12 +18,12 @@ namespace Axure.Models.Module_Stock
 
         //Abreviatura
         [Required]
-        [StringLength(5)]
+        [StringLength(20)]
         public String Abbreviation { get; set; }
 
         //Descripcion
         [Required]
-        [StringLength(20)]
+        [StringLength(200)]
         public String Description { get; set; }
     }
 }
