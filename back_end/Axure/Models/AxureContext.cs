@@ -57,7 +57,7 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementType> MovementTypes { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProductionType> MovementProducts { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProduct> MovementProducts { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProductDetail> MovementProductDetails { get; set; }
 

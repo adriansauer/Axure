@@ -19,11 +19,11 @@ namespace Axure.Models.Module_Stock
         //Abreviatura
         [Required]
         [StringLength(20)]
-        public String Abbreviation { get; set; }
+        public string Abbreviation { get; set; }
 
         //Descripcion
         [Required]
         [StringLength(200)]
-        public String Description { get; set; }
+        public string Description { get; set; }
     }
 }

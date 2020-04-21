@@ -167,17 +167,17 @@ namespace Axure.Migrations
                 new MovementProductionType { Id = 1, Type = "Para producción" },
                 new MovementProductionType { Id = 2, Type = "Para Venta" });
             //Product movements according to production order.
-            context.MovementProductions.AddOrUpdate(x => x.Id);
+            //context.MovementProductions.AddOrUpdate(x => x.Id);
             //Detail od the movement of products for production.
-            context.MovementProductionDetails.AddOrUpdate(x => x.Id);
+            //context.MovementProductionDetails.AddOrUpdate(x => x.Id);
             //It is used when products are missing from the raw material deposit. 
-            context.ProofPurchases.AddOrUpdate(x => x.Id);
-            //Purchase details,
-            context.ProofPurchaseDetails.AddOrUpdate(x => x.Id);
+            //context.ProofPurchases.AddOrUpdate(x => x.Id);
+            //Purchase details.
+            //context.ProofPurchaseDetails.AddOrUpdate(x => x.Id);
 
             //context.MovementProducts.AddOrUpdate(x => x.Id);
             //context.MovementProductDetails.AddOrUpdate(x => x.Id);
-            context.MovementMotives.AddOrUpdate(x => x.Id);
+            //context.MovementMotives.AddOrUpdate(x => x.Id);
             context.MovementTypes.AddOrUpdate(x => x.Id,
                 new MovementType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
                 new MovementType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
