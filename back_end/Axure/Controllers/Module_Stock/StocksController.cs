@@ -13,7 +13,7 @@ namespace Axure.Controllers.Module_Stock
     {
 
         //Atributos
-        StockDB stockDB;
+        /*StockDB stockDB;
 
         public StocksController()
         {
@@ -136,6 +136,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

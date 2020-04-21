@@ -10,13 +10,13 @@ namespace Axure.DataBase.Module_Stock
 {
     public class ProductionStateDB
     {
-        public ProductionStateDB()
+        /*public ProductionStateDB()
         {
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
+        
+         //Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
+        
         public List<ProductionStateDTO> ObtenerTodosLosEstadosProduccion()
         {
             try
@@ -127,5 +127,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

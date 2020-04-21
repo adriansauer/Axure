@@ -10,14 +10,14 @@ namespace Axure.DataBase.Module_Stock
 {
     public class ProductTypeDB
     {
-   
+   /*
         public ProductTypeDB()
         {
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
+        
+         // Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
+        
         public List<ProductTypeDTO> ObtenerTodosTiposProductos()
         {
             try
@@ -131,5 +131,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

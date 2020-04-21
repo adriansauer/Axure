@@ -20,7 +20,7 @@ namespace Axure.Controllers.Module_Stock
     public class ProductsController : Controller
     {
         //Atributos.
-        private ProductsDB productsDB;
+        /*private ProductsDB productsDB;
 
         //Constructor de la clase.
         public ProductsController()
@@ -187,6 +187,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

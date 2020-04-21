@@ -10,6 +10,7 @@ namespace Axure.DataBase.Module_Stock
 {
     public class ProductionOrderDetailDB
     {
+        /*
         public ProductionOrderDetailDB()
         {
         }
@@ -127,5 +128,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

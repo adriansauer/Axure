@@ -11,7 +11,7 @@ namespace Axure.DataBase.Module_Stock
 {
     public class ProductionOrderDB
     {
-
+        /*
         ProductsDB productDB;
 
         public ProductionOrderDB()
@@ -19,9 +19,9 @@ namespace Axure.DataBase.Module_Stock
             this.productDB = new ProductsDB();
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
+        
+          Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
+        
         public List<ProductionOrderDTO> ObtenerTodasOrdenesProduccion()
         {
             try
@@ -145,5 +145,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

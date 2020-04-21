@@ -12,7 +12,7 @@ namespace Axure.Controllers.Module_Stock
     public class ProductionStatesController : Controller
     {
         //Atributos.
-        private ProductionStateDB productionStateDB;
+        /*private ProductionStateDB productionStateDB;
 
         //Constructor de la clase.
         public ProductionStatesController()
@@ -141,6 +141,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

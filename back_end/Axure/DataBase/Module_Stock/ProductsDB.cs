@@ -19,16 +19,16 @@ namespace Axure.DataBase.Module_Stock
 {
     public class ProductsDB
     {
-        ComponentDB componentDB;
+       /* ComponentDB componentDB;
 
         public ProductsDB()
         {
             this.componentDB = new ComponentDB();
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
+        
+         // Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
+        
         public List<ProductDTO> ObtenerTodosProductos()
         {
             try
@@ -50,9 +50,7 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        /*
-         * 
-        */
+        
         public List<ProductDTO> ProductosPorDeposito(int deposito)
         {
             try
@@ -213,6 +211,6 @@ namespace Axure.DataBase.Module_Stock
             {
                 return true;
             }
-        }
+        }*/
     }
 }

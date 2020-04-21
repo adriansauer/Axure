@@ -17,7 +17,7 @@ namespace Axure.DataBase.Module_Stock
     public class MovementProductDAO
     {
         //Constructor
-        public MovementProductDAO() { }
+        /*public MovementProductDAO() { }
 
         //Agregar datos a la Cabecera de Entrada y Salida de Productos
         public bool Agregar(MovementProductionType esp)
@@ -145,5 +145,6 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
+        */
     }
 }

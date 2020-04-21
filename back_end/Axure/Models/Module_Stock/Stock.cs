@@ -19,14 +19,14 @@ namespace Axure.Models.Module_Stock
 
         //Deposit where the product is.
         [Required]
-        public int IdDeposit { get; set; }
-        [ForeignKey("IdDeposit")]
+        public int DepositId { get; set; }
+        [ForeignKey("DepositId")]
         public Deposit Deposit { get; set; }
 
         //Product.
         [Required]
-        public int IdProduct { get; set; }
-        [ForeignKey("IdProduct")]
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
         public Product Product { get; set; }
 
         //Product quantity.

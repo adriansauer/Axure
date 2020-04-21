@@ -12,7 +12,7 @@ namespace Axure.Controllers.Module_Stock
     {
 
         //Atributos.
-        private ProductionOrderDB productionOrderDB;
+        /*private ProductionOrderDB productionOrderDB;
 
         //Constructor de la clase.
         public ProductionOrdersController()
@@ -139,6 +139,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

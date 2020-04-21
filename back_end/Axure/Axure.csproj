@@ -184,11 +184,10 @@
     <Compile Include="Controllers\Module_Stock\ProductTypesController.cs" />
     <Compile Include="Controllers\Module_Stock\StocksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DataBase\DataBaseError.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDetailDAO.cs" />
-    <Compile Include="DataBase\Module_Stock\DepositDB.cs" />
+    <Compile Include="DataBase\Module_Stock\DepositDAO.cs" />
     <Compile Include="DataBase\Module_Stock\EmployeeDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDB.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDetailDB.cs" />
@@ -217,8 +216,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
+    <Compile Include="Models\Module_Stock\MovementProductionDetail.cs" />
+    <Compile Include="Models\Module_Stock\MovementProductionType.cs" />
     <Compile Include="Models\Module_Stock\ProofPurchase.cs" />
-    <Compile Include="Models\Module_Stock\ComprobantePurchaseDetail.cs" />
+    <Compile Include="Models\Module_Stock\ProofPurchaseDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
     <Compile Include="Models\Module_Stock\MovementProduct.cs" />
@@ -226,8 +227,7 @@
     <Compile Include="Models\Module_Stock\MovementType.cs" />
     <Compile Include="Models\Module_Stock\Models\Pc.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
-    <Compile Include="Models\Module_Stock\Movement.cs" />
-    <Compile Include="Models\Module_Stock\MovementDetail.cs" />
+    <Compile Include="Models\Module_Stock\MovementProduction.cs" />
     <Compile Include="Models\Module_Stock\MovementMotive.cs" />
     <Compile Include="Models\Module_Stock\Product.cs" />
     <Compile Include="Models\Module_Stock\ProductComponent.cs" />

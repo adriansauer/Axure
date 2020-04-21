@@ -15,7 +15,7 @@ namespace Axure.DataBase.Module_Stock
         {
         }
 
-        public List<ProductComponentDTO> ObtenerTodosLosComponentes()
+       /* public List<ProductComponentDTO> ObtenerTodosLosComponentes()
         {
             try
             {
@@ -150,5 +150,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

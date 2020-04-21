@@ -8,26 +8,26 @@ using System.Web;
 
 namespace Axure.DataBase.Module_Stock
 {
-    public class DepositDB
+    public class DepositDAO
     {
-        public DepositDB()
+        public DepositDAO()
         {
         }
 
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
-        public List<DepositDTO> ObtenerTodosLosDepositos()
+        /*public List<DepositDTO> ObtenerTodosLosDepositos()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
 
-                    var respuesta = db.Deposits.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, NameD = x.NameD})
+                    var respuesta = db.Deposits
+                        .Select(x => new { Id = x.Id, Name = x.Name})
                         .ToList()
-                        .Select(y => new DepositDTO() { Id = y.Id, NameD = y.NameD})
+                        .Select(y => new DepositDTO() { Id = y.Id, Name = y.Name})
                         .ToList();
                     return respuesta;
                 }
@@ -129,5 +129,6 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+        */
     }
 }

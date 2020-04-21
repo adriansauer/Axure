@@ -18,7 +18,7 @@ namespace Axure.DataBase.Module_Stock
     public class MovementProductDetailDAO
     {
         //Metodo privado para agregar
-        private bool AgregarPriv() { return true; }
+        /*private bool AgregarPriv() { return true; }
 
         //Metodo para agregar a la tabla
         public bool Agregar(MovementProductDetail esp)
@@ -240,6 +240,6 @@ namespace Axure.DataBase.Module_Stock
                 return false;
             }
         }
-
+        */
     }
 }

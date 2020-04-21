@@ -12,7 +12,7 @@ namespace Axure.Controllers.Module_Stock
     public class EmployeesController : Controller
     {
         //Atributos.
-        private EmployeeDB employeeDB;
+        /*private EmployeeDB employeeDB;
 
         //Constructor de la clase.
         public EmployeesController()
@@ -142,6 +142,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

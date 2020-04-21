@@ -17,15 +17,15 @@ namespace Axure.DataBase.Module_Stock
         /*
          * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
         */
-        public List<EmployeeDTO> ObtenerTodosLosEmpleados()
+        /*public List<EmployeeDTO> ObtenerTodosLosEmpleados()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
 
-                    var respuesta = db.Employees.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, NameE = x.NameE, CI = x.CI, Direction = x.Direction, RUC = x.RUC, Phone = x.Phone })
+                    var respuesta = db.Employees.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, NameE = x.Name, CI = x.CI, Direction = x.Address, RUC = x.RUC, Phone = x.Phone })
                         .ToList()
                         .Select(y => new EmployeeDTO() { Id = y.Id, NameE = y.NameE, CI = y.CI, Direction = y.Direction, RUC = y.RUC, Phone = y.Phone })
                         .ToList();
@@ -44,8 +44,8 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    var e = db.Employees.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    return new EmployeeDTO() { Id = e.Id, NameE = e.NameE, CI = e.CI, Direction = e.Direction, RUC = e.RUC, Phone = e.Phone };
+                    var e = db.Employees.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    return new EmployeeDTO() { Id = e.Id, NameE = e.Name, CI = e.CI, Direction = e.Address, RUC = e.RUC, Phone = e.Phone };
                 }
             }
             catch
@@ -62,7 +62,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    db.Employees.Add(new Employee { NameE = e.NameE, CI = e.CI, Direction =e.Direction, RUC = e.RUC, Phone = e.Phone, Delete = false});
+                    db.Employees.Add(new Employee { Name = e.NameE, CI = e.CI, Address =e.Direction, RUC = e.RUC, Phone = e.Phone, Deleted = false});
                     db.SaveChanges();
                     return false;
                 }
@@ -81,9 +81,9 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     Employee empEditado = db.Employees.FirstOrDefault(x => x.Id == id);
-                    empEditado.NameE = e.NameE;
+                    empEditado.Name = e.NameE;
                     empEditado.CI = e.CI;
-                    empEditado.Direction = e.Direction;
+                    empEditado.Address = e.Direction;
                     empEditado.Phone = e.Phone;
                     empEditado.RUC = e.RUC;
                     db.SaveChanges();
@@ -103,7 +103,7 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     Employee e = db.Employees.FirstOrDefault(x => x.Id == id);
-                    e.Delete = true;
+                    e.Deleted = true;
                     db.SaveChanges();
                     return false;
                 }
@@ -131,6 +131,6 @@ namespace Axure.DataBase.Module_Stock
             {
                 return true;
             }
-        }
+        }*/
     }
 }

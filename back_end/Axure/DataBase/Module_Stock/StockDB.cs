@@ -10,7 +10,7 @@ namespace Axure.DataBase.Module_Stock
 {
     public class StockDB
     {
-        ProductsDB productDB;
+       /* ProductsDB productDB;
         public StockDB()
         {
             this.productDB = new ProductsDB();
@@ -103,7 +103,7 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
-
+        */
 
     }
 }
