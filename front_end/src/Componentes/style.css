@@ -34,8 +34,18 @@ html {
   background-color: #fcfcfc;
 }
 
-.Body .Aside {
-  display: none;
+.Body .Body--Box .Box--content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 83.333vw;
+  height: calc(100vh - 4rem);
+  margin-top: 4rem;
+  overflow-x: auto;
 }
 
 #Header {
@@ -127,6 +137,39 @@ html {
   opacity: 1;
 }
 
+#Aside {
+  padding: 0.5rem 1rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#Aside .nav {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  border-bottom-width: 2px;
+}
+
+#Aside .nav .nav-item {
+  margin-bottom: -2px;
+}
+
+#Aside .nav .nav-item .nav-link {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #939393;
+  border-width: 2px;
+  background-color: transparent;
+}
+
+#Aside .nav .nav-item .nav-link.active {
+  border-color: #dee2e6 #dee2e6 #fcfcfc;
+}
+
+#Section {
+  padding: 1.5rem;
+}
+
 .shadow-effect {
   position: relative;
   display: inline-block;
@@ -166,6 +209,26 @@ html {
 
 .shadow-effect:hover:after {
   opacity: 1;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* 
