@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * DepositDAO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DataBase.Module_Stock
 {
     public class DepositDAO
@@ -14,22 +18,13 @@ namespace Axure.DataBase.Module_Stock
         {
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
-        /*public List<DepositDTO> ObtenerTodosLosDepositos()
+        public List<Deposit> GetAll()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-
-                    var respuesta = db.Deposits
-                        .Select(x => new { Id = x.Id, Name = x.Name})
-                        .ToList()
-                        .Select(y => new DepositDTO() { Id = y.Id, Name = y.Name})
-                        .ToList();
-                    return respuesta;
+                    return db.Deposits.ToList();
                 }
             }
             catch
@@ -38,14 +33,13 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public DepositDTO DetalleDelDeposito(int id)
+        public Deposit Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var d = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    return new DepositDTO() { Id = d.Id, NameD = d.NameD};
+                    return db.Deposits.FirstOrDefault(x => x.Id == id );
                 }
             }
             catch
@@ -55,14 +49,13 @@ namespace Axure.DataBase.Module_Stock
 
         }
 
-
-        public bool Agregar(DepositDTO d)
+        public bool Add(Deposit d)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Deposits.Add(new Deposit { NameD = d.NameD, Code = d.Code , Delete = false });
+                    db.Deposits.Add(d);
                     db.SaveChanges();
                     return false;
                 }
@@ -73,16 +66,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-
-        public bool Editar(int id, DepositDTO d)
+        public bool Edit(int id, Deposit d)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit depEditado = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    depEditado.NameD = d.NameD;
-                    depEditado.Code = d.Code;
+                    Deposit depEditado = db.Deposits.FirstOrDefault(x => x.Id == id);
+                    depEditado.Name = d.Name;
                     db.SaveChanges();
                     return false;
                 }
@@ -93,31 +84,13 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool darDeBaja(int id)
+        public bool Delete(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit d = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    d.Delete = true;
-                    db.SaveChanges();
-                    return false;
-                }
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        public bool Eliminar(int id)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    Deposit d = db.Deposits.Single(x => x.Id == id && x.Delete == false);
+                    Deposit d = db.Deposits.Single(x => x.Id == id );
                     if (null == d) { return true; }
                     db.Deposits.Remove(d);
                     db.SaveChanges();
@@ -129,6 +102,5 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
-        */
     }
 }

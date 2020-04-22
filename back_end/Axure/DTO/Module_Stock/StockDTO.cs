@@ -4,20 +4,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+/*
+ * StockDTO class
+ * Created march 10, 2020 by Victor Ciceia.
+ */
 namespace Axure.DTO.Module_Stock
 {
     public class StockDTO
     {
-        //Id
+        //Unique identifier.
         public int Id { get; set; }
-        //
-        [Required]
-        public int IdDeposit { get; set; }
-        //
-        [Required]
-        public int IdProduct { get; set; }
-        //
-        [Required]
+
+        //Deposit where the product is.
+        public int DepositId { get; set; }
+
+        //Product.
+        public int ProductId { get; set; }
+
+        //Product quantity.
         public int Quantity { get; set; }
     }
 }

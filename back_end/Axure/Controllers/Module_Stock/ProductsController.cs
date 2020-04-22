@@ -10,75 +10,72 @@ using System.Web;
 using System.Web.Mvc;
 
 /*
- * Controlador  ProductsController
- * Creado el 10-03-2020 por Victor Ciceia.
- * Maneja todas las peticiones respecto a los producto.
+ * ProductsController class
+ * Created march 10, 2020 by Victor Ciceia.
  */
 namespace Axure.Controllers.Module_Stock
 {
     [RoutePrefix("Products")]
     public class ProductsController : Controller
     {
-        //Atributos.
-        /*private ProductsDB productsDB;
+        //Attributes.
+        private ProductDAO productDAO;
 
-        //Constructor de la clase.
         public ProductsController()
         {
-            this.productsDB = new ProductsDB();
+            this.productDAO = new ProductDAO();
         }
 
-        // GET: Datos del modelo producto.
         //[Authorize(Roles = "user, admin")]
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", ProductType = "True", NameP = "True", DescriptionP = "True", Cost = "True", Quantity = "True", Barcode = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", ProductType = "True", Name = "True", Description = "True", Cost = "True", Quantity = "True", Barcode = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
         }
 
-        // GET: Todos los prodductos existentes.
+        // GET: Products/List
         [Route("List")]
         public ActionResult List()
         {
             try
             {
-                var lista = this.productsDB.ObtenerTodosProductos();
+                var lista = this.productDAO.GetAll();
                 if(null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
            
         }
 
-        // GET: Todos los prodductos existentes en un deposito en especifico.
+        // GET: Products/OfDeposit/1
         [Route("OfDeposit/{id}")]
         public ActionResult OfDeposit(int id)
         {
             try
             {
-                var lista = this.productsDB.ProductosPorDeposito(id);
+                var lista = this.productDAO.ProductDeposit(id);
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
             
         }
@@ -89,19 +86,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.productsDB.DetalleProducto(id);
+                var dato = this.productDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(202);
+                    return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -111,36 +108,36 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Sum = this.productsDB.SumaPrecioProductoDeposito(id) }, JsonRequestBehavior.AllowGet);
+                return Json(new { Sum = this.productDAO.SumProductPricesDeposit(id) }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
-          // POST: Products/Create
+        // POST: Products/Create
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(Pc pc)
         {
             try
             {
-                if(null == pc.listaComponentes)
+                if(null == pc.ListComponents)
                 {
-                    if(this.productsDB.Agregar(pc))
-                        return new HttpStatusCodeResult(406);
+                    if(this.productDAO.Add(pc))
+                        return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    if(this.productsDB.AgregarPcComponentes(pc))
-                        return new HttpStatusCodeResult(406);
+                    if(this.productDAO.AddPc(pc))
+                        return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
-                return new HttpStatusCodeResult(200);
+                return new HttpStatusCodeResult(CodeHTTP.OK);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -151,42 +148,42 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productsDB.Editar(id, prod))
+                if (this.productDAO.Editar(id, prod))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
-        // POST: Products/Delete/5
+        // DELETE: Products/Delete/5
         [HttpDelete]
         [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                if (this.productsDB.darDeBaja(id))
+                if (this.productDAO.Remove(id))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
                 
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
-        }*/
+        }
     }
 }

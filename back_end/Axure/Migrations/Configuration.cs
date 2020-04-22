@@ -31,6 +31,12 @@ namespace Axure.Migrations
                   new User { Id = 1, Role = "user", UserName = "User", Password = "pass", Status = false, IdEmployee=1},
                   new User { Id = 2, Role = "admin", UserName = "Admin", Password = "pass", Status = false , IdEmployee=2}
                   );
+            //Settings
+            context.Settings.AddOrUpdate(x => x.Id,
+                new Setting { Id = 1, Key = "ID_DEPOSIT_RAW_MATERIAL", Value = "1" },
+                new Setting { Id = 2, Key = "ID_DEPOSIT_PRODUCTION", Value = "2" },
+                new Setting { Id = 3, Key = "ID_DEPOSIT_SALE", Value = "3" }
+                );
 
             //--------------------------------------------------------------------------------------------------------------//
             //                                              Module Stock                                                    //
@@ -171,9 +177,9 @@ namespace Axure.Migrations
             //Detail od the movement of products for production.
             //context.MovementProductionDetails.AddOrUpdate(x => x.Id);
             //It is used when products are missing from the raw material deposit. 
-            //context.ProofPurchases.AddOrUpdate(x => x.Id);
+            //context.PurchaseOrders.AddOrUpdate(x => x.Id);
             //Purchase details.
-            //context.ProofPurchaseDetails.AddOrUpdate(x => x.Id);
+            //context.PurchaseOrderDetails.AddOrUpdate(x => x.Id);
 
             //context.MovementProducts.AddOrUpdate(x => x.Id);
             //context.MovementProductDetails.AddOrUpdate(x => x.Id);

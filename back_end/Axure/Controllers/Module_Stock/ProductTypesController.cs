@@ -7,32 +7,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * ProductTypesController class
+ * Created april 21, 2020 by Victor Ciceia.
+ */
 namespace Axure.Controllers.Module_Stock
 {
     [RoutePrefix("ProductTypes")]
     public class ProductTypesController : Controller
     {
-        //Atributos.
-       /* private ProductTypeDB productTypeDB;
 
-        //Constructor de la clase.
+        private ProductTypeDAO productTypeDAO;
+
         public ProductTypesController()
         {
-            this.productTypeDB = new ProductTypeDB();
+            this.productTypeDAO = new ProductTypeDAO();
         }
 
-        // GET: Datos del modelo producto.
+        // GET: ProductTypes
         //[Authorize(Roles = "user, admin")]
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", TypeP = "True"}, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", Type = "True"}, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
         }
 
@@ -42,16 +45,16 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var lista = this.productTypeDB.ObtenerTodosTiposProductos();
+                var lista = this.productTypeDAO.GetAll();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
 
         }
@@ -62,19 +65,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.productTypeDB.DetalleTipoProducto(id);
+                var dato = this.productTypeDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(202);
+                    return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -85,18 +88,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productTypeDB.Agregar(pt))
+                if (this.productTypeDAO.Add(pt))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }                
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -107,18 +110,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productTypeDB.Editar(id, pt))
+                if (this.productTypeDAO.Edit(id, pt))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -129,20 +132,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productTypeDB.darDeBaja(id))
+                if (this.productTypeDAO.Remove(id))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
-
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
-        }*/
+        }
     }
 }

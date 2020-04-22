@@ -6,51 +6,54 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * EmployeesController class
+ * Created april 21, 2020 by Victor Ciceia.
+ */
 namespace Axure.Controllers.Module_Stock
 {
     [RoutePrefix("Employees")]
     public class EmployeesController : Controller
     {
-        //Atributos.
-        /*private EmployeeDB employeeDB;
 
-        //Constructor de la clase.
+        private EmployeeDAO employeeDAO;
+
         public EmployeesController()
         {
-            this.employeeDB = new EmployeeDB();
+            this.employeeDAO = new EmployeeDAO();
         }
 
-        // GET: Datos del modelo de un empleado.
+        // GET: Employees
         //[Authorize(Roles = "user, admin")]
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", NameE = "True", CI = "True", Direction = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", Name = "True", CI = "True", Address = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
         }
 
-        // GET: Todos los tipos de productos existentes.
+        // GET: Employees/List
         [Route("List")]
         public ActionResult List()
         {
             try
             {
-                var lista = this.employeeDB.ObtenerTodosLosEmpleados();
+                var lista = this.employeeDAO.GetAll();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
 
         }
@@ -61,19 +64,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.employeeDB.DetalleDelEmpleado(id);
+                var dato = this.employeeDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(202);
+                    return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -84,18 +87,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.employeeDB.Agregar(e))
+                if (this.employeeDAO.Add(e))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -106,18 +109,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.employeeDB.Editar(id, e))
+                if (this.employeeDAO.Edit(id, e))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -128,20 +131,20 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.employeeDB.darDeBaja(id))
+                if (this.employeeDAO.Remove(id))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
 
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
-        }*/
+        }
     }
 }

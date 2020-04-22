@@ -15,6 +15,8 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.User> Users { get; set; }
 
+        public System.Data.Entity.DbSet<Axure.Models.Setting> Settings { get; set; }
+
         //Module Stock
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Deposit> Deposits { get; set; }
@@ -43,9 +45,9 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Provider> Providers { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProofPurchase> ProofPurchases { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.PurchaseOrder> ProofPurchases { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProofPurchaseDetail> ProofPurchaseDetails { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.PurchaseOrderDetail> ProofPurchaseDetails { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductionState> ProductionStates { get; set; }
 
