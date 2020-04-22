@@ -11,35 +11,31 @@ using System.Web;
 using System.Web.Mvc;
 
 /*
- * Clase  ProductsDB
- * Creado el 10-03-2020 por Victor Ciceia.
- * Clase encargada de realizar peticiones a la base de datos enfocado a los productos.
+ * ProductDAO class
+ * Created march 10, 2020 by Victor Ciceia.
  */
 namespace Axure.DataBase.Module_Stock
 {
-    public class ProductsDB
+    public class ProductDAO
     {
-        ComponentDB componentDB;
+       ComponentDAO componentDB;
 
-        public ProductsDB()
+        public ProductDAO()
         {
-            this.componentDB = new ComponentDB();
+            this.componentDB = new ComponentDAO();
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
-        public List<ProductDTO> ObtenerTodosProductos()
+        public List<ProductDTO> GetAll()
         {
             try
             {
                 using (var db = new AxureContext())
                 {   
                     
-                    var respuesta = db.Products.Include("ProductTypes").Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id,ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                    var respuesta = db.Products.Include("ProductTypes").Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id,ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                         .ToList()
-                        .Select(y => new ProductDTO() { Id = y.Id,ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                        .Select(y => new ProductDTO() { Id = y.Id,ProductType = y.ProductType, Name = y.Name, Description = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                         .ToList();
                     return respuesta;                      
                 }
@@ -49,24 +45,21 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
-
-        /*
-         * 
-        */
-        public List<ProductDTO> ProductosPorDeposito(int deposito)
+        
+        public List<ProductDTO> ProductDeposit (int deposit)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit depos = db.Deposits.Single(x => x.Id == deposito);
-                    var stocks = db.Stocks.Include("Products").Where(x => x.IdDeposit == depos.Id).Select(x => new {Id = x.Product.Id }).ToList();
+                    Deposit depos = db.Deposits.Single(x => x.Id == deposit);
+                    var stocks = db.Stocks.Include("Products").Where(x => x.DepositId == depos.Id).Select(x => new {Id = x.Product.Id }).ToList();
                     List<Product> listaProductos = new List<Product>();
-                    stocks.ForEach(x => listaProductos.Add(db.Products.Include("ProductType").Single(w => w.Id == x.Id && w.Delete == false)));
+                    stocks.ForEach(x => listaProductos.Add(db.Products.Include("ProductType").Single(w => w.Id == x.Id && w.Deleted == false)));
                     var productos = listaProductos
-                        .Select(x => new { Id = x.Id, ProductType = x.ProductType, Nombre = x.NameP, Description = x.DescriptionP, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                        .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
                         .ToList()
-                        .Select(y => new ProductDTO() { Id = y.Id, ProductType = y.ProductType, NameP = y.Nombre, DescriptionP = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                        .Select(y => new ProductDTO() { Id = y.Id, ProductType = y.ProductType, Name = y.Name, Description = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                         .ToList();
                     return productos;
                 }
@@ -78,15 +71,14 @@ namespace Axure.DataBase.Module_Stock
             
         }
 
-        public ProductDTO DetalleProducto(int id)
+        public ProductDTO Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var p = db.Products.Include("ProductType").FirstOrDefault(x => x.Id == id && x.Delete == false);
-                       
-                    return new ProductDTO() { Id = p.Id, ProductType = p.ProductType, NameP = p.NameP, DescriptionP = p.DescriptionP, Cost = p.Cost, QuantityMin = p.QuantityMin, Barcode = p.Barcode };
+                    var p = db.Products.Include("ProductType").FirstOrDefault(x => x.Id == id && x.Deleted == false);                      
+                    return new ProductDTO() { Id = p.Id, ProductType = p.ProductType, Name = p.Name, Description = p.Description, Cost = p.Cost, QuantityMin = p.QuantityMin, Barcode = p.Barcode };
                 }
             }
             catch
@@ -96,7 +88,7 @@ namespace Axure.DataBase.Module_Stock
            
         }
 
-        public int SumaPrecioProductoDeposito(int id)
+        public int SumProductPricesDeposit(int id)
         {
             using (var db = new AxureContext())
             {
@@ -104,7 +96,7 @@ namespace Axure.DataBase.Module_Stock
                 int suma = 0;
                 try
                 {
-                    suma = db.Stocks.Include("Products").Where(x => x.IdDeposit == dep.Id && x.Product.Delete == false).Sum(z => z.Product.Cost * z.Quantity);
+                    suma = db.Stocks.Include("Products").Where(x => x.DepositId == dep.Id && x.Product.Deleted == false).Sum(z => z.Product.Cost * z.Quantity);
                     return suma;
                 }
                 catch
@@ -116,13 +108,13 @@ namespace Axure.DataBase.Module_Stock
         }
 
 
-        public bool Agregar(Pc pc)
+        public bool Add(Pc pc)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Products.Add(new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false });
+                    db.Products.Add(new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -133,18 +125,18 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool AgregarPcComponentes(Pc pc)
+        public bool AddPc(Pc pc)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Product nuevo = new Product() { NameP = pc.NameP, IdProductType = pc.IdProductType, DescriptionP = pc.DescriptionP, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Delete = false };
+                    Product nuevo = new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false };
                     db.Products.Add(nuevo);
                     db.SaveChanges();
-                    for (int i = 0; i < pc.listaComponentes.Count; i++)
+                    for (int i = 0; i < pc.ListComponents.Count; i++)
                     {
-                        this.componentDB.Agregar(new ProductComponentDTO() { IdProduct = nuevo.Id, IdProductComponent = pc.listaComponentes[i].IdProductComponent, Quantity = pc.listaComponentes[i].Quantity });
+                        this.componentDB.Add(new ProductComponentDTO() { ProductId = nuevo.Id, ProductComponentId = pc.ListComponents[i].ProductComponentId, Quantity = pc.ListComponents[i].Quantity });
                     }
                     return false;
                 }
@@ -161,10 +153,10 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    Product producto = db.Products.FirstOrDefault(x => x.Id == id);
-                    producto.NameP = prod.NameP;
-                    producto.IdProductType = prod.IdProductType;
-                    producto.DescriptionP = prod.DescriptionP;
+                    Product producto = db.Products.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    producto.Name = prod.Name;
+                    producto.ProductTypeId = prod.ProductTypeId;
+                    producto.Description = prod.Description;
                     producto.Cost = prod.Cost;
                     producto.QuantityMin = prod.QuantityMin;
                     producto.Barcode = prod.Barcode;
@@ -178,14 +170,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool darDeBaja(int id)
+        public bool Remove(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Product bajar = db.Products.FirstOrDefault(x => x.Id == id);
-                    bajar.Delete = true;
+                    Product bajar = db.Products.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    bajar.Deleted = true;
                     db.SaveChanges();
                     return false;
                 }
@@ -196,7 +188,7 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Eliminar(int id)
+        public bool Delete(int id)
         {
             try
             {

@@ -6,24 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * StockDAO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DataBase.Module_Stock
 {
-    public class StockDB
+    public class StockDAO
     {
-        ProductsDB productDB;
-        public StockDB()
+        ProductDAO productDAO;
+        public StockDAO()
         {
-            this.productDB = new ProductsDB();
+            this.productDAO = new ProductDAO();
         }
 
-        public StockDTO DetalleStock(int id)
+        public StockDTO Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                    var st = db.Stocks.FirstOrDefault(x => x.Id == id);
-                    return new StockDTO() { Id = st.Id, IdDeposit = st.IdDeposit, IdProduct = st.IdProduct, Quantity = st.Quantity};
+                    return new StockDTO() { Id = st.Id, DepositId = st.DepositId, ProductId = st.ProductId, Quantity = st.Quantity};
                 }
             }
             catch
@@ -32,13 +36,13 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public int CantidadProducto(int idProducto, Deposit dep)
+        public int ProductQuantity(int ProductId, Deposit dep)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    return db.Stocks.FirstOrDefault(x => x.IdDeposit == idProducto && x.IdDeposit == dep.Id).Quantity;
+                    return db.Stocks.FirstOrDefault(x => x.ProductId == ProductId && x.DepositId == dep.Id).Quantity;
                 }
             }
             catch
@@ -48,13 +52,13 @@ namespace Axure.DataBase.Module_Stock
         }
 
 
-        public bool Agregar(Stock st)
+        public bool Add (StockDTO st)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Stocks.Add(st);
+                    db.Stocks.Add(new Stock { ProductId = st.ProductId, DepositId = st.DepositId, Quantity = st.Quantity, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -65,15 +69,15 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Editar(int id, Stock st)
+        public bool Edit (int id, StockDTO st)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Stock stock = db.Stocks.FirstOrDefault(x => x.Id == id);
-                    stock.IdProduct = st.IdProduct;
-                    stock.IdDeposit = st.IdDeposit;
+                    Stock stock = db.Stocks.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    stock.ProductId = st.ProductId;
+                    stock.DepositId = st.DepositId;
                     stock.Quantity = st.Quantity;
                     db.SaveChanges();
                     return false;
@@ -85,7 +89,25 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Eliminar(int id)
+        public bool Remove(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    Stock bajar = db.Stocks.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    bajar.Deleted = true;
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool Deleted (int id)
         {
             try
             {
@@ -103,7 +125,5 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
-
-
     }
 }

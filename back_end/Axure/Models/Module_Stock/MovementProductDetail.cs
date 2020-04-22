@@ -17,7 +17,7 @@ namespace Axure.Models.Module_Stock
         //Id
         public int Id { get; set; }
 
-        //FK producto
+        //FK producto 
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
@@ -27,7 +27,7 @@ namespace Axure.Models.Module_Stock
         [Required]
         public int MovementProductId { get; set; }
         [ForeignKey("MovementProductId")]
-        public MovementProduct movementProduct { get; set; }
+        public MovementProductionType movementProduct { get; set; }
 
         //Cantidad de productos
         [Required]
@@ -40,7 +40,7 @@ namespace Axure.Models.Module_Stock
         public int Cost { get; set; }
 
         //Observacion
-        [StringLength(50)]
+        [StringLength(200)]
         public String Observation { get; set; }
     }
 }

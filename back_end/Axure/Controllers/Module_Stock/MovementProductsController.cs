@@ -18,7 +18,7 @@ namespace Axure.Controllers.Module_Stock
     [RoutePrefix("MovementProducts")]
     public class MovementProductsController : Controller
     {
-        private MovementProductDAO espDAO;
+       /* private MovementProductDAO espDAO;
 
         public MovementProductsController()
         {
@@ -28,7 +28,7 @@ namespace Axure.Controllers.Module_Stock
         // POST: MovementProducts/Agregar
         [HttpPost]
         [Route("Agregar")]
-        public ActionResult Agregar(MovementProduct esp)
+        public ActionResult Agregar(MovementProductionType esp)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Axure.Controllers.Module_Stock
 
         [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, MovementProduct esp)
+        public ActionResult Edit(int id, MovementProductionType esp)
         {
             try
             {
@@ -86,6 +86,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

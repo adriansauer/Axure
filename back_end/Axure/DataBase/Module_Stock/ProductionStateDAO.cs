@@ -6,29 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductionStateDAO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DataBase.Module_Stock
 {
-    public class ProductTypeDB
+    public class ProductionStateDAO
     {
-   
-        public ProductTypeDB()
+        public ProductionStateDAO()
         {
         }
-
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
-        public List<ProductTypeDTO> ObtenerTodosTiposProductos()
+        
+        public List<ProductionStateDTO> GetAll()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-
-                    var respuesta = db.ProductTypes.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, TypeP = x.TypeP})
+                    var respuesta = db.ProductionStates.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, State = x.State })
                         .ToList()
-                        .Select(y => new ProductTypeDTO() { Id = y.Id, TypeP = y.TypeP })
+                        .Select(y => new ProductionStateDTO() { Id = y.Id, State = y.State})
                         .ToList();
                     return respuesta;
                 }
@@ -39,15 +38,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public ProductTypeDTO DetalleTipoProducto(int id)
+        public ProductionStateDTO Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var pt = db.ProductTypes.FirstOrDefault(x => x.Id == id && x.Delete == false);
-
-                    return new ProductTypeDTO() { Id = pt.Id, TypeP = pt.TypeP};
+                    var ps = db.ProductionStates.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    return new ProductionStateDTO() { Id = ps.Id, State =ps.State};
                 }
             }
             catch
@@ -57,14 +55,13 @@ namespace Axure.DataBase.Module_Stock
 
         }
 
-
-        public bool Agregar(ProductTypeDTO pt)
+        public bool Add(ProductionStateDTO ps)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.ProductTypes.Add(new ProductType() { TypeP = pt.TypeP, Delete = false});
+                    db.ProductionStates.Add(new ProductionState { State = ps.State, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -75,15 +72,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-
-        public bool Editar(int id, ProductType pt)
+        public bool Edit(int id, ProductionStateDTO ps)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductType ptEditado = db.ProductTypes.FirstOrDefault(x => x.Id == id);
-                    ptEditado.TypeP = pt.TypeP;
+                    ProductionState psEditado = db.ProductionStates.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    psEditado.State = ps.State;
                     db.SaveChanges();
                     return false;
                 }
@@ -94,14 +90,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool darDeBaja(int id)
+        public bool Remove(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductType pt = db.ProductTypes.FirstOrDefault(x => x.Id == id);
-                    pt.Delete = true;
+                    ProductionState ps = db.ProductionStates.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    ps.Deleted = true;
                     db.SaveChanges();
                     return false;
                 }
@@ -112,16 +108,15 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-
-        public bool Eliminar(int id)
+        public bool Delete(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductType pt = db.ProductTypes.Single(x => x.Id == id);
-                    if (null == pt) { return true; }
-                    db.ProductTypes.Remove(pt);
+                    ProductionState ps = db.ProductionStates.Single(x => x.Id == id);
+                    if (null == ps) { return true; }
+                    db.ProductionStates.Remove(ps);
                     db.SaveChanges();
                     return false;
                 }

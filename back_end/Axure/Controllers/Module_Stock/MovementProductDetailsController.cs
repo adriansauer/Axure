@@ -17,7 +17,7 @@ namespace Axure.Controllers.Module_Stock
     [RoutePrefix("MovementProductDetails")]
     public class MovementProductDetailsController : Controller
     {
-        private MovementProductDetailDAO movementDAO;
+       /* private MovementProductDetailDAO movementDAO;
 
         public MovementProductDetailsController()
         {
@@ -110,6 +110,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
     }
 }

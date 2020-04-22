@@ -6,40 +6,47 @@ using System.Linq;
 using System.Web;
 
 /*
- *Clase Product
- * Creado el 1 de marzo de 2020 por Victor Ciceia.
- * Producto que posee la empresa.
+ * Product class
+ * Created march 1, 2020 by Victor Ciceia.
+ * Company products.
  */
 namespace Axure.Models.Module_Stock
 {
     public class Product
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //FK de lo que se espera hacer con el producto, Ej.: materia prima, venta, etc.
+
+        //The type of use that the company gives to the product.
         [Required]
-        public int IdProductType { get; set; }
-        [ForeignKey("IdProductType")]
+        public int ProductTypeId { get; set; }
+        [ForeignKey("ProductTypeId")]
         public ProductType ProductType { get; set; }
-        //Nombre del producto.
+
+        //Product name.
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        //Product description.
         [Required]
         [StringLength(200)]
-        public string NameP { get; set; }
-        //Descripcion del producto.
-        [Required]
-        [StringLength(200)]
-        public string DescriptionP { get; set; }
-        //El costo del producto.
+        public string Description { get; set; }
+
+        //Product cost.
         [Required]
         public int Cost { get; set; }
-        //Cantidad minima que se podra tener del producto.
+
+        //Minimum quantity of the product.
         [Required]
         public int QuantityMin { get; set; }
-        //Codigo de barra del producto.
-        [StringLength(15)]
+
+        //Product barcode.
+        [StringLength(20)]
         public string Barcode { get; set; }
-        //Si es que el producto esta eliminado.
+
+        //Used to remove ilde.
         [Required]
-        public bool Delete { get; set; }
+        public bool Deleted { get; set; }
     }
 }
