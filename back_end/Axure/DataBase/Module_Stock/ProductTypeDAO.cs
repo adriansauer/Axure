@@ -6,28 +6,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductTypeDAO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DataBase.Module_Stock
 {
-    public class DepositDB
+    public class ProductTypeDAO
     {
-        public DepositDB()
+  
+        public ProductTypeDAO()
         {
         }
-
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
-        public List<DepositDTO> ObtenerTodosLosDepositos()
+        
+        public List<ProductTypeDTO> GetAll()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-
-                    var respuesta = db.Deposits.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, NameD = x.NameD, Code = x.Code})
+                    var respuesta = db.ProductTypes.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, Type = x.Type})
                         .ToList()
-                        .Select(y => new DepositDTO() { Id = y.Id, NameD = y.NameD, Code = y.Code})
+                        .Select(y => new ProductTypeDTO() { Id = y.Id, Type = y.Type })
                         .ToList();
                     return respuesta;
                 }
@@ -38,31 +39,29 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public DepositDTO DetalleDelDeposito(int id)
+        public ProductTypeDTO Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var d = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    return new DepositDTO() { Id = d.Id, NameD = d.NameD, Code = d.Code };
+                    var pt = db.ProductTypes.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    return new ProductTypeDTO() { Id = pt.Id, Type = pt.Type};
                 }
             }
             catch
             {
                 return null;
             }
-
         }
 
-
-        public bool Agregar(DepositDTO d)
+        public bool Add(ProductTypeDTO pt)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Deposits.Add(new Deposit { NameD = d.NameD, Code = d.Code , Delete = false });
+                    db.ProductTypes.Add(new ProductType() { Type = pt.Type, Deleted = false});
                     db.SaveChanges();
                     return false;
                 }
@@ -73,16 +72,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-
-        public bool Editar(int id, DepositDTO d)
+        public bool Edit(int id, ProductType pt)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit depEditado = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    depEditado.NameD = d.NameD;
-                    depEditado.Code = d.Code;
+                    ProductType ptEditado = db.ProductTypes.FirstOrDefault(x => x.Id == id);
+                    ptEditado.Type = pt.Type;
                     db.SaveChanges();
                     return false;
                 }
@@ -93,14 +90,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool darDeBaja(int id)
+        public bool Remove(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit d = db.Deposits.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    d.Delete = true;
+                    ProductType pt = db.ProductTypes.FirstOrDefault(x => x.Id == id);
+                    pt.Deleted = true;
                     db.SaveChanges();
                     return false;
                 }
@@ -111,15 +108,15 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Eliminar(int id)
+        public bool Delete(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Deposit d = db.Deposits.Single(x => x.Id == id && x.Delete == false);
-                    if (null == d) { return true; }
-                    db.Deposits.Remove(d);
+                    ProductType pt = db.ProductTypes.Single(x => x.Id == id);
+                    if (null == pt) { return true; }
+                    db.ProductTypes.Remove(pt);
                     db.SaveChanges();
                     return false;
                 }

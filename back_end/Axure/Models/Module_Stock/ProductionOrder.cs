@@ -5,36 +5,40 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductionOrder class
+ * Created March 1, 2020 by Victor Ciceia.
+ * Product production order.
+ */
 namespace Axure.Models.Module_Stock
 {
     public class ProductionOrder
     {
-        //
+        //Unique identifier.
         public int Id { get; set; }
-        //
+
+        //Production order status.
         [Required]
-        public int IdProductionState { get; set; }
-        [ForeignKey("IdProductionState")]
+        public int ProductionStateId { get; set; }
+        [ForeignKey("ProductionStateId")]
         public ProductionState ProductionState { get; set; }
-        //
+
+        //Employee responsible for the production order.
         [Required]
-        public int IdProduct { get; set; }
-        [ForeignKey("IdProduct")]
-        public Product Product { get; set; }
-        //
-        [Required]
-        public int IdEmployee { get; set; }
-        [ForeignKey("IdEmployee")]
+        public int EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
-        //
+
+        //Order creation date.
         [Required]
-        public DateTime DateT { get; set; }
-        //
+        public DateTime Date { get; set; }
+
+        //Observations.
+        [StringLength(200)]
+        public string Observation { get; set; }
+
+        //Used to remove ilde.
         [Required]
-        public int Quantity { get; set; }
-        //Codigo de identificacion de orden de produccion
-        [Required]
-        [StringLength(50)]
-        public string Code { get; set; }
+        public bool Deleted { get; set; }
     }
 }

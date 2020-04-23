@@ -5,25 +5,31 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductionOrderDTO class
+ * Created april 20,2020 by Victor Ciceia.
+ */
 namespace Axure.DTO.Module_Stock
 {
     public class ProductionOrderDTO
     {
-        //
+        //Unique identifier.
         public int Id { get; set; }
-        //
-        public int IdProductionState { get; set; }
-        //
-        public int IdProduct { get; set; }
-        //
-        public int IdEmployee { get; set; }
-        //
-        public DateTime DateT { get; set; }
-        //
-        public int Quantity { get; set; }
-        //Codigo de identificacion de orden de produccion
-        public string Code { get; set; }
-        //
-        public List<ProductionOrderDetail> ListaComponentes { get; set; }
+
+        //Production order status.
+        public int ProductionStateId { get; set; }      
+
+        //Employee responsible for the production order.
+        public int EmployeeId { get; set; }
+
+        //Order creation date.
+        public int Day { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+
+        //Observations.
+        public string Observation { get; set; }
+       
+        public List<ProductionOrderDetailDTO> ListDetails { get; set; }
     }
 }

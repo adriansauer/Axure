@@ -8,22 +8,18 @@ using System.Web;
 
 namespace Axure.DTO.Module_Stock
 {
-    public class EntSalProductDetailDTO
+    public class MovementProductDetailDTO
     {
         //Id
         public int Id { get; set; }
-       
+
         //FK producto
         [Required]
-        public int IdProduct { get; set; }
-        [ForeignKey("IdProduct")]
-        public Product product { get; set; }
+        public int ProductId { get; set; }
 
         //FK Cabecera de Entrada Salida 
         [Required]
-        public int IdEntSalProduct { get; set; }
-        [ForeignKey("IdEntSalProduct")]
-        public EntSalProduct entSalProduct { get; set; }
+        public int MovementProductId { get; set; }
 
         //Cantidad de productos
         [Required]
@@ -31,6 +27,9 @@ namespace Axure.DTO.Module_Stock
 
         //Costo total
         public int TotalCost { get; set; }
+
+        //costo unitario
+        public int Cost { get; set; }
 
         //Observacion
         [StringLength(50)]

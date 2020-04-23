@@ -6,40 +6,45 @@ using System.Linq;
 using System.Web;
 
 /*
- *Clase ProductType
- * Creado el 1 de marzo de 2020 por Victor Ciceia.
- * Modelo de una transferencia de un producto de un deposito a otro,
- * este modelo es utilizado por la base de datos.
+ * Transfer class
+ * Created march 1, 2020 by Victor Ciceia.
+ * Transfer of products from one deposit to another.
  */
 namespace Axure.Models.Module_Stock
 {
     public class Transfer
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //FK del deposito de donde sale el producto.
+
+        //Deposit of origin.
         [Required]
-        public int IdDepositOrigin { get; set; }
-        [ForeignKey("IdDepositOrigin")]
-        public Deposit DepositOr { get; set; }
-        //FK del deposito en donde se traslada.
+        public int DepositOriginId { get; set; }
+        [ForeignKey("DepositOriginId")]
+        public Deposit DepositOrgin { get; set; }
+
+        //Deposit of destination.
         [Required]
-        public int IdDepositDestination { get; set; }
-        [ForeignKey("IdDepositDestination")]
-        public Deposit DepositDes { get; set; }
-        //FK de los detalles de los productos que se esta trasladando.
+        public int DepositDestinationId { get; set; }
+        [ForeignKey("DepositDestinationId")]
+        public Deposit DepositDestination { get; set; }
+
+        //Type of transfer, example for sale.
         [Required]
-        public int IdTransferType { get; set; }
-        [ForeignKey("IdTransferType")]
+        public int TransferTypeId { get; set; }
+        [ForeignKey("TransferTypeId")]
         public TransferType TransferType { get; set; }
-        //La fecha del traslado.
+
+        //Transfer date.
         [Required]
-        public DateTime DateT { get; set; }
-        //Observaciones que puede tener el traslado.
+        public DateTime Date { get; set; }
+
+        //Observation.
         [StringLength(200)]
         public string Observation { get; set; }
-        //Numero de trans1ferencia
+
+        //Used to remove ilde.
         [Required]
-        public int Number { get; set; }
+        public bool Deleted { get; set; }
     }
 }

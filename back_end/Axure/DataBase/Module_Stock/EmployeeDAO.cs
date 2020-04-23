@@ -6,28 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * EmployeeDAO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DataBase.Module_Stock
 {
-    public class EmployeeDB
+    public class EmployeeDAO
     {
-        public EmployeeDB()
+        public EmployeeDAO()
         {
         }
 
-        /*
-         * Metodo ObtenerTodosProductos, retorna todos los productos que tiene registrado.
-        */
-        public List<EmployeeDTO> ObtenerTodosLosEmpleados()
+        public List<EmployeeDTO> GetAll()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-
-                    var respuesta = db.Employees.Where(x => x.Delete == false)
-                        .Select(x => new { Id = x.Id, NameE = x.NameE, CI = x.CI, Direction = x.Direction, RUC = x.RUC, Phone = x.Phone })
+                    var respuesta = db.Employees.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, Name = x.Name, CI = x.CI, Address = x.Address, RUC = x.RUC, Phone = x.Phone })
                         .ToList()
-                        .Select(y => new EmployeeDTO() { Id = y.Id, NameE = y.NameE, CI = y.CI, Direction = y.Direction, RUC = y.RUC, Phone = y.Phone })
+                        .Select(y => new EmployeeDTO() { Id = y.Id, Name = y.Name, CI = y.CI, Address = y.Address, RUC = y.RUC, Phone = y.Phone })
                         .ToList();
                     return respuesta;
                 }
@@ -38,14 +38,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public EmployeeDTO DetalleDelEmpleado(int id)
+        public EmployeeDTO Detail(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var e = db.Employees.FirstOrDefault(x => x.Id == id && x.Delete == false);
-                    return new EmployeeDTO() { Id = e.Id, NameE = e.NameE, CI = e.CI, Direction = e.Direction, RUC = e.RUC, Phone = e.Phone };
+                    var e = db.Employees.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    return new EmployeeDTO() { Id = e.Id, Name = e.Name, CI = e.CI, Address = e.Address, RUC = e.RUC, Phone = e.Phone };
                 }
             }
             catch
@@ -56,13 +56,13 @@ namespace Axure.DataBase.Module_Stock
         }
 
 
-        public bool Agregar(EmployeeDTO e)
+        public bool Add(EmployeeDTO e)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.Employees.Add(new Employee { NameE = e.NameE, CI = e.CI, Direction =e.Direction, RUC = e.RUC, Phone = e.Phone, Delete = false});
+                    db.Employees.Add(new Employee { Name = e.Name, CI = e.CI, Address =e.Address, RUC = e.RUC, Phone = e.Phone, Deleted = false});
                     db.SaveChanges();
                     return false;
                 }
@@ -74,16 +74,16 @@ namespace Axure.DataBase.Module_Stock
         }
 
 
-        public bool Editar(int id, EmployeeDTO e)
+        public bool Edit(int id, EmployeeDTO e)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Employee empEditado = db.Employees.FirstOrDefault(x => x.Id == id);
-                    empEditado.NameE = e.NameE;
+                    Employee empEditado = db.Employees.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    empEditado.Name = e.Name;
                     empEditado.CI = e.CI;
-                    empEditado.Direction = e.Direction;
+                    empEditado.Address = e.Address;
                     empEditado.Phone = e.Phone;
                     empEditado.RUC = e.RUC;
                     db.SaveChanges();
@@ -96,14 +96,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool darDeBaja(int id)
+        public bool Remove(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     Employee e = db.Employees.FirstOrDefault(x => x.Id == id);
-                    e.Delete = true;
+                    e.Deleted = true;
                     db.SaveChanges();
                     return false;
                 }
@@ -114,7 +114,7 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Eliminar(int id)
+        public bool Delete(int id)
         {
             try
             {

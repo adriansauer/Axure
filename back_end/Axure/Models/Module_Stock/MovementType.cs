@@ -11,19 +11,19 @@ using System.Web;
 
 namespace Axure.Models.Module_Stock
 {
-    public class EntSalType
+    public class MovementType
     {
         //Id
         public int Id { get; set; }
 
         //Abreviatura
         [Required]
-        [StringLength(5)]
-        public String Abbreviation { get; set; }
+        [StringLength(20)]
+        public string Abbreviation { get; set; }
 
         //Descripcion
         [Required]
-        [StringLength(20)]
-        public String Description { get; set; }
+        [StringLength(200)]
+        public string Description { get; set; }
     }
 }
