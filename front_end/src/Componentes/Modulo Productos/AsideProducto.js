@@ -24,41 +24,7 @@ class AsideProducto extends Component {
             <a className="nav-link" href="#" onClick={() => this.props.setSectionShow(54)}>Productos de Baja</a>
           </li>
         </ul>
-        {/* <button
-          onClick={() => this.props.setSectionShow(50)}
-          type="button"
-          className="btn btn-secondary btnAsideP"
-        >
-          Stock
-        </button> */}
-        {/* <button
-          onClick={() => this.props.setSectionShow(51)}
-          type="button"
-          className="btn btn-secondary btnAsideP"
-        >
-          Agregar Producto
-        </button> */}
-        {/* <button
-          onClick={() => this.props.setSectionShow(52)}
-          type="button"
-          className="btn btn-secondary btnAsideP"
-        >
-          Generar orden de produccion
-        </button> */}
-        {/* <button
-          onClick={() => this.props.setSectionShow(53)}
-          type="button"
-          className="btn btn-secondary btnAsideP"
-        >
-          Ordenes de produccion
-        </button> */}
-        {/* <button
-          onClick={() => this.props.setSectionShow(54)}
-          type="button"
-          className="btn btn-secondary btnAsideP1"
-        >
-          Productos dados de baja
-        </button> */}
+        
       </div>
     );
   }
