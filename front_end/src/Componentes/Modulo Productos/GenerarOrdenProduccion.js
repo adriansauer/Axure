@@ -22,9 +22,9 @@ class GenerarOrdenProduccion extends Component {
     this.setState({
       ...this.state,
       productosSeleccionados: this.state.productosSeleccionados.concat({
-        NameP: producto.NameP,
+        Name: producto.Name,
         Id: producto.Id,
-        DescriptionP: producto.DescriptionP,
+        Description: producto.Description,
         Barcode: producto.Barcode,
         Cantidad: "1",
       }),
@@ -54,7 +54,7 @@ class GenerarOrdenProduccion extends Component {
         </div>
         <div className="row" style={{"marginTop":20}}>
           <div className="StockBody MateriaPima col-md-12">
-            <table className="table table-hover table-dark">
+            <table className="table table-hover table">
               <thead className="tableHeader">
                 <tr>
                   <th scope="col">#</th>
@@ -68,8 +68,8 @@ class GenerarOrdenProduccion extends Component {
                 {this.state.productosSeleccionados.map((p) => (
                   <tr key={p.Id}>
                     <td>{p.Id}</td>
-                    <td>{p.NameP}</td>
-                    <td>{p.DescriptionP}</td>
+                    <td>{p.Name}</td>
+                    <td>{p.Description}</td>
                     <td>{p.Barcode}</td>
 
                     {/**obtiene la cantidad de este componente que se utilizara para el producto terminado */}
@@ -82,9 +82,9 @@ class GenerarOrdenProduccion extends Component {
                         onChange={(e) => {
                           const arreglo = this.state.productosSeleccionados;
                           arreglo[arreglo.indexOf(p)] = {
-                            NameP: p.NameP,
+                            Name: p.Name,
                             Id: p.Id,
-                            DescriptionP: p.DescriptionP,
+                            Description: p.Description,
                             Barcode: p.Barcode,
                             Cantidad: e.target.value,
                           };
@@ -137,13 +137,13 @@ class GenerarOrdenProduccion extends Component {
         </div>
         <div className="row">
           <div className="StockBody MateriaPima col-md-6">
-            <table className="table table-hover table-dark">
+            <table className="table table-hover table">
               <tbody className="tableBody">
                 {this.state.buscador !== ""
                   ? this.state.productos
                       .filter(
                         (producto) =>
-                          producto.NameP.toLowerCase().indexOf(
+                          producto.Name.toLowerCase().indexOf(
                             this.state.buscador.toLowerCase()
                           ) !== -1
                       )
@@ -159,8 +159,8 @@ class GenerarOrdenProduccion extends Component {
                           onClick={() => this.seleccionarProducto(p)}
                         >
                           <td>{p.Id}</td>
-                          <td>{p.NameP}</td>
-                          <td>{p.DescriptionP}</td>
+                          <td>{p.Name}</td>
+                          <td>{p.Description}</td>
                           <td>{p.Cost}</td>
                           <td>{p.Barcode}</td>
                         </tr>

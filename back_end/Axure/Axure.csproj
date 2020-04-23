@@ -186,20 +186,6 @@
     <Compile Include="Controllers\Module_Stock\StocksController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-<<<<<<< HEAD
-    <Compile Include="DataBase\DataBaseError.cs" />
-    <Compile Include="DataBase\Module_Stock\ComponentDB.cs" />
-    <Compile Include="DataBase\Module_Stock\DepositDB.cs" />
-    <Compile Include="DataBase\Module_Stock\EmployeeDB.cs" />
-    <Compile Include="DataBase\Module_Stock\ProductionOrderDB.cs" />
-    <Compile Include="DataBase\Module_Stock\ProductionOrderDetailDB.cs" />
-    <Compile Include="DataBase\Module_Stock\ProductionStateDB.cs" />
-    <Compile Include="DataBase\Module_Stock\ProductsDB.cs" />
-    <Compile Include="DataBase\Module_Stock\StockDB.cs" />
-    <Compile Include="DataBase\Module_Stock\ProductTypeDB.cs" />
-    <Compile Include="DataBase\Module_Stock\EntSalProductDAO.cs" />
-    <Compile Include="DataBase\Module_Stock\EntSalProductDetailDAO.cs" />
-=======
     <Compile Include="DataBase\Module_Stock\ComponentDAO.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDetailDAO.cs" />
@@ -212,7 +198,6 @@
     <Compile Include="DataBase\Module_Stock\ProductTypeDAO.cs" />
     <Compile Include="DataBase\Module_Stock\StockDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
->>>>>>> master
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDTO.cs" />
@@ -229,9 +214,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004230018540_Initial.cs" />
-    <Compile Include="Migrations\202004230018540_Initial.Designer.cs">
-      <DependentUpon>202004230018540_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202004231345119_Initial.cs" />
+    <Compile Include="Migrations\202004231345119_Initial.Designer.cs">
+      <DependentUpon>202004231345119_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -360,8 +345,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004230018540_Initial.resx">
-      <DependentUpon>202004230018540_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004231345119_Initial.resx">
+      <DependentUpon>202004231345119_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

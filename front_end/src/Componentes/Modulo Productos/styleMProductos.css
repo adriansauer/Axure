@@ -1,67 +1,4 @@
-<<<<<<< HEAD
 
-.stock{
-    width: 100%;
-    height: 100%;
-}
-.StockCabecera{
-    width: 100%;
-    height: 10%;
-}
-.buscador{
-    margin-top: 8%;
-}
-.seleccionador{
-    margin-top: 10%;
-}
-.StockBody{
-   width: 100%;
-   height: 70%; 
-     overflow-y: auto;
-	overflow-x: hidden;
-}    
-.StockFooter{
-    width: 100%;
-    height: 10%;
-}
-.agregarProducto{
-    height: 100%;
-    width: 100%;
-}
-.generarOrdenBaja{
-    height: 100%;
-    width: 100%;
-    background-color: lightskyblue;
-}
-.generarOrdenProduccion{
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-	overflow-x: hidden;
-}
-.ordenesProduccionProducto{
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-	overflow-x: hidden;
-    
-}
-.detalles{
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-	overflow-x: hidden;
-}
-.carta{
-    margin:3%;
-    width: 100%;
-    height: 10%;
-}
-.productosBaja{
-    height: 100%;
-    width: 100%;
-   
-=======
 .StockBody {
   width: 100%;
   height: 100%;
@@ -70,7 +7,7 @@
   border-radius: 1rem;
   -webkit-box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
           box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
->>>>>>> master
+
 }
 
 .StockFooter {

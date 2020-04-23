@@ -22,7 +22,7 @@ class AgregarProducto extends Component {
       listarMateriaPrimaVisible: false
     };
   }
-
+  
   /**Verifica si todos los campos de han rellenado */
   verificarCampos() {
     if (
@@ -39,13 +39,13 @@ class AgregarProducto extends Component {
   enviarProducto() {
   
     this.props.createProducto({
-      NameP: this.state.nombretxt,
-      IdProductType: this.state.tipoProducto,
-      DescriptionP: this.state.descripciontxt,
+      Name: this.state.nombretxt,
+      ProductTypeId: this.state.tipoProducto,
+      Description: this.state.descripciontxt,
       Cost: this.state.costotxt,
       QuantityMin: this.state.cantidadMintxt,
       Barcode: this.state.codigoBarratxt,
-      listaComponentes: this.state.componentes
+      ListComponents: this.state.componentes
     });
   }
   /**Agrega todas las materias primas al estado componentes */
@@ -57,7 +57,7 @@ class AgregarProducto extends Component {
         .filter(p => p.Cantidad !== "0")
         .map(p => {
           return {
-            IdProductComponent: p.Id,
+            ProductComponentId: p.Id,
             Quantity: p.Cantidad
           };
         })
@@ -93,16 +93,16 @@ class AgregarProducto extends Component {
      * cantidad(cuantos de estos componentes tendra el producto terminado)
      * }
      */
-   
-   const materiaPrima  = this.props.materiaPrima.map(p => {
+   console.log(this.props.materiaPrima);
+   const materiaPrima  = this.props.materiaPrima.map(p => 
       
-      return {
-        NameP: p.NameP,
-        DescriptionP: p.DescriptionP,
+     { return {
+        Name: p.Name,
+        Description: p.Description,
         Id: p.Id,
         Cantidad: '0'
-      };
-    });
+      };}
+    );
     /**COMPONENTE QUE LISTA LAS MATERIAS PRIMAS PARA AGREGAR UN PRODUCTO TERMINADO */
     const listarMateriaPrima = (
       <Modal isOpen={this.state.listarMateriaPrimaVisible} centered>
@@ -123,8 +123,8 @@ class AgregarProducto extends Component {
                 {materiaPrima.map(p => (
                   <tr key={p.Id}>
                     <td>{p.Id}</td>
-                    <td>{p.NameP}</td>
-                    <td>{p.DescriptionP}</td>
+                    <td>{p.Name}</td>
+                    <td>{p.Description}</td>
 
                     {/**obtiene la cantidad de este componente que se utilizara para el producto terminado */}
                     <td>

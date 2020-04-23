@@ -38,7 +38,6 @@ export const getProductos = () => async dispatch => {
 export const getMateriasPrimas = () => async dispatch => {
   try {
     const request = await api.productos.getDeposito(1);
-
     dispatch(getMateriasPrimasSuccess(request.data));
   } catch (error) {
     
