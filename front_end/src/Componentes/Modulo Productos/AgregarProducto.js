@@ -78,6 +78,7 @@ class AgregarProducto extends Component {
         tipoProducto: this.state.tipoProducto,
         componentes: this.state.componentes
       });
+      
     } else {
       console.log("Rellene todos los campos");
     }
@@ -222,9 +223,9 @@ class AgregarProducto extends Component {
                     <input
                       type="radio"
                       value="1"
-                      checked={this.state.tipoProducto === 1}
+                      checked={this.state.tipoProducto === 2}
                       onChange={e => {
-                        this.setState({ tipoProducto: 1 });
+                        this.setState({ tipoProducto: 2 });
                       }}
                     />
                     Materia Prima
@@ -235,9 +236,9 @@ class AgregarProducto extends Component {
                     <input
                       type="radio"
                       value="2"
-                      checked={this.state.tipoProducto === 2}
+                      checked={this.state.tipoProducto === 3}
                       onChange={e => {
-                        this.setState({ tipoProducto: 2 });
+                        this.setState({ tipoProducto: 3 });
                       }}
                     />
                     Producto Terminado
@@ -248,9 +249,9 @@ class AgregarProducto extends Component {
                     <input
                       type="radio"
                       value="3"
-                      checked={this.state.tipoProducto === 3}
+                      checked={this.state.tipoProducto === 1}
                       onChange={e => {
-                        this.setState({ tipoProducto: 3 });
+                        this.setState({ tipoProducto: 1 });
                       }}
                     />
                     Ambos
@@ -266,7 +267,7 @@ class AgregarProducto extends Component {
             </div>
 
             {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
-            {this.state.tipoProducto === 2 ? (
+            {this.state.tipoProducto === 3 ? (
               /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
               <button
                 type="button"

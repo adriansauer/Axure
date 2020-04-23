@@ -3,7 +3,7 @@ import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+
 import { connect } from "react-redux";
 import {
   /**Edita un producto */
@@ -23,7 +23,6 @@ import {
   /**Trea solo los productos que estan en el deposito de produccion en proceso */
   getProductosEnProduccion
 } from "../../Redux/actions.js";
-
 class Stock extends Component {
   constructor(props) {
     super(props);
@@ -154,8 +153,12 @@ class Stock extends Component {
     this.actualizar();
     /**ocultar el modal de editar */
     this.setState({ editarModalVisible: false });
+
   }
+
+ 
   render() {
+   
     /**Modal que permite ver los detalles de un producto seleccionado */
     const detallesModal = (
       <Modal isOpen={this.state.detallesModalVisible} centered>
@@ -185,28 +188,7 @@ class Stock extends Component {
         </ModalFooter>
       </Modal>
     );
-    /*Modal para preguntar cuantos productos desea dar de baja*/
-    const darBajaModal = (
-      <Modal isOpen={this.state.darBajaModalVisible} centered>
-        <ModalHeader>Cantidad a dar de baja</ModalHeader>
-        <ModalBody>
-          {/**INPUT PARA INGRESAR LA CANTIDAD DE PRODUCTOS QUE SE QUIERE DAR DE BAJA*/}
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Cantidad a dar de baja"
-          />
-        </ModalBody>
-        <ModalFooter>
-          <button onClick={() => this.setState({ darBajaModalVisible: false })}>
-            Aceptar
-          </button>
-          <button onClick={() => this.setState({ darBajaModalVisible: false })}>
-            Cancelar
-          </button>
-        </ModalFooter>
-      </Modal>
-    );
+   
 
     /**Modal para preguntar si desea eliminar el producto */
     const eliminarAlert = (
@@ -317,7 +299,6 @@ class Stock extends Component {
         {/**Los modals y las alertas en estado visible=false, con acciones se modificara dicho estado */}
         {editarModal}
         {eliminarAlert}
-        {darBajaModal}
         {detallesModal}
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
@@ -407,9 +388,8 @@ class Stock extends Component {
                 .map(p => (
                   <tr
                     key={p.Id}
-                    
-                  >
-                  {console.log(p)}
+                  
+                  >  
                     <td>{p.Id}</td>
                     <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.NameP}</td>
                     <td onClick={() =>this.mostrarDetallesProducto(p)}>{p.DescriptionP}</td>
@@ -455,24 +435,8 @@ class Stock extends Component {
                         }
                         className="icono"
                       />
-                      <ThumbDownIcon
-                        onClick={() =>
-                          this.setState({
-                            darBajaModalVisible: true,
-                            nombreProductoActual: p.NameP,
-                            descripcionProductoActual: p.DescriptionP,
-                            IdProductoActual: p.Id,
-                            costoProductoActual: p.Cost,
-                            cantidadMinProductoActual: p.QuantityMin,
-                            barcodeProductoActual: p.Barcode,
-                            nombreTipoProductoActual: p.ProductType.TypeP,
-                            tipoProductoActual: p.ProductType.Id,
-                            listaComponentes:p.listaComponentes,
-
-                          })
-                        }
-                        className="icono"
-                      />
+                     
+                      
                     </td>
                   </tr>
                 ))}
