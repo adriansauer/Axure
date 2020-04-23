@@ -13,7 +13,7 @@ class Section extends Component{
     render(){ 
         
         return (
-            <div className='Section col-md-8'>
+            <div id="Section" className='Section'>
                 {(() => {
                     switch(this.props.sectionShow[0]) {
                         case 50:return <Stock/>
