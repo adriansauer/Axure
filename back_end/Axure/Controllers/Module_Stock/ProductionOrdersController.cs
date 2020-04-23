@@ -6,18 +6,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * ProductionOrdersController class
+ * Created april 22, 2020 by Victor Ciceia.
+ */
 namespace Axure.Controllers.Module_Stock
 {
+    [RoutePrefix("ProductionOrders")]
     public class ProductionOrdersController : Controller
     {
 
-        //Atributos.
-        private ProductionOrderDB productionOrderDB;
+        private ProductionOrderDAO productionOrderDAO;
 
-        //Constructor de la clase.
         public ProductionOrdersController()
         {
-            this.productionOrderDB = new ProductionOrderDB();
+            this.productionOrderDAO = new ProductionOrderDAO();
         }
 
         // GET: ProductionOrders
@@ -26,11 +29,11 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Id = "True", IdProductionState = "True", IdProduct = "True", IdEmployee = "True", DateT = "True", Quantity = "True", Code = "True", ListDetails = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", ProductionStateId = "True", EmployeeId = "True", Date = "True", Quantity = "True", ListDetails = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
         }
 
@@ -39,16 +42,16 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var lista = this.productionOrderDB.ObtenerTodasOrdenesProduccion();
+                var lista = this.productionOrderDAO.GetAll();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -58,19 +61,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.productionOrderDB.DetalleOrdenProduccion(id);
+                var dato = this.productionOrderDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(202);
+                    return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
         
@@ -81,18 +84,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productionOrderDB.Agregar(po))
+                if (this.productionOrderDAO.Add(po))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -103,18 +106,18 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productionOrderDB.Editar(id, po))
+                if (this.productionOrderDAO.Edit(id, po))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
@@ -125,19 +128,19 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.productionOrderDB.darDeBaja(id))
+                if (this.productionOrderDAO.Remove(id))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
 
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
     }

@@ -5,30 +5,33 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductDTO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DTO.Module_Stock
 {
     public class ProductDTO
     {
-        //Id.
+        //Unique identifier
         public int Id { get; set; }
-        //El tipo de producto, Ej.: materia prima, venta, etc.
+
+        //The type of use that the company gives to the product.
         public ProductType ProductType { get; set; }
-        //Nombre del producto.
-        [Required]
-        [StringLength(200)]
-        public string NameP { get; set; }
-        //Descripcion del producto.
-        [Required]
-        [StringLength(200)]
-        public string DescriptionP { get; set; }
-        //El costo del producto.
-        [Required]
+
+        //Product name.
+        public string Name { get; set; }
+
+        //Product description.
+        public string Description { get; set; }
+        
+        //Product cost.
         public int Cost { get; set; }
-        //Cantidad minima que se podra tener del producto.
-        [Required]
+
+        //Minimum quantity of the product.
         public int QuantityMin { get; set; }
-        //Codigo de barra del producto.
-        [StringLength(15)]
+
+        //Product barcode.
         public string Barcode { get; set; }
     }
 }

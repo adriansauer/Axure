@@ -4,21 +4,30 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+/*
+ * EmployeeDTO class
+ * Created april 20, 2020 by Victor Ciceia.
+ */
 namespace Axure.DTO.Module_Stock
 {
     public class EmployeeDTO
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //Nombre del empleado.
-        public string NameE { get; set; }
-        //Ceddula de identidad.
+
+        //Employee name.
+        public string Name { get; set; }
+
+        //Employee CI.
         public string CI { get; set; }
-        //La direccion del empleado.
-        public string Direction { get; set; }
-        //El RUC del empleado.
+
+        //Employe address.
+        public string Address { get; set; }
+
+        //Employee RUC.
         public string RUC { get; set; }
-        //El numero de celular o telefono del empleado.
+
+        //Employee phone.
         public string Phone { get; set; }
     }
 }

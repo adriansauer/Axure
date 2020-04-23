@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/*
+ * ProductType class
+ * Created march 1, 2020 by Victor Ciceia.
+ */
 namespace Axure.DTO.Module_Stock
 {
     public class ProductTypeDTO
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //Especificacion de lo que se espera hacer con el producto.
-        public string TypeP { get; set; }
+        //Product type.
+        public string Type { get; set; }
     }
 }

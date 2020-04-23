@@ -5,25 +5,20 @@ using System.Linq;
 using System.Web;
 
 /*
- *Clase Deposit
- * Creado el 1 de marzo de 2020 por Victor Ciceia.
- * Depositos que posee la empresa.
+ * Deposit class
+ * Created March 1, 2020 by Victor Ciceia.
+ * Company deposits.
  */
 namespace Axure.Models.Module_Stock
 {
     public class Deposit
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //Nombre del deposito.
+
+        //Product name.
         [Required]
         [StringLength(50)]
-        public string NameD { get; set; }
-        //Codigo identificador del deposito.
-        [Required]
-        [StringLength(50)]
-        public string Code { get; set; }
-        [Required]
-        public bool Delete { get; set; }
+        public string Name { get; set; }
     }
 }

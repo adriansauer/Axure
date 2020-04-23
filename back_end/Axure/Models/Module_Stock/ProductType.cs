@@ -5,23 +5,24 @@ using System.Linq;
 using System.Web;
 
 /*
- *Clase ProductType
- * Creado el 1 de marzo de 2020 por Victor Ciceia.
- * Modelo del tipo de Producto, lo que se espera hacer con el producto en la actualidad, 
- * este modelo es utilizado por la base de datos.
- * Ej.: Si es para produccion, venta, etc.
+ * ProductType class
+ * Created march 1, 2020 by Victor Ciceia.
+ * Type of product that represents for the company such as raw material.
  */
 namespace Axure.Models.Module_Stock
 {
     public class ProductType
     {
-        //Id.
+        //Unique identifier.
         public int Id { get; set; }
-        //Especificacion de lo que se espera hacer con el producto.
+
+        //Product type.
         [Required]
         [StringLength(50)]
-        public string TypeP { get; set; }
+        public string Type { get; set; }
+
+        //Used to remove ilde.
         [Required]
-        public bool Delete { get; set; }
+        public bool Deleted { get; set; }
     }
 }

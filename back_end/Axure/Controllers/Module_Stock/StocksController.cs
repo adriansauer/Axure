@@ -1,4 +1,5 @@
 ﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
@@ -6,18 +7,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * StoksController class
+ * Created april 21, 2020 by Victor Ciceia.
+ */
 namespace Axure.Controllers.Module_Stock
 {
     [RoutePrefix("Stocks")]
     public class StocksController : Controller
     {
 
-        //Atributos
-        StockDB stockDB;
+        //Attributes
+        StockDAO stockDAO;
 
         public StocksController()
         {
-            this.stockDB = new StockDB();
+            this.stockDAO = new StockDAO();
         }
 
         // GET: Stocks
@@ -26,11 +31,11 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Id = "True", IdDeposit = "True", IdProduct = "True", Quantity = "True"}, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", DepositId = "True", ProductId = "True", Quantity = "True"}, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(202);
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
             }
         }
 
@@ -40,22 +45,21 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.stockDB.DetalleStock(id);
+                var dato = this.stockDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(202);
+                    return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
-
 
         // GET: Stocks/Quantity/5
         [Route("Quantity/{id}")]
@@ -63,78 +67,77 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Quantity = this.stockDB.CantidadProducto(id, dep) }, JsonRequestBehavior.AllowGet);
+                return Json(new { Quantity = this.stockDAO.ProductQuantity(id, dep) }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
         // POST: Stocks/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(Stock st)
+        public ActionResult Create(StockDTO st)
         {
             try
             {               
-                if (this.stockDB.Agregar(st))
+                if (this.stockDAO.Add(st))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
-        // POST: Stocks/Edit/5
-        [HttpPost]
+        // PUT: Stocks/Edit/5
+        [HttpPut]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, Stock st)
+        public ActionResult Edit(int id, StockDTO st)
         {
             try
             {
-                if (this.stockDB.Editar(id, st))
+                if (this.stockDAO.Edit(id, st))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
 
-        // POST: Stocks/Delete/5
-        [HttpPost]
+        // DELETE: Stocks/Delete/5
+        [HttpDelete]
         [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                if (this.stockDB.Eliminar(id))
+                if (this.stockDAO.Remove(id))
                 {
-                    return new HttpStatusCodeResult(406);
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
                 else
                 {
-                    return new HttpStatusCodeResult(200);
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
-
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
     }

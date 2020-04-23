@@ -6,18 +6,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+/*
+ * ProductComponentsController class
+ * Created april 21, 2020 by Victor Ciceia.
+ */
 namespace Axure.Controllers.Module_Stock
 {
     [RoutePrefix("ProductComponents")]
     public class ProductComponentsController : Controller
     {
-        //Atributos.
-        private ComponentDB componentDB;
+
+        private ComponentDAO componentDAO;
 
         //Constructor de la clase.
         public ProductComponentsController()
         {
-            this.componentDB = new ComponentDB();
+            this.componentDAO = new ComponentDAO();
         }
 
         // GET: ProductComponents
@@ -26,7 +30,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                return Json(new { Id = "True", NameE = "True", CI = "True", Direction = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", ProductId = "True", ProductComponentId = "True", Quantity = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -34,12 +38,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
+        // GET: ProductComponents/List
         [Route("List")]
         public ActionResult List()
         {
             try
             {
-                var lista = this.componentDB.ObtenerTodosLosComponentes();
+                var lista = this.componentDAO.GetAll();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -52,12 +57,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
+        // GET: ProductComponents/OfProduct
         [Route("OfProduct/{id}")]
         public ActionResult OfProduct(int id)
         {
             try
             {
-                var lista = this.componentDB.ObtenerTodosLosComponentesDeUnProducto(id);
+                var lista = this.componentDAO.GetComponentOfProduct(id);
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -77,7 +83,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var dato = this.componentDB.DetalleDelComponente(id);
+                var dato = this.componentDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
@@ -100,7 +106,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.componentDB.Agregar(pct))
+                if (this.componentDAO.Add(pct))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -122,7 +128,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.componentDB.Editar(id, pct))
+                if (this.componentDAO.Edit(id, pct))
                 {
                     return new HttpStatusCodeResult(406);
                 }
@@ -144,7 +150,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.componentDB.darDeBaja(id))
+                if (this.componentDAO.Delete(id))
                 {
                     return new HttpStatusCodeResult(406);
                 }

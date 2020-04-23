@@ -302,69 +302,32 @@ class Stock extends Component {
         {detallesModal}
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
-          <div className="col-md-3"></div>
-          <div className="col-md-3">
-            {/**Un seleccionador que nos permite ver el tipo de producto que elijamos */}
-            <div className="dropdown seleccionador">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {this.state.nombreBtn}
-              </button>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <p
-                  onClick={() => this.mostrarTodos()}
-                  className="dropdown-item"
-                  href="#todos"
-                >
-                  Todos
-                </p>
-                <p
-                  onClick={() => this.mostrarMateriasPrimas()}
-                  className="dropdown-item"
-                >
-                  Materia prima
-                </p>
-                <p
-                  onClick={() => this.mostrarProductosEnProduccion()}
-                  className="dropdown-item"
-                >
-                  En produccion
-                </p>
-                <p
-                  onClick={() => this.mostrarProductosTerminados()}
-                  className="dropdown-item"
-                >
-                  Productos terminados
-                </p>
+          <div className="col-md-6 ml-auto">
+          {/**Un buscador de productos */}
+            <div className="col-sm-12">
+              <div className="input-group mb-3">
+                <input type="text" className="form-control buscador" aria-label="Busqueda" placeholder="Busqueda..." aria-label="Busqueda"
+                  value={this.state.buscador}
+                  onChange={e => {
+                    this.setState({ buscador: e.target.value });
+                  }}
+                />
+                <div className="input-group-append">
+                  <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.state.nombreBtn}</button>
+                  <div className="dropdown-menu">
+                    <a className="dropdown-item" href="#todos" onClick={() => this.mostrarTodos()}>Todos</a>
+                    <a className="dropdown-item" href="#" onClick={() => this.mostrarMateriasPrimas()}>Materia Prima</a>
+                    <a className="dropdown-item" href="#" onClick={() => this.mostrarProductosEnProduccion()}>En Produccion</a>
+                    <a className="dropdown-item" href="#" onClick={() => this.mostrarProductosTerminados()}>Productos Terminados</a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          {/**Un buscador de productos */}
-          <div className="col-md-4">
-            <input
-              className="form-control form-control-sm  buscador"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-              value={this.state.buscador}
-              onChange={e => {
-                this.setState({ buscador: e.target.value });
-              }}
-            />
           </div>
         </div>
         {/**La tabla para listar los productos */}
         <div className="StockBody">
-          <table className="table table-hover table-dark">
+          <table className="table table-hover table">
             <thead className="tableHeader">
               <tr>
                 <th scope="col">#</th>
@@ -373,7 +336,7 @@ class Stock extends Component {
                 <th scope="col">Costo</th>
                 <th scope="col">Cantidad Minima</th>
                 <th scope="col">Codigo de barra</th>
-                <th scope="col"></th>
+                <th scope="col">Acciones</th>
               </tr>
             </thead>
             {/**Mapeo el arreglo de productos que nos proporciona la api y muestro los productos en la tabla */}
@@ -445,7 +408,15 @@ class Stock extends Component {
         </div>
         {/**El footer de stock nos muestra el capital total del deposito en el cual nos encontramos */}
         <div className="StockFooter">
-          Capital total: {this.state.capitalTotal}GS
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Capital Total:</span>
+            </div>
+            <span class="form-control">{this.state.capitalTotal}</span>
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon1">GS</span>
+            </div>
+          </div>
         </div>
       </div>
     );
