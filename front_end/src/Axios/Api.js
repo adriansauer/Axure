@@ -44,6 +44,25 @@ export default {
       requestHelper({
         url: "Products/SumDeposit/" + deposito,
         methot: "get"
+      }),
+      getComponents:id=>
+      requestHelper({
+        url:'ProductComponents/OfProduct/'+id,
+        method:'get'
       })
+  },
+  ordenProduccion:{
+    get:()=>requestHelper({
+    
+      methot: "get"
+    }),
+    create:(data)=>requestHelper({
+      url:"",
+      methot: "post",
+      data
+    }),
+    cancel:(id)=>requestHelper({
+      methot: "delete"
+    })
   }
 };

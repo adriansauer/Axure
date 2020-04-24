@@ -216,23 +216,23 @@ namespace Axure.Migrations
                 .Index(t => t.ProductId);
             
             CreateTable(
-                "dbo.ProofPurchaseDetails",
+                "dbo.PurchaseOrderDetails",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ProofPurchaseId = c.Int(nullable: false),
+                        PurchaseOrderId = c.Int(nullable: false),
                         ProductId = c.Int(nullable: false),
                         Quantity = c.Int(nullable: false),
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
-                .ForeignKey("dbo.ProofPurchases", t => t.ProofPurchaseId, cascadeDelete: false)
-                .Index(t => t.ProofPurchaseId)
+                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrderId, cascadeDelete: false)
+                .Index(t => t.PurchaseOrderId)
                 .Index(t => t.ProductId);
             
             CreateTable(
-                "dbo.ProofPurchases",
+                "dbo.PurchaseOrders",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -258,6 +258,16 @@ namespace Axure.Migrations
                         Credit = c.Int(nullable: false),
                         RUC = c.String(maxLength: 20),
                         Deleted = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Settings",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Key = c.String(nullable: false, maxLength: 50),
+                        Value = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -350,10 +360,10 @@ namespace Axure.Migrations
             DropForeignKey("dbo.TransferDetails", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Stocks", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Stocks", "DepositId", "dbo.Deposits");
-            DropForeignKey("dbo.ProofPurchaseDetails", "ProofPurchaseId", "dbo.ProofPurchases");
-            DropForeignKey("dbo.ProofPurchases", "ProviderId", "dbo.Providers");
-            DropForeignKey("dbo.ProofPurchases", "EmployeeId", "dbo.Employees");
-            DropForeignKey("dbo.ProofPurchaseDetails", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.PurchaseOrderDetails", "PurchaseOrderId", "dbo.PurchaseOrders");
+            DropForeignKey("dbo.PurchaseOrders", "ProviderId", "dbo.Providers");
+            DropForeignKey("dbo.PurchaseOrders", "EmployeeId", "dbo.Employees");
+            DropForeignKey("dbo.PurchaseOrderDetails", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductionOrderDetails", "ProductionOrderId", "dbo.ProductionOrders");
             DropForeignKey("dbo.ProductionOrderDetails", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductComponents", "ProductComponentId", "dbo.Products");
@@ -379,10 +389,10 @@ namespace Axure.Migrations
             DropIndex("dbo.TransferDetails", new[] { "ProductId" });
             DropIndex("dbo.Stocks", new[] { "ProductId" });
             DropIndex("dbo.Stocks", new[] { "DepositId" });
-            DropIndex("dbo.ProofPurchases", new[] { "EmployeeId" });
-            DropIndex("dbo.ProofPurchases", new[] { "ProviderId" });
-            DropIndex("dbo.ProofPurchaseDetails", new[] { "ProductId" });
-            DropIndex("dbo.ProofPurchaseDetails", new[] { "ProofPurchaseId" });
+            DropIndex("dbo.PurchaseOrders", new[] { "EmployeeId" });
+            DropIndex("dbo.PurchaseOrders", new[] { "ProviderId" });
+            DropIndex("dbo.PurchaseOrderDetails", new[] { "ProductId" });
+            DropIndex("dbo.PurchaseOrderDetails", new[] { "PurchaseOrderId" });
             DropIndex("dbo.ProductionOrderDetails", new[] { "ProductId" });
             DropIndex("dbo.ProductionOrderDetails", new[] { "ProductionOrderId" });
             DropIndex("dbo.ProductComponents", new[] { "ProductComponentId" });
@@ -405,9 +415,10 @@ namespace Axure.Migrations
             DropTable("dbo.Transfers");
             DropTable("dbo.TransferDetails");
             DropTable("dbo.Stocks");
+            DropTable("dbo.Settings");
             DropTable("dbo.Providers");
-            DropTable("dbo.ProofPurchases");
-            DropTable("dbo.ProofPurchaseDetails");
+            DropTable("dbo.PurchaseOrders");
+            DropTable("dbo.PurchaseOrderDetails");
             DropTable("dbo.ProductionOrderDetails");
             DropTable("dbo.ProductComponents");
             DropTable("dbo.MovementProducts");

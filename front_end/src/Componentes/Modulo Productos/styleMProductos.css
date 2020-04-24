@@ -1,94 +1,25 @@
 
-.stock{
-    width: 100%;
-    height: 100%;
-}
-.StockCabecera{
-    width: 100%;
-    height: 10%;
-}
-.buscador{
-    margin-top: 8%;
-}
-.seleccionador{
-    margin-top: 10%;
-}
-.StockBody{
-   width: 100%;
-   height: 70%; 
-     overflow-y: auto;
-	overflow-x: hidden;
-}    
-.StockFooter{
-    width: 100%;
-    height: 10%;
-}
-.agregarProducto{
-    height: 100%;
-    width: 100%;
-    background-color: lightskyblue;
-}
-.generarOrdenBaja{
-    height: 100%;
-    width: 100%;
-    background-color: lightskyblue;
-}
-.generarOrdenProduccion{
-    height: 100%;
-    width: 100%;
-    background-color: lightskyblue;
-}
-.ordenesProduccionProducto{
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-	overflow-x: hidden;
-    
-}
-.detalles{
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
-	overflow-x: hidden;
-}
-.carta{
-    margin:3%;
-    width: 100%;
-    height: 10%;
-}
-.productosBaja{
-    height: 100%;
-    width: 100%;
-   
-}
-
-.productosBajaCabecera{
- 
-    width: 100%;
-    height: 10%;
+.StockBody {
+  width: 100%;
+  height: 100%;
+  max-height: calc(70vh);
+  overflow-x: auto;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
+          box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
 
 }
-.productosBajaBody{
-    
-    width: 100%;
-    height: 70%;
-    overflow-y: auto;
-	overflow-x: hidden;
-}
-.productosBajaFooter{
-  
-    width: 100%;
-    height: 10%;
-}
-.icono{
-    margin-left: 0%;
-}
-.icono:hover{
-    background: #318aac;
-    color: #fff !important;
+
+.StockFooter {
+  margin-top: 1rem;
 }
 
-
-.MateriaPrima{
-    margin-bottom: 20%;
+.StockFooter span.form-control {
+  -webkit-box-flex: initial;
+      -ms-flex: initial;
+          flex: initial;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
+/*# sourceMappingURL=styleMProductos.css.map */

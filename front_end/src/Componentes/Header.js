@@ -1,31 +1,38 @@
-import React, { Component } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import React, { Component, useState } from "react";
 import "./style.css";
-import HomeIcon from "@material-ui/icons/Home";
 import { connect } from "react-redux";
 import { homeVisible } from "../Redux/actions.js";
+
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
+// funciones para cargar modulos
+clickProducto(){
+  this.props.homeVisible(false);
+  document.getElementsByClassName("Body")[0].classList.add("producto");
+}
+clickVenta(){
+  this.props.homeVisible(false);
+  document.getElementsByClassName("Body")[0].classList.add("venta");
+}
+clickCompra(){
+  this.props.homeVisible(false);
+  document.getElementsByClassName("Body")[0].classList.add("compra");
+}
+clickContabilidad(){
+  this.props.homeVisible(false);
+  document.getElementsByClassName("Body")[0].classList.add("contabilidad");
+}
+
   render() {
+    
     return (
-      <div className="Header row">
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="title" color="inherit">
-              AXure
-              <HomeIcon
-                className="homeIcono"
-                onClick={() => this.props.homeVisible(true)}
-              />
-            </Typography>
-          </Toolbar>
-        </AppBar>
+      <div id="Header" className="Header">
+        
       </div>
     );
   }
