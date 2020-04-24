@@ -35,14 +35,28 @@ class Menu extends Component {
     this.props.homeVisible(false);
     document.getElementsByClassName("Body")[0].classList.add("contabilidad");
   }
+
+  //funcionalidad del menu
+  toggleMenu(arg){
+    document.getElementsByClassName('navbar')[0].classList.toggle('active');
+    document.getElementById('Box--content').classList.toggle('navbar-active')
+    if (document.getElementsByClassName('navbar')[0].classList.contains('active')) {
+      setTimeout(() => {
+        document.getElementById(arg).classList.toggle('show');
+      }, 350);
+    }else{
+      document.getElementById(arg).classList.toggle('show');
+    }
+  }
+
   render() {
     const isOpen = this.state.isOpen;
     return (
       <div id="Menu" className="Menu">
 
-        <nav className="navbar active">
+        <nav className="navbar">
           <a className="navbar-brand" href="#home">AXure</a>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarContent">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarContent" onClick={() => this.toggleMenu('navbarContent')}>
             <span className="navbar-toggler-icon shadow-effect"></span>
           </button>
 
@@ -50,31 +64,31 @@ class Menu extends Component {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item active">
                 <a className="nav-link" href="#home" onClick={() => this.props.homeVisible(true)}>
-                  <i></i>
+                  <i className="ico home"></i>
                   Home
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.clickProducto()}>
-                  <i></i>
+                  <i className="ico products"></i>
                   Productos
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
-                  <i></i>
+                  <i className="ico sells"></i>
                   Ventas
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
-                  <i></i>
+                  <i className="ico buys"></i>
                   Compras
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
-                  <i></i>
+                  <i className="ico account"></i>
                   Contabilidad
                 </a>
               </li>

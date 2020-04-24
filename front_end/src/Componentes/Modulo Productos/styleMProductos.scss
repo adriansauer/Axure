@@ -17,98 +17,44 @@
 
 }
 
-
-
-// .stock{
-//     width: 100%;
-//     height: 100%;
-// }
-// .StockCabecera{
-//     width: 100%;
-//     height: 10%;
-// }
-// .buscador{
-//     margin-top: 8%;
-// }
-// .seleccionador{
-//     margin-top: 10%;
-// }
-// .StockBody{
-//    width: 100%;
-//    height: 70%; 
-//      overflow-y: auto;
-// 	overflow-x: hidden;
-// }    
-// .StockFooter{
-//     width: 100%;
-//     height: 10%;
-// }
-// .agregarProducto{
-//     height: 100%;
-//     width: 100%;
-//     background-color: lightskyblue;
-// }
-// .generarOrdenBaja{
-//     height: 100%;
-//     width: 100%;
-//     background-color: lightskyblue;
-// }
-// .generarOrdenProduccion{
-//     height: 100%;
-//     width: 100%;
-//     background-color: lightskyblue;
-// }
-// .ordenesProduccionProducto{
-//     height: 100%;
-//     width: 100%;
-//     overflow-y: scroll;
-// 	overflow-x: hidden;
-    
-// }
-// .detalles{
-//     height: 100%;
-//     width: 100%;
-//     overflow-y: scroll;
-// 	overflow-x: hidden;
-// }
-// .carta{
-//     margin:3%;
-//     width: 100%;
-//     height: 10%;
-// }
-// .productosBaja{
-//     height: 100%;
-//     width: 100%;
-   
-// }
-
-// .productosBajaCabecera{
- 
-//     width: 100%;
-//     height: 10%;
-
-// }
-// .productosBajaBody{
-    
-//     width: 100%;
-//     height: 70%;
-//     overflow-y: auto;
-// 	overflow-x: hidden;
-// }
-// .productosBajaFooter{
-  
-//     width: 100%;
-//     height: 10%;
-// }
-// .icono{
-//     margin-left: 0%;
-// }
-// .icono:hover{
-//     background: #318aac;
-//     color: #fff !important;
-// }
-
-
-// .MateriaPrima{
-//     margin-bottom: 20%;
-// }
+.agregarProducto{
+    display: flex;
+    flex-direction: row;
+    width: 33.33%;
+    margin: auto;
+    max-height: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 9px 16px rgba($color: #000000, $alpha: 0.16);
+    form{
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        padding-top: 0;
+        width: 100%;
+        .bg-title{
+            margin-left: -2rem !important;
+            margin-right: -2rem !important;
+            height: 3rem;
+            background-color: #1A689E;
+            border-radius: 1rem 1rem 0.15rem 0.15rem;
+            box-shadow: 23px -23px 47px #d4d4d4, 
+             -23px 23px 47px #ffffff;
+             .title-label{
+                 font-size: 1.5rem;
+                 font-weight: 500;
+                 color: #fafafa;
+             }
+        }
+        label:not(.title-label){
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #939393;
+            &.form-check-label{
+                font-size: 1rem;
+            }
+        }
+        .dropdown-divider{
+            margin: 0;
+        }
+    }
+}
