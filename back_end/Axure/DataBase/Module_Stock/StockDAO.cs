@@ -125,5 +125,23 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+
+        public bool CheckStock (List<ProductionOrderDetailDTO> listDetails, int idDeposit)
+        {
+            try
+            {
+                SettingDAO settingDAO = new SettingDAO();
+                for (int i = 0; i < listDetails.Count; i++)
+                {
+                    int cant = ProductQuantity(listDetails[i].ProductId, new Deposit{ Id = idDeposit });
+                    if (listDetails[i].Quantity > cant) { return true; }
+                }
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
+        }
     }
 }
