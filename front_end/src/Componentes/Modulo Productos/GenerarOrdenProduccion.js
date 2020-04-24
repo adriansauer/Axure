@@ -5,6 +5,8 @@ import api from "../../Axios/Api.js";
 import { getEmpleados } from "../../Redux/actions.js";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
+
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,14 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: "",
       empleados: [],
       empleadoElegido: false,
+      detallesModalVisible: false,
+      productoSeleccionado: {
+        Name: "",
+        Description: "",
+        Cost: "",
+        Barcode: "",
+        QuantityMin: "",
+      },
     };
   }
   async componentDidMount() {
@@ -99,8 +109,31 @@ class GenerarOrdenProduccion extends Component {
     }
   }
   render() {
+    /**Modal que permite ver los detalles de un producto seleccionado */
+    const detallesModal = (
+      <Modal isOpen={this.state.detallesModalVisible} centered>
+        <ModalHeader>Detalles del Producto</ModalHeader>
+        <ModalBody>
+          <b> Nombre:</b> {this.state.productoSeleccionado.Name}
+          <br />
+          <b>Descripcion:</b> {this.state.productoSeleccionado.Description}
+          <br />
+          <b>Codigo de Barra:</b> {this.state.productoSeleccionado.Barcode}
+          <br />
+          <textarea className="form-control detalles" rows="3"></textarea>
+        </ModalBody>
+        <ModalFooter>
+          <button
+            onClick={() => this.setState({ detallesModalVisible: false })}
+          >
+            Cerrar
+          </button>
+        </ModalFooter>
+      </Modal>
+    );
     return (
       <div className="generarOrdenProduccion ">
+        {detallesModal}
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-md-8">
@@ -220,7 +253,14 @@ class GenerarOrdenProduccion extends Component {
                   </td>
                   {/**Boton para sacar de la lista el producto */}
                   <td>
-                    <VisibilityIcon />
+                    <VisibilityIcon
+                      onClick={() =>
+                        this.setState({
+                          productoSeleccionado: p,
+                          detallesModalVisible: true,
+                        })
+                      }
+                    />
                     <DeleteIcon onClick={() => this.delete(p.Id)} />
                   </td>
                 </tr>
