@@ -12,10 +12,6 @@ using System.Web.Mvc;
  */
 namespace Axure.Controllers.Module_Stock
 {
-<<<<<<< HEAD
-=======
-    //[EnableCors(origins: "*", headers: "*", methods: "*")]
->>>>>>> master
     [RoutePrefix("ProductionOrderDetails")]
     public class ProductionOrderDetailsController : Controller
     {
