@@ -170,7 +170,7 @@ class AgregarProducto extends Component {
           </div>
           <div className="form-group row mb-3">
             <label for="" className="">Descripcion del Producto</label>
-            <textarea class="form-control" placeholder="Descripcion del producto" value={this.state.descripciontxt} onChange={e => {
+            <textarea className="form-control" placeholder="Descripcion del producto" value={this.state.descripciontxt} onChange={e => {
                 this.setState({ descripciontxt: e.target.value });
               }} rows="3"></textarea>
           </div>

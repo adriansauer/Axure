@@ -461,10 +461,6 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.We
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
 >>>>>>> master
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
-<<<<<<< HEAD
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
-=======
-C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
->>>>>>> master
