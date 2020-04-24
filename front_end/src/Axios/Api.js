@@ -4,6 +4,7 @@ const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
   headers:{
       'content-type':'application/json',
+      
   }
 });
 
@@ -53,16 +54,26 @@ export default {
   },
   ordenProduccion:{
     get:()=>requestHelper({
-    
       methot: "get"
     }),
     create:(data)=>requestHelper({
-      url:"",
+      url:"ProductionOrders/Create ",
       methot: "post",
-      data
+      data: JSON.stringify(data),
+        headers:{
+          'content-type': 'application/json; charset=utf-8',
+          'dataType': 'json',
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
+        }
+      
     }),
-    cancel:(id)=>requestHelper({
-      methot: "delete"
+    
+  },
+  empleados:{
+    get:()=>requestHelper({
+      url:"Employees/List",
+      method:"get"
+      
     })
   }
 };

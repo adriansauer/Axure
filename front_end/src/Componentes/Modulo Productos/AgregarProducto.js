@@ -93,7 +93,6 @@ class AgregarProducto extends Component {
      * cantidad(cuantos de estos componentes tendra el producto terminado)
      * }
      */
-   console.log(this.props.materiaPrima);
    const materiaPrima  = this.props.materiaPrima.map(p => 
       
      { return {

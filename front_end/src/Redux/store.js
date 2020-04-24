@@ -8,6 +8,7 @@ import productos_terminados from './Reducers/productos_terminados.js';
 import productos_en_produccion from './Reducers/productos_en_produccion.js';
 import capitalTotal from './Reducers/capitalTotal.js';
 import capitalDeposito from './Reducers/capitalDeposito.js';
+import empleados from './Reducers/empleados.js';
 
 
 const reducer=combineReducers({
@@ -19,7 +20,7 @@ const reducer=combineReducers({
    homeVisible,
    capitalTotal,
    capitalDeposito,
-
+   empleados,
    
 });
 

@@ -9,7 +9,21 @@
           box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
 
 }
-
+.seleccionador{
+  float: none;
+content: '';
+position: relative;
+float: left;
+width: 15px;
+height: 15px;
+border-radius: 15px;
+background-color: #FEFEFE;
+margin: 20px 30px;
+z-index: -2;
+border: solid 1px #B7B7B7;
+left: 50%;
+box-sizing: content-box;
+}
 .StockFooter {
   margin-top: 1rem;
 }
