@@ -54,6 +54,7 @@ class Stock extends Component {
   }
   /**Cuando se renderiza el componente actualizo todos los datos con la api */
   async componentDidMount() {
+    
     await this.props.getProductos();
     await this.props.getMateriasPrimas();
     await this.props.getProductosTerminados();

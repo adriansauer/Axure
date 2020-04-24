@@ -2,9 +2,7 @@
 import axios from "axios";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
-  headers:{
-      'content-type':'application/json',
-  }
+  
 });
 
 export default {
@@ -53,16 +51,22 @@ export default {
   },
   ordenProduccion:{
     get:()=>requestHelper({
-    
       methot: "get"
     }),
     create:(data)=>requestHelper({
-      url:"",
+      url:"ProductionOrders/Create ",
       methot: "post",
-      data
+      data: data,
+        
+      
     }),
-    cancel:(id)=>requestHelper({
-      methot: "delete"
+    
+  },
+  empleados:{
+    get:()=>requestHelper({
+      url:"Employees/List",
+      method:"get"
+      
     })
   }
 };
