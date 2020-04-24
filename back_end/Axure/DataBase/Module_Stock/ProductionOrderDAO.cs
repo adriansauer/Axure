@@ -112,6 +112,24 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
+        public bool EditState(int id, int idState)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    ProductionOrder poEditado = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
+                    poEditado.ProductionStateId = idState;
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
         public bool Remove(int id)
         {
             try
@@ -140,6 +158,57 @@ namespace Axure.DataBase.Module_Stock
                     if (null == po) { return true; }
                     db.ProductionOrders.Remove(po);
                     db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool ChangeState (int idOrden, ProductionStateDTO prductionStateDTO)
+        {
+            try
+            {
+                switch (prductionStateDTO.Id)
+                {
+                    case 1:
+
+                    break;
+                    case 2:
+                        if (StatusInProgress(idOrden))
+                        {
+                            return true;
+                        }
+                    break;
+                }
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        public bool StatusInProgress(int idOrden)
+        {
+            try
+            {
+                ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
+                StockDAO stockDAO = new StockDAO();
+                SettingDAO settingDAO = new SettingDAO();
+                List<ProductionOrderDetailDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
+                if (stockDAO.CheckStock(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL"))))
+                {                   
+                    return true;
+                }
+                else
+                {
+                    if (EditState(idOrden, 2))
+                    {
+                        return true;
+                    }
                     return false;
                 }
             }

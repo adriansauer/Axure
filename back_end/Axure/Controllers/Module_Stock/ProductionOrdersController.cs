@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 /*
@@ -12,6 +13,7 @@ using System.Web.Mvc;
  */
 namespace Axure.Controllers.Module_Stock
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("ProductionOrders")]
     public class ProductionOrdersController : Controller
     {
@@ -107,6 +109,28 @@ namespace Axure.Controllers.Module_Stock
             try
             {
                 if (this.productionOrderDAO.Edit(id, po))
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
+                }
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+            }
+        }
+
+        // POST: ProductionOrders/ChangeState/5
+        [HttpPut]
+        [Route("ChangeState/{id}")]
+        public ActionResult ChangeState(int id, ProductionStateDTO productionStateDTO)
+        {
+            try
+            {
+                if (this.productionOrderDAO.ChangeState(id, productionStateDTO))
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
