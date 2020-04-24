@@ -169,9 +169,24 @@ class GenerarOrdenProduccion extends Component {
           </div>
           <div className="col-md-8"></div>
         </div>
+<<<<<<< HEAD
         <div className="row">
           <div className="StockBody MateriaPima col-md-4">
             <table className="table table-hover ">
+=======
+        <div className="row" style={{"marginTop":20}}>
+          <div className="StockBody MateriaPrima col-md-12">
+            <table className="table table-hover table">
+              <thead className="tableHeader">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Codigo de barra</th>
+                  <th scope="col">Cantidad</th>
+                </tr>
+              </thead>
+>>>>>>> master
               <tbody className="tableBody">
                 {this.state.encargadoNombre !== "" &&
                 !this.state.empleadoElegido
@@ -293,8 +308,13 @@ class GenerarOrdenProduccion extends Component {
           </div>
         </div>
         <div className="row">
+<<<<<<< HEAD
           <div className="StockBody MateriaPima col-md-4">
             <table className="table table-hover ">
+=======
+          <div className="StockBody MateriaPrima col-md-6">
+            <table className="table table-hover table">
+>>>>>>> master
               <tbody className="tableBody">
                 {this.state.buscador !== ""
                   ? this.state.productos
