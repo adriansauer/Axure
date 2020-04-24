@@ -2,10 +2,7 @@
 import axios from "axios";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
-  headers:{
-      'content-type':'application/json',
-      
-  }
+  
 });
 
 export default {
@@ -59,12 +56,8 @@ export default {
     create:(data)=>requestHelper({
       url:"ProductionOrders/Create ",
       methot: "post",
-      data: JSON.stringify(data),
-        headers:{
-          'content-type': 'application/json; charset=utf-8',
-          'dataType': 'json',
-          "Access-Control-Allow-Origin": "http://127.0.0.1:3000"
-        }
+      data: data,
+        
       
     }),
     
