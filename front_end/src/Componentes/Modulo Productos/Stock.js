@@ -313,9 +313,9 @@ class Stock extends Component {
         {detallesModal}
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
-          <div className="col-md-6 ml-auto">
+          <div className="col-md-6 mr-auto pl-0">
             {/**Un buscador de productos */}
-            <div className="col-sm-12">
+            <div className="col-sm-12 pl-0">
               <div className="input-group mb-3">
                 <input
                   type="text"

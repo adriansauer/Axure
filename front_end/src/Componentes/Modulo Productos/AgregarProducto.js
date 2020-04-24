@@ -108,7 +108,7 @@ class AgregarProducto extends Component {
       <Modal isOpen={this.state.listarMateriaPrimaVisible} centered>
         <ModalHeader>Lista de componentes</ModalHeader>
         <ModalBody>
-          <div className="StockBody MateriaPima row">
+          <div className="StockBody MateriaPrima row">
             <table className="table table-hover table-dark">
               <thead className="tableHeader">
                 <tr>
@@ -154,119 +154,85 @@ class AgregarProducto extends Component {
         {/**Modales  */}
         {listarMateriaPrima}
         <form onSubmit={this.handleSubmit}>
-          <div className="form-row">
-            <div className="col-md-6">
-              {/**NOMBRE DEL PRODUCTO*/}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Nombre del Producto"
-                value={this.state.nombretxt}
-                onChange={e => {
-                  this.setState({ nombretxt: e.target.value });
-                }}
-              />
-            </div>
-            <div className="col-md-6">
-              {/**DESCRIPCION DEL PRODUCTO*/}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Descripcion del producto"
-                value={this.state.descripciontxt}
-                onChange={e => {
-                  this.setState({ descripciontxt: e.target.value });
-                }}
-              />
-            </div>
-            <div className="col-md-6">
-              {/**COSTO DEL PRODUCTO*/}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Costo"
-                value={this.state.costotxt}
-                onChange={e => {
-                  this.setState({ costotxt: e.target.value });
-                }}
-              />
-            </div>
-            <div className="col-md-6">
-              {/**CANTIDAD MINIMA DEL PRODUCTO*/}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Cantidad Minima"
-                value={this.state.cantidadMintxt}
-                onChange={e => {
-                  this.setState({ cantidadMintxt: e.target.value });
-                }}
-              />
-            </div>
-            <div className="col-md-6">
-              {/**CODIGO DE BARRA DEL PRODUCTO*/}
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Codigo de barra"
-                value={this.state.codigoBarratxt}
-                onChange={e => {
-                  this.setState({ codigoBarratxt: e.target.value });
-                }}
-              />
-            </div>
-            <div className="col-md-12">
-              {/**TIPO DEL PRODUCTO, -MATERIA PRIMA O -PRODUCTO TERMINADO O AMBOS */}
-              <div>
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      value="1"
-                      checked={this.state.tipoProducto === 2}
-                      onChange={e => {
-                        this.setState({ tipoProducto: 2 });
-                      }}
-                    />
-                    Materia Prima
-                  </label>
-                </div>
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      value="2"
-                      checked={this.state.tipoProducto === 3}
-                      onChange={e => {
-                        this.setState({ tipoProducto: 3 });
-                      }}
-                    />
-                    Producto Terminado
-                  </label>
-                </div>
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      value="3"
-                      checked={this.state.tipoProducto === 1}
-                      onChange={e => {
-                        this.setState({ tipoProducto: 1 });
-                      }}
-                    />
-                    Ambos
-                  </label>
-                </div>
+          <div className="form-group row bg-title mb-2">
+            <label className="mx-auto title-label">Agregar Producto</label>
+          </div>
+          <div className="form-group row mb-2">
+            <label for="" className="">Nombre del Producto</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nombre del Producto"
+              value={this.state.nombretxt}
+              onChange={e => {
+                this.setState({ nombretxt: e.target.value });
+              }}
+            />
+          </div>
+          <div className="form-group row mb-3">
+            <label for="" className="">Descripcion del Producto</label>
+            <textarea class="form-control" placeholder="Descripcion del producto" value={this.state.descripciontxt} onChange={e => {
+                this.setState({ descripciontxt: e.target.value });
+              }} rows="3"></textarea>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div className="form-group row mb-2">
+            <label for="" className="">Costo </label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Costo"
+              value={this.state.costotxt}
+              onChange={e => {
+                this.setState({ costotxt: e.target.value });
+              }}
+            />
+          </div>
+          <div className="form-group row mb-2">
+            <label for="" className="">Cantidad Minima</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Cantidad Minima"
+              value={this.state.cantidadMintxt}
+              onChange={e => {
+                this.setState({ cantidadMintxt: e.target.value });
+              }}
+            />
+          </div>
+          <div className="form-group row mb-3">
+            <label for="" className="">Codigo de Barra</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Codigo de barra"
+              value={this.state.codigoBarratxt}
+              onChange={e => {
+                this.setState({ codigoBarratxt: e.target.value });
+              }}
+            />
+          </div>
+          <div class="dropdown-divider"></div>
+          <div className="form-group row">
+            <label>Tipo de Producto</label>
+            <div className="form-group mx-auto">
+              <div class="form-check form-check-inline">
+                <input type="radio" className="mr-1" value="1" checked={this.state.tipoProducto === 2} onChange={e => { this.setState({ tipoProducto: 2 }); }}/>
+                <label class="form-check-label mr-2" for="inlineRadio1">Materia Prima</label>
               </div>
-              {/**BOTON PARA AGREGAR PRODUCTO*/}
-              <input
-                className="btn btn-primary"
-                type="submit"
-                value="Crear Producto"
-              />
+              <div class="form-check form-check-inline">
+                <input type="radio" className="mr-1" value="2" checked={this.state.tipoProducto === 3} onChange={e => { this.setState({ tipoProducto: 3 }); }} />
+                <label class="form-check-label mr-2" for="inlineRadio2">Producto Terminado</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" className="mr-1" value="3" checked={this.state.tipoProducto === 1} onChange={e => { this.setState({ tipoProducto: 1 }); }} />
+                <label class="form-check-label" for="inlineRadio3">Ambos</label>
+              </div>
             </div>
-
-            {/** EN EL CASO DE QUE SEA UN PRODUCTO TERMINADO, SE DESPLAZA UN COMPONENTE PARA CARGAR SUS MATERIAS PRIMAS */}
+          </div>
+          <div class="dropdown-divider"></div>
+          <div className="form-group row mt-3">
+            <button type="submit" class="btn btn-primary ml-auto mr-3" value="Crear Producto">Crear Producto</button>
             {this.state.tipoProducto === 3 ? (
               /**SI ES UN PRODUCTO TERMINIADO DESPLAZAR LA LISTA DE MATERIA PRIMA */
               <button
