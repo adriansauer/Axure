@@ -4,24 +4,36 @@ import { connect } from "react-redux";
 import { setSectionShow } from "../../Redux/actions";
 import "../style.css";
 class AsideProducto extends Component {
+
+  selectTab(args, trackNumber){
+    let selector = args;
+    var aux = document.getElementById('Aside').querySelectorAll('.nav-link');
+    for (let index = 0; index < aux.length; index++) {
+      const element = aux[index];
+      element.classList.remove('active');
+    }
+    aux.item(trackNumber).classList.add('active');
+    this.props.setSectionShow(selector);
+  }
+
   render() {
     return (
       <div id="Aside" className="Aside">
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a className="nav-link active" href="#" onClick={() => this.props.setSectionShow(50)}>Stock</a>
+            <a className="nav-link active" href="#" onClick={() => this.selectTab(50, 0)}>Stock</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.props.setSectionShow(51)}>Agregar Producto</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(51, 1)}>Agregar Producto</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.props.setSectionShow(52)}>Orden de Produccion</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(52, 2)}>Orden de Produccion</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.props.setSectionShow(53)}>Ordenes de Produccion</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(53, 3)}>Ordenes de Produccion</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.props.setSectionShow(54)}>Productos de Baja</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(54, 4)}>Productos de Baja</a>
           </li>
         </ul>
         

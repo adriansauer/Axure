@@ -53,7 +53,7 @@ class GenerarOrdenProduccion extends Component {
           <div className="col-md-8"></div>
         </div>
         <div className="row" style={{"marginTop":20}}>
-          <div className="StockBody MateriaPima col-md-12">
+          <div className="StockBody MateriaPrima col-md-12">
             <table className="table table-hover table">
               <thead className="tableHeader">
                 <tr>
@@ -136,7 +136,7 @@ class GenerarOrdenProduccion extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="StockBody MateriaPima col-md-6">
+          <div className="StockBody MateriaPrima col-md-6">
             <table className="table table-hover table">
               <tbody className="tableBody">
                 {this.state.buscador !== ""
