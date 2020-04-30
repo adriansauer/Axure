@@ -100,6 +100,46 @@ namespace Axure.Controllers.Module_Stock
 
         }
 
+        // GET: Products/OfTypeRawMaterialAndBoth
+        [Route("OfTypeRawMaterialAndBoth")]
+        public ActionResult OfTypeRawMaterialAndBoth()
+        {
+            try
+            {
+                var lista = this.productDAO.ProductTypeRawMaterialAndBoth();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+            }
+
+        }
+
+        // GET: Products/OfTypeFinishedAndBoth
+        [Route("OfTypeFinishedAndBoth")]
+        public ActionResult OfTypeFinishedAndBoth()
+        {
+            try
+            {
+                var lista = this.productDAO.ProductTypeFinishedAndBoth();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+            }
+
+        }
+
         // GET: Products/Details/5
         [Route("Details/{id}")]
         public ActionResult Details(int id)
