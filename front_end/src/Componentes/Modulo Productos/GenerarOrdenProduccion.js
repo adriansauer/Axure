@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import { connect } from "react-redux";
 import api from "../../Axios/Api.js";
-import { getEmpleados } from "../../Redux/actions.js";
+import { getEmpleados,getMateriasPrimas_Terminados } from "../../Redux/actions.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
 
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      productos: this.props.productos_terminados,
+      
       buscador: "",
       productosSeleccionados: [],
       observacion: "",
@@ -21,7 +21,7 @@ class GenerarOrdenProduccion extends Component {
   }
   async componentDidMount() {
     await this.props.getEmpleados();
-
+    await this.props.getMateriasPrimas_Terminados();
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -221,7 +221,7 @@ const envio={
             <table className="table table-hover ">
               <tbody className="tableBody">
                 {this.state.buscador !== ""
-                  ? this.state.productos
+                  ? this.props.productos_terminados
                       .filter(
                         (producto) =>
                           producto.Name.toLowerCase().indexOf(
@@ -257,12 +257,13 @@ const envio={
 }
 const mapStateToProps = (state) => {
   return {
-    productos_terminados: state.productos_terminados,
+    productos_terminados: state.materiasPrimas_Terminados,
     empleados: state.empleados,
   };
 };
 const mapDispatchToProps = {
   getEmpleados,
+  getMateriasPrimas_Terminados,
 };
 
 export default connect(

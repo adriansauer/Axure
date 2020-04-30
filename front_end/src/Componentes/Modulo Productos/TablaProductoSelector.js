@@ -2,8 +2,7 @@ import React,{Component} from 'react';
 import './styleMProductos.css'
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
-
+import DetallesModal from "./Modales/ProductoDetalles.js";
 class TablaProductoSelector extends Component{
     
     constructor(props){
@@ -11,44 +10,36 @@ class TablaProductoSelector extends Component{
         this.state={
             detallesModalVisible: false,
       productoSeleccionado: {
+        Id: "",
         Name: "",
         Description: "",
         Cost: "",
+        ProductType: {
+          Id: "",
+        },
         Barcode: "",
         QuantityMin: "",
+
       },
         }
        
     } 
     
-    
+    ocultarModal(){
+      this.setState({
+        detallesModalVisible:false,
+      })
+    }
     render(){
         const productos=this.props.productos;
-            /**Modal que permite ver los detalles de un producto seleccionado */
-    const detallesModal = (
-        <Modal isOpen={this.state.detallesModalVisible} centered>
-          <ModalHeader>Detalles del Producto</ModalHeader>
-          <ModalBody>
-            <b> Nombre:</b> {this.state.productoSeleccionado.Name}
-            <br />
-            <b>Descripcion:</b> {this.state.productoSeleccionado.Description}
-            <br />
-            <b>Codigo de Barra:</b> {this.state.productoSeleccionado.Barcode}
-            <br />
-            <textarea className="form-control detalles" rows="3"></textarea>
-          </ModalBody>
-          <ModalFooter>
-            <button
-              onClick={() => this.setState({ detallesModalVisible: false })}
-            >
-              Cerrar
-            </button>
-          </ModalFooter>
-        </Modal>
-      );
+           
         return(
             <div className="row">
-                 {detallesModal}
+                <DetallesModal
+                producto={this.state.productoSeleccionado}
+                visible={this.state.detallesModalVisible}
+                ocultar={this.ocultarModal.bind(this)}
+                />
             <table className="table table-hover table" style={{ marginTop: 50 }}>
               <thead className="tableHeader">
                 <tr>

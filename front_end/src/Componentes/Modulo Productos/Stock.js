@@ -4,14 +4,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { connect } from "react-redux";
 import DetallesModal from "./Modales/ProductoDetalles.js";
-import EditarModal from './Modales/EditarProducto.js';
+import EditarModal from "./Modales/EditarProducto.js";
 import EliminarModal from "./Modales/EliminarProducto.js";
-import {
-  getCapitalTotal,
-  getCapitalDeposito,
-  getProductos,
-  deleteProducto,
-} from "../../Redux/actions.js";
+import { getProductos, getProductosDeposito } from "../../Redux/actions.js";
+import api from "../../Axios/Api.js";
 class Stock extends Component {
   constructor(props) {
     super(props);
@@ -31,31 +27,30 @@ class Stock extends Component {
       nombreSelector: "Todos",
       productos: this.props.productos,
       buscador: "",
-      capitalTotal: 0,
+      capital: 0,
       editarModalVisible: false,
       eliminarModalVisible: false,
       detallesModalVisible: false,
     };
   }
-  /**Cuando se renderiza el componente actualizo todos los datos con la api */
   async componentDidMount() {
     await this.props.getProductos();
-    await this.props.getCapitalTotal();
 
-    /**por defecto se mostraran todos los productos existentes */
+    const capital1 = await api.productos.getCapital(1);
+    const capital2 = await api.productos.getCapital(3);
+
+    const capitalTotal = capital1.data.Sum + capital2.data.Sum;
     this.setState({
       productos: this.props.productos,
-      capitalTotal: this.props.capitalTotal,
+      capital: capitalTotal,
     });
   }
 
-  //actualiza los estados al seleccionar un producto
   seleccionarProducto(p) {
     this.setState({
       productoActual: p,
     });
   }
-  /**oculta todos los modales */
   ocultarModals() {
     this.setState({
       detallesModalVisible: false,
@@ -63,13 +58,49 @@ class Stock extends Component {
       eliminarModalVisible: false,
     });
   }
-  
+
   async actualizar() {
     await this.props.getProductos();
-    await this.props.getCapitalTotal();
-  }
-  
+    if (this.state.selector < 4) {
+      await this.props.getProductosDeposito(this.state.selector);
+      const capital = await api.productos.getCapital(this.state.selector);
 
+      this.setState({
+        productos: this.props.productosDeposito,
+        capital: capital.data.Sum,
+      });
+    } else {
+      const capital1 = await api.productos.getCapital(1);
+      const capital2 = await api.productos.getCapital(3);
+
+      const capitalTotal = capital1.data.Sum + capital2.data.Sum;
+      this.setState({
+        productos: this.props.productos,
+        capital: capitalTotal,
+      });
+    }
+  }
+  mostrarProductosTerminados() {
+    this.setState({
+      selector: 3,
+      nombreSelector: "ProductosTerminados",
+    });
+    this.actualizar();
+  }
+  mostrarMateriaPrima() {
+    this.setState({
+      selector: 1,
+      nombreSelector: "Materia Prima",
+    });
+    this.actualizar();
+  }
+  mostrarTodos() {
+    this.setState({
+      selector: 4,
+      nombreSelector: "Todos",
+    });
+    this.actualizar();
+  }
   mostrarDetallesProducto(p) {
     this.seleccionarProducto(p);
     this.setState({ detallesModalVisible: true });
@@ -84,14 +115,13 @@ class Stock extends Component {
   }
 
   render() {
-
     return (
       <div className="stock">
-         <EliminarModal
-        producto={this.state.productoActual}
-        visible={this.state.eliminarModalVisible}
-        ocultar={this.ocultarModals.bind(this)}
-        actualizar={this.actualizar.bind(this)}
+        <EliminarModal
+          producto={this.state.productoActual}
+          visible={this.state.eliminarModalVisible}
+          ocultar={this.ocultarModals.bind(this)}
+          actualizar={this.actualizar.bind(this)}
         />
         <DetallesModal
           producto={this.state.productoActual}
@@ -99,10 +129,10 @@ class Stock extends Component {
           ocultar={this.ocultarModals.bind(this)}
         />
         <EditarModal
-        producto={this.state.productoActual}
-        visible={this.state.editarModalVisible}
-        ocultar={this.ocultarModals.bind(this)}
-        actualizar={this.actualizar.bind(this)}
+          producto={this.state.productoActual}
+          visible={this.state.editarModalVisible}
+          ocultar={this.ocultarModals.bind(this)}
+          actualizar={this.actualizar.bind(this)}
         />
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
@@ -135,36 +165,21 @@ class Stock extends Component {
                     <a
                       className="dropdown-item"
                       href="#todos"
-                      onClick={() =>
-                        this.setState({
-                          selector: 4,
-                          nombreSelector: "Todos",
-                        })
-                      }
+                      onClick={() => this.mostrarTodos()}
                     >
                       Todos
                     </a>
                     <a
                       className="dropdown-item"
                       href="#"
-                      onClick={() =>
-                        this.setState({
-                          selector: 1,
-                          nombreSelector: "Materia Prima",
-                        })
-                      }
+                      onClick={() => this.mostrarMateriaPrima()}
                     >
                       Materia Prima
                     </a>
                     <a
                       className="dropdown-item"
                       href="#"
-                      onClick={() =>
-                        this.setState({
-                          selector: 3,
-                          nombreSelector: "ProductosTerminados",
-                        })
-                      }
+                      onClick={() => this.mostrarProductosTerminados()}
                     >
                       Productos Terminados
                     </a>
@@ -191,15 +206,9 @@ class Stock extends Component {
             {/**Mapeo el arreglo de productos que nos proporciona la api y muestro los productos en la tabla */}
             <tbody className="tableBody">
               {this.state.productos
-
-                .filter((p) =>
-                  this.state.selector === 4
-                    ? true
-                    : p.ProductType.Id == this.state.selector
-                )
                 .filter(
-                  (producto) =>
-                    producto.Name.toLowerCase().indexOf(
+                  (p) =>
+                    p.Name.toLowerCase().indexOf(
                       this.state.buscador.toLowerCase()
                     ) !== -1
                 )
@@ -246,7 +255,7 @@ class Stock extends Component {
                 Capital Total:
               </span>
             </div>
-            <span className="form-control">{this.state.capitalTotal}</span>
+            <span className="form-control">{this.state.capital}</span>
             <div className="input-group-append">
               <span className="input-group-text" id="basic-addon1">
                 GS
@@ -262,15 +271,13 @@ class Stock extends Component {
 const mapStateToProps = (state) => {
   return {
     productos: state.productos,
-    capitalTotal: state.capitalTotal,
-    capitalDeposito: state.capitalDeposito,
+    productosDeposito: state.productoDeDeposito,
+    capital: state.capitalDeposito,
   };
 };
 const mapDispatchToProps = {
   getProductos,
-  deleteProducto,
-  getCapitalTotal,
-  getCapitalDeposito,
+  getProductosDeposito,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);

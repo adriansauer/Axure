@@ -1,9 +1,9 @@
 import { handleActions } from "redux-actions";
-import { getProductosSuccess } from "../actions";
+import { getProductosTerminadosSuccess } from "../actions";
 
 export default handleActions(
   {
-    [getProductosSuccess]: (state, action) => {
+    [getProductosTerminadosSuccess]: (state, action) => {
       return action.payload;
     },
   },

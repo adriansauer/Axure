@@ -2,7 +2,7 @@
 import axios from "axios";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
-  origin: "http://127.0.0.1/3000",
+
 });
 
 export default {
@@ -12,10 +12,18 @@ export default {
         url: "Products/List",
         method: "get",
       }),
-      getStockProduct:(id)=>requestHelper({
-        url: "Stocks/Quantity/"+id,
-        method: "get",
-      }),
+     getMateriasPrimas:()=>requestHelper({
+      url: "Products/OfType/2" ,
+      method: "get",
+     }),
+     getProductosTerminados:()=>requestHelper({
+      url: "Products/OfType/3" ,
+      method: "get",
+     }),
+     getMateriasPrimas_Terminados:()=>requestHelper({
+      url: "Products/OfType/1" ,
+      method: "get",
+     }),
     getDeposito: (deposito) =>
       requestHelper({
         url: "Products/OfDeposit/" + deposito,
