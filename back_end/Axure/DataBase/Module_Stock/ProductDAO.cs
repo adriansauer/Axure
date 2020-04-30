@@ -71,6 +71,55 @@ namespace Axure.DataBase.Module_Stock
             
         }
 
+
+        public List<ProductDTO> ProductTypeRawMaterialAndBoth()
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    SettingDAO settingDAO = new SettingDAO();
+                    int rawMaterial = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_RAW_MATERIAL"));
+                    int both = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED"));
+                    var respuesta = db.Products.Where(x => x.Deleted == false && (x.ProductTypeId == rawMaterial || x.ProductTypeId == both))
+                           .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                           .ToList()
+                           .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                           .ToList();
+                    return respuesta;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public List<ProductDTO> ProductTypeFinishedAndBoth()
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    SettingDAO settingDAO = new SettingDAO();
+                    int finished = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_FINISHED"));
+                    int both = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED"));
+                    var respuesta = db.Products.Where(x => x.Deleted == false && (x.ProductTypeId == finished || x.ProductTypeId == both))
+                           .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                           .ToList()
+                           .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                           .ToList();
+                    return respuesta;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         public List<ProductDTO> ProductType(int type)
         {
             try
