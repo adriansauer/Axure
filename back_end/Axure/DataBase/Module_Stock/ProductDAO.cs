@@ -71,6 +71,27 @@ namespace Axure.DataBase.Module_Stock
             
         }
 
+        public List<ProductDTO> ProductType(int type)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var respuesta = db.Products.Where(x => x.Deleted == false && x.ProductTypeId == type)
+                          .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                          .ToList()
+                          .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                          .ToList();
+                    return respuesta;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         public ProductDTO Detail(int id)
         {
             try

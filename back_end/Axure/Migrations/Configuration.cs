@@ -35,7 +35,10 @@ namespace Axure.Migrations
             context.Settings.AddOrUpdate(x => x.Id,
                 new Setting { Id = 1, Key = "ID_DEPOSIT_RAW_MATERIAL", Value = "1" },
                 new Setting { Id = 2, Key = "ID_DEPOSIT_PRODUCTION", Value = "2" },
-                new Setting { Id = 3, Key = "ID_DEPOSIT_SALE", Value = "3" }
+                new Setting { Id = 3, Key = "ID_DEPOSIT_SALE", Value = "3" },
+                new Setting { Id = 3, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED", Value = "1" },
+                new Setting { Id = 3, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL", Value = "2" },
+                new Setting { Id = 3, Key = "ID_TYPE_OF_PRODUCT_FINISHED", Value = "3" }
                 );
 
             //--------------------------------------------------------------------------------------------------------------//
