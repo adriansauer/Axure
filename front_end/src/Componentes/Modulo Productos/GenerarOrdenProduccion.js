@@ -80,21 +80,28 @@ class GenerarOrdenProduccion extends Component {
         Quantity: parseInt(p.Cantidad),
       };
     });
-
+const envio={
+  ProductionStateId: 1,
+  EmployeeId: this.state.encargado.Id,
+  Day: date.getDate() + 1,
+  Month: date.getMonth() + 1,
+  Year: date.getFullYear(),
+  Observation: this.state.observacion,
+  ListDetails: productos,
+}
     if (this.validarCampos()) {
-      const request = await api.ordenProduccion.create({
-        ProductionStateId: 1,
-        EmployeeId: this.state.encargado.Id,
-        Day: date.getDate() + 1,
-        Month: date.getMonth() + 1,
-        Year: date.getFullYear(),
-        Observation: this.state.observacion,
-        ListDetails: productos,
-      });
-      console.log("Respuesta=" + request);
-      if (request.state === 200) {
-        this.setState({});
-        console.log("Orgen guardada con exito");
+      const request = await api.ordenProduccion.create(envio);
+      console.log(request.status);
+      if (request.status === 200) {
+        this.setState({
+          buscador: "",
+          productosSeleccionados: [],
+          observacion: "",
+          encargado: {},
+          encargadoNombre: "",
+          empleadoElegido: false,
+        });
+        console.log("Orden guardada con exito");
       }
     }
   }
@@ -175,8 +182,11 @@ class GenerarOrdenProduccion extends Component {
               onChange={(e) => this.setState({ observacion: e.target.value })}
             />
           </div>
+          <div className="col-md-4">
+            <label>Estado: Pendiente</label>
+          </div>
 
-          <div className="col-md-8"></div>
+          <div className="col-md-4"></div>
         </div>
         <TablaProductoSelector productos={this.state.productosSeleccionados} delete={this.delete.bind(this)}/>
 

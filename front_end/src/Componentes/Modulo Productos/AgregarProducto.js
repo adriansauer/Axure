@@ -211,15 +211,15 @@ class AgregarProducto extends Component {
               }}
             />
           </div>
-          <div class="dropdown-divider"></div>
+          <div className="dropdown-divider"></div>
           <div className="form-group row">
             <label>Tipo de Producto</label>
             <div className="form-group mx-auto">
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input type="radio" className="mr-1" value="1" checked={this.state.tipoProducto === 2} onChange={e => { this.setState({ tipoProducto: 2 }); }}/>
-                <label class="form-check-label mr-2" for="inlineRadio1">Materia Prima</label>
+                <label className="form-check-label mr-2" for="inlineRadio1">Materia Prima</label>
               </div>
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input type="radio" className="mr-1" value="2" checked={this.state.tipoProducto === 3} onChange={e => { this.setState({ tipoProducto: 3 }); }} />
                 <label class="form-check-label mr-2" for="inlineRadio2">Producto Terminado</label>
               </div>
@@ -229,7 +229,7 @@ class AgregarProducto extends Component {
               </div>
             </div>
           </div>
-          <div class="dropdown-divider"></div>
+          <div className="dropdown-divider"></div>
           <div className="form-group row mt-3">
             <button type="submit" class="btn btn-primary ml-auto mr-3" value="Crear Producto">Crear Producto</button>
             {this.state.tipoProducto === 3 ? (

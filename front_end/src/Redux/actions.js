@@ -4,15 +4,7 @@ import api from "../Axios/Api.js";
 export const handleError = createAction("handleError");
 /**Obtener todos los productos */
 export const getProductosSuccess = createAction("getProductosSuccess");
-export const getMateriasPrimasSuccess = createAction(
-  "getMateriasPrimasSuccess"
-);
-export const getProductosEnProduccionSuccess = createAction(
-  "getProductosEnProduccionSuccess"
-);
-export const getProductosTerminadosSuccess = createAction(
-  "getProductosTerminadosSuccess"
-);
+
 /**obtener el capital todos los productos existentes en los depositos*/
 export const getCapitalTotalSuccess = createAction("getCapitalTotalSuccess");
 /**obtiene el capital de todos los productos de un deposito en especifico */
@@ -31,27 +23,6 @@ export const getProductos = () => async (dispatch) => {
     const request = await api.productos.get();
 
     dispatch(getProductosSuccess(request.data));
-  } catch (error) {}
-};
-/**devuelve todos los productos que son materia prima de la api */
-export const getMateriasPrimas = () => async (dispatch) => {
-  try {
-    const request = await api.productos.getDeposito(1);
-    dispatch(getMateriasPrimasSuccess(request.data));
-  } catch (error) {}
-};
-/**devuelve todos los productos que son productos terminados */
-export const getProductosTerminados = () => async (dispatch) => {
-  try {
-    const request = await api.productos.getDeposito(3);
-    dispatch(getProductosTerminadosSuccess(request.data));
-  } catch (error) {}
-};
-/**devuelve todos los productos que estan en produccion */
-export const getProductosEnProduccion = () => async (dispatch) => {
-  try {
-    const request = await api.productos.getDeposito(2);
-    dispatch(getProductosEnProduccionSuccess(request.data));
   } catch (error) {}
 };
 
@@ -91,8 +62,7 @@ export const createProducto = (data) => async (dispatch) => {
 
     if (request.status === 200) {
       dispatch(getProductos);
-      dispatch(getMateriasPrimas);
-      dispatch(getProductosTerminados);
+
     }
   } catch (error) {}
 };
@@ -102,8 +72,7 @@ export const editProducto = (id, data) => async (dispatch) => {
     const request = await api.productos.edit(id, data);
     if (request.state === 200) {
       dispatch(getProductos);
-      dispatch(getMateriasPrimas);
-      dispatch(getProductosTerminados);
+  
     }
   } catch (error) {}
 };

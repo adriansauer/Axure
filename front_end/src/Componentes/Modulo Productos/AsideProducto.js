@@ -35,6 +35,9 @@ class AsideProducto extends Component {
           <li className="nav-item">
             <a className="nav-link" href="#" onClick={() => this.selectTab(54, 4)}>Productos de Baja</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#" onClick={() => this.selectTab(55, 5)}>Dar de baja</a>
+          </li>
         </ul>
         
       </div>
