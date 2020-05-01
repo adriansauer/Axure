@@ -22,10 +22,6 @@ namespace Axure.DTO.Module_Stock
         //Costo total
         public int TotalCost { get; set; }
 
-        //Razon de Entrada Salida
-        [StringLength(5)]
-        public String Reason { get; set; }
-
         //FK del encargado
         public int EmployeeId { get; set; }
 
@@ -33,6 +29,6 @@ namespace Axure.DTO.Module_Stock
         public int DepositId { get; set; }
 
         //FK Entrada o Salida
-        public int MovementTypeId { get; set; }
+        public int MovementMotiveId { get; set; }
     }
 }

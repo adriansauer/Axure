@@ -143,5 +143,24 @@ namespace Axure.DataBase.Module_Stock
                 return true;
             }
         }
+
+        //editar cantidad
+        public bool UpdateQuantity(Stock stock, int productId, int quantity)
+        {
+            try
+            {
+                using(var db = new AxureContext())
+                {
+                    Stock st = db.Stocks.FirstOrDefault(x=> x.Id == stock.Id && x.ProductId == productId && x.DepositId == stock.DepositId);
+                    st.Quantity = quantity;
+                    db.SaveChanges();
+                    return true;// retorna true si se actualizo correctamente
+                }
+            }
+            catch
+            {
+                return false;//retorna false si no pudo realizar la actualizacion
+            }
+        }
     }
 }
