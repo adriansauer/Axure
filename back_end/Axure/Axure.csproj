@@ -193,6 +193,8 @@
     <Compile Include="Controllers\Module_Stock\ProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductTypesController.cs" />
     <Compile Include="Controllers\Module_Stock\StocksController.cs" />
+    <Compile Include="Controllers\Module_Stock\TransferDetailsController.cs" />
+    <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDAO.cs" />
@@ -206,6 +208,8 @@
     <Compile Include="DataBase\Module_Stock\ProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\ProductTypeDAO.cs" />
     <Compile Include="DataBase\Module_Stock\StockDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\TransferDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\TransferDetailDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
@@ -220,12 +224,14 @@
     <Compile Include="DTO\Module_Stock\ProductionStateDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductTypeDTO.cs" />
     <Compile Include="DTO\Module_Stock\StockDTO.cs" />
+    <Compile Include="DTO\Module_Stock\TransferDetailDTO.cs" />
+    <Compile Include="DTO\Module_Stock\TransferDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004231345119_Initial.cs" />
-    <Compile Include="Migrations\202004231345119_Initial.Designer.cs">
-      <DependentUpon>202004231345119_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202005011705165_Initial.cs" />
+    <Compile Include="Migrations\202005011705165_Initial.Designer.cs">
+      <DependentUpon>202005011705165_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -252,7 +258,6 @@
     <Compile Include="Models\Module_Stock\Stock.cs" />
     <Compile Include="Models\Module_Stock\Transfer.cs" />
     <Compile Include="Models\Module_Stock\TransferDetail.cs" />
-    <Compile Include="Models\Module_Stock\TransferType.cs" />
     <Compile Include="Models\MyAuthorizationServerProvider.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\User.cs" />
@@ -323,6 +328,7 @@
     <Folder Include="Views\Setting\" />
     <Folder Include="Views\Stocks\" />
     <Folder Include="Views\TranferDetails\" />
+    <Folder Include="Views\TransferDetails\" />
     <Folder Include="Views\Transfers\" />
     <Folder Include="Views\TransferTypes\" />
   </ItemGroup>
@@ -354,8 +360,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004231345119_Initial.resx">
-      <DependentUpon>202004231345119_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005011705165_Initial.resx">
+      <DependentUpon>202005011705165_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

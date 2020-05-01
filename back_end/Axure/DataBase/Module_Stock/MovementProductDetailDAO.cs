@@ -17,51 +17,48 @@ namespace Axure.DataBase.Module_Stock
 {
     public class MovementProductDetailDAO
     {
-        //Metodo privado para agregar
-        /*private bool AgregarPriv() { return true; }
-
         //Metodo para agregar a la tabla
-        public bool Agregar(MovementProductDetail esp)
+        public bool Add(MovementProductDetail esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
 
-                    StockDB dbDAO = new StockDB();
+                    StockDAO dbDAO = new StockDAO();
                     MovementProductDAO espDao = new MovementProductDAO();
 
                     Product pd = db.Products.Single(x => x.Id == esp.ProductId);
-                    MovementProductionType espC = db.MovementProducts.Single(x=> x.Id == esp.MovementProductId);
-                    Stock st = db.Stocks.Single(x => x.IdProduct == pd.Id && x.IdDeposit == espC.DepositId);
+                    MovementProduct espC = db.MovementProducts.Single(x => x.Id == esp.MovementProductId);
+                    Stock st = db.Stocks.Single(x => x.ProductId == pd.Id && x.DepositId == espC.DepositId);
+                    MovementMotive mt = db.MovementMotives.Single(x => x.Id == espC.MovementMotiveId);
+
+                    Setting stgE = db.Settings.Single(x => x.Key == "ID_ENTRY_PRODUCT");
+                    Setting stgO = db.Settings.Single(x => x.Key == "ID_OUTPUT_PRODUCT");
+
 
                     //pregunta si es Entrada o salida para actualizar el stock
-                    if (espC.MovementTypeId == 1)//si es Entrada
+                    if (mt.MovementTypeId == int.Parse(stgE.Value))//si es Entrada
                     {
-                        db.MovementProductDetails.Add( new MovementProductDetail() { ProductId = esp.ProductId, MovementProductId = esp.MovementProductId, Quantity = esp.Quantity, Observation = esp.Observation, TotalCost = esp.Quantity * pd.Cost, Cost = esp.Cost});
-                        //se actualiza la cabecera
-                        espDao.Editar(espC.Id,new MovementProductionType { DepositId = espC.DepositId,EmployeeId = espC.EmployeeId, Reason = espC.Reason, TotalCost = espC.TotalCost + esp.TotalCost});
-                        //se actualiza el stock
-                        dbDAO.Editar(st.Id,new Stock {IdProduct = pd.Id, IdDeposit = espC.DepositId, Quantity = st.Quantity + esp.Quantity });
+                        db.MovementProductDetails.Add(new MovementProductDetail() { ProductId = esp.ProductId, MovementProductId = esp.MovementProductId, Quantity = esp.Quantity, Observation = esp.Observation, TotalCost = esp.Quantity * pd.Cost, Cost = pd.Cost });
+                        //espDao.UpdateTotalCost(espC.Id, espC.TotalCost + esp.TotalCost);//se actualiza la cabecera
+                        dbDAO.UpdateQuantity(st, pd.Id, st.Quantity + esp.Quantity);//se actualiza el stock
                         db.SaveChanges();
                         return true;
                     }
-                    if (espC.MovementTypeId == 2)//si es salida
+                    if (mt.MovementTypeId == int.Parse(stgO.Value))//si es salida   )
                     {
                         //verifica que la cantidad a sacar no sea mayor a la existente
                         if (esp.Quantity <= st.Quantity)
                         {
-                            db.MovementProductDetails.Add( new MovementProductDetail() { ProductId = esp.ProductId, MovementProductId = esp.MovementProductId, Quantity = esp.Quantity, Observation = esp.Observation, TotalCost = esp.Quantity * pd.Cost, Cost = esp.Cost });
-                            //se actualiza la cabecera
-                            espDao.Editar(espC.Id, new MovementProductionType { DepositId = espC.DepositId, EmployeeId = espC.EmployeeId, Reason = espC.Reason, TotalCost = espC.TotalCost - esp.TotalCost });
-                            //se actualiza el stock
-                            dbDAO.Editar(st.Id, new Stock { IdProduct = pd.Id, IdDeposit = espC.DepositId, Quantity = st.Quantity - esp.Quantity });
+                            db.MovementProductDetails.Add(new MovementProductDetail() { ProductId = esp.ProductId, MovementProductId = esp.MovementProductId, Quantity = esp.Quantity, Observation = esp.Observation, TotalCost = esp.Quantity * pd.Cost, Cost = pd.Cost });
+                            //espDao.UpdateTotalCost(espC.Id, espC.TotalCost - esp.TotalCost);//se actualiza la cabecera
+                            dbDAO.UpdateQuantity(st, pd.Id, st.Quantity - esp.Quantity); //se actualiza el stock
                             db.SaveChanges();
                             return true;
                         }
                         else return false;
                     }
-
                     else return false;
                 }
             }
@@ -72,7 +69,7 @@ namespace Axure.DataBase.Module_Stock
         }
 
         //Metodo para obterner todos los productos de entrada o salida
-        public List<MovementProductDetailDTO> Obtener()
+        public List<MovementProductDetailDTO> List()
         {
             try
             {
@@ -81,23 +78,24 @@ namespace Axure.DataBase.Module_Stock
                     var lista = db.MovementProductDetails.Where(x => x.Quantity > 0)
                         .Select(x => new
                         {
-                            Id              = x.Id,
+                            Id = x.Id,
                             MovementProductId = x.MovementProductId,
-                            IdProduct       = x.ProductId,
-                            Quantity        = x.Quantity,
-                            TotalCost       = x.TotalCost,
-                            Cost            = x.Cost,
-                            Observation     = x.Observation
+                            IdProduct = x.ProductId,
+                            Quantity = x.Quantity,
+                            TotalCost = x.TotalCost,
+                            Cost = x.Cost,
+                            Observation = x.Observation
                         })
                         .ToList()
-                        .Select(y => new MovementProductDetailDTO() {
-                            Id              = y.Id,
+                        .Select(y => new MovementProductDetailDTO()
+                        {
+                            Id = y.Id,
                             MovementProductId = y.MovementProductId,
-                            ProductId       = y.IdProduct,
-                            Quantity        = y.Quantity,
-                            TotalCost       = y.TotalCost,
-                            Cost            = y.Cost,
-                            Observation     = y.Observation
+                            ProductId = y.IdProduct,
+                            Quantity = y.Quantity,
+                            TotalCost = y.TotalCost,
+                            Cost = y.Cost,
+                            Observation = y.Observation
                         })
                         .ToList();
                     return lista;
@@ -105,15 +103,15 @@ namespace Axure.DataBase.Module_Stock
             }
             catch
             {
-                return null ;
+                return null;
             }
         }
 
 
         //Cambiar de nuevo
-        
+
         //Obtener productos por id de cabecera
-        public List<MovementProductDetailDTO> ObtenerPorNro(int id)
+        public List<MovementProductDetailDTO> ListByMaster(int id)
         {
             try
             {
@@ -150,96 +148,5 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
-
-        //Eliminar 
-        public bool Eliminar(int id)
-        {
-            try
-            {
-                using (var db  =  new AxureContext())
-                {
-                    MovementProductDetail esp = db.MovementProductDetails.Single(x => x.Id == id);
-                    MovementProductionType espC = db.MovementProducts.Single(x => x.Id == esp.MovementProductId);
-                    Product pd = db.Products.Single(x => x.Id == esp.ProductId);
-                    Stock st = db.Stocks.Single(x => x.IdProduct == pd.Id && x.IdDeposit == espC.DepositId);
-
-                    MovementProductDAO espDAO = new MovementProductDAO();
-                    StockDB dbDAO = new StockDB();
-
-                    //pregunta si es entrada o salida
-                    if (espC.MovementTypeId == 1) //si es entrada
-                    {
-                        if (esp.Quantity <= st.Quantity)
-                        {
-                            //actualiza el costo de la cabecera
-                            espDAO.Editar(esp.MovementProductId, new MovementProductionType() { DepositId = espC.DepositId, EmployeeId = espC.EmployeeId, MovementTypeId = espC.MovementTypeId, Reason = espC.Reason, Number = espC.Number, Date = espC.Date, TotalCost = espC.TotalCost - esp.TotalCost });
-                            //se actualiza el stock
-                            dbDAO.Editar(st.Id, new Stock { IdProduct = pd.Id, IdDeposit = espC.DepositId, Quantity = st.Quantity - esp.Quantity });
-                            db.MovementProductDetails.Remove(esp);
-                            db.SaveChanges();
-                            return true;
-                        }
-                        else return false;
-                    }
-                    if (espC.MovementTypeId == 2)//si es salida
-                    {
-                        //actualiza el costo de la cabecera
-                        espDAO.Editar(esp.MovementProductId, new MovementProductionType() { DepositId = espC.DepositId, EmployeeId = espC.EmployeeId, MovementTypeId = espC.MovementTypeId, Reason = espC.Reason, Number = espC.Number, Date = espC.Date, TotalCost = espC.TotalCost - esp.TotalCost });
-                        //se actualiza el stock
-                        dbDAO.Editar(st.Id, new Stock { IdProduct = pd.Id, IdDeposit = espC.DepositId, Quantity = st.Quantity + esp.Quantity });
-                        db.MovementProductDetails.Remove(esp);
-                        db.SaveChanges();
-                        return true;
-                    }
-                    else return false;
-                    
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //Editar
-        public bool Editar(int id, MovementProductDetail esp)
-        {
-            try
-            {
-                using (var db  = new AxureContext())
-                {
-                    int cantAux = esp.Quantity;
-
-                    MovementProductionType espC = db.MovementProducts.Single(x => x.Id == esp.MovementProductId);
-                    Product pd = db.Products.Single(x => x.Id == esp.ProductId);
-                    Stock st = db.Stocks.Single(x => x.IdProduct == pd.Id && x.IdDeposit == espC.DepositId);
-
-                    StockDB dbDAO = new StockDB();
-
-                    if (esp.Quantity <= st.Quantity)
-                    {
-                        MovementProductDetail espD = db.MovementProductDetails.FirstOrDefault(x => x.Id == id);
-                        espD.MovementProductId = esp.MovementProductId;
-                        espD.ProductId = esp.ProductId;
-                        espD.Observation = esp.Observation;
-                        espD.Quantity = esp.Quantity;
-                        espD.Cost = esp.Cost;
-                        espD.TotalCost = esp.TotalCost;
-
-                        //se actualiza el stock
-                        dbDAO.Editar(st.Id, new Stock { IdProduct = pd.Id, IdDeposit = espC.DepositId, Quantity = st.Quantity - cantAux + esp.Quantity });
-
-                        db.SaveChanges();
-                        return true;
-                    }
-                    else return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        */
     }
 }
