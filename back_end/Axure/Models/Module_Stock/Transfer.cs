@@ -29,12 +29,6 @@ namespace Axure.Models.Module_Stock
         [ForeignKey("DepositDestinationId")]
         public Deposit DepositDestination { get; set; }
 
-        //Type of transfer, example for sale.
-        [Required]
-        public int TransferTypeId { get; set; }
-        [ForeignKey("TransferTypeId")]
-        public TransferType TransferType { get; set; }
-
         //Transfer date.
         [Required]
         public DateTime Date { get; set; }
@@ -42,6 +36,9 @@ namespace Axure.Models.Module_Stock
         //Observation.
         [StringLength(200)]
         public string Observation { get; set; }
+
+        //[Required]
+        public int Number { get; set; }
 
         //Used to remove ilde.
         [Required]

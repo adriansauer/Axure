@@ -27,8 +27,6 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementProductionDetail> MovementProductionDetails { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.TransferType> TransferTypes { get; set; }
-
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Transfer> Transfers { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductType> ProductTypes { get; set; }

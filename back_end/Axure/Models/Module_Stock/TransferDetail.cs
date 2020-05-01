@@ -36,5 +36,8 @@ namespace Axure.Models.Module_Stock
         //Used to remove ilde.
         [Required]
         public bool Deleted { get; set; }
+
+        //[Required]
+        public int Number { get; set; }
     }
 }
