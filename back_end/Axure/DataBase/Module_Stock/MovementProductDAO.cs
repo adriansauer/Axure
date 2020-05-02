@@ -158,13 +158,13 @@ namespace Axure.DataBase.Module_Stock
         }
 
         //actualizar el costo total
-        public bool UpdateTotalCost(int mpId, int tc)
+        public bool UpdateTotalCost(MovementProduct mvp, int tc)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    MovementProduct mp = db.MovementProducts.FirstOrDefault(x => x.Id == mpId);
+                    MovementProduct mp = db.MovementProducts.FirstOrDefault(x => x.Id == mvp.Id);
                     mp.TotalCost = tc;
                     db.SaveChanges();
                     return true;

@@ -26,9 +26,28 @@ namespace Axure.DataBase.Module_Stock
                 {
                     //cabecera de la transferencia
                     tc = db.Transfers.Single(x => x.Id == td.TransferId && x.Number == td.Number);
+
                     //Stock de depositos de Origen y destino
-                    stDes = db.Stocks.Single(x=> x.DepositId == tc.DepositDestinationId && x.ProductId == td.ProductId);
-                    stOri = db.Stocks.Single(x=> x.DepositId == tc.DepositOriginId && x.ProductId == td.ProductId);
+                    try
+                    {
+                        //trata de encontar el deposito de origen del producto a transferir, si encuentra, perfecto
+                        stOri = db.Stocks.Single(x => x.DepositId == tc.DepositOriginId && x.ProductId == td.ProductId);
+                    }
+                    catch
+                    {
+                        //si no encuentra retorna false y corta el agregado
+                        return false;
+                    }
+                    try
+                    {
+                        //trata de encontar el deposito de destino del producto a transferir, si encuentra, perfecto
+                        stDes = db.Stocks.Single(x => x.DepositId == tc.DepositDestinationId && x.ProductId == td.ProductId);
+                    }
+                    catch
+                    {
+                        //si no encuentra, lo inicializa a null para pasar a crear un stock del producto a transferir
+                        stDes = null;
+                    }
 
                     
                     if (td.Quantity <= stOri.Quantity)//si la cantidad a transferir es menor o igual al stock actual entonces se realiza si no retorna false
