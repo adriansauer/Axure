@@ -14,15 +14,12 @@ namespace Axure.DTO.Module_Stock
         public int Id { get; set; }
 
         //FK producto
-        [Required]
         public int ProductId { get; set; }
 
         //FK Cabecera de Entrada Salida 
-        [Required]
         public int MovementProductId { get; set; }
 
         //Cantidad de productos
-        [Required]
         public int Quantity { get; set; }
 
         //Costo total

@@ -21,6 +21,7 @@ namespace Axure.Migrations
         {
             //Configuration where the base updates automatically when doing the migration, false to deactivate the configuration
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
          //Function that is called every time the migration is performed. 
@@ -36,9 +37,11 @@ namespace Axure.Migrations
                 new Setting { Id = 1, Key = "ID_DEPOSIT_RAW_MATERIAL", Value = "1" },
                 new Setting { Id = 2, Key = "ID_DEPOSIT_PRODUCTION", Value = "2" },
                 new Setting { Id = 3, Key = "ID_DEPOSIT_SALE", Value = "3" },
-                new Setting { Id = 4, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED", Value = "1" },
-                new Setting { Id = 5, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL", Value = "2" },
-                new Setting { Id = 6, Key = "ID_TYPE_OF_PRODUCT_FINISHED", Value = "3" }
+                new Setting { Id = 4, Key = "ID_ENTRY_PRODUCT", Value = "1" },
+                new Setting { Id = 5, Key = "ID_OUTPUT_PRODUCT", Value = "2" },
+                new Setting { Id = 6, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED", Value = "1" },
+                new Setting { Id = 7, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL", Value = "2" },
+                new Setting { Id = 8, Key = "ID_TYPE_OF_PRODUCT_FINISHED", Value = "3" }
                 );
 
             //--------------------------------------------------------------------------------------------------------------//
@@ -85,16 +88,12 @@ namespace Axure.Migrations
                 new Product { Id = 23, Name = "Computadora PC3", Description = "Gama Alta", Cost = 3000000, ProductTypeId = 3, QuantityMin = 2, Barcode = "023", Deleted = false }
 
                 );
-            //Reason for the transfer.
-            context.TransferTypes.AddOrUpdate(x => x.Id,
-                new TransferType { Id = 1, Type = "Para Venta", Deleted = false }
-                );
             //Transfers the products.
             context.Transfers.AddOrUpdate(x => x.Id,
-                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, TransferTypeId = 1, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted= false });
+                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted= false, Number = 1 });
             //Transfer details.
             context.TransferDetails.AddOrUpdate(x => x.Id,
-                new TransferDetail { Id=1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false });
+                new TransferDetail { Id=1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false, Number = 1 });
             //Existence of products.
             context.Stocks.AddOrUpdate(x => x.Id,
                 //Deposit raw material.
@@ -188,8 +187,13 @@ namespace Axure.Migrations
             //context.MovementProductDetails.AddOrUpdate(x => x.Id);
             //context.MovementMotives.AddOrUpdate(x => x.Id);
             context.MovementTypes.AddOrUpdate(x => x.Id,
-                new MovementType { Id = 1, Abbreviation = "ENT", Description = "Entrada" },
-                new MovementType { Id = 2, Abbreviation = "SAL", Description = "Salida"}
+                new MovementType { Id = 1, Abbreviation = "ENT", Description = "Entry" },
+                new MovementType { Id = 2, Abbreviation = "OUT", Description = "Output"}
+                );
+
+            context.MovementMotives.AddOrUpdate(x => x.Id,
+                new MovementMotive {Id = 1, MovementTypeId = 1, Motive = "Obsequio del proveedor." },
+                new MovementMotive {Id = 2, MovementTypeId = 2, Motive = "Salida por rotura." }
                 );
             
             

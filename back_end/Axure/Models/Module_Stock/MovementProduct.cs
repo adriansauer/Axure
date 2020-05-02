@@ -17,10 +17,6 @@ namespace Axure.Models.Module_Stock
         //Id
         public int Id { get; set; }
 
-        //Numero de Entrada Salida
-        [Required]
-        public int Number { get; set; }
-
         //Fecha
         [Required]
         public DateTime Date { get; set; }
