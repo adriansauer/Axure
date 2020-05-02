@@ -1,6 +1,7 @@
 import { createAction } from "redux-actions";
 import api from "../Axios/Api.js";
-
+export const getProductosDeCompraSuccess = createAction("getProductosDeCompraSuccess");
+export const getProductosDeVentaSuccess = createAction("getProductosDeVentaSuccess");
 export const getMateriasPrimasSuccess = createAction("getMateriasPrimasSuccess");
 export const getProductosTerminadosSuccess = createAction("getProductosTerminadosSuccess");
 export const getMateriasPrimas_TerminadosSuccess = createAction("getMateriasPrimas_TerminadosSuccess");
@@ -16,6 +17,19 @@ export const getProductos = () => async (dispatch) => {
     const request = await api.productos.get();
 
     dispatch(getProductosSuccess(request.data));
+
+};
+export const getProductosDeVenta = () => async (dispatch) => {
+
+  const request = await api.productos.getProductosDeVenta();
+  dispatch(getProductosDeVentaSuccess(request.data));
+
+};
+export const getProductosDeCompra = () => async (dispatch) => {
+
+  const request = await api.productos.getProductosDeCompra();
+
+  dispatch(getProductosDeCompraSuccess(request.data));
 
 };
 export const getMateriasPrimas = () => async (dispatch) => {

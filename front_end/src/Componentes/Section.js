@@ -7,8 +7,8 @@ import Stock from './Modulo Productos/Stock';
 import AgregarProducto from './Modulo Productos/AgregarProducto';
 import GenerarOrdenProduccion from './Modulo Productos/GenerarOrdenProduccion';
 import OrdenesProduccionProductos from './Modulo Productos/OrdenesProduccionProductos';
-import ProductosBaja from './Modulo Productos/ProductosBaja';
-import DarDeBaja from './Modulo Productos/DarDeBaja.js';
+import ProductosBaja from './Modulo Productos/Movimientos';
+import DarDeBaja from './Modulo Productos/Ingreso_Egreso.js';
 
 class Section extends Component{
  

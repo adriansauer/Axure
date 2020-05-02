@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import { connect } from "react-redux";
 import api from "../../Axios/Api.js";
-import { getEmpleados,getMateriasPrimas_Terminados } from "../../Redux/actions.js";
+import { getEmpleados,getProductosDeVenta } from "../../Redux/actions.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
 
 class GenerarOrdenProduccion extends Component {
@@ -21,7 +21,7 @@ class GenerarOrdenProduccion extends Component {
   }
   async componentDidMount() {
     await this.props.getEmpleados();
-    await this.props.getMateriasPrimas_Terminados();
+    await this.props.getProductosDeVenta();
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -57,6 +57,8 @@ class GenerarOrdenProduccion extends Component {
         Description: producto.Description,
         Barcode: producto.Barcode,
         Cantidad: "1",
+        Cost:producto.Cost,
+        QuantityMin:producto.QuantityMin,
       }),
     });
     this.setState({ buscador: "" });
@@ -89,6 +91,7 @@ const envio={
   Observation: this.state.observacion,
   ListDetails: productos,
 }
+console.log(envio);
     if (this.validarCampos()) {
       const request = await api.ordenProduccion.create(envio);
       console.log(request.status);
@@ -221,7 +224,7 @@ const envio={
             <table className="table table-hover ">
               <tbody className="tableBody">
                 {this.state.buscador !== ""
-                  ? this.props.productos_terminados
+                  ? this.props.productos
                       .filter(
                         (producto) =>
                           producto.Name.toLowerCase().indexOf(
@@ -257,13 +260,13 @@ const envio={
 }
 const mapStateToProps = (state) => {
   return {
-    productos_terminados: state.materiasPrimas_Terminados,
+    productos: state.productosDeVenta,
     empleados: state.empleados,
   };
 };
 const mapDispatchToProps = {
   getEmpleados,
-  getMateriasPrimas_Terminados,
+  getProductosDeVenta,
 };
 
 export default connect(

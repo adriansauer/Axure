@@ -8,6 +8,8 @@ import productoDeDeposito from "./Reducers/productoDeDeposito.js"
 import materiasPrimas from "./Reducers/materiasPrimas.js"
 import productosTerminados from "./Reducers/productosTerminados.js"
 import materiasPrimas_Terminados from "./Reducers/materiasPrimas_Terminados.js"
+import productosDeCompra from "./Reducers/productosDeCompra.js"
+import productosDeVenta from "./Reducers/productosDeVenta.js"
 
 const reducer=combineReducers({
    productos,
@@ -18,6 +20,8 @@ const reducer=combineReducers({
    materiasPrimas,
    productosTerminados,
    materiasPrimas_Terminados,
+   productosDeCompra,
+   productosDeVenta,
    
 });
 

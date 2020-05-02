@@ -24,6 +24,14 @@ export default {
       url: "Products/OfType/1" ,
       method: "get",
      }),
+     getProductosDeCompra:()=>requestHelper({
+      url: "Products/OfTypeRawMaterialAndBoth" ,
+      method: "get",
+     }),
+     getProductosDeVenta:()=>requestHelper({
+      url: "Products/OfTypeFinishedAndBoth " ,
+      method: "get",
+     }),
     getDeposito: (deposito) =>
       requestHelper({
         url: "Products/OfDeposit/" + deposito,
@@ -64,6 +72,7 @@ export default {
   ordenProduccion: {
     get: () =>
       requestHelper({
+        url: "ProductionOrders/List ",
         method: "get",
       }),
     create: (data) =>
@@ -71,6 +80,11 @@ export default {
         url: "ProductionOrders/Create ",
         method: "post",
         data: data,      
+      }),
+      ordenDetalles: (id) =>
+      requestHelper({
+        url: "ProductionOrders/Details/"+id,
+        method: "get",   
       }),
   },
   empleados: {

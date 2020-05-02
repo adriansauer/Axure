@@ -30,14 +30,15 @@ class AsideProducto extends Component {
             <a className="nav-link" href="#" onClick={() => this.selectTab(52, 2)}>Orden de Produccion</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.selectTab(53, 3)}>Ordenes de Produccion</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(55, 3)}>Ingreso/Egreso</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.selectTab(54, 4)}>Productos de Baja</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(53, 4)}>Ordenes de Produccion</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#" onClick={() => this.selectTab(55, 5)}>Dar de baja</a>
+            <a className="nav-link" href="#" onClick={() => this.selectTab(54, 5)}>Movimientos</a>
           </li>
+          
         </ul>
         
       </div>

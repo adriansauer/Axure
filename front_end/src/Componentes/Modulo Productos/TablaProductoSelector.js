@@ -32,7 +32,7 @@ class TablaProductoSelector extends Component{
     }
     render(){
         const productos=this.props.productos;
-           
+     
         return(
             <div className="row">
                 <DetallesModal
