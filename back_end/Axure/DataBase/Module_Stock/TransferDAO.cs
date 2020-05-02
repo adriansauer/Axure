@@ -26,8 +26,8 @@ namespace Axure.DataBase.Module_Stock
                         DepositOriginId = tc.DepositOriginId,
                         Date = tc.Date,
                         Observation = tc.Observation,
-                        Deleted = tc.Deleted,
-                        Number = tc.Number
+                        Deleted = false,
+                        Number = 0
                     });
                     db.SaveChanges();
                     return true;
