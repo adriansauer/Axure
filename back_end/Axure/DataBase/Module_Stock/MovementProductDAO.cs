@@ -22,21 +22,34 @@ namespace Axure.DataBase.Module_Stock
         public MovementProductDAO() { }
 
         //Agregar datos a la Cabecera de Entrada y Salida de Productos
-        public bool Add(MovementProduct esp)
+        public bool Add(MovementProductListDTO esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.MovementProducts.Add(new MovementProduct()
+                    MovementProduct mvp = new MovementProduct()
                     {
-                        Date = esp.Date,
-                        //TotalCost = esp.TotalCost,
+                        Date = new DateTime(esp.Year, esp.Month, esp.Day),
+                        TotalCost = 0,
                         DepositId = esp.DepositId,
                         EmployeeId = esp.EmployeeId,
-                        MovementMotiveId = esp.MovementMotiveId
-                    });
+                        MovementMotiveId = esp.MovementMotiveId,
+                        Deleted = false
+                    };
+                    db.MovementProducts.Add(mvp);
                     db.SaveChanges();
+
+                    MovementProductDetailDAO mvDDAO = new MovementProductDetailDAO();
+                    if(null != esp.ListDetails)
+                    {
+                        for (int i = 0; i < esp.ListDetails.Count; i++)
+                        {
+                            esp.ListDetails[i].MovementProductId = mvp.Id;
+                            mvDDAO.Add(esp.ListDetails[i]);
+                        }
+                    }
+
                     return true;
                 }
             }
@@ -46,7 +59,7 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public List<MovementProductDTO> MovementByDeposit(int deposito)
+        /*public List<MovementProductDTO> MovementByDeposit(int deposito)
         {
             try
             {
@@ -69,17 +82,17 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
-
+        */
         public List<MovementProductDTO> List()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var lista = db.MovementProducts.Where(x => x.TotalCost >= 0)
+                    var lista = db.MovementProducts.Where(x => x.Deleted == false)
                         .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Date = y.Date, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
                         .ToList();
                     return lista;
                 }
@@ -97,8 +110,8 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    MovementProduct mv = db.MovementProducts.Single(x => x.Id == mvId);
-                    return new MovementProductDTO { Id = mv.Id, Date = mv.Date, TotalCost = mv.TotalCost, EmployeeId = mv.EmployeeId, DepositId = mv.DepositId, MovementMotiveId = mv.MovementMotiveId };
+                    MovementProduct mv = db.MovementProducts.Single(x => x.Id == mvId && x.Deleted == false);
+                    return new MovementProductDTO { Id = mv.Id, Day = mv.Date.Day, Month = mv.Date.Month, Year = mv.Date.Year, TotalCost = mv.TotalCost, EmployeeId = mv.EmployeeId, DepositId = mv.DepositId, MovementMotiveId = mv.MovementMotiveId };
                 }
             }
             catch
@@ -114,13 +127,13 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    var mv = db.MovementProducts.Where(x => x.MovementMotiveId == mvMotiveId).ToList();
+                    var mv = db.MovementProducts.Where(x => x.MovementMotiveId == mvMotiveId && x.Deleted == false).ToList();
                     List<MovementProduct> mvList = new List<MovementProduct>();
                     mv.ForEach(x => mvList.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
                     var mvs = mvList
                         .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Date = y.Date, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
                         .ToList();
                         return mvs;
                 }
@@ -141,12 +154,12 @@ namespace Axure.DataBase.Module_Stock
                     List<MovementProduct> mvs = (from mv in db.MovementProducts
                                                  join mvM in db.MovementMotives on mv.MovementMotiveId equals mvM.Id
                                                  join mvT in db.MovementTypes on mvM.MovementTypeId equals mvT.Id
-                                                 where mvT.Id == mvTypeId
+                                                 where (mvT.Id == mvTypeId && mv.Deleted == false)
                                                  select mv).ToList();
                     var mvList = mvs
                         .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Date = y.Date, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
                         .ToList();
                     return mvList;     
                 }
@@ -176,5 +189,23 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
+        //borrado ocioso
+        public bool Remove(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    MovementProduct bajar = db.MovementProducts.FirstOrDefault(x => x.Id == id);
+                    bajar.Deleted = true;
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
     }
 }

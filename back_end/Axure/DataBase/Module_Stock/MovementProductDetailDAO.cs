@@ -19,7 +19,7 @@ namespace Axure.DataBase.Module_Stock
     {
         Stock st;
         //Metodo para agregar a la tabla
-        public bool Add(MovementProductDetail esp)
+        public bool Add(MovementProductDetailDTO esp)
         {
             try
             {

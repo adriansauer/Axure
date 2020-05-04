@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Misc;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;//
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace Axure.Controllers.Module_Stock
         // POST: Agregar Entrada Salida de Productos
         [HttpPost]
         [Route("Add")]
-        public ActionResult Add(MovementProductDetail esp)
+        public ActionResult Add(MovementProductDetailDTO esp)
         {
             try
             {
