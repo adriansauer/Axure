@@ -215,6 +215,7 @@
     <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\EmployeeDTO.cs" />
+    <Compile Include="DTO\Module_Stock\MovementProductListDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductDTO.cs" />
     <Compile Include="DTO\Module_Stock\ProductionOrderDetailDTO.cs" />

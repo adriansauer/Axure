@@ -41,5 +41,9 @@ namespace Axure.Models.Module_Stock
         public int MovementMotiveId { get; set; }
         [ForeignKey("MovementMotiveId")]
         public MovementMotive MovementMotive { get; set; }
+
+        //Used to remove ilde.
+        [Required]
+        public bool Deleted { get; set; }
     }
 }
