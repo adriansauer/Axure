@@ -99,7 +99,7 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: ProductionOrders/Edit/5
+        // PUT: ProductionOrders/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
         public ActionResult Edit(int id, ProductionOrderDTO po)
@@ -121,16 +121,20 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: ProductionOrders/ChangeState/5
+        // PUT: ProductionOrders/ChangeState/5
         [HttpPut]
         [Route("ChangeState/{id}")]
-        public ActionResult ChangeState(int id, ProductionStateDTO productionStateDTO)
+        public ActionResult ChangeState(int id, ProductionOrderDTO ps)
         {
             try
             {
-                if (this.productionOrderDAO.ChangeState(id, productionStateDTO))
+                List<int> listNotStock = this.productionOrderDAO.ChangeState(id, ps);
+                if (null == listNotStock)
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }else if(0 != listNotStock.Count)
+                {
+                    return Json(new { listNotStock = listNotStock });
                 }
                 else
                 {

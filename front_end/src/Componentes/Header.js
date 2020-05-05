@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import "./style.css";
 import { connect } from "react-redux";
 import { homeVisible } from "../Redux/actions.js";
