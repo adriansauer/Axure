@@ -464,3 +464,5 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
