@@ -18,14 +18,14 @@ namespace Axure.DataBase.Module_Stock
         Stock stDes;
 
         //Agregar a la tabla
-        public bool Add(TransferDetail td)
+        public bool Add(TransferDetailDTO td)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     //cabecera de la transferencia
-                    tc = db.Transfers.Single(x => x.Id == td.TransferId && x.Number == td.Number);
+                    tc = db.Transfers.Single(x => x.Id == td.TransferId && x.Deleted == false);
 
                     //Stock de depositos de Origen y destino
                     try
@@ -54,13 +54,13 @@ namespace Axure.DataBase.Module_Stock
                     {
                         if (stDes == null)//si es stock es nulo entonces crea uno nuevo
                         {
-                            db.TransferDetails.Add(new TransferDetail { ProductId = td.ProductId, TransferId = td.TransferId, Quantity = td.Quantity, Deleted = td.Deleted, Number = td.Number });
+                            db.TransferDetails.Add(new TransferDetail { ProductId = td.ProductId, TransferId = td.TransferId, Quantity = td.Quantity, Deleted = td.Deleted, Number = 0 });
                             stDAO.Add(new StockDTO { ProductId = td.ProductId, DepositId = tc.DepositDestinationId, Quantity = td.Quantity });
                             stDAO.UpdateQuantity(stOri, td.ProductId, stOri.Quantity - td.Quantity);
                         }
                         else//si el deposito de destino no es nulo entonces actualiza su cantidad
                         {
-                            db.TransferDetails.Add(new TransferDetail { ProductId = td.ProductId, TransferId = td.TransferId, Quantity = td.Quantity, Deleted = td.Deleted, Number = td.Number });
+                            db.TransferDetails.Add(new TransferDetail { ProductId = td.ProductId, TransferId = td.TransferId, Quantity = td.Quantity, Deleted = td.Deleted, Number = 0 });
                             stDAO.UpdateQuantity(stOri, td.ProductId, stOri.Quantity - td.Quantity);
                             stDAO.UpdateQuantity(stDes, td.ProductId, stDes.Quantity + td.Quantity);
                         }
@@ -90,9 +90,9 @@ namespace Axure.DataBase.Module_Stock
                     List<TransferDetail> lsTr = new List<TransferDetail>();
                     tr.ForEach(x => lsTr.Add(db.TransferDetails.Single(y => x.Id == y.Id && y.Deleted == false)));
                     var transfers = lsTr
-                        .Select(x => new { Id = x.Id, ProductId = x.ProductId, TransferId = x.TransferId, Quantity = x.Quantity, Deleted = x.Deleted, Number = x.Number })
+                        .Select(x => new { Id = x.Id, ProductId = x.ProductId, TransferId = x.TransferId, Quantity = x.Quantity, Deleted = x.Deleted})
                         .ToList()
-                        .Select(y => new TransferDetailDTO { Id = y.Id, ProductId = y.ProductId, TransferId = y.TransferId, Quantity = y.Quantity, Deleted = y.Deleted, Number = y.Number })
+                        .Select(y => new TransferDetailDTO { Id = y.Id, ProductId = y.ProductId, TransferId = y.TransferId, Quantity = y.Quantity, Deleted = y.Deleted})
                         .ToList();
                     return transfers;
                 }

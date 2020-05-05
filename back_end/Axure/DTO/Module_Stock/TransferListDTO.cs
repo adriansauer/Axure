@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Axure.DTO.Module_Stock
 {
-    public class TransferDTO
+    public class TransferListDTO
     {
         //Unique identifier.
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace Axure.DTO.Module_Stock
         //Deposit of destination.
         public int DepositDestinationId { get; set; }
 
-        //Transfer creation date.
+        //Order creation date.
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
@@ -28,5 +28,9 @@ namespace Axure.DTO.Module_Stock
 
         //Used to remove ilde.
         public bool Deleted { get; set; }
+
+        //Lista de detalles
+        public List<TransferDetailDTO> ListDetails { get; set; }
+
     }
 }
