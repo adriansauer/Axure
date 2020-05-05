@@ -95,7 +95,7 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        //Listar por motivo de movimiento
+        /*//Listar por motivo de movimiento
         [Route("ListByMovementMotive/{id}")]
         public ActionResult ListByMovementMotive(int id)
         {
@@ -109,7 +109,7 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
 
         //Listar por tipo de movimiento
         [Route("ListByMovementType/{id}")]
@@ -124,6 +124,28 @@ namespace Axure.Controllers.Module_Stock
             catch
             {
                 return new HttpStatusCodeResult(406);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                if (this.mvDAO.Remove(id))
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
+                }
+
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -27,7 +28,11 @@ namespace Axure.DTO.Module_Stock
         public int DepositId { get; set; }
 
         //FK Entrada o Salida
-        public int MovementMotiveId { get; set; }
+        public int MovementTypeId { get; set; }
+
+        //Observacion
+        [StringLength(200)]
+        public String Observation { get; set; }
 
         //Lista de detalles
         public List<MovementProductDetailDTO> ListDetails { get; set; }

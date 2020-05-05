@@ -38,12 +38,16 @@ namespace Axure.Models.Module_Stock
 
         //FK Entrada o Salida
         [Required]//cambiar nombre movent
-        public int MovementMotiveId { get; set; }
-        [ForeignKey("MovementMotiveId")]
-        public MovementMotive MovementMotive { get; set; }
+        public int MovementTypeId { get; set; }
+        [ForeignKey("MovementTypeId")]
+        public MovementType MovementType { get; set; }
 
         //Used to remove ilde.
         [Required]
         public bool Deleted { get; set; }
+
+        //Observacion
+        [StringLength(200)]
+        public String Observation { get; set; }
     }
 }
