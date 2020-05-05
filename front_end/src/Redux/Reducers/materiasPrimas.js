@@ -1,14 +1,11 @@
 import { handleActions } from "redux-actions";
-import { getMateriasPrimasSuccess, handleError } from "../actions";
+import { getMateriasPrimasSuccess } from "../actions";
 
 export default handleActions(
   {
     [getMateriasPrimasSuccess]: (state, action) => {
       return action.payload;
     },
-    [handleError]: (state, action) => {
-      return console.log("Ocurrio un error");
-    }
   },
   []
 );

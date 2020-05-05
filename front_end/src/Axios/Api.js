@@ -2,7 +2,7 @@
 import axios from "axios";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
-  
+
 });
 
 export default {
@@ -10,63 +10,96 @@ export default {
     get: () =>
       requestHelper({
         url: "Products/List",
-        method: "get"
+        method: "get",
       }),
-    getDeposito: deposito =>
+     getMateriasPrimas:()=>requestHelper({
+      url: "Products/OfType/2" ,
+      method: "get",
+     }),
+     getProductosTerminados:()=>requestHelper({
+      url: "Products/OfType/3" ,
+      method: "get",
+     }),
+     getMateriasPrimas_Terminados:()=>requestHelper({
+      url: "Products/OfType/1" ,
+      method: "get",
+     }),
+     getProductosDeCompra:()=>requestHelper({
+      url: "Products/OfTypeRawMaterialAndBoth" ,
+      method: "get",
+     }),
+     getProductosDeVenta:()=>requestHelper({
+      url: "Products/OfTypeFinishedAndBoth " ,
+      method: "get",
+     }),
+    getDeposito: (deposito) =>
       requestHelper({
         url: "Products/OfDeposit/" + deposito,
-        method: "get"
+        method: "get",
       }),
-    create: data =>
+    create: (data) =>
       requestHelper({
         url: "Products/Create",
         method: "post",
-        data: data
+        data: data,
       }),
-    delete: id =>
+    delete: (id) =>
       requestHelper({
         url: "Products/Delete/" + id,
-        method: "delete"
+        method: "delete",
       }),
     edit: (id, data) =>
       requestHelper({
         url: "Products/Edit/" + id,
         method: "put",
         data: JSON.stringify(data),
-        headers:{
-          'content-type': 'application/json; charset=utf-8',
-          'dataType': 'json',
-        }
+        headers: {
+          "content-type": "application/json; charset=utf-8",
+          dataType: "json",
+        },
       }),
-    getCapital: deposito =>
+    getCapital: (deposito) =>
       requestHelper({
         url: "Products/SumDeposit/" + deposito,
-        methot: "get"
+        method: "get",
       }),
-      getComponents:id=>
+    getComponents: (id) =>
       requestHelper({
-        url:'ProductComponents/OfProduct/'+id,
-        method:'get'
-      })
+        url: "ProductComponents/OfProduct/" + id,
+        method: "get",
+      }),
   },
-  ordenProduccion:{
-    get:()=>requestHelper({
-      methot: "get"
-    }),
-    create:(data)=>requestHelper({
-      url:"ProductionOrders/Create ",
-      methot: "post",
-      data: data,
-        
-      
-    }),
-    
+  ordenProduccion: {
+    get: () =>
+      requestHelper({
+        url: "ProductionOrders/List ",
+        method: "get",
+      }),
+    create: (data) =>
+      requestHelper({
+        url: "ProductionOrders/Create ",
+        method: "post",
+        data: data,      
+      }),
+      ordenDetalles: (id) =>
+      requestHelper({
+        url: "ProductionOrders/Details/"+id,
+        method: "get",   
+      }),
   },
-  empleados:{
-    get:()=>requestHelper({
-      url:"Employees/List",
-      method:"get"
-      
-    })
-  }
+  empleados: {
+    get: () =>
+      requestHelper({
+        url: "Employees/List",
+        method: "get",
+      }),
+  },
+  ingreso_egreso: {
+    create: (data) =>
+      requestHelper({
+        url: "MovementProducts/Add",
+        method: "post",
+        data:data,
+      }),
+  },
 };
