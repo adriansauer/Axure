@@ -27,8 +27,12 @@ namespace Axure.DTO.Module_Stock
         //Deposito de salida o deposito destino
         public int DepositId { get; set; }
 
+        //Observacion
+        [StringLength(200)]
+        public String Observation { get; set; }
+
         //FK Entrada o Salida
-        public int MovementMotiveId { get; set; }
+        public int MovementTypeId { get; set; }
 
     }
 }

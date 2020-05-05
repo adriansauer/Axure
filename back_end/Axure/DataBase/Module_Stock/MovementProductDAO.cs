@@ -34,7 +34,8 @@ namespace Axure.DataBase.Module_Stock
                         TotalCost = 0,
                         DepositId = esp.DepositId,
                         EmployeeId = esp.EmployeeId,
-                        MovementMotiveId = esp.MovementMotiveId,
+                        MovementTypeId = esp.MovementTypeId,
+                        Observation = esp.Observation,
                         Deleted = false
                     };
                     db.MovementProducts.Add(mvp);
@@ -90,9 +91,9 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     var lista = db.MovementProducts.Where(x => x.Deleted == false)
-                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
                         .ToList();
                     return lista;
                 }
@@ -111,7 +112,7 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     MovementProduct mv = db.MovementProducts.Single(x => x.Id == mvId && x.Deleted == false);
-                    return new MovementProductDTO { Id = mv.Id, Day = mv.Date.Day, Month = mv.Date.Month, Year = mv.Date.Year, TotalCost = mv.TotalCost, EmployeeId = mv.EmployeeId, DepositId = mv.DepositId, MovementMotiveId = mv.MovementMotiveId };
+                    return new MovementProductDTO { Id = mv.Id, Day = mv.Date.Day, Month = mv.Date.Month, Year = mv.Date.Year, TotalCost = mv.TotalCost, EmployeeId = mv.EmployeeId, DepositId = mv.DepositId, MovementTypeId = mv.MovementTypeId, Observation = mv.Observation };
                 }
             }
             catch
@@ -121,19 +122,19 @@ namespace Axure.DataBase.Module_Stock
         }
 
         //listar por Motivo de movimiento
-        public List<MovementProductDTO> ListByMovementMotive(int mvMotiveId)
+        public List<MovementProductDTO> ListByMovementMotive(int mvTypeId)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var mv = db.MovementProducts.Where(x => x.MovementMotiveId == mvMotiveId && x.Deleted == false).ToList();
+                    var mv = db.MovementProducts.Where(x => x.MovementTypeId == mvTypeId && x.Deleted == false).ToList();
                     List<MovementProduct> mvList = new List<MovementProduct>();
                     mv.ForEach(x => mvList.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
                     var mvs = mvList
-                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
                         .ToList();
                         return mvs;
                 }
@@ -152,14 +153,13 @@ namespace Axure.DataBase.Module_Stock
                 using(var db = new AxureContext())
                 {
                     List<MovementProduct> mvs = (from mv in db.MovementProducts
-                                                 join mvM in db.MovementMotives on mv.MovementMotiveId equals mvM.Id
-                                                 join mvT in db.MovementTypes on mvM.MovementTypeId equals mvT.Id
+                                                 join mvT in db.MovementTypes on mv.MovementTypeId equals mvT.Id
                                                  where (mvT.Id == mvTypeId && mv.Deleted == false)
                                                  select mv).ToList();
                     var mvList = mvs
-                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
                         .ToList();
                     return mvList;     
                 }
