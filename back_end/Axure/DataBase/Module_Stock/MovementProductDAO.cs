@@ -1,8 +1,10 @@
-﻿using Axure.DTO.Module_Stock;
+﻿using Antlr.Runtime.Tree;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web;
@@ -17,58 +19,38 @@ namespace Axure.DataBase.Module_Stock
     public class MovementProductDAO
     {
         //Constructor
-        /*public MovementProductDAO() { }
+        public MovementProductDAO() { }
 
         //Agregar datos a la Cabecera de Entrada y Salida de Productos
-        public bool Agregar(MovementProductionType esp)
+        public bool Add(MovementProductListDTO esp)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    db.MovementProducts.Add(new MovementProductionType() { 
-                        Number = esp.Number, 
-                        Date = esp.Date,
-                        TotalCost = esp.TotalCost,
-                        Reason = esp.Reason,
+                    MovementProduct mvp = new MovementProduct()
+                    {
+                        Date = new DateTime(esp.Year, esp.Month, esp.Day),
+                        TotalCost = 0,
                         DepositId = esp.DepositId,
                         EmployeeId = esp.EmployeeId,
-                        MovementTypeId = esp.MovementTypeId});
+                        MovementTypeId = esp.MovementTypeId,
+                        Observation = esp.Observation,
+                        Deleted = false
+                    };
+                    db.MovementProducts.Add(mvp);
                     db.SaveChanges();
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        
-        //Eliminar una cabecera EntSalProduct
-        public bool Eliminar(int id)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    MovementProductionType esp = db.MovementProducts.Single(x => x.Id == id);
-                    if (null == esp) return true;
 
-                    //Todos los detalles de una cabecera
-                    var produc = db.MovementProductDetails
-                        .Where(x => x.MovementProductId == esp.Id)
-                        .ToList();
-
-                    if (produc == null) return true;
-
-                    //Elimina primero los detalles
-                    for (int i = 0; i < produc.Count; i++)
+                    MovementProductDetailDAO mvDDAO = new MovementProductDetailDAO();
+                    if(null != esp.ListDetails)
                     {
-                        db.MovementProductDetails.Remove(produc[i]);
+                        for (int i = 0; i < esp.ListDetails.Count; i++)
+                        {
+                            esp.ListDetails[i].MovementProductId = mvp.Id;
+                            mvDDAO.Add(esp.ListDetails[i]);
+                        }
                     }
-                    //Luego elimina la cabecera
-                    db.MovementProducts.Remove(esp);// db.EntSalProducts.Single(x=> x.Id == id));
-                    db.SaveChanges();
+
                     return true;
                 }
             }
@@ -78,31 +60,7 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool Editar(int id, MovementProductionType esp)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    MovementProductionType pr = db.MovementProducts.FirstOrDefault(x => x.Id == id);
-
-                    pr.DepositId    = esp.DepositId;
-                    pr.EmployeeId   = esp.EmployeeId;
-                    pr.Reason       = esp.Reason;
-                    //no deberia
-                    pr.TotalCost    = esp.TotalCost;
-
-                    db.SaveChanges();
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }        
-
-        public List<MovementProductDTO> MovementDeposito(int deposito)
+        /*public List<MovementProductDTO> MovementByDeposit(int deposito)
         {
             try
             {
@@ -110,12 +68,12 @@ namespace Axure.DataBase.Module_Stock
                 {
                     Deposit dp = db.Deposits.Single(x => x.Id == deposito);
                     var movement = db.MovementProducts.Where(x => x.DepositId == dp.Id).ToList();
-                    List<MovementProductionType> lista = new List<MovementProductionType>();
-                    movement.ForEach( x=> lista.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
+                    List<MovementProduct> lista = new List<MovementProduct>();
+                    movement.ForEach(x => lista.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
 
-                    var listaMov = lista.Select(x => new { Id = x.Id, Number = x.Number, Date = x.Date, TotalCost = x.TotalCost, Reason = x.Reason, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId })
+                    var listaMov = lista.Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementMotiveId = x.MovementMotiveId })
                         .ToList()
-                        .Select(y => new MovementProductDTO(){ Id = y.Id, Number = y.Number, Date = y.Date, TotalCost = y.TotalCost, Reason = y.Reason, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId})
+                        .Select(y => new MovementProductDTO() { Id = y.Id, Date = y.Date, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementMotiveId = y.MovementMotiveId })
                         .ToList();
                     return listaMov;
                 }
@@ -125,17 +83,17 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
-
-        public List<MovementProductDTO> Obtener()
+        */
+        public List<MovementProductDTO> List()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var lista = db.MovementProducts.Where(x => x.TotalCost > 0)
-                        .Select(x => new { Id = x.Id, Number = x.Number, Date = x.Date, TotalCost = x.TotalCost, Reason = x.Reason, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId })
+                    var lista = db.MovementProducts.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
                         .ToList()
-                        .Select(y => new MovementProductDTO { Id = y.Id, Number = y.Number, Date = y.Date, TotalCost = y.TotalCost, Reason = y.Reason, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId })
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
                         .ToList();
                     return lista;
                 }
@@ -145,6 +103,109 @@ namespace Axure.DataBase.Module_Stock
                 return null;
             }
         }
-        */
+
+        //listar por Id
+        public MovementProductDTO ListByMasterId(int mvId)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    MovementProduct mv = db.MovementProducts.Single(x => x.Id == mvId && x.Deleted == false);
+                    return new MovementProductDTO { Id = mv.Id, Day = mv.Date.Day, Month = mv.Date.Month, Year = mv.Date.Year, TotalCost = mv.TotalCost, EmployeeId = mv.EmployeeId, DepositId = mv.DepositId, MovementTypeId = mv.MovementTypeId, Observation = mv.Observation };
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //listar por Motivo de movimiento
+        public List<MovementProductDTO> ListByMovementMotive(int mvTypeId)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var mv = db.MovementProducts.Where(x => x.MovementTypeId == mvTypeId && x.Deleted == false).ToList();
+                    List<MovementProduct> mvList = new List<MovementProduct>();
+                    mv.ForEach(x => mvList.Add(db.MovementProducts.Single(y => y.Id == x.Id)));
+                    var mvs = mvList
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
+                        .ToList()
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
+                        .ToList();
+                        return mvs;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //listar por tipo de movimiento
+        public List<MovementProductDTO> ListByMovementType(int mvTypeId)
+        {
+            try
+            {
+                using(var db = new AxureContext())
+                {
+                    List<MovementProduct> mvs = (from mv in db.MovementProducts
+                                                 join mvT in db.MovementTypes on mv.MovementTypeId equals mvT.Id
+                                                 where (mvT.Id == mvTypeId && mv.Deleted == false)
+                                                 select mv).ToList();
+                    var mvList = mvs
+                        .Select(x => new { Id = x.Id, Date = x.Date, TotalCost = x.TotalCost, EmployeeId = x.EmployeeId, DepositId = x.DepositId, MovementTypeId = x.MovementTypeId, Observation = x.Observation })
+                        .ToList()
+                        .Select(y => new MovementProductDTO { Id = y.Id, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, TotalCost = y.TotalCost, EmployeeId = y.EmployeeId, DepositId = y.DepositId, MovementTypeId = y.MovementTypeId, Observation = y.Observation })
+                        .ToList();
+                    return mvList;     
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        //actualizar el costo total
+        public bool UpdateTotalCost(MovementProduct mvp, int tc)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    MovementProduct mp = db.MovementProducts.FirstOrDefault(x => x.Id == mvp.Id);
+                    mp.TotalCost = tc;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //borrado ocioso
+        public bool Remove(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    MovementProduct bajar = db.MovementProducts.FirstOrDefault(x => x.Id == id);
+                    bajar.Deleted = true;
+                    db.SaveChanges();
+                    return false;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+        }
     }
 }

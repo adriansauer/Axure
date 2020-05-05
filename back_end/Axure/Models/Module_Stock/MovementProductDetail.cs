@@ -27,7 +27,7 @@ namespace Axure.Models.Module_Stock
         [Required]
         public int MovementProductId { get; set; }
         [ForeignKey("MovementProductId")]
-        public MovementProductionType movementProduct { get; set; }
+        public MovementProduct movementProduct { get; set; }
 
         //Cantidad de productos
         [Required]

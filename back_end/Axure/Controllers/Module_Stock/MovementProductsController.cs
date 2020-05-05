@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Misc;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,107 @@ namespace Axure.Controllers.Module_Stock
     [RoutePrefix("MovementProducts")]
     public class MovementProductsController : Controller
     {
-       /* private MovementProductDAO espDAO;
+        private MovementProductDAO mvDAO;
 
         public MovementProductsController()
         {
-            this.espDAO = new MovementProductDAO();
+            this.mvDAO = new MovementProductDAO();
         }
 
         // POST: MovementProducts/Agregar
         [HttpPost]
-        [Route("Agregar")]
-        public ActionResult Agregar(MovementProductionType esp)
+        [Route("Add")]
+        public ActionResult Add(MovementProductListDTO esp)
         {
             try
             {
-                if (this.espDAO.Agregar(esp) == true) return new HttpStatusCodeResult(200);
+                if (this.mvDAO.Add(esp) == true) return new HttpStatusCodeResult(200);
                 else return new HttpStatusCodeResult(406);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        /*//Todas las cabeceras de los movimientos, por deposito
+        [Route("MovementByDeposit/{id}")]
+        public ActionResult MovementByDeposit(int id)
+        {
+            try
+            {
+                var lista = this.mvDAO.MovementByDeposit(id);
+                if (lista != null)
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(202);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }*/
+
+        //Lista todos los movimientos
+        [Route("List")]
+        public ActionResult List()
+        {
+            try
+            {
+                var lista = this.mvDAO.List();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        //Listar por id
+        [Route("ListByMasterId/{id}")]
+        public ActionResult ListByMasterId(int id)
+        {
+            try
+            {
+                var mv = this.mvDAO.ListByMasterId(id);
+                if (null != mv) return Json(mv, JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(200);
+
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        /*//Listar por motivo de movimiento
+        [Route("ListByMovementMotive/{id}")]
+        public ActionResult ListByMovementMotive(int id)
+        {
+            try
+            {
+                var mvList = this.mvDAO.ListByMovementMotive(id);
+                if (null != mvList) return Json(mvList,JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(200);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }*/
+
+        //Listar por tipo de movimiento
+        [Route("ListByMovementType/{id}")]
+        public ActionResult ListByMovementType(int id)
+        {
+            try
+            {
+                var mvList = this.mvDAO.ListByMovementType(id);
+                if (null != mvList) return Json(mvList, JsonRequestBehavior.AllowGet);
+                return new HttpStatusCodeResult(200);
             }
             catch
             {
@@ -47,45 +133,21 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                if (this.espDAO.Eliminar(id) == true) return new HttpStatusCodeResult(200);
-                else return new HttpStatusCodeResult(406);
+                if (this.mvDAO.Remove(id))
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
+                }
+
             }
             catch
             {
-                return new HttpStatusCodeResult(406);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
-
-        [HttpPut]
-        [Route("Edit/{id}")]
-        public ActionResult Edit(int id, MovementProductionType esp)
-        {
-            try
-            {
-                if (this.espDAO.Editar(id, esp) == true) return new HttpStatusCodeResult(200);
-                else return new HttpStatusCodeResult(406);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(406);
-            }
-        }
-
-        //Todas las cabeceras de Entrada y Salida por deposito
-        [Route("MovementDeposito/{id}")]
-        public ActionResult MovementDeposito(int id)
-        {
-            try
-            {
-                var lista = this.espDAO.MovementDeposito(id);
-                if (lista != null)
-                    return Json(lista, JsonRequestBehavior.AllowGet);
-                return new HttpStatusCodeResult(202);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(406);
-            }
-        }*/
     }
 }
+

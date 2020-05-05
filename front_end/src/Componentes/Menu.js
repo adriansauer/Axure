@@ -50,7 +50,6 @@ class Menu extends Component {
   }
 
   render() {
-    const isOpen = this.state.isOpen;
     return (
       <div id="Menu" className="Menu">
 

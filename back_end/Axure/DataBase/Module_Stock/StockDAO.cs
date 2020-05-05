@@ -126,21 +126,42 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool CheckStock (List<ProductionOrderDetailDTO> listDetails, int idDeposit)
+        public List<int> CheckStock (List<ProductionOrderDetailDTO> listDetails, int idDeposit)
         {
             try
             {
+                List<int> notStock = new List<int>();
                 SettingDAO settingDAO = new SettingDAO();
                 for (int i = 0; i < listDetails.Count; i++)
                 {
+                    
                     int cant = ProductQuantity(listDetails[i].ProductId, new Deposit{ Id = idDeposit });
-                    if (listDetails[i].Quantity > cant) { return true; }
+                    if (listDetails[i].Quantity > cant) { notStock.Add(listDetails[i].ProductId); }
                 }
-                return false;
+                return notStock;
             }
             catch
             {
-                return true;
+                return null;
+            }
+        }
+
+        //editar cantidad
+        public bool UpdateQuantity(Stock stock, int productId, int quantity)
+        {
+            try
+            {
+                using(var db = new AxureContext())
+                {
+                    Stock st = db.Stocks.FirstOrDefault(x=> x.Id == stock.Id && x.ProductId == productId && x.DepositId == stock.DepositId);
+                    st.Quantity = quantity;
+                    db.SaveChanges();
+                    return true;// retorna true si se actualizo correctamente
+                }
+            }
+            catch
+            {
+                return false;//retorna false si no pudo realizar la actualizacion
             }
         }
     }

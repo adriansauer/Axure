@@ -3,7 +3,7 @@ namespace Axure.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -65,19 +65,31 @@ namespace Axure.Migrations
                         Observation = c.String(maxLength: 200),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MovementProductionTypes", t => t.MovementProductId, cascadeDelete: false)
+                .ForeignKey("dbo.MovementProducts", t => t.MovementProductId, cascadeDelete: false)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
                 .Index(t => t.ProductId)
                 .Index(t => t.MovementProductId);
             
             CreateTable(
-                "dbo.MovementProductionTypes",
+                "dbo.MovementProducts",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Type = c.String(nullable: false, maxLength: 20),
+                        Date = c.DateTime(nullable: false),
+                        TotalCost = c.Int(nullable: false),
+                        EmployeeId = c.Int(nullable: false),
+                        DepositId = c.Int(nullable: false),
+                        MovementTypeId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        Observation = c.String(maxLength: 200),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: false)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
+                .ForeignKey("dbo.MovementTypes", t => t.MovementTypeId, cascadeDelete: false)
+                .Index(t => t.EmployeeId)
+                .Index(t => t.DepositId)
+                .Index(t => t.MovementTypeId);
             
             CreateTable(
                 "dbo.Products",
@@ -138,6 +150,15 @@ namespace Axure.Migrations
                 .Index(t => t.MovementProductionTypeId);
             
             CreateTable(
+                "dbo.MovementProductionTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.String(nullable: false, maxLength: 20),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.ProductionOrders",
                 c => new
                     {
@@ -163,26 +184,6 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.MovementProducts",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Number = c.Int(nullable: false),
-                        Date = c.DateTime(nullable: false),
-                        TotalCost = c.Int(nullable: false),
-                        EmployeeId = c.Int(nullable: false),
-                        DepositId = c.Int(nullable: false),
-                        MovementMotiveId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: false)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
-                .ForeignKey("dbo.MovementMotives", t => t.MovementMotiveId, cascadeDelete: false)
-                .Index(t => t.EmployeeId)
-                .Index(t => t.DepositId)
-                .Index(t => t.MovementMotiveId);
             
             CreateTable(
                 "dbo.ProductComponents",
@@ -296,6 +297,7 @@ namespace Axure.Migrations
                         TransferId = c.Int(nullable: false),
                         Quantity = c.Int(nullable: false),
                         Deleted = c.Boolean(nullable: false),
+                        Number = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
@@ -310,28 +312,16 @@ namespace Axure.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         DepositOriginId = c.Int(nullable: false),
                         DepositDestinationId = c.Int(nullable: false),
-                        TransferTypeId = c.Int(nullable: false),
                         Date = c.DateTime(nullable: false),
                         Observation = c.String(maxLength: 200),
+                        Number = c.Int(nullable: false),
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Deposits", t => t.DepositDestinationId, cascadeDelete: false)
                 .ForeignKey("dbo.Deposits", t => t.DepositOriginId, cascadeDelete: false)
-                .ForeignKey("dbo.TransferTypes", t => t.TransferTypeId, cascadeDelete: false)
                 .Index(t => t.DepositOriginId)
-                .Index(t => t.DepositDestinationId)
-                .Index(t => t.TransferTypeId);
-            
-            CreateTable(
-                "dbo.TransferTypes",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Type = c.String(nullable: false, maxLength: 50),
-                        Deleted = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+                .Index(t => t.DepositDestinationId);
             
             CreateTable(
                 "dbo.Users",
@@ -354,7 +344,6 @@ namespace Axure.Migrations
         {
             DropForeignKey("dbo.Users", "IdEmployee", "dbo.Employees");
             DropForeignKey("dbo.TransferDetails", "TransferId", "dbo.Transfers");
-            DropForeignKey("dbo.Transfers", "TransferTypeId", "dbo.TransferTypes");
             DropForeignKey("dbo.Transfers", "DepositOriginId", "dbo.Deposits");
             DropForeignKey("dbo.Transfers", "DepositDestinationId", "dbo.Deposits");
             DropForeignKey("dbo.TransferDetails", "ProductId", "dbo.Products");
@@ -368,9 +357,6 @@ namespace Axure.Migrations
             DropForeignKey("dbo.ProductionOrderDetails", "ProductId", "dbo.Products");
             DropForeignKey("dbo.ProductComponents", "ProductComponentId", "dbo.Products");
             DropForeignKey("dbo.ProductComponents", "ProductId", "dbo.Products");
-            DropForeignKey("dbo.MovementProducts", "MovementMotiveId", "dbo.MovementMotives");
-            DropForeignKey("dbo.MovementProducts", "EmployeeId", "dbo.Employees");
-            DropForeignKey("dbo.MovementProducts", "DepositId", "dbo.Deposits");
             DropForeignKey("dbo.MovementProductionDetails", "ProductionOrderId", "dbo.ProductionOrders");
             DropForeignKey("dbo.ProductionOrders", "ProductionStateId", "dbo.ProductionStates");
             DropForeignKey("dbo.ProductionOrders", "EmployeeId", "dbo.Employees");
@@ -379,10 +365,12 @@ namespace Axure.Migrations
             DropForeignKey("dbo.MovementProductions", "EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.MovementProductDetails", "ProductId", "dbo.Products");
             DropForeignKey("dbo.Products", "ProductTypeId", "dbo.ProductTypes");
-            DropForeignKey("dbo.MovementProductDetails", "MovementProductId", "dbo.MovementProductionTypes");
+            DropForeignKey("dbo.MovementProductDetails", "MovementProductId", "dbo.MovementProducts");
+            DropForeignKey("dbo.MovementProducts", "MovementTypeId", "dbo.MovementTypes");
+            DropForeignKey("dbo.MovementProducts", "EmployeeId", "dbo.Employees");
+            DropForeignKey("dbo.MovementProducts", "DepositId", "dbo.Deposits");
             DropForeignKey("dbo.MovementMotives", "MovementTypeId", "dbo.MovementTypes");
             DropIndex("dbo.Users", new[] { "IdEmployee" });
-            DropIndex("dbo.Transfers", new[] { "TransferTypeId" });
             DropIndex("dbo.Transfers", new[] { "DepositDestinationId" });
             DropIndex("dbo.Transfers", new[] { "DepositOriginId" });
             DropIndex("dbo.TransferDetails", new[] { "TransferId" });
@@ -397,9 +385,6 @@ namespace Axure.Migrations
             DropIndex("dbo.ProductionOrderDetails", new[] { "ProductionOrderId" });
             DropIndex("dbo.ProductComponents", new[] { "ProductComponentId" });
             DropIndex("dbo.ProductComponents", new[] { "ProductId" });
-            DropIndex("dbo.MovementProducts", new[] { "MovementMotiveId" });
-            DropIndex("dbo.MovementProducts", new[] { "DepositId" });
-            DropIndex("dbo.MovementProducts", new[] { "EmployeeId" });
             DropIndex("dbo.ProductionOrders", new[] { "EmployeeId" });
             DropIndex("dbo.ProductionOrders", new[] { "ProductionStateId" });
             DropIndex("dbo.MovementProductions", new[] { "MovementProductionTypeId" });
@@ -407,11 +392,13 @@ namespace Axure.Migrations
             DropIndex("dbo.MovementProductionDetails", new[] { "ProductionOrderId" });
             DropIndex("dbo.MovementProductionDetails", new[] { "MovementProductionId" });
             DropIndex("dbo.Products", new[] { "ProductTypeId" });
+            DropIndex("dbo.MovementProducts", new[] { "MovementTypeId" });
+            DropIndex("dbo.MovementProducts", new[] { "DepositId" });
+            DropIndex("dbo.MovementProducts", new[] { "EmployeeId" });
             DropIndex("dbo.MovementProductDetails", new[] { "MovementProductId" });
             DropIndex("dbo.MovementProductDetails", new[] { "ProductId" });
             DropIndex("dbo.MovementMotives", new[] { "MovementTypeId" });
             DropTable("dbo.Users");
-            DropTable("dbo.TransferTypes");
             DropTable("dbo.Transfers");
             DropTable("dbo.TransferDetails");
             DropTable("dbo.Stocks");
@@ -421,14 +408,14 @@ namespace Axure.Migrations
             DropTable("dbo.PurchaseOrderDetails");
             DropTable("dbo.ProductionOrderDetails");
             DropTable("dbo.ProductComponents");
-            DropTable("dbo.MovementProducts");
             DropTable("dbo.ProductionStates");
             DropTable("dbo.ProductionOrders");
+            DropTable("dbo.MovementProductionTypes");
             DropTable("dbo.MovementProductions");
             DropTable("dbo.MovementProductionDetails");
             DropTable("dbo.ProductTypes");
             DropTable("dbo.Products");
-            DropTable("dbo.MovementProductionTypes");
+            DropTable("dbo.MovementProducts");
             DropTable("dbo.MovementProductDetails");
             DropTable("dbo.MovementTypes");
             DropTable("dbo.MovementMotives");

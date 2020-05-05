@@ -13,18 +13,13 @@ namespace Axure.DTO.Module_Stock
         //Id
         public int Id { get; set; }
 
-        //Numero de Entrada Salida
-        public int Number { get; set; }
-
         //Fecha
-        public DateTime Date { get; set; }
+        public int Day { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
 
         //Costo total
         public int TotalCost { get; set; }
-
-        //Razon de Entrada Salida
-        [StringLength(5)]
-        public String Reason { get; set; }
 
         //FK del encargado
         public int EmployeeId { get; set; }
@@ -32,7 +27,12 @@ namespace Axure.DTO.Module_Stock
         //Deposito de salida o deposito destino
         public int DepositId { get; set; }
 
+        //Observacion
+        [StringLength(200)]
+        public String Observation { get; set; }
+
         //FK Entrada o Salida
         public int MovementTypeId { get; set; }
+
     }
 }

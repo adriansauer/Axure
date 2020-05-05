@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Misc;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;//
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Axure.Controllers.Module_Stock
     [RoutePrefix("MovementProductDetails")]
     public class MovementProductDetailsController : Controller
     {
-       /* private MovementProductDetailDAO movementDAO;
+        private MovementProductDetailDAO movementDAO;
 
         public MovementProductDetailsController()
         {
@@ -26,52 +27,13 @@ namespace Axure.Controllers.Module_Stock
 
         // POST: Agregar Entrada Salida de Productos
         [HttpPost]
-        [Route("Agregar")]
-        public ActionResult Agregar(MovementProductDetail esp)
+        [Route("Add")]
+        public ActionResult Add(MovementProductDetailDTO esp)
         {
             try
             {
-                if(this.movementDAO.Agregar(esp)==true) return new HttpStatusCodeResult(200);
+                if (this.movementDAO.Add(esp)) return new HttpStatusCodeResult(200);
                 else return new HttpStatusCodeResult(406);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(406);
-            }
-        }
-
-        // GET: EntSalProductDetails/Edit/5
-        [HttpPut]
-        [Route("Edit/{id}")]
-        public ActionResult Edit(int id, MovementProductDetail esp)
-        {
-            try
-            {
-                if (this.movementDAO.Editar(id, esp) == true) return new HttpStatusCodeResult(200);
-                else return new HttpStatusCodeResult(406);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(406);
-            }
-        }
-
-        // POST: EntSalProductDetails/Delete/5
-        [HttpDelete]
-        [Route("Delete/{id}")]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                try
-                {
-                    if (this.movementDAO.Eliminar(id) == true) return new HttpStatusCodeResult(200);
-                    else return new HttpStatusCodeResult(406);
-                }
-                catch
-                {
-                    return new HttpStatusCodeResult(406);
-                }
             }
             catch
             {
@@ -84,7 +46,7 @@ namespace Axure.Controllers.Module_Stock
         {
             try
             {
-                var lista = this.movementDAO.Obtener();
+                var lista = this.movementDAO.List();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -97,12 +59,12 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        [Route("ForMovement/{id}")]
-        public ActionResult ForMovement(int id)
+        [Route("byMovement/{id}")]
+        public ActionResult byMovement(int id)
         {
             try
             {
-                var lista = this.movementDAO.ObtenerPorNro(id);
+                var lista = this.movementDAO.ListByMaster(id);
                 if (null != lista) return Json(lista, JsonRequestBehavior.AllowGet);
                 return new HttpStatusCodeResult(200);
             }
@@ -110,6 +72,6 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }*/
+        }
     }
 }
