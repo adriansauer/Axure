@@ -13,11 +13,8 @@ namespace Axure.Migrations
         
         string IMigrationMetadata.Id
         {
-<<<<<<< HEAD:back_end/Axure/Migrations/202005031809478_initial.Designer.cs
             get { return "202005031809478_initial"; }
-=======
             get { return "202005050009307_Initial"; }
->>>>>>> master:back_end/Axure/Migrations/202005050009307_Initial.Designer.cs
         }
         
         string IMigrationMetadata.Source
