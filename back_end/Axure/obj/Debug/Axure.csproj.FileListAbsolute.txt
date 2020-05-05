@@ -112,8 +112,6 @@ C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.pdb
-C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
-C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\Usuario\Desktop\Axure\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
 C:\Users\Usuario\Desktop\Axure\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\Usuario\Desktop\Axure\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
@@ -577,5 +575,10 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.We
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
+<<<<<<< HEAD
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+=======
+C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
+C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+>>>>>>> master
