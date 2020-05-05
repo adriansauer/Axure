@@ -1,317 +1,139 @@
 import React, { Component } from "react";
-import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-
 import { connect } from "react-redux";
-import {
-  /**Edita un producto */
-  editProducto,
-  /**nos devuelve el capital total de productos existentes */
-  getCapitalTotal,
-  /**nos devuelve el capital total de productos en un deposito en especifico */
-  getCapitalDeposito,
-  /**devuelve todos los productos */
-  getProductos,
-  /**funcion que elimina un producto pasandole el Id */
-  deleteProducto,
-  /**Trae solo los productos del deposito de materia prima */
-  getMateriasPrimas,
-  /**Trae solo los productos del deposito de Productos terminados */
-  getProductosTerminados,
-  /**Trea solo los productos que estan en el deposito de produccion en proceso */
-  getProductosEnProduccion,
-} from "../../Redux/actions.js";
+import DetallesModal from "./Modales/ProductoDetalles.js";
+import EditarModal from "./Modales/EditarProducto.js";
+import EliminarModal from "./Modales/EliminarProducto.js";
+import { getProductos, getProductosDeposito } from "../../Redux/actions.js";
+import api from "../../Axios/Api.js";
 class Stock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      /**El producto seleccionado */
-      IdProductoActual: 0,
-      descripcionProductoActual: "",
-      cantidadMinProductoActual: 0,
-      barcodeProductoActual: "",
-      nombreProductoActual: "",
-      costoProductoActual: "",
-      tipoProductoActual: 0,
-      nombreTipoProductoActual: "",
-      listaComponentes: [],
-      /**El deposito actual en el que nos encontramos, Todos, Materia prima, En produccion o productos terminados */
-      nombreBtn: "Todos",
-      /**guarda todos los productos que nos trae la api */
+      productoActual: {
+        Id: "",
+        Name: "",
+        Description: "",
+        Cost: "",
+        ProductType: {
+          Id: "",
+        },
+        Barcode: "",
+        QuantityMin: "",
+      },
+      selector: 4,
+      nombreSelector: "Todos",
       productos: this.props.productos,
-      /**almacena la cadena de caracteres existentes en el buscador */
       buscador: "",
-      /**capital total de los productos del deposito en el que nos encontramos actualmente */
-      capitalTotal: 0,
-      /**permite hacer visible u ocultar las alertas y modals */
+      capital: 0,
       editarModalVisible: false,
       eliminarModalVisible: false,
-      darBajaModalVisible: false,
       detallesModalVisible: false,
     };
   }
-  /**Cuando se renderiza el componente actualizo todos los datos con la api */
   async componentDidMount() {
-    
     await this.props.getProductos();
-    await this.props.getMateriasPrimas();
-    await this.props.getProductosTerminados();
-    await this.props.getProductosEnProduccion();
-    await this.props.getCapitalTotal();
-    /**por defecto se mostraran todos los productos existentes */
+
+    const capital1 = await api.productos.getCapital(1);
+    const capital2 = await api.productos.getCapital(3);
+
+    const capitalTotal = capital1.data.Sum + capital2.data.Sum;
     this.setState({
       productos: this.props.productos,
-      capitalTotal: this.props.capitalTotal,
+      capital: capitalTotal,
     });
   }
-  /**Muestra todos los productos existentes con su capital total */
-  mostrarTodos() {
-    this.setState({ nombreBtn: "Todos" });
-    this.setState({ productos: this.props.productos });
-    this.setState({ capitalTotal: this.props.capitalTotal });
-  }
-  /**muestra solo productos materia prima con su capital */
-  async mostrarMateriasPrimas() {
-    /**el deposito 1 es el que tiene las materias primas */
-    await this.props.getCapitalDeposito(1);
-    this.setState({
-      nombreBtn: "Materia Prima",
-      productos: this.props.materias_primas,
-      capitalTotal: this.props.capitalDeposito,
-    });
-  }
-  /**muestra todos los productos terminados con su capital total */
-  async mostrarProductosTerminados() {
-    await this.props.getCapitalDeposito(3);
-    this.setState({ nombreBtn: "Terminados" });
-    this.setState({ productos: this.props.productos_terminados });
-    this.setState({ capitalTotal: this.props.capitalDeposito });
-  }
-  //actializa los estados al seleccionar un producto
+
   seleccionarProducto(p) {
     this.setState({
-      nombreProductoActual: p.Name,
-      descripcionProductoActual: p.Description,
-      IdProductoActual: p.Id,
-      costoProductoActual: p.Cost,
-      cantidadMinProductoActual: p.QuantityMin,
-      barcodeProductoActual: p.Barcode,
-      tipoProductoActual: p.ProductType.Id,
+      productoActual: p,
     });
   }
-  /**muestra los productos del deposito en produccion */
-  async mostrarProductosEnProduccion() {
-    await this.props.getCapitalDeposito(2);
-    this.setState({ nombreBtn: "En Produccion" });
-    this.setState({ productos: this.props.productos_en_produccion });
-    this.setState({ capitalTotal: this.props.capitalDeposito });
+  ocultarModals() {
+    this.setState({
+      detallesModalVisible: false,
+      editarModalVisible: false,
+      eliminarModalVisible: false,
+    });
   }
-  /**setea los estados para ver los detalles del producto seleccionado */
+
+  async actualizar() {
+    await this.props.getProductos();
+    if (this.state.selector < 4) {
+      await this.props.getProductosDeposito(this.state.selector);
+      const capital = await api.productos.getCapital(this.state.selector);
+
+      this.setState({
+        productos: this.props.productosDeposito,
+        capital: capital.data.Sum,
+      });
+    } else {
+      const capital1 = await api.productos.getCapital(1);
+      const capital2 = await api.productos.getCapital(3);
+
+      const capitalTotal = capital1.data.Sum + capital2.data.Sum;
+      this.setState({
+        productos: this.props.productos,
+        capital: capitalTotal,
+      });
+    }
+  }
+  mostrarProductosTerminados() {
+    this.setState({
+      selector: 3,
+      nombreSelector: "ProductosTerminados",
+    });
+    this.actualizar();
+  }
+  mostrarMateriaPrima() {
+    this.setState({
+      selector: 1,
+      nombreSelector: "Materia Prima",
+    });
+    this.actualizar();
+  }
+  mostrarTodos() {
+    this.setState({
+      selector: 4,
+      nombreSelector: "Todos",
+    });
+    this.actualizar();
+  }
   mostrarDetallesProducto(p) {
     this.seleccionarProducto(p);
     this.setState({ detallesModalVisible: true });
-  }
-  async actualizar() {
-    await this.props.getProductos();
-    await this.props.getMateriasPrimas();
-    await this.props.getProductosTerminados();
-    await this.props.getProductosEnProduccion();
-    await this.props.getCapitalTotal();
-    if (this.state.nombreBtn === "Todos") {
-      this.setState({ productos: this.props.productos });
-      this.setState({ capitalTotal: this.props.capitalTotal });
-      /**actualizo los datos dependiendo de en cual deposito estaba el usuario y lo pinto de vuelta */
-    } else if (this.state.nombreBtn === "Materia Prima") {
-      await this.props.getCapitalDeposito(1);
-      this.setState({ productos: this.props.materias_primas });
-      // this.setState({ capitalTotal: this.props.capitalDeposito });
-    } else if (this.state.nombreBtn === "Terminados") {
-      await this.props.getCapitalDeposito(3);
-      this.setState({ productos: this.props.productos_terminados });
-      // this.setState({ capitalTotal: this.props.capitalDeposito });
-    } else if (this.state.nombreBtn === "En Produccion") {
-      await this.props.getCapitalDeposito(2);
-      this.setState({ productos: this.props.productos_en_produccion });
-      // this.setState({ capitalTotal: this.props.capitalDeposito });
-    }
-  }
-  /**elimino el producto si es que el usuario acepta y actualizo todos los datos con la api */
-  async eliminarProducto() {
-    await this.props.deleteProducto(this.state.IdProductoActual);
-    /**actualizo los datos */
-    this.actualizar();
-    /**ocultar el modal de eliminar */
-    this.setState({ eliminarModalVisible: false });
-  }
-  /**Edito el un producto y actualizo la tabla */
-  async editarProducto() {
-    await this.props.editProducto(this.state.IdProductoActual, {
-      Name: this.state.nombreProductoActual,
-      Description: this.state.descripcionProductoActual,
-      Cost: this.state.costoProductoActual,
-      QuantityMin: this.state.cantidadMinProductoActual,
-      Barcode: this.state.barcodeProductoActual,
-      ProductTypeId: this.state.tipoProductoActual,
-    });
-    /**actualizo los cambios */
-    this.actualizar();
-    /**ocultar el modal de editar */
-    this.setState({ editarModalVisible: false });
   }
   editar(p) {
     this.seleccionarProducto(p);
     this.setState({ editarModalVisible: true });
   }
-
   eliminar(p) {
     this.seleccionarProducto(p);
     this.setState({ eliminarModalVisible: true });
   }
-  render() {
-    /**Modal que permite ver los detalles de un producto seleccionado */
-    const detallesModal = (
-      <Modal isOpen={this.state.detallesModalVisible} centered>
-        <ModalHeader>Detalles del Producto</ModalHeader>
-        <ModalBody>
-          <b> Nombre:</b> {this.state.nombreProductoActual}
-          <br />
-          <b>Descripcion:</b> {this.state.descripcionProductoActual}
-          <br />
-          <b>Cantidad Minima:</b> {this.state.cantidadMinProductoActual}
-          <br />
-          <b>Codigo de Barra:</b> {this.state.barcodeProductoActual}
-          <br />
-          <b>Tipo de Producto:</b> {this.state.nombreTipoProductoActual}
-          <br />
-          <b>Costo:</b> {this.state.costoProductoActual}
-          <br />
-          <textarea className="form-control detalles" rows="3">
-           
-          </textarea>
-        </ModalBody>
-        <ModalFooter>
-          <button
-            onClick={() => this.setState({ detallesModalVisible: false })}
-          >
-            Cerrar
-          </button>
-        </ModalFooter>
-      </Modal>
-    );
 
-    /**Modal para preguntar si desea eliminar el producto */
-    const eliminarAlert = (
-      <Modal isOpen={this.state.eliminarModalVisible} centered>
-        <ModalHeader>
-          Desea eliminar el producto {this.state.barcodeProductoActual}-
-          {this.state.nombreProductoActual}?
-        </ModalHeader>
-        <ModalFooter>
-          <button onClick={() => this.eliminarProducto()}>Si</button>
-          <button
-            onClick={() => this.setState({ eliminarModalVisible: false })}
-          >
-            No
-          </button>
-        </ModalFooter>
-      </Modal>
-    );
-    /**Un modal que permite al usuario la facilidad de editar el producto que elija */
-    const editarModal = (
-      <Modal isOpen={this.state.editarModalVisible} centered>
-        <ModalHeader>Editar Producto</ModalHeader>
-        <ModalBody>
-          <form>
-            <div className="form-row">
-              <div className="col-md-6">
-                {/**NOMBRE DEL PRODUCTO*/}
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Nombre del Producto"
-                  value={this.state.nombreProductoActual}
-                  onChange={(e) => {
-                    this.setState({ nombreProductoActual: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                {/**DESCRIPCION DEL PRODUCTO*/}
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Descripcion del producto"
-                  value={this.state.descripcionProductoActual}
-                  onChange={(e) => {
-                    this.setState({
-                      descripcionProductoActual: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                {/**COSTO DEL PRODUCTO*/}
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Costo"
-                  value={this.state.costoProductoActual}
-                  onChange={(e) => {
-                    this.setState({ costoProductoActual: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                {/**CANTIDAD MINIMA DEL PRODUCTO*/}
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Cantidad Minima"
-                  value={this.state.cantidadMinProductoActual}
-                  onChange={(e) => {
-                    this.setState({
-                      cantidadMinProductoActual: e.target.value,
-                    });
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                {/**CODIGO DE BARRA DEL PRODUCTO*/}
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Codigo de barra"
-                  value={this.state.barcodeProductoActual}
-                  onChange={(e) => {
-                    this.setState({ barcodeProductoActual: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="col-md-12"></div>
-            </div>
-          </form>
-        </ModalBody>
-        <ModalFooter>
-          <button className="primary" onClick={() => this.editarProducto()}>
-            Agregar Cambios
-          </button>
-          <button
-            className="exit"
-            onClick={() => this.setState({ editarModalVisible: false })}
-          >
-            Cancelar
-          </button>
-        </ModalFooter>
-      </Modal>
-    );
+  render() {
     return (
       <div className="stock">
-        {/**Los modals y las alertas en estado visible=false, con acciones se modificara dicho estado */}
-        {editarModal}
-        {eliminarAlert}
-        {detallesModal}
+        <EliminarModal
+          producto={this.state.productoActual}
+          visible={this.state.eliminarModalVisible}
+          ocultar={this.ocultarModals.bind(this)}
+          actualizar={this.actualizar.bind(this)}
+        />
+        <DetallesModal
+          producto={this.state.productoActual}
+          visible={this.state.detallesModalVisible}
+          ocultar={this.ocultarModals.bind(this)}
+        />
+        <EditarModal
+          producto={this.state.productoActual}
+          visible={this.state.editarModalVisible}
+          ocultar={this.ocultarModals.bind(this)}
+          actualizar={this.actualizar.bind(this)}
+        />
         {/**representa la cabecera del stock con un buscador y un seleccionador de deposito actual */}
         <div className="StockCabecera row ">
           <div className="col-md-6 mr-auto pl-0">
@@ -337,7 +159,7 @@ class Stock extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    {this.state.nombreBtn}
+                    {this.state.nombreSelector}
                   </button>
                   <div className="dropdown-menu">
                     <a
@@ -350,16 +172,9 @@ class Stock extends Component {
                     <a
                       className="dropdown-item"
                       href="#"
-                      onClick={() => this.mostrarMateriasPrimas()}
+                      onClick={() => this.mostrarMateriaPrima()}
                     >
                       Materia Prima
-                    </a>
-                    <a
-                      className="dropdown-item"
-                      href="#"
-                      onClick={() => this.mostrarProductosEnProduccion()}
-                    >
-                      En Produccion
                     </a>
                     <a
                       className="dropdown-item"
@@ -392,8 +207,8 @@ class Stock extends Component {
             <tbody className="tableBody">
               {this.state.productos
                 .filter(
-                  (producto) =>
-                    producto.Name.toLowerCase().indexOf(
+                  (p) =>
+                    p.Name.toLowerCase().indexOf(
                       this.state.buscador.toLowerCase()
                     ) !== -1
                 )
@@ -440,7 +255,7 @@ class Stock extends Component {
                 Capital Total:
               </span>
             </div>
-            <span className="form-control">{this.state.capitalTotal}</span>
+            <span className="form-control">{this.state.capital}</span>
             <div className="input-group-append">
               <span className="input-group-text" id="basic-addon1">
                 GS
@@ -456,22 +271,13 @@ class Stock extends Component {
 const mapStateToProps = (state) => {
   return {
     productos: state.productos,
-    materias_primas: state.materias_primas,
-    productos_terminados: state.productos_terminados,
-    productos_en_produccion: state.productos_en_produccion,
-    capitalTotal: state.capitalTotal,
-    capitalDeposito: state.capitalDeposito,
+    productosDeposito: state.productoDeDeposito,
+    capital: state.capitalDeposito,
   };
 };
 const mapDispatchToProps = {
   getProductos,
-  deleteProducto,
-  getMateriasPrimas,
-  getProductosTerminados,
-  getProductosEnProduccion,
-  getCapitalTotal,
-  getCapitalDeposito,
-  editProducto,
+  getProductosDeposito,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);

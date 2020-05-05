@@ -70,7 +70,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, EmployeeId = orden.EmployeeId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
+                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
                     db.ProductionOrders.Add(nuevo);
                     db.SaveChanges();
                     ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
@@ -112,14 +112,15 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool EditState(int id, int idState)
+        public bool EditState(int id, int stateId, int employeeId)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     ProductionOrder poEditado = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
-                    poEditado.ProductionStateId = idState;
+                    poEditado.ProductionStateId = stateId;
+                    poEditado.EmployeeId = employeeId;
                     db.SaveChanges();
                     return false;
                 }
@@ -167,31 +168,42 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public bool ChangeState (int idOrden, ProductionStateDTO prductionStateDTO)
+        public List<int> ChangeState(int idOrden, ProductionOrderDTO ps)
         {
             try
             {
-                switch (prductionStateDTO.Id)
+                SettingDAO settingDAO = new SettingDAO();
+                ProductionOrderReportDTO po = Detail(idOrden);
+                if (ps.ProductionStateId == int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")))
                 {
-                    case 1:
-
-                    break;
-                    case 2:
-                        if (StatusInProgress(idOrden))
-                        {
-                            return true;
-                        }
-                    break;
+                    List<int> status = StatusInProgress(idOrden, ps.EmployeeId);
+                    if (null != status)
+                    {
+                        return status;
+                    }
                 }
-                return false;
+                else if (ps.ProductionStateId == int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_FINALIZED")))
+                {
+                    if (!StatusInFinalized(idOrden, ps.EmployeeId))
+                    {
+                        return new List<int>();
+                    }
+                }else if (ps.ProductionStateId == int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_CANCELLED")))
+                {
+                    if (!StatusInCancelled(idOrden, ps.EmployeeId))
+                    {
+                        return new List<int>();
+                    }
+                }
+                return null;
             }
             catch
             {
-                return true;
+                return null;
             }
         }
 
-        public bool StatusInProgress(int idOrden)
+        private List<int> StatusInProgress(int idOrden, int employeId)
         {
             try
             {
@@ -199,18 +211,63 @@ namespace Axure.DataBase.Module_Stock
                 StockDAO stockDAO = new StockDAO();
                 SettingDAO settingDAO = new SettingDAO();
                 List<ProductionOrderDetailDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
-                if (stockDAO.CheckStock(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL"))))
-                {                   
-                    return true;
+                List<int> notStock = stockDAO.CheckStock(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL")));
+                if (null == notStock)
+                {
+                    return null;
+                }
+                else if (0 == notStock.Count())
+                {
+                    if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")), employeId))
+                    {
+                        return notStock;
+                    }
+                    return null;
                 }
                 else
                 {
-                    if (EditState(idOrden, 2))
+                    return notStock;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        
+        private bool StatusInFinalized(int idOrden, int employeId)
+        {
+            try
+            {
+                SettingDAO settingDAO = new SettingDAO();
+                ProductionOrderDAO productionOrderDAO = new ProductionOrderDAO();
+                ProductionOrderReportDTO po = productionOrderDAO.Detail(idOrden);
+                if (int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")) == po.ProductionState.Id)
+                {
+                    if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_FINALIZED")), employeId))
                     {
-                        return true;
+                        return false;
                     }
+                }
+                return true;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        private bool StatusInCancelled(int idOrden, int employeId)
+        {
+            try
+            {
+                SettingDAO settingDAO = new SettingDAO();
+                if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_CANCELLED")), employeId))
+                {
                     return false;
                 }
+                return true;
             }
             catch
             {

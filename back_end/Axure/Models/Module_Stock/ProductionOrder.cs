@@ -24,7 +24,6 @@ namespace Axure.Models.Module_Stock
         public ProductionState ProductionState { get; set; }
 
         //Employee responsible for the production order.
-        [Required]
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
