@@ -55,7 +55,7 @@ export const getMateriasPrimas_Terminados = () => async (dispatch) => {
 };
 
 export const deleteProducto = (id) => async (dispatch) => {
-  const request = await api.productos.delete(id);
+   await api.productos.delete(id);
   dispatch(getProductos());
 };
 export const getProductosDeposito = (deposito) => async (dispatch) => {
@@ -64,7 +64,7 @@ export const getProductosDeposito = (deposito) => async (dispatch) => {
 };
 
 export const createProducto = (data) => async (dispatch) => {
-  const request = await api.productos.create(data);
+  await api.productos.create(data);
   dispatch(getProductos());
 };
 export const editProducto = (id, data) => async (dispatch) => {

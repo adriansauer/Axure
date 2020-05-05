@@ -1,28 +1,89 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {getProductos,getEmpleados} from "../../Redux/actions.js";
-import './styleMProductos.css'
-import TablaProductoSelector from "./TablaProductoSelector.js";
+import { getEmpleados } from "../../Redux/actions.js";
+import "./styleMProductos.css";
+import api from "../../Axios/Api.js";
+import Tabla from "./Tabla_Ingreso_EgresoSelector";
 
 class DarDeBaja extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        productos: this.props.productos,
+      productos: this.props.productos,
+      buscador: "",
+      productosSeleccionados: [],
+      observacion: "",
+      encargado: {},
+      encargadoNombre: "",
+      empleados: [],
+      empleadoElegido: false,
+      tipo_movimiento: 1,
+      deposito: 3,
+      nombreMovimientoBtn: "Ingreso",
+      nombreDepositoBtn: "Deposito de productos terminados",
+    };
+  }
+  /**{
+	"Day": 4,
+	"Month": 5,
+	"Year": 2020,
+	"DepositId": 1,
+	"EmployeeId": 1,
+	"MovementMotiveId": 1,
+	"Observation": "Agrego 1 cabecera",  //no mas de 200 caracteres
+	"ListDetails": 
+	[
+		{"ProductId": 1,
+		 "Quantity": 5,
+		 "Observation": "Agrego 1 detalle"
+		},
+		{"ProductId": 1,
+		 "Quantity": 5,
+		 "Observation": "Agrego 2 detalles"
+		}	
+	]
+}
+ */
+async enviar() {
+  let date = new Date(document.getElementById("fecha").value);
+  const productos = this.state.productosSeleccionados.map((p) => {
+    return {
+      ProductId: p.Id,
+      Quantity: parseInt(p.Cantidad),
+      Observation:p.ObservacionDetalle,
+    };
+  });
+const envio={
+  DepositId:this.state.deposito,
+  MovementMotiveId:this.state.tipo_movimiento,
+EmployeeId: this.state.encargado.Id,
+Day: date.getDate() + 1,
+Month: date.getMonth() + 1,
+Year: date.getFullYear(),
+Observation: this.state.observacion,
+ListDetails: productos,
+}
+console.log(envio);
+console.log(envio);
+  if (this.validarCampos()) {
+    const request = await api.ingreso_egreso.create(envio);
+    console.log(request.status);
+    if (request.status === 200) {
+      this.setState({
         buscador: "",
         productosSeleccionados: [],
         observacion: "",
         encargado: {},
         encargadoNombre: "",
-        empleados: [],
         empleadoElegido: false,
-        
-
-    };
+      });
+      console.log("Orden guardada con exito");
+    }
   }
+}
   async componentDidMount() {
     await this.props.getEmpleados();
-    await this.props.getProductos();
+    const p = await api.productos.getDeposito(this.state.deposito);
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -32,6 +93,7 @@ class DarDeBaja extends Component {
     if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
     this.setState({
+      productos: p.data,
       empleados: this.props.empleados,
     });
   }
@@ -60,13 +122,38 @@ class DarDeBaja extends Component {
         Description: producto.Description,
         Barcode: producto.Barcode,
         Cantidad: "1",
+        ObservacionDetalle: "",
       }),
     });
     this.setState({ buscador: "" });
   }
+  validarCampos() {
+    if (
+      this.state.productosSeleccionados.length === 0 ||
+      this.state.encargadoNombre === "" ||
+      document.getElementById("fecha").value === ""
+    ) {
+      console.log("Rellene todos los campos");
+      return false;
+    }
+    return true;
+  }
+  async cambiarDeposito(id, nombre) {
+    console.log(this.state.deposito);
+    console.log(id);
+    if (id !== this.state.deposito) {
+      const p = await api.productos.getDeposito(id);
+      this.setState({
+        productosSeleccionados: [],
+        productos: p.data,
+        nombreDepositoBtn: nombre,
+        deposito:id,
+      });
+    }
+  }
   render() {
     return (
-        <div className="darDeBaja ">
+      <div className="darDeBaja ">
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-md-8">
@@ -100,6 +187,7 @@ class DarDeBaja extends Component {
               />
             </div>
           </div>
+
           <div className="col-md-8"></div>
         </div>
 
@@ -136,20 +224,98 @@ class DarDeBaja extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Observacion(Opcional)"
+              placeholder="Observacion"
               value={this.state.observacion}
               onChange={(e) => this.setState({ observacion: e.target.value })}
             />
           </div>
-          <div className="col-md-4">
-          <label className="radio-inline"><input type="radio" name="optradio" checked/>Ingreso</label>
-<label className="radio-inline"><input type="radio" name="optradio"/>Egreso</label>
+          <div className="col-md-1">
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {this.state.nombreMovimientoBtn}
+              </button>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a
+                  onClick={() =>
+                    this.setState({
+                      nombreMovimientoBtn: "Ingreso",
+                      tipo_movimiento: 1,
+                    })
+                  }
+                  className="dropdown-item"
+                  href="#"
+                >
+                  Ingreso
+                </a>
+                <a
+                  onClick={() =>
+                    this.setState({
+                      nombreMovimientoBtn: "Egreso",
+                      tipo_movimiento: 2,
+                    })
+                  }
+                  className="dropdown-item"
+                  href="#"
+                >
+                  Egreso
+                </a>
+              </div>
+            </div>
           </div>
-          
+          <div className="col-md-3">
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {this.state.nombreDepositoBtn}
+              </button>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a
+                  onClick={() =>
+                    this.cambiarDeposito(3, "Deposito de productos terminados")
+                  }
+                  className="dropdown-item"
+                  href="#"
+                >
+                  Deposito de productos terminados
+                </a>
+                <a
+                  onClick={() =>
+                    this.cambiarDeposito(1, "Deposito de materia prima")
+                  }
+                  className="dropdown-item"
+                  href="#"
+                >
+                  Deposito de materia prima
+                </a>
+              </div>
+            </div>
+          </div>
 
           <div className="col-md-4"></div>
         </div>
-        <TablaProductoSelector productos={this.state.productosSeleccionados} delete={this.delete.bind(this)}/>
+        <Tabla
+          productos={this.state.productosSeleccionados}
+          delete={this.delete.bind(this)}
+        />
 
         <div className="row">
           <div className="col-md-4">
@@ -217,14 +383,12 @@ class DarDeBaja extends Component {
   }
 }
 const mapStateToProps = (state) => {
-    return {
-      productos: state.productos,
-      empleados: state.empleados,
-    };
+  return {
+    empleados: state.empleados,
   };
-  const mapDispatchToProps = {
-    getEmpleados,
-    getProductos,
-  };
+};
+const mapDispatchToProps = {
+  getEmpleados,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DarDeBaja);

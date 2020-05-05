@@ -11,6 +11,8 @@ class OrdenesProduccionProductos extends Component {
       detallesVisible: false,
       empleados: null,
       fecha: new Date(1000, 1, 1),
+      /**Pendiente,En Proceso,Terminado,Cancelado */
+      filtro:"Pendiente"
     };
   }
   async componentDidMount() {
@@ -38,6 +40,7 @@ componentDidUpdate(){
       detallesVisible: true,
     });
   }
+ 
   render() {
     
     return (
@@ -49,10 +52,10 @@ componentDidUpdate(){
         />
         <div className="row">
           <div className="col-md-4"></div>
-          <button>Pendientes</button>
-          <button>En proceso</button>
-          <button>Terminadas</button>
-          <button>Canceladas</button>
+          <button onClick={()=>this.setState({filtro:"Pendiente"})}>Pendientes</button>
+          <button onClick={()=>this.setState({filtro:"En Proceso"})}>En proceso</button>
+          <button onClick={()=>this.setState({filtro:"Terminado"})}>Terminadas</button>
+          <button onClick={()=>this.setState({filtro:"Cancelado"})}>Canceladas</button>
 
         </div>
         <div className="row">
@@ -78,7 +81,7 @@ componentDidUpdate(){
           </div>
         </div>
 
-        {this.state.ordenes
+        {this.state.ordenes.filter(o=>this.state.filtro===o.ProductionState.State)
           .filter(
             (o) => new Date(o.Year, o.Month - 1, o.Day) >= this.state.fecha
           )

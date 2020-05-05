@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import { connect } from "react-redux";
 import { createProducto, getProductosDeCompra } from "../../Redux/actions.js";
-import TablaProductoSelector from './TablaProductoSelector.js';
 class AgregarProducto extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +82,7 @@ class AgregarProducto extends Component {
             <label className="mx-auto title-label">Agregar Producto</label>
           </div>
           <div className="form-group row mb-2">
-            <label for="" className="">
+            <label htmlFor="" className="">
               Nombre del Producto
             </label>
             <input
@@ -97,7 +96,7 @@ class AgregarProducto extends Component {
             />
           </div>
           <div className="form-group row mb-3">
-            <label for="" className="">
+            <label htmlFor="" className="">
               Descripcion del Producto
             </label>
             <textarea
@@ -110,9 +109,9 @@ class AgregarProducto extends Component {
               rows="3"
             ></textarea>
           </div>
-          <div class="dropdown-divider"></div>
+          <div className="dropdown-divider"></div>
           <div className="form-group row mb-2">
-            <label for="" className="">
+            <label htmlFor="" className="">
               Costo{" "}
             </label>
             <input
@@ -126,7 +125,7 @@ class AgregarProducto extends Component {
             />
           </div>
           <div className="form-group row mb-2">
-            <label for="" className="">
+            <label htmlFor="" className="">
               Cantidad Minima
             </label>
             <input
@@ -140,7 +139,7 @@ class AgregarProducto extends Component {
             />
           </div>
           <div className="form-group row mb-3">
-            <label for="" className="">
+            <label htmlFor="" className="">
               Codigo de Barra
             </label>
             <input
@@ -167,7 +166,7 @@ class AgregarProducto extends Component {
                     this.setState({ tipoProducto: 2 });
                   }}
                 />
-                <label className="form-check-label mr-2" for="inlineRadio1">
+                <label className="form-check-label mr-2" htmlFor="inlineRadio1">
                   Materia Prima
                 </label>
               </div>
@@ -181,11 +180,11 @@ class AgregarProducto extends Component {
                     this.setState({ tipoProducto: 3 });
                   }}
                 />
-                <label class="form-check-label mr-2" for="inlineRadio2">
+                <label className="form-check-label mr-2" htmlFor="inlineRadio2">
                   Producto Terminado
                 </label>
               </div>
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
                   type="radio"
                   className="mr-1"
@@ -195,7 +194,7 @@ class AgregarProducto extends Component {
                     this.setState({ tipoProducto: 1 });
                   }}
                 />
-                <label class="form-check-label" for="inlineRadio3">
+                <label className="form-check-label" htmlFor="inlineRadio3">
                   Ambos
                 </label>
               </div>
@@ -205,7 +204,7 @@ class AgregarProducto extends Component {
           <div className="form-group row mt-3">
             <button
               type="submit"
-              class="btn btn-primary ml-auto mr-3"
+              className="btn btn-primary ml-auto mr-3"
               value="Crear Producto"
             >
               Crear Producto

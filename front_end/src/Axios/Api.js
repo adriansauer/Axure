@@ -94,4 +94,12 @@ export default {
         method: "get",
       }),
   },
+  ingreso_egreso: {
+    create: (data) =>
+      requestHelper({
+        url: "MovementProducts/Add",
+        method: "post",
+        data:data,
+      }),
+  },
 };

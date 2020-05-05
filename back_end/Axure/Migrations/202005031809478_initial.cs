@@ -39,7 +39,7 @@ namespace Axure.Migrations
                         Motive = c.String(nullable: false, maxLength: 200),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MovementTypes", t => t.MovementTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.MovementTypes", t => t.MovementTypeId, cascadeDelete: false)
                 .Index(t => t.MovementTypeId);
             
             CreateTable(
@@ -65,8 +65,8 @@ namespace Axure.Migrations
                         Observation = c.String(maxLength: 200),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MovementProducts", t => t.MovementProductId, cascadeDelete: true)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
+                .ForeignKey("dbo.MovementProducts", t => t.MovementProductId, cascadeDelete: false)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
                 .Index(t => t.ProductId)
                 .Index(t => t.MovementProductId);
             
@@ -82,9 +82,9 @@ namespace Axure.Migrations
                         MovementMotiveId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: true)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
-                .ForeignKey("dbo.MovementMotives", t => t.MovementMotiveId, cascadeDelete: true)
+                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: false)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
+                .ForeignKey("dbo.MovementMotives", t => t.MovementMotiveId, cascadeDelete: false)
                 .Index(t => t.EmployeeId)
                 .Index(t => t.DepositId)
                 .Index(t => t.MovementMotiveId);
@@ -103,7 +103,7 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ProductTypes", t => t.ProductTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.ProductTypes", t => t.ProductTypeId, cascadeDelete: false)
                 .Index(t => t.ProductTypeId);
             
             CreateTable(
@@ -126,8 +126,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MovementProductions", t => t.MovementProductionId, cascadeDelete: true)
-                .ForeignKey("dbo.ProductionOrders", t => t.ProductionOrderId, cascadeDelete: true)
+                .ForeignKey("dbo.MovementProductions", t => t.MovementProductionId, cascadeDelete: false)
+                .ForeignKey("dbo.ProductionOrders", t => t.ProductionOrderId, cascadeDelete: false)
                 .Index(t => t.MovementProductionId)
                 .Index(t => t.ProductionOrderId);
             
@@ -142,8 +142,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
-                .ForeignKey("dbo.MovementProductionTypes", t => t.MovementProductionTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
+                .ForeignKey("dbo.MovementProductionTypes", t => t.MovementProductionTypeId, cascadeDelete: false)
                 .Index(t => t.EmployeeId)
                 .Index(t => t.MovementProductionTypeId);
             
@@ -168,8 +168,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
-                .ForeignKey("dbo.ProductionStates", t => t.ProductionStateId, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
+                .ForeignKey("dbo.ProductionStates", t => t.ProductionStateId, cascadeDelete: false)
                 .Index(t => t.ProductionStateId)
                 .Index(t => t.EmployeeId);
             
@@ -193,8 +193,8 @@ namespace Axure.Migrations
                         Quantity = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.Products", t => t.ProductComponentId, cascadeDelete: true)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
+                .ForeignKey("dbo.Products", t => t.ProductComponentId, cascadeDelete: false)
                 .Index(t => t.ProductId)
                 .Index(t => t.ProductComponentId);
             
@@ -209,8 +209,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.ProductionOrders", t => t.ProductionOrderId, cascadeDelete: true)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
+                .ForeignKey("dbo.ProductionOrders", t => t.ProductionOrderId, cascadeDelete: false)
                 .Index(t => t.ProductionOrderId)
                 .Index(t => t.ProductId);
             
@@ -225,8 +225,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrderId, cascadeDelete: true)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
+                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrderId, cascadeDelete: false)
                 .Index(t => t.PurchaseOrderId)
                 .Index(t => t.ProductId);
             
@@ -241,8 +241,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
-                .ForeignKey("dbo.Providers", t => t.ProviderId, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: false)
+                .ForeignKey("dbo.Providers", t => t.ProviderId, cascadeDelete: false)
                 .Index(t => t.ProviderId)
                 .Index(t => t.EmployeeId);
             
@@ -281,8 +281,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: true)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
+                .ForeignKey("dbo.Deposits", t => t.DepositId, cascadeDelete: false)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
                 .Index(t => t.DepositId)
                 .Index(t => t.ProductId);
             
@@ -298,8 +298,8 @@ namespace Axure.Migrations
                         Number = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.Transfers", t => t.TransferId, cascadeDelete: true)
+                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: false)
+                .ForeignKey("dbo.Transfers", t => t.TransferId, cascadeDelete: false)
                 .Index(t => t.ProductId)
                 .Index(t => t.TransferId);
             
@@ -316,8 +316,8 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Deposits", t => t.DepositDestinationId, cascadeDelete: true)
-                .ForeignKey("dbo.Deposits", t => t.DepositOriginId, cascadeDelete: true)
+                .ForeignKey("dbo.Deposits", t => t.DepositDestinationId, cascadeDelete: false)
+                .ForeignKey("dbo.Deposits", t => t.DepositOriginId, cascadeDelete: false)
                 .Index(t => t.DepositOriginId)
                 .Index(t => t.DepositDestinationId);
             
@@ -333,7 +333,7 @@ namespace Axure.Migrations
                         IdEmployee = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.IdEmployee, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.IdEmployee, cascadeDelete: false)
                 .Index(t => t.IdEmployee);
             
         }
