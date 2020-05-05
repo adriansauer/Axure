@@ -41,7 +41,12 @@ namespace Axure.Migrations
                 new Setting { Id = 5, Key = "ID_OUTPUT_PRODUCT", Value = "2" },
                 new Setting { Id = 6, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED", Value = "1" },
                 new Setting { Id = 7, Key = "ID_TYPE_OF_PRODUCT_RAW_MATERIAL", Value = "2" },
-                new Setting { Id = 8, Key = "ID_TYPE_OF_PRODUCT_FINISHED", Value = "3" }
+                new Setting { Id = 8, Key = "ID_TYPE_OF_PRODUCT_FINISHED", Value = "3" },
+                new Setting { Id = 9, Key = "AUTOMATIC_PRODUCTION_ORDER", Value = "0" },
+                new Setting { Id = 10, Key = "ID_PRODUCTION_STATE_PENDING", Value = "1" },
+                new Setting { Id = 11, Key = "ID_PRODUCTION_STATE_PROGRESS", Value = "2" },
+                new Setting { Id = 12, Key = "ID_PRODUCTION_STATE_FINALIZED", Value = "3" },
+                new Setting { Id = 13, Key = "ID_PRODUCTION_STATE_CANCELLED", Value = "4" }
                 );
 
             //--------------------------------------------------------------------------------------------------------------//
@@ -164,11 +169,17 @@ namespace Axure.Migrations
                 );
             //Product production order.
             context.ProductionOrders.AddOrUpdate(x => x.Id,
-                new ProductionOrder { Id = 1, ProductionStateId = 1, EmployeeId = 3, Date = new DateTime(2020,03,10), Observation = "Que los cables sean negros", Deleted = false }
+                new ProductionOrder { Id = 1, ProductionStateId = 1, EmployeeId = 3, Date = new DateTime(2020,03,10), Observation = "Que los cables sean negros", Deleted = false },
+                new ProductionOrder { Id = 2, ProductionStateId = 1, EmployeeId = 3, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
+                new ProductionOrder { Id = 3, ProductionStateId = 2, EmployeeId = 1, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
+                new ProductionOrder { Id = 4, ProductionStateId = 3, EmployeeId = 4, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
+                new ProductionOrder { Id = 5, ProductionStateId = 4, EmployeeId = 5, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false }
                 );
             //Products to produce.
             context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
-                new ProductionOrderDetail { Id = 1, ProductionOrderId = 1, ProductId = 23, Quantity = 1, Deleted = false }
+                new ProductionOrderDetail { Id = 1, ProductionOrderId = 1, ProductId = 23, Quantity = 1, Deleted = false },
+                new ProductionOrderDetail { Id = 2, ProductionOrderId = 1, ProductId = 22, Quantity = 1, Deleted = false },
+                new ProductionOrderDetail { Id = 3, ProductionOrderId = 1, ProductId = 1, Quantity = 1, Deleted = false }
                 );
             //Types of product movements according to production order.
             context.MovementProductionTypes.AddOrUpdate(x => x.Id,
