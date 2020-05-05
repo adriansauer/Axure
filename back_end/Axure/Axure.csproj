@@ -227,6 +227,7 @@
     <Compile Include="DTO\Module_Stock\StockDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDTO.cs" />
+    <Compile Include="DTO\Module_Stock\TransferListDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
