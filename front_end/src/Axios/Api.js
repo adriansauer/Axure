@@ -101,5 +101,17 @@ export default {
         method: "post",
         data:data,
       }),
+      get:()=>requestHelper({
+        url:"MovementProducts/List",
+        method:"get",
+      }),
+      getMovimientoDetalle:(id)=>requestHelper({
+        url:"MovementProductDetails/byMovement/"+id,
+        method:"get",
+      }),
+      delete:(id)=>requestHelper({
+        url:"MovementProducts/Delete/"+id,
+        method:"delete",
+      })
   },
 };
