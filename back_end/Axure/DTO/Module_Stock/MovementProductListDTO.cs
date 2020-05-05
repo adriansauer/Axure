@@ -1,19 +1,19 @@
-﻿using Axure.Models.Module_Stock;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace Axure.DTO.Module_Stock
 {
-    public class MovementProductDTO
+    public class MovementProductListDTO
     {
+
         //Id
         public int Id { get; set; }
 
         //Fecha
+        //Order creation date.
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
@@ -27,12 +27,14 @@ namespace Axure.DTO.Module_Stock
         //Deposito de salida o deposito destino
         public int DepositId { get; set; }
 
+        //FK Entrada o Salida
+        public int MovementTypeId { get; set; }
+
         //Observacion
         [StringLength(200)]
         public String Observation { get; set; }
 
-        //FK Entrada o Salida
-        public int MovementTypeId { get; set; }
-
+        //Lista de detalles
+        public List<MovementProductDetailDTO> ListDetails { get; set; }
     }
 }

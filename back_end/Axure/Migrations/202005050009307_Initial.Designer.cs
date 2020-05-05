@@ -13,7 +13,7 @@ namespace Axure.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202005011705165_Initial"; }
+            get { return "202005050009307_Initial"; }
         }
         
         string IMigrationMetadata.Source

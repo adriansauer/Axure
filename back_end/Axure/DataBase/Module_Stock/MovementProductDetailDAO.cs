@@ -19,7 +19,7 @@ namespace Axure.DataBase.Module_Stock
     {
         Stock st;
         //Metodo para agregar a la tabla
-        public bool Add(MovementProductDetail esp)
+        public bool Add(MovementProductDetailDTO esp)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Axure.DataBase.Module_Stock
                     MovementProductDAO espDao = new MovementProductDAO();
                     Product pd = db.Products.Single(x => x.Id == esp.ProductId);
                     MovementProduct espC = db.MovementProducts.Single(x => x.Id == esp.MovementProductId);
-                    MovementMotive mt = db.MovementMotives.Single(x => x.Id == espC.MovementMotiveId);
+                    //MovementMotive mt = db.MovementMotives.Single(x => x.Id == espC.MovementMotiveId);
 
                     try
                     {           
@@ -46,7 +46,7 @@ namespace Axure.DataBase.Module_Stock
 
 
                     //pregunta si es Entrada o salida para actualizar el stock
-                    if (mt.MovementTypeId == int.Parse(stgE.Value))//si es Entrada
+                    if (espC.MovementTypeId == int.Parse(stgE.Value))//si es Entrada
                     {
                         if (st != null) //si existe el stock agrega el detalle actualiza el costo total de la cabecera y actualiza el stock del producto
                         {
@@ -65,7 +65,7 @@ namespace Axure.DataBase.Module_Stock
                             return true;
                         }
                     }
-                    if (mt.MovementTypeId == int.Parse(stgO.Value))//si es salida   
+                    if (espC.MovementTypeId == int.Parse(stgO.Value))//si es salida   
                     {
                         //verifica que la cantidad a sacar no sea mayor a la existente
                         if (esp.Quantity <= st.Quantity)

@@ -29,7 +29,7 @@ namespace Axure.DTO.Module_Stock
         public int Cost { get; set; }
 
         //Observacion
-        [StringLength(50)]
+        [StringLength(200)]
         public String Observation { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Antlr.Runtime.Misc;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Axure.Controllers.Module_Stock
         // POST: MovementProducts/Agregar
         [HttpPost]
         [Route("Add")]
-        public ActionResult Add(MovementProduct esp)
+        public ActionResult Add(MovementProductListDTO esp)
         {
             try
             {
@@ -41,7 +42,7 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        //Todas las cabeceras de los movimientos, por deposito
+        /*//Todas las cabeceras de los movimientos, por deposito
         [Route("MovementByDeposit/{id}")]
         public ActionResult MovementByDeposit(int id)
         {
@@ -56,7 +57,7 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
 
         //Lista todos los movimientos
         [Route("List")]
@@ -94,7 +95,7 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        //Listar por motivo de movimiento
+        /*//Listar por motivo de movimiento
         [Route("ListByMovementMotive/{id}")]
         public ActionResult ListByMovementMotive(int id)
         {
@@ -108,7 +109,7 @@ namespace Axure.Controllers.Module_Stock
             {
                 return new HttpStatusCodeResult(406);
             }
-        }
+        }*/
 
         //Listar por tipo de movimiento
         [Route("ListByMovementType/{id}")]
@@ -123,6 +124,28 @@ namespace Axure.Controllers.Module_Stock
             catch
             {
                 return new HttpStatusCodeResult(406);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                if (this.mvDAO.Remove(id))
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
+                }
+
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
     }
