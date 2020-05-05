@@ -7,7 +7,7 @@ class ProductoDetalles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentes: null,
+      componentes: [],
       productos: null,
     };
   }
@@ -33,8 +33,7 @@ class ProductoDetalles extends Component {
           <br />
           <b>Costo:</b> {this.props.producto.Cost}
           <br />
-          
-            {this.state.componentes!==null?
+            {this.state.componentes.lenght!==[]?
             <div>
             <b>Componentes</b>
             <div className="StockBody">

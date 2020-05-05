@@ -23,27 +23,7 @@ class DarDeBaja extends Component {
       nombreDepositoBtn: "Deposito de productos terminados",
     };
   }
-  /**{
-	"Day": 4,
-	"Month": 5,
-	"Year": 2020,
-	"DepositId": 1,
-	"EmployeeId": 1,
-	"MovementMotiveId": 1,
-	"Observation": "Agrego 1 cabecera",  //no mas de 200 caracteres
-	"ListDetails": 
-	[
-		{"ProductId": 1,
-		 "Quantity": 5,
-		 "Observation": "Agrego 1 detalle"
-		},
-		{"ProductId": 1,
-		 "Quantity": 5,
-		 "Observation": "Agrego 2 detalles"
-		}	
-	]
-}
- */
+
 async enviar() {
   let date = new Date(document.getElementById("fecha").value);
   const productos = this.state.productosSeleccionados.map((p) => {
@@ -55,7 +35,7 @@ async enviar() {
   });
 const envio={
   DepositId:this.state.deposito,
-  MovementMotiveId:this.state.tipo_movimiento,
+  MovementTypeId:this.state.tipo_movimiento,
 EmployeeId: this.state.encargado.Id,
 Day: date.getDate() + 1,
 Month: date.getMonth() + 1,
@@ -63,11 +43,8 @@ Year: date.getFullYear(),
 Observation: this.state.observacion,
 ListDetails: productos,
 }
-console.log(envio);
-console.log(envio);
   if (this.validarCampos()) {
     const request = await api.ingreso_egreso.create(envio);
-    console.log(request.status);
     if (request.status === 200) {
       this.setState({
         buscador: "",
