@@ -1,4 +1,5 @@
 ﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Stock;
 using Axure.Models.Module_Stock;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Axure.Controllers.Module_Stock
         // POST: Agregar Transferencia
         [HttpPost]
         [Route("Add")]
-        public ActionResult Add(TransferDetail esp)
+        public ActionResult Add(TransferDetailDTO esp)
         {
             try
             {
