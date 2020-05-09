@@ -4,6 +4,7 @@ import api from "../../Axios/Api.js";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Detalle from "./Modales/movimientoDetalle.js";
+
 class Movimientos extends Component {
   constructor(props) {
     super(props);

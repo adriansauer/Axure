@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import api from "../../Axios/Api.js";
 import { getEmpleados,getProductosDeVenta } from "../../Redux/actions.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
-
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
