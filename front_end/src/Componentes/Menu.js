@@ -39,7 +39,7 @@ class Menu extends Component {
   //funcionalidad del menu
   toggleMenu(arg){
     document.getElementsByClassName('navbar')[0].classList.toggle('active');
-    document.getElementById('Box--content').classList.toggle('navbar-active')
+    document.getElementById('Box--content').classList.toggle('navbar-inactive')
     if (document.getElementsByClassName('navbar')[0].classList.contains('active')) {
       setTimeout(() => {
         document.getElementById(arg).classList.toggle('show');

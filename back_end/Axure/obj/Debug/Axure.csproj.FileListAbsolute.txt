@@ -569,6 +569,10 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
+<<<<<<< HEAD
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
+=======
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
@@ -576,8 +580,14 @@ C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\bin\System.Web.
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+=======
+>>>>>>> master
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
+C:\xampp\htdocs\working\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
+>>>>>>> master
 =======
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\Usuario\Desktop\Desarrollo Sistema\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache

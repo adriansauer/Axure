@@ -127,13 +127,12 @@ html{
     width: 83.333vw;
     height: calc(100vh - 4rem);
     margin-top: 4rem;
-    overflow-x: auto;
     transform: translateX(0);
     transition: all 0.5s ease-in-out;
     z-index: 800;
-    &.navbar-active{
+    &.navbar-inactive{
         width: 100vw;
-        transform: translateX(-8.3335vw);
+        transform: translateX(-16.67vw);
         z-index: 950;
     }
     #Aside{
