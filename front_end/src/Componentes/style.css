@@ -181,7 +181,6 @@ html {
   width: 83.333vw;
   height: calc(100vh - 4rem);
   margin-top: 4rem;
-  overflow-x: auto;
   -webkit-transform: translateX(0);
           transform: translateX(0);
   -webkit-transition: all 0.5s ease-in-out;
@@ -189,10 +188,10 @@ html {
   z-index: 800;
 }
 
-#Box--content.navbar-active {
+#Box--content.navbar-inactive {
   width: 100vw;
-  -webkit-transform: translateX(-8.3335vw);
-          transform: translateX(-8.3335vw);
+  -webkit-transform: translateX(-16.67vw);
+          transform: translateX(-16.67vw);
   z-index: 950;
 }
 
