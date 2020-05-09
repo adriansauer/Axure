@@ -27,7 +27,7 @@ class Body extends Component {
           <Header />
           <div className="Body--Box">
             <Menu />
-            <div id="Box--content" className="Box--content navbar-active">
+            <div id="Box--content" className="Box--content navbar-inactive">
               <Aside />
               <Section />
             </div>   
