@@ -9,28 +9,7 @@ class ordenDetalles extends Component {
       productos: null,
     };
   }
-  /*  {
-        "Id": 1,
-        "ProductionState": {
-            "Id": 1,
-            "State": "Pendiente",
-            "Deleted": false
-        },
-        "EmployeeId": 3,
-        "Day": 10,
-        "Month": 3,
-        "Year": 2020,
-        "Observation": "Que los cables sean negros",
-        "ListDetails": [
-            {
-                "Id": 1,
-                "ProductionOrderId": 1,
-                "ProductId": 23,
-                "Quantity": 1
-            }
-        ]
-    }
-    */
+ 
   async componentWillReceiveProps() {
     
       const request = await api.productos.get();
