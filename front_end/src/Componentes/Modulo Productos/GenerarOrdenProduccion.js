@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
-import { connect } from "react-redux";
 import api from "../../Axios/Api.js";
-import { getEmpleados,getProductosDeVenta } from "../../Redux/actions.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
+import Notificacion,{notify} from "../Notificacion.js";
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +15,12 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: "",
       empleados: [],
       empleadoElegido: false,
+      productos:[],
     };
   }
   async componentDidMount() {
-    await this.props.getEmpleados();
-    await this.props.getProductosDeVenta();
+    const empleados=await api.empleados.get();
+    const productos=await api.productos.getProductosDeVenta();
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -30,7 +30,8 @@ class GenerarOrdenProduccion extends Component {
     if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
     this.setState({
-      empleados: this.props.empleados,
+      empleados: empleados.data,
+      productos:productos.data,
     });
   }
   delete(id) {
@@ -68,7 +69,7 @@ class GenerarOrdenProduccion extends Component {
       this.state.encargadoNombre === "" ||
       document.getElementById("fecha").value === ""
     ) {
-      console.log("Rellene todos los campos");
+      notify("Rellene todos los campos!","warning");
       return false;
     }
     return true;
@@ -90,10 +91,8 @@ const envio={
   Observation: this.state.observacion,
   ListDetails: productos,
 }
-console.log(envio);
     if (this.validarCampos()) {
       const request = await api.ordenProduccion.create(envio);
-      console.log(request.status);
       if (request.status === 200) {
         this.setState({
           buscador: "",
@@ -103,13 +102,17 @@ console.log(envio);
           encargadoNombre: "",
           empleadoElegido: false,
         });
-        console.log("Orden guardada con exito");
+        notify("Orden guardada exitosamente!","success");
+      }else{
+        notify("Error al intentar guardar la orden!","danger");
+
       }
     }
   }
   render() {
     return (
       <div className="generarOrdenProduccion ">
+        <Notificacion/>
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-md-8">
@@ -223,7 +226,7 @@ console.log(envio);
             <table className="table table-hover ">
               <tbody className="tableBody">
                 {this.state.buscador !== ""
-                  ? this.props.productos
+                  ? this.state.productos
                       .filter(
                         (producto) =>
                           producto.Name.toLowerCase().indexOf(
@@ -257,18 +260,6 @@ console.log(envio);
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    productos: state.productosDeVenta,
-    empleados: state.empleados,
-  };
-};
-const mapDispatchToProps = {
-  getEmpleados,
-  getProductosDeVenta,
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GenerarOrdenProduccion);
+
+export default GenerarOrdenProduccion;
