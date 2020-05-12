@@ -22,5 +22,6 @@ namespace Axure.DTO.Module_Stock
         //Used to remove ilde.
         public bool Deleted { get; set; }
 
+        public int Number { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Axure.Controllers.Module_Stock
 
         [HttpPost]
         [Route("Add")]
-        public ActionResult Add(TransferListDTO tr)
+        public ActionResult Add(Transfer tr)
         {
             try
             {
@@ -112,28 +112,6 @@ namespace Axure.Controllers.Module_Stock
                 return new HttpStatusCodeResult(406);
             }
 
-        }
-
-        [HttpDelete]
-        [Route("Delete/{id}")]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                if (this.trDAO.Remove(id))
-                {
-                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
-                }
-                else
-                {
-                    return new HttpStatusCodeResult(CodeHTTP.OK);
-                }
-
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
-            }
         }
     }
 }

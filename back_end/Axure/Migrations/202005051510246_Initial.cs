@@ -164,7 +164,7 @@ namespace Axure.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ProductionStateId = c.Int(nullable: false),
-                        EmployeeId = c.Int(nullable: false),
+                        EmployeeId = c.Int(nullable: true),
                         Date = c.DateTime(nullable: false),
                         Observation = c.String(maxLength: 200),
                         Deleted = c.Boolean(nullable: false),

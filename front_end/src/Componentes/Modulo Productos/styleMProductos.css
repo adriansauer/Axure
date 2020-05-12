@@ -1,11 +1,17 @@
 .StockBody {
   width: 100%;
   height: 100%;
-  max-height: calc(70vh);
+  max-height: 70vh;
   overflow-x: auto;
   border-radius: 1rem;
   -webkit-box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
           box-shadow: 0 9px 16px rgba(0, 0, 0, 0.16);
+}
+
+@media all and (max-width: 1366px) {
+  .StockBody {
+    max-height: 60vh;
+  }
 }
 
 .StockFooter {
@@ -60,15 +66,28 @@
           box-shadow: 23px -23px 47px #d4d4d4,  -23px 23px 47px #ffffff;
 }
 
+@media all and (max-width: 1366px) {
+  .agregarProducto form .bg-title {
+    height: 2rem;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
 .agregarProducto form .bg-title .title-label {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #fafafa;
+}
+
+@media all and (max-width: 1366px) {
+  .agregarProducto form .bg-title .title-label {
+    font-size: 1rem;
+  }
 }
 
 .agregarProducto form label:not(.title-label) {
   font-size: 1.25rem;
-  font-weight: 400;
+  font-weight: 500;
   color: #939393;
 }
 
@@ -76,7 +95,60 @@
   font-size: 1rem;
 }
 
+@media all and (max-width: 1366px) {
+  .agregarProducto form label:not(.title-label).form-check-label {
+    font-size: 0.75rem;
+    margin-bottom: 0;
+  }
+  .agregarProducto form label:not(.title-label).form-check-label.mr-2 {
+    margin-right: 0.1rem !important;
+  }
+}
+
+@media all and (max-width: 1366px) {
+  .agregarProducto form label:not(.title-label) {
+    font-size: .9rem;
+    margin-bottom: 0rem;
+  }
+}
+
+@media all and (max-width: 1366px) {
+  .agregarProducto form input, .agregarProducto form textarea {
+    font-size: 0.8rem;
+    padding: .25rem .5rem;
+  }
+}
+
+.agregarProducto form .form-group.mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.agregarProducto form .form-group.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+@media all and (max-width: 1366px) {
+  .agregarProducto form .form-group.check-list {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.agregarProducto form .form-group.mt-3 {
+  margin-top: 0.5rem !important;
+}
+
 .agregarProducto form .dropdown-divider {
   margin: 0;
+}
+
+.agregarProducto form button[type=submit] {
+  font-size: 0.9rem;
+  padding: .25rem 0.5rem;
+}
+
+@media all and (max-width: 1366px) {
+  th {
+    padding: 0.5rem !important;
+  }
 }
 /*# sourceMappingURL=styleMProductos.css.map */

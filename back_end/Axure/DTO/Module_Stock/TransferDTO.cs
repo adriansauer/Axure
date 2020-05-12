@@ -17,14 +17,14 @@ namespace Axure.DTO.Module_Stock
         //Deposit of destination.
         public int DepositDestinationId { get; set; }
 
-        //Transfer creation date.
-        public int Day { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
+        //Transfer date.
+        public DateTime Date { get; set; }
 
         //Observation.
         [StringLength(200)]
         public string Observation { get; set; }
+
+        public int Number { get; set; }
 
         //Used to remove ilde.
         public bool Deleted { get; set; }

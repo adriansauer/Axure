@@ -134,27 +134,9 @@ namespace Axure.DataBase.Module_Stock
                 SettingDAO settingDAO = new SettingDAO();
                 for (int i = 0; i < listDetails.Count; i++)
                 {
-                    ComponentDAO componentDAO = new ComponentDAO();
-                    List<ProductComponentDTO> components = componentDAO.GetComponentOfProduct(listDetails[i].ProductId);
-                    if (0 < components.Count)
-                    {
-                        for(int z = 0; z < components.Count; z++)
-                        {
-                            int cant = ProductQuantity(components[z].ProductComponentId, new Deposit { Id = idDeposit });
-                            if ((listDetails[i].Quantity * components[z].Quantity) >= cant) { 
-                                notStock.Add(listDetails[i].ProductId);
-                                z = components.Count;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        int cant = ProductQuantity(listDetails[i].ProductId, new Deposit { Id = idDeposit });
-                        if (listDetails[i].Quantity >= cant)
-                        {
-                            notStock.Add(listDetails[i].ProductId);
-                        }
-                    }                 
+                    
+                    int cant = ProductQuantity(listDetails[i].ProductId, new Deposit{ Id = idDeposit });
+                    if (listDetails[i].Quantity > cant) { notStock.Add(listDetails[i].ProductId); }
                 }
                 return notStock;
             }
@@ -182,111 +164,5 @@ namespace Axure.DataBase.Module_Stock
                 return false;//retorna false si no pudo realizar la actualizacion
             }
         }
-
-        public bool UpdateQuant(Stock stock, int quantity)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    Stock st = db.Stocks.FirstOrDefault(x => x.Id == stock.Id);
-                    st.Quantity += quantity;
-                    db.SaveChanges();
-                    return false;// retorna true si se actualizo correctamente
-                }
-            }
-            catch
-            {
-                return true;//retorna false si no pudo realizar la actualizacion
-            }
-        }
-
-        public bool ModificarCantidad(int productId, int depositId, int cant)
-        {
-            try
-            {
-                if(cant >= 0)
-                {
-                    using (var db = new AxureContext())
-                    {
-                        Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == productId && x.DepositId == depositId && x.Deleted == false);
-                        if(null == st)
-                        {
-                            Add(new StockDTO { DepositId = depositId, ProductId = productId, Quantity = cant });                      
-                        }
-                        else
-                        {
-                            if(UpdateQuant(st, cant)) { return true; }
-                        }
-                    }
-                }
-                else
-                {
-                    using (var db = new AxureContext())
-                    {
-                        Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == productId && x.DepositId == depositId && x.Deleted == false);
-                        if (null == st)
-                        {
-                            return true;
-                        }
-                        else if(st.Quantity >= (cant * - 1))
-                        {
-                            if (UpdateQuant(st, cant)) { return true; }
-                        }
-                    }
-                }
-                return false;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        public bool TransferProduct(int productId, int cant, int depositIdOrigin, int depostIdDestination)
-        {
-            try
-            {
-                if (ModificarCantidad(productId, depositIdOrigin, cant * -1))
-                {
-                    return true;
-                }
-                else
-                {
-                    if (ModificarCantidad(productId, depostIdDestination, cant))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-
-        public bool TransferProductSacar(int productId, int cant, int depositIdOrigin, int depostIdDestination)
-        {
-            try
-            {
-                if (ModificarCantidad(productId, depositIdOrigin, cant * -1))
-                {
-                    return true;
-                }
-                
-                return false;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-
-
-
-
     }
 }

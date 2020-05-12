@@ -95,18 +95,10 @@ namespace Axure.Migrations
                 );
             //Transfers the products.
             context.Transfers.AddOrUpdate(x => x.Id,
-                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted = false, Number = 1 },
-                new Transfer { Id = 2, DepositOriginId = 2, DepositDestinationId = 3, Date = new DateTime(2020, 04, 29), Observation = "Para reposicion de productos.", Deleted = false, Number = 0 },
-                new Transfer { Id = 3, DepositOriginId = 3, DepositDestinationId = 2, Date = new DateTime(2020, 05, 05), Observation = "Para reposicion de productos.", Deleted = false, Number = 0 },
-                new Transfer { Id = 4, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 05, 05), Observation = "Para reposicion de productos.", Deleted = false, Number = 1 }
-
-                );
+                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted= false, Number = 1 });
             //Transfer details.
             context.TransferDetails.AddOrUpdate(x => x.Id,
-                new TransferDetail { Id = 1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false, Number = 1 },
-                new TransferDetail { Id = 2, TransferId = 2, ProductId = 2, Quantity = 2, Deleted = false, Number = 0 },
-                new TransferDetail { Id = 3, TransferId = 3, ProductId = 3, Quantity = 3, Deleted = false, Number = 0 },
-                new TransferDetail { Id = 4, TransferId = 4, ProductId = 4, Quantity = 4, Deleted = false, Number = 1 });
+                new TransferDetail { Id=1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false, Number = 1 });
             //Existence of products.
             context.Stocks.AddOrUpdate(x => x.Id,
                 //Deposit raw material.
@@ -181,16 +173,13 @@ namespace Axure.Migrations
                 new ProductionOrder { Id = 2, ProductionStateId = 1, EmployeeId = 3, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
                 new ProductionOrder { Id = 3, ProductionStateId = 2, EmployeeId = 1, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
                 new ProductionOrder { Id = 4, ProductionStateId = 3, EmployeeId = 4, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
-                new ProductionOrder { Id = 5, ProductionStateId = 4, EmployeeId = 5, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
-                new ProductionOrder { Id = 6, ProductionStateId = 1, EmployeeId = 5, Date = new DateTime(2020, 03, 10), Observation = "Detalles", Deleted = false }
+                new ProductionOrder { Id = 5, ProductionStateId = 4, EmployeeId = 5, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false }
                 );
             //Products to produce.
             context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
                 new ProductionOrderDetail { Id = 1, ProductionOrderId = 1, ProductId = 23, Quantity = 1, Deleted = false },
                 new ProductionOrderDetail { Id = 2, ProductionOrderId = 1, ProductId = 22, Quantity = 1, Deleted = false },
-                new ProductionOrderDetail { Id = 3, ProductionOrderId = 1, ProductId = 1, Quantity = 1, Deleted = false },
-                new ProductionOrderDetail { Id = 4, ProductionOrderId = 6, ProductId = 8, Quantity = 2, Deleted = false },
-                new ProductionOrderDetail { Id = 5, ProductionOrderId = 6, ProductId = 23, Quantity = 1, Deleted = false }
+                new ProductionOrderDetail { Id = 3, ProductionOrderId = 1, ProductId = 1, Quantity = 1, Deleted = false }
                 );
             //Types of product movements according to production order.
             context.MovementProductionTypes.AddOrUpdate(x => x.Id,
@@ -217,18 +206,8 @@ namespace Axure.Migrations
                 new MovementMotive {Id = 1, MovementTypeId = 1, Motive = "Obsequio del proveedor." },
                 new MovementMotive {Id = 2, MovementTypeId = 2, Motive = "Salida por rotura." }
                 );
-            context.MovementProducts.AddOrUpdate(x => x.Id,
-                new MovementProduct { Id = 1, Date = new DateTime(2020, 03, 10), TotalCost = 0, EmployeeId = 1, DepositId = 1, MovementTypeId = 2, Deleted = false, Observation = "Danado por agua" },
-                new MovementProduct { Id = 2, Date = new DateTime(2020, 04, 10), TotalCost = 0, EmployeeId = 1, DepositId = 2, MovementTypeId = 1, Deleted = false, Observation = "Obsequios del proveedor" },
-                new MovementProduct { Id = 3, Date = new DateTime(2020, 05, 10), TotalCost = 0, EmployeeId = 1, DepositId = 3, MovementTypeId = 2, Deleted = false, Observation = "Fallo de fabrica" }
-                );
-            context.MovementProductDetails.AddOrUpdate(x => x.Id,
-                new MovementProductDetail { Id = 1, ProductId = 1, MovementProductId = 1, Quantity = 1, TotalCost = 700000, Cost = 700000, Observation = " " },
-                new MovementProductDetail { Id = 2, ProductId = 2, MovementProductId = 2, Quantity = 1, TotalCost = 300000, Cost = 300000, Observation = " " },
-                new MovementProductDetail { Id = 3, ProductId = 3, MovementProductId = 3, Quantity = 1, TotalCost = 1500000, Cost = 1500000, Observation = " " }
-
-                );
-
+            
+            
         }
     }
 }
