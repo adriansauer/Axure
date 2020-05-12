@@ -38,15 +38,15 @@ class Menu extends Component {
 
   //funcionalidad del menu
   toggleMenu(arg){
-    document.getElementsByClassName('navbar')[0].classList.toggle('active');
+    document.getElementsByClassName('navbar')[0].classList.toggle('inactive');
     document.getElementById('Box--content').classList.toggle('navbar-inactive')
-    if (document.getElementsByClassName('navbar')[0].classList.contains('active')) {
-      setTimeout(() => {
-        document.getElementById(arg).classList.toggle('show');
-      }, 350);
-    }else{
-      document.getElementById(arg).classList.toggle('show');
-    }
+    // if (document.getElementsByClassName('navbar')[0].classList.contains('inactive')) {
+    //   setTimeout(() => {
+    //     document.getElementById(arg).classList.toggle('show');
+    //   }, 350);
+    // }else{
+    //   document.getElementById(arg).classList.toggle('show');
+    // }
   }
 
   render() {
@@ -59,36 +59,36 @@ class Menu extends Component {
             <span className="navbar-toggler-icon shadow-effect"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarContent">
+          <div className="collapse navbar-collapse show" id="navbarContent">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item active">
                 <a className="nav-link" href="#home" onClick={() => this.props.homeVisible(true)}>
                   <i className="ico home"></i>
-                  Home
+                  <p>Home</p>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.clickProducto()}>
                   <i className="ico products"></i>
-                  Productos
+                  <p>Productos</p>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
                   <i className="ico sells"></i>
-                  Ventas
+                  <p>Ventas</p>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
                   <i className="ico buys"></i>
-                  Compras
+                  <p>Compras</p>
                 </a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#!" onClick={() => this.props.homeVisible(true)}>
                   <i className="ico account"></i>
-                  Contabilidad
+                  <p>Contabilidad</p>
                 </a>
               </li>
             </ul>

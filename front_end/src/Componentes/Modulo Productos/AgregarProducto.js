@@ -78,8 +78,8 @@ class AgregarProducto extends Component {
     return (
       <div className="agregarProducto">
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group row bg-title mb-2">
-            <label className="mx-auto title-label">Agregar Producto</label>
+          <div className="form-group row bg-title">
+            <label className="m-auto title-label">Agregar Producto</label>
           </div>
           <div className="form-group row mb-2">
             <label htmlFor="" className="">
@@ -155,7 +155,7 @@ class AgregarProducto extends Component {
           <div className="dropdown-divider"></div>
           <div className="form-group row">
             <label>Tipo de Producto</label>
-            <div className="form-group mx-auto">
+            <div className="form-group check-list mx-auto">
               <div className="form-check form-check-inline">
                 <input
                   type="radio"
@@ -204,7 +204,7 @@ class AgregarProducto extends Component {
           <div className="form-group row mt-3">
             <button
               type="submit"
-              className="btn btn-primary ml-auto mr-3"
+              className="btn btn-primary ml-auto"
               value="Crear Producto"
             >
               Crear Producto

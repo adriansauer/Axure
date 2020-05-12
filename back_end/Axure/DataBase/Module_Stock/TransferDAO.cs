@@ -14,32 +14,22 @@ namespace Axure.DataBase.Module_Stock
         public TransferDAO() { }
 
         //Agregar datos a la cabecera de la transferencia
-        public bool Add(TransferListDTO tc)
+        public bool Add(Transfer tc)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Transfer trC = new Transfer()
+                    db.Transfers.Add(new Transfer
                     {
                         DepositDestinationId = tc.DepositDestinationId,
                         DepositOriginId = tc.DepositOriginId,
-                        Date = new DateTime(tc.Year, tc.Month, tc.Day),
+                        Date = tc.Date,
                         Observation = tc.Observation,
                         Deleted = false,
                         Number = 0
-                    };
-                    db.Transfers.Add(trC);
+                    });
                     db.SaveChanges();
-                    TransferDetailDAO trDAO = new TransferDetailDAO();
-                    if (null != tc.ListDetails)
-                    {
-                        for (int i = 0; i < tc.ListDetails.Count; i++)
-                        {
-                            tc.ListDetails[i].TransferId = trC.Id;
-                            trDAO.Add(tc.ListDetails[i]);
-                        }
-                    }
                     return true;
                 }
             }
@@ -57,9 +47,9 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     var transfers = db.Transfers.Where(x => x.Deleted == false)
-                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation})
+                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation, Number = x.Number })
                         .ToList()
-                        .Select(y=> new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Observation = y.Observation})
+                        .Select(y=> new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Date = y.Date, Observation = y.Observation, Number = y.Number })
                         .ToList();
                     return transfers;
                 }
@@ -78,7 +68,7 @@ namespace Axure.DataBase.Module_Stock
                 using (var db = new AxureContext())
                 {
                     var tr = db.Transfers.Single(x => x.Id == id);
-                    return new TransferDTO() { Id = tr.Id, DepositOriginId = tr.DepositOriginId, DepositDestinationId = tr.DepositDestinationId, Day = tr.Date.Day, Month = tr.Date.Month, Year = tr.Date.Year, Observation = tr.Observation };
+                    return new TransferDTO() { Id = tr.Id, DepositOriginId = tr.DepositOriginId, DepositDestinationId = tr.DepositDestinationId, Date = tr.Date, Observation = tr.Observation, Number = tr.Number };
                 }
             }
             catch
@@ -98,9 +88,9 @@ namespace Axure.DataBase.Module_Stock
                     List<Transfer> lsTr = new List<Transfer>();
                     tr.ForEach(x=> lsTr.Add(db.Transfers.Single(y=> x.Id == y.Id && y.Deleted == false)));
                     var transfers = lsTr
-                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation })
+                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation, Number = x.Number })
                         .ToList()
-                        .Select(y => new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Observation = y.Observation })
+                        .Select(y => new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Date = y.Date, Observation = y.Observation, Number = y.Number })
                         .ToList();
                     return transfers;
                 }
@@ -122,9 +112,9 @@ namespace Axure.DataBase.Module_Stock
                     List<Transfer> lsTr = new List<Transfer>();
                     tr.ForEach(x => lsTr.Add(db.Transfers.Single(y => x.Id == y.Id && y.Deleted == false)));
                     var transfers = lsTr
-                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation })
+                        .Select(x => new { Id = x.Id, DepositOriginId = x.DepositOriginId, DepositDestinationId = x.DepositDestinationId, Date = x.Date, Observation = x.Observation, Number = x.Number })
                         .ToList()
-                        .Select(y => new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Observation = y.Observation })
+                        .Select(y => new TransferDTO { Id = y.Id, DepositOriginId = y.DepositOriginId, DepositDestinationId = y.DepositDestinationId, Date = y.Date, Observation = y.Observation, Number = y.Number })
                         .ToList();
                     return transfers;
                 }
@@ -135,23 +125,5 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        //borrado ocioso
-        public bool Remove(int id)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    Transfer bajar = db.Transfers.FirstOrDefault(x => x.Id == id);
-                    bajar.Deleted = true;
-                    db.SaveChanges();
-                    return false;
-                }
-            }
-            catch
-            {
-                return true;
-            }
-        }
     }
 }

@@ -70,8 +70,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    SettingDAO settingDAO = new SettingDAO();
-                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PENDING")), EmployeeId = orden.EmployeeId ,Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
+                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
                     db.ProductionOrders.Add(nuevo);
                     db.SaveChanges();
                     ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
@@ -219,49 +218,39 @@ namespace Axure.DataBase.Module_Stock
                 }
                 else if (0 == notStock.Count())
                 {
-                    if (tranferirOrden(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL")), int.Parse(settingDAO.Get("ID_DEPOSIT_PRODUCTION"))))
+                    if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")), employeId))
                     {
-                        return null;
+                        return notStock;
                     }
-                    else
-                    {
-                        if (EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")), employeId))
-                        {
-                            return null;
-                        }
-                    }                    
+                    return null;
                 }
-                return notStock;
+                else
+                {
+                    return notStock;
+                }
             }
             catch
             {
                 return null;
             }
         }
+
         
         private bool StatusInFinalized(int idOrden, int employeId)
         {
             try
             {
                 SettingDAO settingDAO = new SettingDAO();
-                StockDAO stockDAO = new StockDAO();
                 ProductionOrderDAO productionOrderDAO = new ProductionOrderDAO();
-                ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
                 ProductionOrderReportDTO po = productionOrderDAO.Detail(idOrden);
-                List<ProductionOrderDetailDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
                 if (int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")) == po.ProductionState.Id)
                 {
-                
-                    if (tranferirOrdenFinalizado(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_PRODUCTION")), int.Parse(settingDAO.Get("ID_DEPOSIT_SALE"))))
+                    if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_FINALIZED")), employeId))
                     {
-                        return true;
-                    }
-                    if (EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_FINALIZED")), employeId))
-                    {
-                        return true;
+                        return false;
                     }
                 }
-                return false;
+                return true;
             }
             catch
             {
@@ -273,106 +262,12 @@ namespace Axure.DataBase.Module_Stock
         {
             try
             {
-                ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
-                StockDAO stockDAO = new StockDAO();
                 SettingDAO settingDAO = new SettingDAO();
-                ProductionOrderDAO productionOrderDAO = new ProductionOrderDAO();
-                ProductionOrderReportDTO po = productionOrderDAO.Detail(idOrden);
-                List<ProductionOrderDetailDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
-                if (int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")) == po.ProductionState.Id)
+                if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_CANCELLED")), employeId))
                 {
-                    if (tranferirOrden(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_PRODUCTION")), int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL"))))
-                    {
-                        return true;
-                    }
+                    return false;
                 }
-                if (EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_CANCELLED")), employeId))
-                {
-                    return true;
-                }                            
-                return false;
-            }
-            catch
-            {
                 return true;
-            }
-        }
-
-        private bool tranferirOrden(List<ProductionOrderDetailDTO> listDetails, int depositIdOrigin, int depostIdDestination)
-        {
-            try
-            {
-                StockDAO stockDAO = new StockDAO();
-                for (int i = 0; i < listDetails.Count; i++)
-                {
-                    ComponentDAO componentDAO = new ComponentDAO();
-                    List<ProductComponentDTO> components = componentDAO.GetComponentOfProduct(listDetails[i].ProductId);
-                    if (0 < components.Count)
-                    {
-                        for (int z = 0; z < components.Count; z++)
-                        {
-                            if (stockDAO.TransferProduct(components[z].ProductComponentId, listDetails[i].Quantity * components[z].Quantity, depositIdOrigin, depostIdDestination))
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (stockDAO.TransferProduct(listDetails[i].ProductId, listDetails[i].Quantity, depositIdOrigin, depostIdDestination))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        private bool tranferirOrdenFinalizado(List<ProductionOrderDetailDTO> listDetails, int depositIdOrigin, int depostIdDestination)
-        {
-            try
-            {
-                StockDAO stockDAO = new StockDAO();
-                for (int i = 0; i < listDetails.Count; i++)
-                {
-                    ComponentDAO componentDAO = new ComponentDAO();
-                    List<ProductComponentDTO> components = componentDAO.GetComponentOfProduct(listDetails[i].ProductId);
-                    if (0 < components.Count)
-                    {
-                        for (int z = 0; z < components.Count; z++)
-                        {
-                            if (stockDAO.ModificarCantidad(components[z].ProductComponentId, depositIdOrigin, (listDetails[i].Quantity * components[z].Quantity)* -1))
-                            {
-                                return true;
-                            }
-                        }
-                        if (stockDAO.ModificarCantidad(listDetails[i].ProductId, depostIdDestination, listDetails[i].Quantity))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (stockDAO.ModificarCantidad(listDetails[i].ProductId, depositIdOrigin, listDetails[i].Quantity * - 1))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            if (stockDAO.ModificarCantidad(listDetails[i].ProductId, depostIdDestination, listDetails[i].Quantity))
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                }
-               
-                return false;
             }
             catch
             {
