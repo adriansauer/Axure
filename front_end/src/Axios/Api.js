@@ -2,7 +2,6 @@
 import axios from "axios";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
-
 });
 
 export default {
@@ -12,26 +11,31 @@ export default {
         url: "Products/List",
         method: "get",
       }),
-     getMateriasPrimas:()=>requestHelper({
-      url: "Products/OfType/2" ,
-      method: "get",
-     }),
-     getProductosTerminados:()=>requestHelper({
-      url: "Products/OfType/3" ,
-      method: "get",
-     }),
-     getMateriasPrimas_Terminados:()=>requestHelper({
-      url: "Products/OfType/1" ,
-      method: "get",
-     }),
-     getProductosDeCompra:()=>requestHelper({
-      url: "Products/OfTypeRawMaterialAndBoth" ,
-      method: "get",
-     }),
-     getProductosDeVenta:()=>requestHelper({
-      url: "Products/OfTypeFinishedAndBoth " ,
-      method: "get",
-     }),
+    getMateriasPrimas: () =>
+      requestHelper({
+        url: "Products/OfType/2",
+        method: "get",
+      }),
+    getProductosTerminados: () =>
+      requestHelper({
+        url: "Products/OfType/3",
+        method: "get",
+      }),
+    getMateriasPrimas_Terminados: () =>
+      requestHelper({
+        url: "Products/OfType/1",
+        method: "get",
+      }),
+    getProductosDeCompra: () =>
+      requestHelper({
+        url: "Products/OfTypeRawMaterialAndBoth",
+        method: "get",
+      }),
+    getProductosDeVenta: () =>
+      requestHelper({
+        url: "Products/OfTypeFinishedAndBoth ",
+        method: "get",
+      }),
     getDeposito: (deposito) =>
       requestHelper({
         url: "Products/OfDeposit/" + deposito,
@@ -79,12 +83,23 @@ export default {
       requestHelper({
         url: "ProductionOrders/Create ",
         method: "post",
-        data: data,      
+        data: data,
       }),
-      ordenDetalles: (id) =>
+    ordenDetalles: (id) =>
       requestHelper({
-        url: "ProductionOrders/Details/"+id,
-        method: "get",   
+        url: "ProductionOrders/Details/" + id,
+        method: "get",
+      }),
+    cambiarEstado: (id, data) =>
+      requestHelper({
+        url: "ProductionOrders/ChangeState/" + id,
+        method: "put",
+        data,
+       
+      }),
+      delete:(id)=>requestHelper({
+        url:"ProductionOrders/Delete/"+id,
+        method:"delete"
       }),
   },
   empleados: {
@@ -99,7 +114,43 @@ export default {
       requestHelper({
         url: "MovementProducts/Add",
         method: "post",
-        data:data,
+        data: data,
       }),
+    get: () =>
+      requestHelper({
+        url: "MovementProducts/List",
+        method: "get",
+      }),
+    getMovimientoDetalle: (id) =>
+      requestHelper({
+        url: "MovementProductDetails/byMovement/" + id,
+        method: "get",
+      }),
+    delete: (id) =>
+      requestHelper({
+        url: "MovementProducts/Delete/" + id,
+        method: "delete",
+      }),
+  },
+  settings: {
+    /**-	ID_DEPOSIT_RAW_MATERIAL
+-	ID_DEPOSIT_PRODUCTION
+-	ID_DEPOSIT_SALE 
+-	ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED
+-	ID_TYPE_OF_PRODUCT_RAW_MATERIAL
+-	ID_TYPE_OF_PRODUCT_FINISHED
+-	AUTOMATIC_PRODUCTION_ORDER
+-	ID_PRODUCTION_STATE_PENDING
+-	ID_PRODUCTION_STATE_PROGRESS
+-	ID_PRODUCTION_STATE_FINALIZED
+-	ID_PRODUCTION_STATE_CANCELLED
+ */
+    get: (data) =>
+      requestHelper({
+        url: "Settings/Get",       
+        method:"post",
+        data:{Key:data}
+      }),
+        
   },
 };

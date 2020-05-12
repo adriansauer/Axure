@@ -1,7 +1,6 @@
 import React,{Component} from "react";
 import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
-import {editProducto} from "../../../Redux/actions.js";
-import {connect} from "react-redux";
+import api from "../../../Axios/Api.js";
 class EditarProducto extends Component{
     constructor(props){
         super(props);
@@ -9,7 +8,7 @@ class EditarProducto extends Component{
     }
 /**Edito el un producto y actualizo la tabla */
 async editarProducto() {
-    await this.props.editProducto(this.props.producto.Id, {
+   const request= await api.productos.edit(this.props.producto.Id, {
       Name: document.getElementById("nombre").value,
       Description: document.getElementById("descripcion").value,
       Cost: document.getElementById("costo").value,
@@ -17,6 +16,7 @@ async editarProducto() {
       Barcode: document.getElementById("codigoBarra").value,
       ProductTypeId: this.props.producto.ProductType.Id,
     });
+    
     this.props.actualizar();
     this.props.ocultar();
   }
@@ -97,12 +97,5 @@ async editarProducto() {
         );
     }
 }
-/**Redux */
-const mapStateToProps = (state) => {
-  return{}
-  };
-  const mapDispatchToProps = {
-    editProducto,
-  };
-  
-export default connect(mapStateToProps,mapDispatchToProps)(EditarProducto);
+
+export default EditarProducto;

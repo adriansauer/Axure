@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./styleMProductos.css";
-import { connect } from "react-redux";
-import { createProducto, getProductosDeCompra } from "../../Redux/actions.js";
+import api from "../../Axios/Api.js";
+import Notificacion,{notify} from "../Notificacion.js";
 class AgregarProducto extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ class AgregarProducto extends Component {
     };
   }
   async componentDidMount() {
-    await getProductosDeCompra();
+    const request =await api.productos.getProductosDeCompra();
   }
   seleccionarComponente(producto) {
     this.setState({
@@ -43,8 +43,8 @@ class AgregarProducto extends Component {
     }
     return false;
   }
-  enviarProducto() {
-    this.props.createProducto({
+  async enviarProducto() {
+   const request=await api.productos.create({
       Name: this.state.nombretxt,
       ProductTypeId: this.state.tipoProducto,
       Description: this.state.descripciontxt,
@@ -53,6 +53,11 @@ class AgregarProducto extends Component {
       Barcode: this.state.codigoBarratxt,
       ListComponents: this.state.componentesSeleccionados,
     });
+    if(request.status===200){
+      notify("Producto creado exitosamente!","success");
+    }else{
+      notify("No se pudo crear el producto!","danger");
+    }
   }
  
   handleSubmit = (event) => {
@@ -70,16 +75,17 @@ class AgregarProducto extends Component {
         componentes: this.state.componentes,
       });
     } else {
-      console.log("Rellene todos los campos");
+      notify("Rellene todos los campos!","warning");
     }
   };
 
   render() {
     return (
       <div className="agregarProducto">
+        <Notificacion/>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group row bg-title mb-2">
-            <label className="mx-auto title-label">Agregar Producto</label>
+          <div className="form-group row bg-title">
+            <label className="m-auto title-label">Agregar Producto</label>
           </div>
           <div className="form-group row mb-2">
             <label htmlFor="" className="">
@@ -155,7 +161,7 @@ class AgregarProducto extends Component {
           <div className="dropdown-divider"></div>
           <div className="form-group row">
             <label>Tipo de Producto</label>
-            <div className="form-group mx-auto">
+            <div className="form-group check-list mx-auto">
               <div className="form-check form-check-inline">
                 <input
                   type="radio"
@@ -204,7 +210,7 @@ class AgregarProducto extends Component {
           <div className="form-group row mt-3">
             <button
               type="submit"
-              className="btn btn-primary ml-auto mr-3"
+              className="btn btn-primary ml-auto"
               value="Crear Producto"
             >
               Crear Producto
@@ -217,13 +223,5 @@ class AgregarProducto extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    materiaPrima: state.productosDeCompra,
-  };
-};
-const mapDispatchToProps = {
-  createProducto,
-  getProductosDeCompra,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(AgregarProducto);
+
+export default AgregarProducto;

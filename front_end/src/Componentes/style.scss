@@ -1,3 +1,49 @@
+//START-----------------------------------------------------------------------------------MEDIA QUERYES
+
+//mixin targeting IE
+@mixin ietarget{
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        @content;
+    }
+}
+
+@mixin break1700{
+    @media all and (max-width: 1700px){
+        @content;
+    }
+}
+@mixin break1500{
+    @media all and (max-width: 1500px){
+        @content;
+    }
+}
+@mixin break1366{
+    @media all and (max-width: 1366px){
+        @content;
+    }
+}
+@mixin break1300{
+    @media all and (max-width: 1300px){
+        @content;
+    }
+}
+@mixin break992{
+    @media all and (max-width: 992px){
+        @content;
+    }
+}
+@mixin break765{
+    @media all and (max-width: 765px){
+        @content;
+    }
+}
+@mixin break575{
+    @media all and (max-width: 575px){
+        @content;
+    }
+}
+
+//END-----------------------------------------------------------------------------------MEDIA QUERYES
 *{
     box-sizing: border-box;
 }
@@ -16,9 +62,12 @@ html{
     width: 100vw;
     height: 100vh;
     .Body--Box{
+        position: relative;
         display: flex;
+        align-items: stretch;
         flex-direction: row;
         height: 100%;
+        width: 100vw;
         background-color: #fcfcfc;
     }
     
@@ -34,14 +83,15 @@ html{
 }
 #Menu{
     z-index: 900;
+    display: flex;
     .navbar{
         position: relative;
         display: flex;
         flex-direction: row;
-        width: 16.667vw;
-        min-width: 220px;
-        height: 4rem;
-        min-height: 4rem;
+        width: 12.5vw;
+        min-width: 150px;
+        height: 100vh;
+        min-height: 600px;
         padding: 0 1rem;
         padding-top: 1rem;
         background-image: url(../img/menuBack.png);
@@ -49,21 +99,39 @@ html{
         background-position: center top;
         background-repeat: no-repeat;
         align-items: flex-start;
-        &:before{
-            content:"";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba($color: #000000, $alpha: 0.15);
-        }
-        transition: all 0.3s ease-in-out;
-        &.active{
-            height: 100vh;
-            min-height: 600px;
-            &:before{
-                content: none;
+        transition: all 0.6s ease-in-out;
+        &.inactive{
+            width: 7.5vw;
+            min-width: unset;
+            .navbar-brand{
+                width: 2.3ch;
+                overflow: hidden;
+                @include break1366(){
+                    width: 2.5ch;
+                }
+            }
+            .navbar-toggler{
+                .navbar-toggler-icon{
+                    @include break1366(){
+                        width: 1.25rem;
+                        height: 1.25rem;
+                    }
+                }
+            }
+            .navbar-collapse{
+                .navbar-nav{
+                    .nav-item{
+                        height: 9.5vh;
+                        align-items: center;
+                        .nav-link{
+                            overflow: hidden;
+                            p{
+                                overflow: hidden;
+                                width: 0;
+                            }
+                        }
+                    }
+                }
             }
         }
         .navbar-brand{
@@ -72,20 +140,30 @@ html{
             line-height: 2rem;
             font-weight: 500;
             padding: 0;
+            margin: 0;
             transition: all 0.3s ease-in-out;
             z-index: 950;
             &:hover{
                 transform: scale(1.05);
             }
+            @include break1366(){
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
         }
         .navbar-toggler{
             padding: 0;
             outline: none;
+            line-height: 1.5rem;
             .navbar-toggler-icon{
                 background-image: url(../img/bars-solid.svg);
                 opacity: 0.75;
                 &:hover{
                     opacity: 1;
+                }
+                @include break1366(){
+                    width: 1.5rem;
+                    height: 1.5rem;
                 }
             }
         }
@@ -102,18 +180,28 @@ html{
                     height: 12.5vh;
                     padding: 1rem;
                     background-color: #fff;
-                    border-radius: 1rem;
-                    box-shadow: -4px 8px 15px #888888b5, inset 3px -5px 8px #949494;             
+                    border-radius: 0.25rem;
+                    box-shadow: inset 3px -3px 6px 0 #00000066, -5px 5px 20px 0 #00000066;
+                    justify-content: center;
                     .nav-link{
                         color: #939393;
-                        font-size: 1.25rem;
+                        font-size: 1.5rem;
                         font-weight: 500;
+                        padding: 0;
+                        p{
+                            margin-bottom: 0;
+                        }
+                        @include break1366(){
+                            font-size: 1.15rem;
+                        }
                     }
                     &.active{
                         .nav-link{
                             font-weight: 600;
-                            font-size: 1.5rem;
                         }
+                    }
+                    @include break1366(){
+                        padding: 0.5rem 1rem;
                     }
                 }
                 transition: all 0.3s ease-in-out;
@@ -124,20 +212,18 @@ html{
 #Box--content{
     display: flex;
     flex-direction: column;
-    width: 83.333vw;
+    width: 87.5vw;
     height: calc(100vh - 4rem);
     margin-top: 4rem;
-    overflow-x: auto;
     transform: translateX(0);
     transition: all 0.5s ease-in-out;
     z-index: 800;
-    &.navbar-active{
-        width: 100vw;
-        transform: translateX(-8.3335vw);
+    &.navbar-inactive{
+        width: 93vw;
         z-index: 950;
     }
     #Aside{
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0;
         justify-content: center;
         .nav{
             justify-content: space-around;
@@ -153,7 +239,13 @@ html{
                     border-color: transparent;
                     transition: all 0.2s ease-in-out;
                     &.active{
+                        background: linear-gradient(0, transparent -50%, #00497bc9);
                         border-color: #dee2e6 #dee2e6 #fcfcfc;
+                        color: #ffffff;
+                        font-weight: 600;
+                    }
+                    @include break1366(){
+                        font-size: 1.15rem;
                     }
                 }
             }
@@ -254,5 +346,8 @@ html{
     &.sells{
         background-image: url(../img/sells.png);
     }
-
+    @include break1366(){
+        height: 2rem;
+        width: 2rem;
+    }
 }
