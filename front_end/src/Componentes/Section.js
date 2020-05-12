@@ -36,12 +36,10 @@ class Section extends Component{
 }
 const mapStateToProps=state=>{
     return {
-        productos:state.productos,
         sectionShow:state.sectionShow,
         modulo:state.modulo,
     };
 }
 const mapDispatchToProps=({
-    getProductos,
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Section);

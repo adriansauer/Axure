@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { ModalFooter, Modal, ModalHeader } from "reactstrap";
-import { connect } from "react-redux";
-import { deleteProducto } from "../../../Redux/actions.js";
-
+import api from "../../../Axios/Api.js";
 class EliminarProducto extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   async eliminarProducto() {
-    await this.props.deleteProducto(this.props.producto.Id);
+    const request =await api.productos.delete(this.props.producto.Id);
     /**actualizo los datos */
     this.props.actualizar();
     this.props.ocultar();
@@ -33,11 +31,5 @@ class EliminarProducto extends Component {
     );
   }
 }
-/**Redux */
-const mapStateToProps = (state) => {
-  return {};
-};
-const mapDispatchToProps = {
-  deleteProducto,
-};
-export default connect(mapStateToProps, mapDispatchToProps)(EliminarProducto);
+
+export default EliminarProducto;

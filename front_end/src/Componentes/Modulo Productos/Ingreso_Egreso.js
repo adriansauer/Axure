@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getEmpleados } from "../../Redux/actions.js";
 import "./styleMProductos.css";
 import api from "../../Axios/Api.js";
 import Tabla from "./Tabla_Ingreso_EgresoSelector";
+import Notificacion,{ notify } from "../Notificacion.js";
 
 class DarDeBaja extends Component {
   constructor(props) {
@@ -54,12 +53,14 @@ ListDetails: productos,
         encargadoNombre: "",
         empleadoElegido: false,
       });
-      console.log("Orden guardada con exito");
+      notify("Orden guardada con exito!","success");
+    }else{
+      notify("Error al intentar guardar la orden!","danger")
     }
   }
 }
   async componentDidMount() {
-    await this.props.getEmpleados();
+    const empleados= await api.empleados.get();
     const p = await api.productos.getDeposito(this.state.deposito);
     const f = new Date();
 
@@ -71,7 +72,7 @@ ListDetails: productos,
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
     this.setState({
       productos: p.data,
-      empleados: this.props.empleados,
+      empleados: empleados.data
     });
   }
   //elimina un producto de los detalles
@@ -110,7 +111,7 @@ ListDetails: productos,
       this.state.encargadoNombre === "" ||
       document.getElementById("fecha").value === ""
     ) {
-      console.log("Rellene todos los campos");
+      notify("Rellene todos los campos!","warning");
       return false;
     }
     return true;
@@ -131,6 +132,7 @@ ListDetails: productos,
   render() {
     return (
       <div className="darDeBaja ">
+        <Notificacion/>
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-md-8">
@@ -359,13 +361,5 @@ ListDetails: productos,
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    empleados: state.empleados,
-  };
-};
-const mapDispatchToProps = {
-  getEmpleados,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(DarDeBaja);
+export default DarDeBaja;

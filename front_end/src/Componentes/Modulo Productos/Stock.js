@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { connect } from "react-redux";
 import DetallesModal from "./Modales/ProductoDetalles.js";
 import EditarModal from "./Modales/EditarProducto.js";
 import EliminarModal from "./Modales/EliminarProducto.js";
-import { getProductos, getProductosDeposito } from "../../Redux/actions.js";
 import api from "../../Axios/Api.js";
 class Stock extends Component {
   constructor(props) {
@@ -23,9 +21,9 @@ class Stock extends Component {
         Barcode: "",
         QuantityMin: "",
       },
-      selector: 4,
+      selector: "TODOS",
       nombreSelector: "Todos",
-      productos: this.props.productos,
+      productos: [],
       buscador: "",
       capital: 0,
       editarModalVisible: false,
@@ -34,14 +32,22 @@ class Stock extends Component {
     };
   }
   async componentDidMount() {
-    await this.props.getProductos();
+    const request = await api.productos.get();
 
-    const capital1 = await api.productos.getCapital(1);
-    const capital2 = await api.productos.getCapital(3);
+    const depositoProduccionId = await api.settings.get("ID_DEPOSIT_SALE");
+    const depositoMateriaPrimaId = await api.settings.get(
+      "ID_DEPOSIT_RAW_MATERIAL"
+    );
+    const capital1 = await api.productos.getCapital(
+      depositoProduccionId.data.Value
+    );
+    const capital2 = await api.productos.getCapital(
+      depositoMateriaPrimaId.data.Value
+    );
 
     const capitalTotal = capital1.data.Sum + capital2.data.Sum;
     this.setState({
-      productos: this.props.productos,
+      productos: request.data,
       capital: capitalTotal,
     });
   }
@@ -60,46 +66,83 @@ class Stock extends Component {
   }
 
   async actualizar() {
-    await this.props.getProductos();
-    if (this.state.selector < 4) {
-      await this.props.getProductosDeposito(this.state.selector);
-      const capital = await api.productos.getCapital(this.state.selector);
+    if (this.state.selector === "TODOS") {
+      const request = await api.productos.get();
 
+      
+        const depositoProduccionId = await api.settings.get("ID_DEPOSIT_SALE");
+        const depositoMateriaPrimaId = await api.settings.get(
+          "ID_DEPOSIT_RAW_MATERIAL"
+        );
+        const capital1 = await api.productos.getCapital(
+          depositoProduccionId.data.Value
+        );
+        const capital2 = await api.productos.getCapital(
+          depositoMateriaPrimaId.data.Value
+        );
+
+        const capitalTotal = capital1.data.Sum + capital2.data.Sum;
+        this.setState({
+          productos: request.data,
+          capital: capitalTotal,
+        });
+      
+    } else if (this.state.selector === "MATERIAPRIMA") {
+      const depositoMateriaPrimaId = await api.settings.get(
+        "ID_DEPOSIT_RAW_MATERIAL"
+      );
+
+      const capital2 = await api.productos.getCapital(
+        depositoMateriaPrimaId.data.Value
+      );
+      const request = await api.productos.getDeposito(
+        depositoMateriaPrimaId.data.Value
+      );
+      const capitalTotal = capital2.data.Sum;
       this.setState({
-        productos: this.props.productosDeposito,
-        capital: capital.data.Sum,
+        productos: request.data,
+        capital: capitalTotal,
       });
-    } else {
-      const capital1 = await api.productos.getCapital(1);
-      const capital2 = await api.productos.getCapital(3);
+    } else if (this.state.selector === "PRODUCTOSTERMINADOS") {
+      const depositoProduccionId = await api.settings.get("ID_DEPOSIT_SALE");
 
-      const capitalTotal = capital1.data.Sum + capital2.data.Sum;
+      const capital1 = await api.productos.getCapital(
+        depositoProduccionId.data.Value
+      );
+      const request = await api.productos.getDeposito(
+        depositoProduccionId.data.Value
+      );
+      const capitalTotal = capital1.data.Sum;
       this.setState({
-        productos: this.props.productos,
+        productos: request.data,
+        capital: capitalTotal,
+      });
+      this.setState({
+        productos: request.data,
         capital: capitalTotal,
       });
     }
   }
-  mostrarProductosTerminados() {
-    this.setState({
-      selector: 3,
+  async mostrarProductosTerminados() {
+    await this.setState({
+      selector: "PRODUCTOSTERMINADOS",
       nombreSelector: "ProductosTerminados",
     });
-    this.actualizar();
+    await this.actualizar();
   }
-  mostrarMateriaPrima() {
-    this.setState({
-      selector: 1,
+  async mostrarMateriaPrima() {
+    await this.setState({
+      selector: "MATERIAPRIMA",
       nombreSelector: "Materia Prima",
     });
-    this.actualizar();
+    await this.actualizar();
   }
-  mostrarTodos() {
-    this.setState({
-      selector: 4,
+  async mostrarTodos() {
+    await this.setState({
+      selector: "TODOS",
       nombreSelector: "Todos",
     });
-    this.actualizar();
+    await this.actualizar();
   }
   mostrarDetallesProducto(p) {
     this.seleccionarProducto(p);
@@ -267,17 +310,5 @@ class Stock extends Component {
     );
   }
 }
-/**Redux */
-const mapStateToProps = (state) => {
-  return {
-    productos: state.productos,
-    productosDeposito: state.productoDeDeposito,
-    capital: state.capitalDeposito,
-  };
-};
-const mapDispatchToProps = {
-  getProductos,
-  getProductosDeposito,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stock);
+export default Stock;
