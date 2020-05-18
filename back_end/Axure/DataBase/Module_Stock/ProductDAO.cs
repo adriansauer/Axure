@@ -184,7 +184,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    db.Products.Add(new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false });
+                    db.Products.Add(new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, IVAId = pc.IVAId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -201,7 +201,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    Product nuevo = new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false };
+                    Product nuevo = new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, IVAId = pc.IVAId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false };
                     db.Products.Add(nuevo);
                     db.SaveChanges();
                     for (int i = 0; i < pc.ListComponents.Count; i++)

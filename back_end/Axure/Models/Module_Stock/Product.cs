@@ -23,6 +23,12 @@ namespace Axure.Models.Module_Stock
         [ForeignKey("ProductTypeId")]
         public ProductType ProductType { get; set; }
 
+        //IVA porcentage of a product.
+        [Required]
+        public int IVAId { get; set; }
+        [ForeignKey("IVAId")]
+        public IVA IVA { get; set; }
+
         //Product name.
         [Required]
         [StringLength(100)]

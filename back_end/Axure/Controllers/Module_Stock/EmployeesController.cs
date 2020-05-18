@@ -102,7 +102,7 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: Employees/Edit/5
+        // PUT: Employees/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]
         public ActionResult Edit(int id, EmployeeDTO e)
