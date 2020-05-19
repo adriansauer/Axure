@@ -129,235 +129,238 @@ ListDetails: productos,
       });
     }
   }
+  toggleShow(param){
+    
+    if(document.getElementById(param)!==null){
+        document.getElementById(param).classList.toggle("show");
+    }
+   
+  }
+  buscarEncargado(e){
+    this.setState({
+      encargadoNombre: e.target.value,
+      empleadoElegido: false,
+    })
+    
+      this.toggleShow("dropdown-encargado");
+  }
   render() {
     return (
-      <div className="darDeBaja ">
+      <div className="darDeBaja ingreso-egreso">
         <Notificacion/>
-        <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-md-8">
-            <h3>Ingreso y Egreso de productos</h3>
+        <div className="row title-wrapper py-3">
+          <div className="col-sm-12 bg-title">
+            <label className="m-auto title-label">Ingreso y Egreso de Productos</label>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Encargado"
-              value={this.state.encargadoNombre}
-              onChange={(e) =>
-                this.setState({
-                  encargadoNombre: e.target.value,
-                  empleadoElegido: false,
-                })
-              }
-            />
+        <div className="content-wrapper">
+          <div className="row row-group">
+            <div className="col-sm-5">
+              <div className="dropdown">
+                <input
+                  
+                  type="text"
+                  className="form-control"
+                  placeholder="Encargado"
+                  required="required"
+                  value={this.state.encargadoNombre}
+                  onChange={(e) =>
+                    this.buscarEncargado(e)
+                  }
+                />
+                <div className="dropdown-menu" id="dropdown-encargado">
+                  {this.state.encargadoNombre !== "" &&
+                  !this.state.empleadoElegido
+                    ? this.state.empleados
+                        .filter(
+                          (empleado) =>
+                            empleado.Name.toLowerCase().indexOf(
+                              this.state.encargadoNombre.toLowerCase()
+                            ) !== -1
+                        )
+                        .map((p) => (
+                          <a
+                            className="dropdown-item"
+                            key={p.Id}
+                            onClick={() => this.seleccionarEmpleado(p)}
+                            href="#"
+                          >
+                            {p.Name},{p.CI}
+                          </a>
+                        ))
+                    : null}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="form-group">
+                <input
+                  type="date"
+                  name="date"
+                  id="fecha"
+                  max="3000-12-31"
+                  min="1000-01-01"
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="inner-wrapper-buttons">
+                <div className="dropdown">
+                <button
+                  className="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.nombreMovimientoBtn}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        nombreMovimientoBtn: "Ingreso",
+                        tipo_movimiento: 1,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                    Ingreso
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        nombreMovimientoBtn: "Egreso",
+                        tipo_movimiento: 2,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                    Egreso
+                  </a>
+                </div>
+              </div>
+                <div className="dropdown">
+                <button
+                  className="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.nombreDepositoBtn}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a
+                    onClick={() =>
+                      this.cambiarDeposito(3, "Deposito de productos terminados")
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                    Deposito de productos terminados
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.cambiarDeposito(1, "Deposito de materia prima")
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                    Deposito de materia prima
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
           </div>
-          <div className="col-md-4">
-            <div className="form-group">
-              <input
-                type="date"
-                name="date"
-                id="fecha"
-                max="3000-12-31"
-                min="1000-01-01"
+          <div className="row">
+            <div className="col-sm-12">
+              <textarea
+                type="text"
                 className="form-control"
+                placeholder="Observacion"
+                value={this.state.observacion}
+                onChange={(e) => this.setState({ observacion: e.target.value })}
               />
             </div>
           </div>
+          <div className="dropdown-divider my-3"></div>
+          <Tabla
+            productos={this.state.productosSeleccionados}
+            delete={this.delete.bind(this)}
+          />
 
-          <div className="col-md-8"></div>
-        </div>
-
-        <div className="row">
-          <div className="StockBody MateriaPima col-md-4">
-            <table className="table table-hover ">
-              <tbody className="tableBody">
-                {this.state.encargadoNombre !== "" &&
-                !this.state.empleadoElegido
-                  ? this.state.empleados
-                      .filter(
-                        (empleado) =>
-                          empleado.Name.toLowerCase().indexOf(
-                            this.state.encargadoNombre.toLowerCase()
-                          ) !== -1
-                      )
-                      .map((p) => (
-                        <tr
-                          key={p.Id}
-                          onClick={() => this.seleccionarEmpleado(p)}
-                        >
-                          <td>{p.Name}</td>
-                          <td>{p.CI}</td>
-                        </tr>
-                      ))
-                  : null}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Observacion"
-              value={this.state.observacion}
-              onChange={(e) => this.setState({ observacion: e.target.value })}
-            />
-          </div>
-          <div className="col-md-1">
-            <div className="dropdown">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {this.state.nombreMovimientoBtn}
-              </button>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a
-                  onClick={() =>
-                    this.setState({
-                      nombreMovimientoBtn: "Ingreso",
-                      tipo_movimiento: 1,
-                    })
-                  }
-                  className="dropdown-item"
-                  href="#"
-                >
-                  Ingreso
-                </a>
-                <a
-                  onClick={() =>
-                    this.setState({
-                      nombreMovimientoBtn: "Egreso",
-                      tipo_movimiento: 2,
-                    })
-                  }
-                  className="dropdown-item"
-                  href="#"
-                >
-                  Egreso
-                </a>
-              </div>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="dropup">
+                  <input
+                    type="text"
+                    className="form-control form-control-sm buscador"
+                    id="id1"
+                    placeholder="Añadir producto"
+                    required="required"
+                    onChange={(e) => {
+                      this.setState({ buscador: e.target.value });
+                      this.toggleShow("dropdown-buscador");
+                    }}
+                    value={this.state.buscador}
+                  />
+                  <div className="dropdown-menu" id="dropdown-buscador">
+                    {this.state.buscador !== ""
+                      ? this.state.productos
+                          .filter(
+                            (producto) =>
+                              producto.Name.toLowerCase().indexOf(
+                                this.state.buscador.toLowerCase()
+                              ) !== -1
+                          )
+                          .filter(
+                            (producto) =>
+                              this.state.productosSeleccionados.find(
+                                (e) => e.Id === producto.Id
+                              ) === undefined
+                          )
+                          .map((p) => (
+                            <tr
+                              key={p.Id}
+                              onClick={() => this.seleccionarProducto(p)}
+                            >
+                              <td>{p.Id}</td>
+                              <td>{p.Name}</td>
+                              <td>{p.Description}</td>
+                              <td>{p.Cost}</td>
+                              <td>{p.Barcode}</td>
+                            </tr>
+                          ))
+                      : null}
+                  </div>
+                </div>
             </div>
           </div>
-          <div className="col-md-3">
-            <div className="dropdown">
+          <div className="row">
+            <div className="col-md-3">
               <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                className="btn btn-primary mt-3"
+                onClick={() => this.enviar()}
               >
-                {this.state.nombreDepositoBtn}
+                Guardar
               </button>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a
-                  onClick={() =>
-                    this.cambiarDeposito(3, "Deposito de productos terminados")
-                  }
-                  className="dropdown-item"
-                  href="#"
-                >
-                  Deposito de productos terminados
-                </a>
-                <a
-                  onClick={() =>
-                    this.cambiarDeposito(1, "Deposito de materia prima")
-                  }
-                  className="dropdown-item"
-                  href="#"
-                >
-                  Deposito de materia prima
-                </a>
-              </div>
             </div>
           </div>
-
-          <div className="col-md-4"></div>
         </div>
-        <Tabla
-          productos={this.state.productosSeleccionados}
-          delete={this.delete.bind(this)}
-        />
-
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              className="form-control form-control-sm  buscador"
-              type="text"
-              id="id1"
-              placeholder="Añadir producto"
-              onChange={(e) => {
-                this.setState({ buscador: e.target.value });
-              }}
-              value={this.state.buscador}
-            />
-          </div>
-
-          <div className="col-md-4"></div>
-
-          <div className="col-md-3">
-            <button
-              className="btn btn-primary"
-              style={{ marginTop: 20 }}
-              onClick={() => this.enviar()}
-            >
-              Guardar
-            </button>
-          </div>
         </div>
-        <div className="row">
-          <div className="StockBody MateriaPima col-md-4">
-            <table className="table table-hover ">
-              <tbody className="tableBody">
-                {this.state.buscador !== ""
-                  ? this.state.productos
-                      .filter(
-                        (producto) =>
-                          producto.Name.toLowerCase().indexOf(
-                            this.state.buscador.toLowerCase()
-                          ) !== -1
-                      )
-                      .filter(
-                        (producto) =>
-                          this.state.productosSeleccionados.find(
-                            (e) => e.Id === producto.Id
-                          ) === undefined
-                      )
-                      .map((p) => (
-                        <tr
-                          key={p.Id}
-                          onClick={() => this.seleccionarProducto(p)}
-                        >
-                          <td>{p.Id}</td>
-                          <td>{p.Name}</td>
-                          <td>{p.Description}</td>
-                          <td>{p.Cost}</td>
-                          <td>{p.Barcode}</td>
-                        </tr>
-                      ))
-                  : null}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     );
   }
 }
