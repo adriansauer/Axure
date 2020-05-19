@@ -75,6 +75,7 @@ ListDetails: productos,
       empleados: empleados.data
     });
   }
+ 
   //elimina un producto de los detalles
   delete(id) {
     this.setState({
@@ -139,6 +140,8 @@ ListDetails: productos,
             <h3>Ingreso y Egreso de productos</h3>
           </div>
         </div>
+        
+       
         <div className="row">
           <div className="col-md-4">
             <input
@@ -302,6 +305,7 @@ ListDetails: productos,
               className="form-control form-control-sm  buscador"
               type="text"
               id="id1"
+              autocomplete="off"
               placeholder="Añadir producto"
               onChange={(e) => {
                 this.setState({ buscador: e.target.value });

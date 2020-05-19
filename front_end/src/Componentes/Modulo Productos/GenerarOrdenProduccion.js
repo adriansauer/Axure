@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import api from "../../Axios/Api.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
-import Notificacion,{notify} from "../Notificacion.js";
+import Notificacion, { notify } from "../Notificacion.js";
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
       buscador: "",
       productosSeleccionados: [],
       observacion: "",
@@ -15,12 +14,12 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: "",
       empleados: [],
       empleadoElegido: false,
-      productos:[],
+      productos: [],
     };
   }
   async componentDidMount() {
-    const empleados=await api.empleados.get();
-    const productos=await api.productos.getProductosDeVenta();
+    const empleados = await api.empleados.get();
+    const productos = await api.productos.getProductosDeVenta();
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -31,7 +30,7 @@ class GenerarOrdenProduccion extends Component {
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
     this.setState({
       empleados: empleados.data,
-      productos:productos.data,
+      productos: productos.data,
     });
   }
   delete(id) {
@@ -47,6 +46,10 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: empleado.Name,
       empleadoElegido: true,
     });
+    
+    this.toggleShow("dropdown-encargado");
+  
+    
   }
   seleccionarProducto(producto) {
     this.setState({
@@ -57,8 +60,8 @@ class GenerarOrdenProduccion extends Component {
         Description: producto.Description,
         Barcode: producto.Barcode,
         Cantidad: "1",
-        Cost:producto.Cost,
-        QuantityMin:producto.QuantityMin,
+        Cost: producto.Cost,
+        QuantityMin: producto.QuantityMin,
       }),
     });
     this.setState({ buscador: "" });
@@ -69,7 +72,7 @@ class GenerarOrdenProduccion extends Component {
       this.state.encargadoNombre === "" ||
       document.getElementById("fecha").value === ""
     ) {
-      notify("Rellene todos los campos!","warning");
+      notify("Rellene todos los campos!", "warning");
       return false;
     }
     return true;
@@ -82,15 +85,16 @@ class GenerarOrdenProduccion extends Component {
         Quantity: parseInt(p.Cantidad),
       };
     });
-const envio={
-  ProductionStateId: 1,
-  EmployeeId: this.state.encargado.Id,
-  Day: date.getDate() + 1,
-  Month: date.getMonth() + 1,
-  Year: date.getFullYear(),
-  Observation: this.state.observacion,
-  ListDetails: productos,
-}
+    const envio = {
+      ProductionStateId: 1,
+      EmployeeId: this.state.encargado.Id,
+      Day: date.getDate() + 1,
+      Month: date.getMonth() + 1,
+      Year: date.getFullYear(),
+      Observation: this.state.observacion,
+      ListDetails: productos,
+    };
+    console.log(envio);
     if (this.validarCampos()) {
       const request = await api.ordenProduccion.create(envio);
       if (request.status === 200) {
@@ -102,17 +106,33 @@ const envio={
           encargadoNombre: "",
           empleadoElegido: false,
         });
-        notify("Orden guardada exitosamente!","success");
-      }else{
-        notify("Error al intentar guardar la orden!","danger");
-
+        notify("Orden guardada exitosamente!", "success");
+      } else {
+        notify("Error al intentar guardar la orden!", "danger");
       }
     }
+  }
+  toggleShow(param){
+    
+    if(document.getElementById(param)!==null){
+        document.getElementById(param).classList.toggle("show");
+    }
+   
+  }
+  buscarEncargado(e){
+    this.setState({
+      encargadoNombre: e.target.value,
+      empleadoElegido: false,
+    })
+    
+      this.toggleShow("dropdown-encargado");
+    
+    
   }
   render() {
     return (
       <div className="generarOrdenProduccion ">
-        <Notificacion/>
+        <Notificacion />
         <div className="row">
           <div className="col-md-4"></div>
           <div className="col-md-8">
@@ -120,7 +140,45 @@ const envio={
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-sm-4">
+            <div className="dropdown">
+              <input
+                
+                type="text"
+                className="form-control"
+                placeholder="Encargado"
+                required="required"
+                value={this.state.encargadoNombre}
+                onChange={(e) =>
+                  this.buscarEncargado(e)
+                }
+              />
+              <div className="dropdown-menu" id="dropdown-encargado">
+                {this.state.encargadoNombre !== "" &&
+                !this.state.empleadoElegido
+                  ? this.state.empleados
+                      .filter(
+                        (empleado) =>
+                          empleado.Name.toLowerCase().indexOf(
+                            this.state.encargadoNombre.toLowerCase()
+                          ) !== -1
+                      )
+                      .map((p) => (
+                        <a
+                          className="dropdown-item"
+                          key={p.Id}
+                          onClick={() => this.seleccionarEmpleado(p)}
+                          href="#"
+                        >
+                          {p.Name},{p.CI}
+                        </a>
+                      ))
+                  : null}
+              </div>
+            </div>
+          </div>
+
+          {/**  <div className="col-md-4">
             <input
               type="text"
               className="form-control"
@@ -133,7 +191,8 @@ const envio={
                 })
               }
             />
-          </div>
+          </div>*/}
+
           <div className="col-md-4">
             <div className="form-group">
               <input
@@ -149,7 +208,7 @@ const envio={
           <div className="col-md-8"></div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="StockBody MateriaPima col-md-4">
             <table className="table table-hover ">
               <tbody className="tableBody">
@@ -175,7 +234,7 @@ const envio={
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-4">
@@ -193,7 +252,10 @@ const envio={
 
           <div className="col-md-4"></div>
         </div>
-        <TablaProductoSelector productos={this.state.productosSeleccionados} delete={this.delete.bind(this)}/>
+        <TablaProductoSelector
+          productos={this.state.productosSeleccionados}
+          delete={this.delete.bind(this)}
+        />
 
         <div className="row">
           <div className="col-md-4">
@@ -201,6 +263,7 @@ const envio={
               className="form-control form-control-sm  buscador"
               type="text"
               id="id1"
+              autoComplete="off"
               placeholder="Añadir producto"
               onChange={(e) => {
                 this.setState({ buscador: e.target.value });
@@ -260,6 +323,5 @@ const envio={
     );
   }
 }
-
 
 export default GenerarOrdenProduccion;
