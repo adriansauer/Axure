@@ -1,5 +1,5 @@
-﻿using Axure.DataBase.Module_Stock;
-using Axure.DTO.Module_Stock;
+﻿using Axure.DataBase.Module_Sale;
+using Axure.DTO.Module_Sale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,30 +7,29 @@ using System.Web;
 using System.Web.Mvc;
 
 /*
- * EmployeesController class
- * Created april 21, 2020 by Victor Ciceia.
+ * ClientsController class
+ * Created May 18, 2020 by Victor Ciceia.
  */
-namespace Axure.Controllers.Module_Stock
+namespace Axure.Controllers.Module_Sale
 {
-    [RoutePrefix("Employees")]
-    public class EmployeesController : Controller
+    [RoutePrefix("Clients")]
+    public class ClientsController : Controller
     {
 
-        private EmployeeDAO employeeDAO;
+        private ClientDAO clientDAO;
 
-        public EmployeesController()
+        public ClientsController()
         {
-            this.employeeDAO = new EmployeeDAO();
+            this.clientDAO = new ClientDAO();
         }
 
-        // GET: Employees
-        //[Authorize(Roles = "user, admin")]
+        // GET: Clients
         [Route("Index")]
         public ActionResult Index()
         {
             try
             {
-                return Json(new { Id = "True", Name = "True", CI = "True", Address = "True", RUC = "True", Phone = "True" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Id = "True", Name = "True", Address = "True", RUC = "True", CreditMaximum = "True", CreditPending = "True" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -38,13 +37,13 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // GET: Employees/List
+        // GET: Clients/List
         [Route("List")]
         public ActionResult List()
         {
             try
             {
-                var lista = this.employeeDAO.GetAll();
+                var lista = this.clientDAO.GetAll();
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -58,13 +57,13 @@ namespace Axure.Controllers.Module_Stock
 
         }
 
-        // GET: Employees/Details/5
+        // GET: Clients/Details/5
         [Route("Details/{id}")]
         public ActionResult Details(int id)
         {
             try
             {
-                var dato = this.employeeDAO.Detail(id);
+                var dato = this.clientDAO.Detail(id);
                 if (null != dato)
                 {
                     return Json(dato, JsonRequestBehavior.AllowGet);
@@ -80,14 +79,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: Employees/Create
+        // POST: Clients/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(EmployeeDTO e)
+        public ActionResult Create(ClientDTO c)
         {
             try
             {
-                if (this.employeeDAO.Add(e))
+                if (this.clientDAO.Add(c))
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
@@ -102,14 +101,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // PUT: Employees/Edit/5
-        [HttpPut]
+        // POST: Clients/Edit/5
+        [HttpPost]
         [Route("Edit/{id}")]
-        public ActionResult Edit(int id, EmployeeDTO e)
+        public ActionResult Edit(int id, ClientDTO e)
         {
             try
             {
-                if (this.employeeDAO.Edit(id, e))
+                if (this.clientDAO.Edit(id, e))
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
@@ -124,14 +123,14 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // DELETE: Employees/Delete/5
-        [HttpDelete]
+        // POST: Clients/Delete/5
+        [HttpPost]
         [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                if (this.employeeDAO.Remove(id))
+                if (this.clientDAO.Remove(id))
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
@@ -139,7 +138,6 @@ namespace Axure.Controllers.Module_Stock
                 {
                     return new HttpStatusCodeResult(CodeHTTP.OK);
                 }
-
             }
             catch
             {
