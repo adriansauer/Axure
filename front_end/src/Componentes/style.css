@@ -300,6 +300,8 @@ html {
 
 #Box--content #Section {
   padding: 1rem 1.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .shadow-effect {

@@ -2,6 +2,7 @@ namespace Axure.Migrations
 {
     using Axure.Models;
     using Axure.Models.Module_Stock;
+    using Axure.Models.Module_Sale;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -32,6 +33,7 @@ namespace Axure.Migrations
                   new User { Id = 1, Role = "user", UserName = "User", Password = "pass", Status = false, IdEmployee=1},
                   new User { Id = 2, Role = "admin", UserName = "Admin", Password = "pass", Status = false , IdEmployee=2}
                   );
+
             //Settings
             context.Settings.AddOrUpdate(x => x.Id,
                 new Setting { Id = 1, Key = "ID_DEPOSIT_RAW_MATERIAL", Value = "1" },
@@ -59,46 +61,59 @@ namespace Axure.Migrations
                 new Deposit { Id = 2, Name = "Deposito de Ensamblaje"},
                 new Deposit { Id = 3, Name = "Deposito de Productos Terminados"}
                 );
+
             //Type of products, utility that the company will give.
             context.ProductTypes.AddOrUpdate(x => x.Id,
                 new ProductType { Id = 1, Type = "Materia Prima o Producto Terminado", Deleted = false },
                 new ProductType { Id = 2, Type = "Materia Prima", Deleted = false },
                 new ProductType { Id = 3, Type = "Producto Terminado", Deleted = false }
                 );
+
+            //Taxes of a product.
+            context.IVAs.AddOrUpdate(x => x.Id,
+                new IVA { Id = 1, Quantity = 0, Description = "Tasa 0%", Deleted = false },
+                new IVA { Id = 2, Quantity = 5, Description = "Tasa 5%", Deleted = false },
+                new IVA { Id = 3, Quantity = 10, Description = "Tasa 10%", Deleted = false }
+                );
+
             //Products 
            context.Products.AddOrUpdate(x => x.Id,
-                new Product { Id = 1, Name = "Monitor 22", Description = "22 pulg. ACER", Cost = 700000, ProductTypeId = 1, QuantityMin = 3, Barcode = "001", Deleted = false },
-                new Product { Id = 2, Name = "Monitor 12", Description = "12 pulg. ACER", Cost = 300000, ProductTypeId = 1, QuantityMin = 3, Barcode = "002", Deleted = false },
-                new Product { Id = 3, Name = "Monitor 42", Description = "42 pulg. ACER", Cost = 1500000, ProductTypeId = 1, QuantityMin = 3, Barcode = "003", Deleted = false },
-                new Product { Id = 4, Name = "Teclado", Description = "Gammer", Cost = 150000, ProductTypeId = 1, QuantityMin = 2, Barcode = "004", Deleted = false },
-                new Product { Id = 5, Name = "Teclado", Description = "ACER", Cost = 50000, ProductTypeId = 1, QuantityMin = 2, Barcode = "005", Deleted = false },
-                new Product { Id = 6, Name = "Mouse", Description = "Logitech B100", Cost = 45000, ProductTypeId = 1, QuantityMin = 2, Barcode = "006", Deleted = false },
-                new Product { Id = 7, Name = "Mouse", Description = "Inalambrico Logitech M185", Cost = 75000, ProductTypeId = 1, QuantityMin = 2, Barcode = "007", Deleted = false },
-                new Product { Id = 8, Name = "Teclado", Description = "Convencional", Cost = 50000, ProductTypeId = 1, QuantityMin = 2, Barcode = "008", Deleted = false },
-                new Product { Id = 9, Name = "Teclado", Description = "Inalambrico", Cost = 80000, ProductTypeId = 1, QuantityMin = 2, Barcode = "009", Deleted = false },
-                new Product { Id = 10, Name = "Mouse", Description = "Inalambrico Logitech M220 Silent", Cost = 120000, ProductTypeId = 1, QuantityMin = 2, Barcode = "010", Deleted = false },
-                new Product { Id = 11, Name = "Placa Principal", Description = "ASUS", Cost = 350000, ProductTypeId = 2, QuantityMin = 2, Barcode = "011", Deleted = false },
-                new Product { Id = 12, Name = "Microprocesador", Description = "Intel Core i5-9400F", Cost = 988149, ProductTypeId = 2, QuantityMin = 2, Barcode = "012", Deleted = false },
-                new Product { Id = 13, Name = "Placa Principal", Description = "MSI", Cost = 338000, ProductTypeId = 2, QuantityMin = 1, Barcode = "013", Deleted = false },
-                new Product { Id = 14, Name = "Microprocesador", Description = "Intel Core i7-9700", Cost = 2174000, ProductTypeId = 2, QuantityMin = 2, Barcode = "014", Deleted = false },
-                new Product { Id = 15, Name = "Microprocesador", Description = "Intel Core i3-9100F", Cost = 539895, ProductTypeId = 2, QuantityMin = 2, Barcode = "015", Deleted = false },
-                new Product { Id = 16, Name = "Placa Principal", Description = "MSI B360M Gaming", Cost = 545000, ProductTypeId = 2, QuantityMin = 1, Barcode = "016", Deleted = false },
-                new Product { Id = 17, Name = "Placa Principal", Description = "ASUS Prime H310M-D", Cost = 445000, ProductTypeId = 2, QuantityMin = 1, Barcode = "017", Deleted = false },
-                new Product { Id = 18, Name = "Microprocesador", Description = "AMD ATHLON", Cost = 500000, ProductTypeId = 2, QuantityMin = 2, Barcode = "018", Deleted = false },
-                new Product { Id = 19, Name = "Microprocesador", Description = "AMD Ryzen", Cost = 250000, ProductTypeId = 2, QuantityMin = 2, Barcode = "019", Deleted = false },
-                new Product { Id = 20, Name = "Placa Principal", Description = "MSI PRO-VH", Cost = 443000, ProductTypeId = 2, QuantityMin = 1, Barcode = "020", Deleted = false },
+                new Product { Id = 1, Name = "Monitor 22", Description = "22 pulg. ACER", Cost = 700000, IVAId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "001", Deleted = false },
+                new Product { Id = 2, Name = "Monitor 12", Description = "12 pulg. ACER", Cost = 300000, IVAId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "002", Deleted = false },
+                new Product { Id = 3, Name = "Monitor 42", Description = "42 pulg. ACER", Cost = 1500000, IVAId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "003", Deleted = false },
+                new Product { Id = 4, Name = "Teclado", Description = "Gammer", Cost = 150000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "004", Deleted = false },
+                new Product { Id = 5, Name = "Teclado", Description = "ACER", Cost = 50000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "005", Deleted = false },
+                new Product { Id = 6, Name = "Mouse", Description = "Logitech B100", Cost = 45000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "006", Deleted = false },
+                new Product { Id = 7, Name = "Mouse", Description = "Inalambrico Logitech M185", Cost = 75000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "007", Deleted = false },
+                new Product { Id = 8, Name = "Teclado", Description = "Convencional", Cost = 50000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "008", Deleted = false },
+                new Product { Id = 9, Name = "Teclado", Description = "Inalambrico", Cost = 80000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "009", Deleted = false },
+                new Product { Id = 10, Name = "Mouse", Description = "Inalambrico Logitech M220 Silent", Cost = 120000, IVAId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "010", Deleted = false },
+                new Product { Id = 11, Name = "Placa Principal", Description = "ASUS", Cost = 350000, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "011", Deleted = false },
+                new Product { Id = 12, Name = "Microprocesador", Description = "Intel Core i5-9400F", Cost = 988149, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "012", Deleted = false },
+                new Product { Id = 13, Name = "Placa Principal", Description = "MSI", Cost = 338000, IVAId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "013", Deleted = false },
+                new Product { Id = 14, Name = "Microprocesador", Description = "Intel Core i7-9700", Cost = 2174000, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "014", Deleted = false },
+                new Product { Id = 15, Name = "Microprocesador", Description = "Intel Core i3-9100F", Cost = 539895, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "015", Deleted = false },
+                new Product { Id = 16, Name = "Placa Principal", Description = "MSI B360M Gaming", Cost = 545000, IVAId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "016", Deleted = false },
+                new Product { Id = 17, Name = "Placa Principal", Description = "ASUS Prime H310M-D", Cost = 445000, IVAId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "017", Deleted = false },
+                new Product { Id = 18, Name = "Microprocesador", Description = "AMD ATHLON", Cost = 500000, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "018", Deleted = false },
+                new Product { Id = 19, Name = "Microprocesador", Description = "AMD Ryzen", Cost = 250000, IVAId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "019", Deleted = false },
+                new Product { Id = 20, Name = "Placa Principal", Description = "MSI PRO-VH", Cost = 443000, IVAId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "020", Deleted = false },
                 //PC creation. 
-                new Product { Id = 21, Name = "Computadora PC1", Description = "Gama Baja", Cost = 2000000, ProductTypeId = 3, QuantityMin = 1, Barcode = "021", Deleted = false },
-                new Product { Id = 22, Name = "Computadora PC2", Description = "Gama Media", Cost = 2500000, ProductTypeId = 3, QuantityMin = 1, Barcode = "022", Deleted = false },
-                new Product { Id = 23, Name = "Computadora PC3", Description = "Gama Alta", Cost = 3000000, ProductTypeId = 3, QuantityMin = 2, Barcode = "023", Deleted = false }
-
+                new Product { Id = 21, Name = "Computadora PC1", Description = "Gama Baja", Cost = 2000000, IVAId = 3, ProductTypeId = 3, QuantityMin = 1, Barcode = "021", Deleted = false },
+                new Product { Id = 22, Name = "Computadora PC2", Description = "Gama Media", Cost = 2500000, IVAId = 3, ProductTypeId = 3, QuantityMin = 1, Barcode = "022", Deleted = false },
+                new Product { Id = 23, Name = "Computadora PC3", Description = "Gama Alta", Cost = 3000000, IVAId = 3, ProductTypeId = 3, QuantityMin = 2, Barcode = "023", Deleted = false }
                 );
+
             //Transfers the products.
             context.Transfers.AddOrUpdate(x => x.Id,
-                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted= false, Number = 1 });
+                new Transfer { Id = 1, DepositOriginId = 1, DepositDestinationId = 3, Date = new DateTime(2020, 03, 10), Observation = "Para la realizacion de ventas varias.", Deleted= false, Number = 1 }
+                );
+
             //Transfer details.
             context.TransferDetails.AddOrUpdate(x => x.Id,
-                new TransferDetail { Id=1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false, Number = 1 });
+                new TransferDetail { Id=1, TransferId = 1, ProductId = 1, Quantity = 1, Deleted = false, Number = 1 }
+                );
+
             //Existence of products.
             context.Stocks.AddOrUpdate(x => x.Id,
                 //Deposit raw material.
@@ -126,12 +141,14 @@ namespace Axure.Migrations
                 new Stock { Id = 21, ProductId = 5, DepositId = 3, Quantity = 2 },
                 new Stock { Id = 22, ProductId = 9, DepositId = 3, Quantity = 2 }
                 );
+
             //Providers the raw material.
             context.Providers.AddOrUpdate(x => x.Id,
                 new Provider { Id = 1, Name = "Maria Paredes", Address = "La Paz", Phone = "0985 758 239", Credit = 10000000, RUC = "5.563.547-5", Deleted = false },
                 new Provider { Id = 2, Name = "Jorge Miranda", Address = "Ciudad del Este", Phone = "0991 566 143", Credit = 8000000, RUC = "1.348.376-1", Deleted = false },
                 new Provider { Id = 3, Name = "Mauricio Rojas", Address = "Pilar", Phone = "0993 555 987", Credit = 6000000, RUC = "8.547.631-0", Deleted = false });
             //Parts the PC.
+
             context.ProductComponents.AddOrUpdate(x => x.Id,
                 //Low range
                 new ProductComponent { Id = 1, ProductId = 21, ProductComponentId = 2, Quantity = 1 },
@@ -152,6 +169,7 @@ namespace Axure.Migrations
                 new ProductComponent { Id = 14, ProductId = 23, ProductComponentId = 14, Quantity = 1 },
                 new ProductComponent { Id = 15, ProductId = 23, ProductComponentId = 16, Quantity = 1 }
                 );
+
             //Company employees.
             context.Employees.AddOrUpdate(x => x.Id,
                 new Employee { Id = 1, Name = "Juan Sanchez", CI="1.236.526", Address = "Carmen del Parana", RUC="1.236.526-5", Phone="0761 582 975", Deleted=false },
@@ -160,6 +178,7 @@ namespace Axure.Migrations
                 new Employee { Id = 4, Name = "Oscar Sandoval", CI = "6.524.879", Address = "La Paz", RUC = "6.524.879-3", Phone = "0761 889 777", Deleted = false },
                 new Employee { Id = 5, Name = "Julio Barrosa", CI = "2.683.256", Address = "Coronel Bogado", RUC = "2.683.256-4", Phone = "0761 769 542", Deleted = false }
                 );
+
             //Status of a production order.
             context.ProductionStates.AddOrUpdate(x => x.Id,
                 new ProductionState { Id = 1, State = "Pendiente", Deleted = false },
@@ -167,6 +186,7 @@ namespace Axure.Migrations
                 new ProductionState { Id = 3, State = "Terminado", Deleted = false },
                 new ProductionState { Id = 4, State = "Cancelado", Deleted = false }
                 );
+
             //Product production order.
             context.ProductionOrders.AddOrUpdate(x => x.Id,
                 new ProductionOrder { Id = 1, ProductionStateId = 1, EmployeeId = 3, Date = new DateTime(2020,03,10), Observation = "Que los cables sean negros", Deleted = false },
@@ -175,28 +195,26 @@ namespace Axure.Migrations
                 new ProductionOrder { Id = 4, ProductionStateId = 3, EmployeeId = 4, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false },
                 new ProductionOrder { Id = 5, ProductionStateId = 4, EmployeeId = 5, Date = new DateTime(2020, 03, 10), Observation = "Que los cables sean negros", Deleted = false }
                 );
+
             //Products to produce.
             context.ProductionOrderDetails.AddOrUpdate(x => x.Id,
                 new ProductionOrderDetail { Id = 1, ProductionOrderId = 1, ProductId = 23, Quantity = 1, Deleted = false },
                 new ProductionOrderDetail { Id = 2, ProductionOrderId = 1, ProductId = 22, Quantity = 1, Deleted = false },
                 new ProductionOrderDetail { Id = 3, ProductionOrderId = 1, ProductId = 1, Quantity = 1, Deleted = false }
                 );
-            //Types of product movements according to production order.
-            context.MovementProductionTypes.AddOrUpdate(x => x.Id,
-                new MovementProductionType { Id = 1, Type = "Para producción" },
-                new MovementProductionType { Id = 2, Type = "Para Venta" });
-            //Product movements according to production order.
-            //context.MovementProductions.AddOrUpdate(x => x.Id);
-            //Detail od the movement of products for production.
-            //context.MovementProductionDetails.AddOrUpdate(x => x.Id);
+
             //It is used when products are missing from the raw material deposit. 
             //context.PurchaseOrders.AddOrUpdate(x => x.Id);
+
             //Purchase details.
             //context.PurchaseOrderDetails.AddOrUpdate(x => x.Id);
 
             //context.MovementProducts.AddOrUpdate(x => x.Id);
+
             //context.MovementProductDetails.AddOrUpdate(x => x.Id);
+
             //context.MovementMotives.AddOrUpdate(x => x.Id);
+
             context.MovementTypes.AddOrUpdate(x => x.Id,
                 new MovementType { Id = 1, Abbreviation = "ENT", Description = "Entry" },
                 new MovementType { Id = 2, Abbreviation = "OUT", Description = "Output"}
@@ -206,8 +224,88 @@ namespace Axure.Migrations
                 new MovementMotive {Id = 1, MovementTypeId = 1, Motive = "Obsequio del proveedor." },
                 new MovementMotive {Id = 2, MovementTypeId = 2, Motive = "Salida por rotura." }
                 );
-            
-            
+
+            //--------------------------------------------------------------------------------------------------------------//
+            //                                              Module Sale                                                     //
+            //--------------------------------------------------------------------------------------------------------------//
+
+            //Clients making purchases.
+            context.Clients.AddOrUpdate(x => x.Id,
+                new Client { Id = 1, Name = "Maria Duarte", Address = "Encarnación", RUC = "5.963.256-0", CreditMaximum = 10000000, CreditPending = 0, Deleted = false },
+                new Client { Id = 2, Name = "Marcelo Vera", Address = "La Paz", RUC = "5.999.147-3", CreditMaximum = 5000000, CreditPending = 0, Deleted = false },
+                new Client { Id = 3, Name = "Elena Galeano", Address = "Encarnación", RUC = "7.854.296-4", CreditMaximum = 1000000, CreditPending = 0, Deleted = false },
+                new Client { Id = 4, Name = "Julio Cabrera", Address = "Coronel Bogado", RUC = "8.456.276-6", CreditMaximum = 8000000, CreditPending = 0, Deleted = false },
+                new Client { Id = 5, Name = "Dahiana Torres", Address = "Encarnación", RUC = "4.831.745-0", CreditMaximum = 15000000, CreditPending = 0, Deleted = false },
+                new Client { Id = 6, Name = "Mirian Sosa", Address = "Pilar", RUC = "6.477.234-3", CreditMaximum = 12000000, CreditPending = 0, Deleted = false }
+                );
+
+            //Order sale statuses.
+            context.StateOrderSales.AddOrUpdate(x => x.Id,
+                new StateOrderSale { Id = 1, Description = "Pendiente", Deleted = false }, 
+                new StateOrderSale { Id = 2, Description = "En Proceso", Deleted = false },
+                new StateOrderSale { Id = 3, Description = "Completado", Deleted = false },
+                new StateOrderSale { Id = 4, Description = "Cancelado", Deleted = false }
+                );
+
+            //Invoice statuses.
+            context.StateInvoices.AddOrUpdate(x => x.Id,
+                new StateInvoice { Id = 1, Description = "Al dia", Deleted = false },
+                new StateInvoice { Id = 2, Description = "Pagada", Deleted = false },
+                new StateInvoice { Id = 3, Description = "Cancelada", Deleted = false }
+                );
+
+            //Type of payments.
+            context.IncomeTypes.AddOrUpdate(x => x.Id,
+                new IncomeType { Id = 1, Description = "Efectivo" },
+                new IncomeType { Id = 2, Description = "Cheque Banco Nacional de Fomento" },
+                new IncomeType { Id = 3, Description = "Cheque Banco Regional" },
+                new IncomeType { Id = 4, Description = "Cheque Banco Continetal" }
+                );
+
+            //Payment terms of a credit invoice.
+            context.IncomeDeadlines.AddOrUpdate(x => x.Id,
+                new IncomeDeadline { Id = 1, MonthsQuantity = 1, Description = "Mensual" },
+                new IncomeDeadline { Id = 2, MonthsQuantity = 12, Description = "Anual" }
+                );
+
+            //Payment terms of invoice.
+            context.PaymentTerms.AddOrUpdate(x => x.Id,
+                new PaymentTerm { Id = 1, Description = "Contado" },
+                new PaymentTerm { Id = 2, Description = "Credito" }
+                );
+
+            //Sales orders.
+            context.OrderSales.AddOrUpdate(x => x.Id,
+                new OrderSale { Id = 1, ClientId = 1, EmployeeId = 2, StateOrderSaleId = 1, OrderNumber = "100-001-0001", Date = new DateTime(2020, 05, 10), Deleted = false },
+                new OrderSale { Id = 2, ClientId = 1, EmployeeId = 2, StateOrderSaleId = 1, OrderNumber = "100-001-0002", Date = new DateTime(2020, 05, 11), Deleted = false },
+                new OrderSale { Id = 3, ClientId = 2, EmployeeId = 2, StateOrderSaleId = 1, OrderNumber = "100-001-0003", Date = new DateTime(2020, 05, 11), Deleted = false }
+                );
+
+            //Products of a sales order.
+            context.OrderSaleDetails.AddOrUpdate(x => x.Id,
+                new OrderSaleDetail { Id = 1, SaleOrderId = 1, ProductId = 22, Quantity = 1, QuantityPending = 1, Deleted = false },
+                new OrderSaleDetail { Id = 2, SaleOrderId = 2, ProductId = 1, Quantity = 1, QuantityPending = 1, Deleted = false },
+                new OrderSaleDetail { Id = 3, SaleOrderId = 2, ProductId = 4, Quantity = 1, QuantityPending = 1, Deleted = false },
+                new OrderSaleDetail { Id = 4, SaleOrderId = 2, ProductId = 22, Quantity = 1, QuantityPending = 1, Deleted = false },
+                new OrderSaleDetail { Id = 5, SaleOrderId = 3, ProductId = 23, Quantity = 1, QuantityPending = 1, Deleted = false }
+                );
+
+            //
+            context.Invoices.AddOrUpdate(x => x.Id);
+            //
+            context.InvoiceItems.AddOrUpdate(x => x.Id);
+            //
+            context.Incomes.AddOrUpdate(x => x.Id);
+            //
+            context.Credits.AddOrUpdate(x => x.Id);
+            //
+            context.FeeCredits.AddOrUpdate(x => x.Id);
+            //
+            context.IncomeDetails.AddOrUpdate(x => x.Id);
+            //
+            context.Receipts.AddOrUpdate(x => x.Id);
+            //
+            context.ReceiptDetails.AddOrUpdate(x => x.Id);
         }
     }
 }

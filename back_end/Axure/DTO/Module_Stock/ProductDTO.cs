@@ -28,6 +28,9 @@ namespace Axure.DTO.Module_Stock
         //Product cost.
         public int Cost { get; set; }
 
+        //IVA percentage of a product.
+        public int IVA { get; set; }
+
         //Minimum quantity of the product.
         public int QuantityMin { get; set; }
 
