@@ -100,129 +100,129 @@ class OrdenesProduccionProductos extends Component {
           visible={this.state.productosFaltantesVisible}
           ocultar={this.ocultarModales.bind(this)}
         />
-        <div className="row">
-          <div className="col-md-4"></div>
-          <button onClick={() => this.setState({ filtro: "Pendiente" })}>
-            Pendientes
-          </button>
-          <button onClick={() => this.setState({ filtro: "En Proceso" })}>
-            En proceso
-          </button>
-          <button onClick={() => this.setState({ filtro: "Terminado" })}>
-            Terminadas
-          </button>
-          <button onClick={() => this.setState({ filtro: "Cancelado" })}>
-            Canceladas
-          </button>
-        </div>
-        <div className="row">
-          <div className="col-md-2">
-            <label>Filtrar ordenes a partir del:</label>
-          </div>
-          <div className="col-md-2">
-            <div className="form-group">
-              <input
-                type="date"
-                name="date"
-                id="fecha"
-                max="3000-12-31"
-                min="1000-01-01"
-                className="form-control"
-                onChange={(e) => {
-                  this.setState({
-                    fecha: new Date(e.target.value),
-                  });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {this.state.ordenes
-          .filter((o) => this.state.filtro === o.ProductionState.State)
-          .filter(
-            (o) => new Date(o.Year, o.Month - 1, o.Day) >= this.state.fecha
-          )
-          .map((o) => (
-            <div className="card " key={o.Id}>
-              <div className="card-body carta">
-                <div className="row">
-                  <h5 className="card-title">Orden Numero: {o.Id}</h5>
+        <div className="content-wrapper p-3">
+          <div className="row py-3 justify-content-center">
+            <div className="card-deck w-100">
+              <div className="card dash-top bg-info text-white">
+                <div className="card-body" onClick={() => this.setState({ filtro: "Pendiente" })}>
+                  <h6 className="card-title">Ordenes  Pendientes</h6>
+                  <p className="card-text left-bottom"><small className="text-red">03</small></p>
                 </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="card-text">
-                      Estado: {o.ProductionState.State}
-                    </p>
-                    <p className="card-text">Observacion: {o.Observation}</p>
-                  </div>
+              </div>
+              <div className="card dash-top bg-warning text-white">
+                <div className="card-body" onClick={() => this.setState({ filtro: "En Proceso" })}>
+                  <h6 className="card-title">Ordenes en Proceso</h6>
+                  <p className="card-text left-bottom"><small className="text-red">02</small></p>
                 </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="card-text ">
-                      Fecha: {o.Day}/{o.Month}/{o.Year}
-                    </p>
-                    <p className="card-text ">
-                      Encargado/a:{" "}
-                      {this.state.empleados
-                        .filter((e) => o.EmployeeId === e.Id)
-                        .map((e) => e.Name)}
-                    </p>
-                  </div>
-                  <div className="col-md-4">
-                    <button onClick={() => this.mostrarDetalles(o.Id)}>
-                      Detalles
-                    </button>
-                    {o.ProductionState.State === "Pendiente" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_PROGRESS",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Procesar orden
-                      </button>
-                    ) : o.ProductionState.State === "En Proceso" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_FINALIZED",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Terminar orden
-                      </button>
-                    ) : null}
-                    {o.ProductionState.State === "Pendiente" ||
-                    o.ProductionState.State == "En Proceso" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_CANCELLED",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Cancelar
-                      </button>
-                    ) : null}
-                  </div>
-                  <div className="col-md-2">
-                    {o.ProductionState.State === "Cancelado" ||
-                    o.ProductionState.State === "Terminado" ? (
-                      <DeleteIcon className="icono" onClick={()=>this.eliminarOrden(o.Id)}/>
-                    ) : null}
-                  </div>
+              </div>
+              <div className="card dash-top bg-success text-white">
+                <div className="card-body" onClick={() => this.setState({ filtro: "Terminado" })}>
+                  <h6 className="card-title">Ordenes Terminadas</h6>
+                  <p className="card-text left-bottom"><small className="text-red">02</small></p>
+                </div>
+              </div>
+              <div className="card dash-top bg-danger text-white">
+                <div className="card-body" onClick={() => this.setState({ filtro: "Cancelado" })}>
+                  <h6 className="card-title">Ordenes Canceladas</h6>
+                  <p className="card-text left-bottom"><small className="text-red">01</small></p>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+          <div className="row">
+            <div className="col-sm-4">
+              
+            </div>
+          </div>
+            {this.state.ordenes
+            .filter((o) => this.state.filtro === o.ProductionState.State)
+            .filter(
+              (o) => new Date(o.Year, o.Month - 1, o.Day) >= this.state.fecha
+            )
+            .map((o) => (
+              <div className="card mb-3">
+                <div className="card-body carta">
+                  <h6 className="card-title">Orden Numero: {o.Id}</h6>
+                  <div className="row">
+                    <div className="col-sm-9">
+                      <div className="col-md-12">
+                        <p className="card-text">
+                          Estado: {o.ProductionState.State}
+                        </p>
+                        <p className="card-text">Observacion: {o.Observation}</p>
+                      </div>
+                      <div className="col-md-12">
+                        <p className="card-text ">
+                          Fecha: {o.Day}/{o.Month}/{o.Year}
+                        </p>
+                        <p className="card-text ">
+                          Encargado/a:{" "}
+                          {this.state.empleados
+                            .filter((e) => o.EmployeeId === e.Id)
+                            .map((e) => e.Name)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="row"> 
+                        <div className="col-md-12 buttons-column">
+                          <button onClick={() => this.mostrarDetalles(o.Id)}>
+                            Detalles
+                          </button>
+                        {o.ProductionState.State === "Pendiente" ? (
+                          <button
+                            onClick={() =>
+                              this.cambiarEstado(
+                                "ID_PRODUCTION_STATE_PROGRESS",
+                                o.EmployeeId,
+                                o.Id
+                              )
+                            }
+                          >
+                            Procesar orden
+                          </button>
+                        ) : o.ProductionState.State === "En Proceso" ? (
+                          <button
+                            onClick={() =>
+                              this.cambiarEstado(
+                                "ID_PRODUCTION_STATE_FINALIZED",
+                                o.EmployeeId,
+                                o.Id
+                              )
+                            }
+                          >
+                            Terminar orden
+                          </button>
+                        ) : null}
+                        {o.ProductionState.State === "Pendiente" ||
+                        o.ProductionState.State == "En Proceso" ? (
+                          <button
+                            onClick={() =>
+                              this.cambiarEstado(
+                                "ID_PRODUCTION_STATE_CANCELLED",
+                                o.EmployeeId,
+                                o.Id
+                              )
+                            }
+                          >
+                            Cancelar
+                          </button>
+                        ) : null}
+                        </div>
+                        <div className="col-md-2">
+                          {o.ProductionState.State === "Cancelado" ||
+                          o.ProductionState.State === "Terminado" ? (
+                            <DeleteIcon className="icono" onClick={()=>this.eliminarOrden(o.Id)}/>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+        
       </div>
     );
   }

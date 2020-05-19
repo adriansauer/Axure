@@ -65,7 +65,7 @@
     }
 
 }
-.agregarProducto, .generarOrdenProduccion, .ingreso-egreso{
+.agregarProducto, .generarOrdenProduccion, .ingreso-egreso,.productosBaja{
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -182,6 +182,49 @@
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
+        }
+    }
+}
+.ordenesProduccionProducto{
+    height: 100%;
+    .card.dash-top{
+        position: relative;
+        height: 7rem;
+        .card-body{
+            box-shadow: inset 3px -3px 6px 0 #00000066, -5px 5px 20px 0 #00000066;
+        }
+        .card-text.left-bottom{
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+        }
+    }
+    .buttons-column{
+        display: flex;
+        flex-direction: column;
+    }
+    .text-red{
+        color: rgba($color: red, $alpha: 0.5);
+    }
+    .filtrado-contenido{
+        display: flex;
+        flex-direction:column;
+    }
+    .content-wrapper{
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+.productosBaja{
+    .title-wrapper{
+        .bg-title{
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            display: flex;
+            justify-content: center;
+            .title-label{
+
+            }
         }
     }
 }

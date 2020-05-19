@@ -60,13 +60,17 @@ class Movimientos extends Component {
           ocultar={this.ocultarModales.bind(this)}
           visible={this.state.detallesVisible}
         />
-
-        <div className="row">
-          <div className="col-md-2">
-            <label>Filtrar ordenes a partir del:</label>
+        <div className="row title-wrapper py-3">
+          <div className="col-sm-12 bg-title">
+            <label className="m-auto title-label">Movimientos</label>
           </div>
-          <div className="col-md-2">
-            <div className="form-group">
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">Filtrar por fecha: </span>
+              </div>
               <input
                 type="date"
                 name="date"
@@ -83,8 +87,8 @@ class Movimientos extends Component {
             </div>
           </div>
         </div>
-        <div className="row">
-          <table className="table table-hover table" style={{ marginTop: 50 }}>
+        <div className="row p-3">
+          <table className="table table-hover table">
             <thead className="tableHeader">
               <tr>
                 <th scope="col">#</th>

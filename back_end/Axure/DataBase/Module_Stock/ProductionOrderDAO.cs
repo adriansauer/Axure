@@ -70,7 +70,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
+                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, EmployeeId=orden.EmployeeId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
                     db.ProductionOrders.Add(nuevo);
                     db.SaveChanges();
                     ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
