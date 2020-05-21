@@ -14,6 +14,10 @@ namespace Axure.DTO.Module_Sale
         //Product.
         public ProductOrderSaleDTO Product { get; set; }
 
+        public int ProductId { get; set; }
+
+        public int OrderSaleId { get; set; }
+
         //Quantity to sell.
         public int Quantity { get; set; }
 

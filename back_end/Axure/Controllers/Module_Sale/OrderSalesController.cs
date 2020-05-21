@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Axure.DataBase.Module_Sale;
+using Axure.DTO.Module_Sale;
+using Axure.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,83 +9,175 @@ using System.Web.Mvc;
 
 namespace Axure.Controllers.Module_Sale
 {
+    [RoutePrefix("OrderSales")]
     public class OrderSalesController : Controller
     {
-        // GET: OrderSales
-        public ActionResult Index()
+
+        private OrderSaleDAO osDAO;
+
+        public OrderSalesController()
         {
-            return View();
+            this.osDAO = new OrderSaleDAO();
         }
 
-        // GET: OrderSales/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: OrderSales/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: OrderSales/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [Route("Add")]
+        public ActionResult Add(OrderSaleListDTO os)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (this.osDAO.Add(os) == true) return new HttpStatusCodeResult(200);
+                else return new HttpStatusCodeResult(406);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
             }
         }
 
-        // GET: OrderSales/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: OrderSales/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpGet]
+        [Route("List")]
+        public ActionResult List()
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                var lista = this.osDAO.List();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
             }
         }
 
-        // GET: OrderSales/Delete/5
+        //por cliente
+        [HttpGet]
+        [Route("ListByClient/{id}")]
+        public ActionResult ListByClient(int id)
+        {
+            try
+            {
+                var lista = this.osDAO.ListByClient(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        //por estado
+        [HttpGet]
+        [Route("ListByState/{id}")]
+        public ActionResult ListByState(int id)
+        {
+            try
+            {
+                var lista = this.osDAO.ListByState(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        //por numero
+        [HttpGet]
+        [Route("GetByNumber/{number}")]
+        public ActionResult GetByNumber(String number)
+        {
+            try
+            {
+                var lista = this.osDAO.GetByNumber(number);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                    return new HttpStatusCodeResult(200);
+                }
+                else
+                {
+
+                    return new HttpStatusCodeResult(406);
+                }
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+        //por id
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public ActionResult GetById(int id)
+        {
+            try
+            {
+                var lista = this.osDAO.GetById(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }
+
+       /*[HttpPut]
+        [Route("UpdateState")]
+        public ActionResult UpdateState(int osId, int stId)
+        {
+            try
+            {
+                if (this.osDAO.UpdateState(osId, stId) == true) return new HttpStatusCodeResult(200);
+                else return new HttpStatusCodeResult(406);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(406);
+            }
+        }*/
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: OrderSales/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add delete logic here
+                if (this.osDAO.Remove(id))
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(CodeHTTP.OK);
+                }
 
-                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
     }
