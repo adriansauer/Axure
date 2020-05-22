@@ -582,10 +582,7 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource
 >>>>>>> master
 C:\xampp\htdocs\working\Axure\back_end\Axure\bin\System.Web.Http.Cors.dll
 C:\xampp\htdocs\working\Axure\back_end\Axure\bin\System.Web.Http.Cors.xml
-<<<<<<< HEAD
-=======
 C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.dll
 C:\xampp\htdocs\working\Axure\back_end\Axure\bin\Simple.Owin.Cors.xml
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
->>>>>>> master

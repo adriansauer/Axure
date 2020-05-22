@@ -154,24 +154,6 @@ ListDetails: productos,
             <label className="m-auto title-label">Ingreso y Egreso de Productos</label>
           </div>
         </div>
-<<<<<<< HEAD
-        
-       
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Encargado"
-              value={this.state.encargadoNombre}
-              onChange={(e) =>
-                this.setState({
-                  encargadoNombre: e.target.value,
-                  empleadoElegido: false,
-                })
-              }
-            />
-=======
         <div className="content-wrapper">
           <div className="row row-group">
             <div className="col-sm-5">
@@ -303,7 +285,6 @@ ListDetails: productos,
               </div>
               </div>
             </div>
->>>>>>> master
           </div>
           <div className="row">
             <div className="col-sm-12">
@@ -380,75 +361,6 @@ ListDetails: productos,
             </div>
           </div>
         </div>
-<<<<<<< HEAD
-        <Tabla
-          productos={this.state.productosSeleccionados}
-          delete={this.delete.bind(this)}
-        />
-
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              className="form-control form-control-sm  buscador"
-              type="text"
-              id="id1"
-              autocomplete="off"
-              placeholder="Añadir producto"
-              onChange={(e) => {
-                this.setState({ buscador: e.target.value });
-              }}
-              value={this.state.buscador}
-            />
-          </div>
-
-          <div className="col-md-4"></div>
-
-          <div className="col-md-3">
-            <button
-              className="btn btn-primary"
-              style={{ marginTop: 20 }}
-              onClick={() => this.enviar()}
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
-        <div className="row">
-          <div className="StockBody MateriaPima col-md-4">
-            <table className="table table-hover ">
-              <tbody className="tableBody">
-                {this.state.buscador !== ""
-                  ? this.state.productos
-                      .filter(
-                        (producto) =>
-                          producto.Name.toLowerCase().indexOf(
-                            this.state.buscador.toLowerCase()
-                          ) !== -1
-                      )
-                      .filter(
-                        (producto) =>
-                          this.state.productosSeleccionados.find(
-                            (e) => e.Id === producto.Id
-                          ) === undefined
-                      )
-                      .map((p) => (
-                        <tr
-                          key={p.Id}
-                          onClick={() => this.seleccionarProducto(p)}
-                        >
-                          <td>{p.Id}</td>
-                          <td>{p.Name}</td>
-                          <td>{p.Description}</td>
-                          <td>{p.Cost}</td>
-                          <td>{p.Barcode}</td>
-                        </tr>
-                      ))
-                  : null}
-              </tbody>
-            </table>
-          </div>
-=======
->>>>>>> master
         </div>
     );
   }

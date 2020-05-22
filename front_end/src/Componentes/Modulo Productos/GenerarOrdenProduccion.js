@@ -126,86 +126,10 @@ class GenerarOrdenProduccion extends Component {
     })
     
       this.toggleShow("dropdown-encargado");
-<<<<<<< HEAD
-    
-    
-=======
->>>>>>> master
   }
   render() {
     return (
       <div className="generarOrdenProduccion ">
-<<<<<<< HEAD
-        <Notificacion />
-        <div className="row">
-          <div className="col-md-4"></div>
-          <div className="col-md-8">
-            <h3>Generar Orden Produccion</h3>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-4">
-            <div className="dropdown">
-              <input
-                
-                type="text"
-                className="form-control"
-                placeholder="Encargado"
-                required="required"
-                value={this.state.encargadoNombre}
-                onChange={(e) =>
-                  this.buscarEncargado(e)
-                }
-              />
-              <div className="dropdown-menu" id="dropdown-encargado">
-                {this.state.encargadoNombre !== "" &&
-                !this.state.empleadoElegido
-                  ? this.state.empleados
-                      .filter(
-                        (empleado) =>
-                          empleado.Name.toLowerCase().indexOf(
-                            this.state.encargadoNombre.toLowerCase()
-                          ) !== -1
-                      )
-                      .map((p) => (
-                        <a
-                          className="dropdown-item"
-                          key={p.Id}
-                          onClick={() => this.seleccionarEmpleado(p)}
-                          href="#"
-                        >
-                          {p.Name},{p.CI}
-                        </a>
-                      ))
-                  : null}
-              </div>
-            </div>
-          </div>
-
-          {/**  <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Encargado"
-              value={this.state.encargadoNombre}
-              onChange={(e) =>
-                this.setState({
-                  encargadoNombre: e.target.value,
-                  empleadoElegido: false,
-                })
-              }
-            />
-          </div>*/}
-
-          <div className="col-md-4">
-            <div className="form-group">
-              <input
-                type="date"
-                name="date"
-                id="fecha"
-                max="3000-12-31"
-                min="1000-01-01"
-=======
         <Notificacion/>
         <div className="row title-wrapper py-3">
           <div className="row bg-title">
@@ -271,7 +195,6 @@ class GenerarOrdenProduccion extends Component {
             <div className="col-md-12">
               <textarea
                 type="text"
->>>>>>> master
                 className="form-control"
                 placeholder="Observacion(Opcional)"
                 value={this.state.observacion}
@@ -279,79 +202,8 @@ class GenerarOrdenProduccion extends Component {
               />
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="col-md-8"></div>
-        </div>
-
-        {/* <div className="row">
-          <div className="StockBody MateriaPima col-md-4">
-            <table className="table table-hover ">
-              <tbody className="tableBody">
-                {this.state.encargadoNombre !== "" &&
-                !this.state.empleadoElegido
-                  ? this.state.empleados
-                      .filter(
-                        (empleado) =>
-                          empleado.Name.toLowerCase().indexOf(
-                            this.state.encargadoNombre.toLowerCase()
-                          ) !== -1
-                      )
-                      .map((p) => (
-                        <tr
-                          key={p.Id}
-                          onClick={() => this.seleccionarEmpleado(p)}
-                        >
-                          <td>{p.Name}</td>
-                          <td>{p.CI}</td>
-                        </tr>
-                      ))
-                  : null}
-              </tbody>
-            </table>
-          </div>
-        </div> */}
-
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Observacion(Opcional)"
-              value={this.state.observacion}
-              onChange={(e) => this.setState({ observacion: e.target.value })}
-            />
-          </div>
-          <div className="col-md-4">
-            <label>Estado: Pendiente</label>
-          </div>
-
-          <div className="col-md-4"></div>
-        </div>
-        <TablaProductoSelector
-          productos={this.state.productosSeleccionados}
-          delete={this.delete.bind(this)}
-        />
-
-        <div className="row">
-          <div className="col-md-4">
-            <input
-              className="form-control form-control-sm  buscador"
-              type="text"
-              id="id1"
-              autoComplete="off"
-              placeholder="Añadir producto"
-              onChange={(e) => {
-                this.setState({ buscador: e.target.value });
-              }}
-              value={this.state.buscador}
-            />
-          </div>
-
-          <div className="col-md-4"></div>
-=======
           <div className="dropdown-divider my-3"></div>
           <TablaProductoSelector productos={this.state.productosSeleccionados} delete={this.delete.bind(this)}/>
->>>>>>> master
 
           <div className="row">
             <div className="col-sm-6">
