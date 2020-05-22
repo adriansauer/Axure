@@ -221,6 +221,7 @@
     <Compile Include="DTO\Module_Sale\ClientDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDetailDTO.cs" />
+    <Compile Include="DTO\Module_Sale\OrderSaleListDTO.cs" />
     <Compile Include="DTO\Module_Sale\StateOrderSaleDTO.cs" />
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
