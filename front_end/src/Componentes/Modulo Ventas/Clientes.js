@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import AgregarCliente from "./Modales/AgregarCliente.js";
+import EditarCliente from "./Modales/EditarCliente.js";
+import "./style.css"
+import Api from "../../Axios/Api.js";
+import Notificacion, { notify } from "../Notificacion.js";
+
 class Clientes extends Component {
   constructor(props) {
     super(props);
@@ -9,9 +14,29 @@ class Clientes extends Component {
       nombreSelector: "Todos",
       buscador: "",
       agregarClienteVisible: false,
+      editarClienteVisible:false,
+      clientes: [],
+      clienteSeleccionado: {
+        Id: 0,
+        Name: "",
+        Address: "",
+        RUC: "",
+        Phone: "",
+        CreditMaximum: "",
+      },
     };
   }
-
+  componentDidMount() {
+    this.actualizar();
+  }
+  async actualizar() {
+    try {
+      const clientes = await Api.clientes.get();
+      this.setState({ clientes: clientes.data });
+    } catch (error) {
+      notify("No se pudo conectar a la base de datos", "danger");
+    }
+  }
   mostrarTodos() {
     this.setState({ nombreSelector: "Todos" });
   }
@@ -21,15 +46,45 @@ class Clientes extends Component {
   mostrarEnMora() {
     this.setState({ nombreSelector: "En mora" });
   }
-  ocultarModales() {
-    this.setState({ agregarClienteVisible: false });
+  async ocultarModales() {
+    this.setState({ agregarClienteVisible: false,editarClienteVisible:false });
+    await this.actualizar();
+  }
+  seleccionarCliente(cliente) {
+    this.setState({ clienteSeleccionado: cliente });
+  }
+  async eliminarCliente(cliente) {
+    await this.seleccionarCliente(cliente);
+    try {
+      const request = await Api.clientes.delete(
+        this.state.clienteSeleccionado.Id
+      );
+      if (request.status === 200) {
+        notify("Cliente eliminado con exito", "success");
+        await this.actualizar();
+      } else {
+        notify("Error al intentar eliminar el cliente", "danger");
+      }
+    } catch (error) {
+      notify("Error al intentar eliminar el cliente", "danger");
+    }
+  }
+ async  editarCliente(cliente){
+    await this.seleccionarCliente(cliente);
+    this.setState({editarClienteVisible:true});
   }
   render() {
     return (
       <div className="Container">
+        <Notificacion />
         <AgregarCliente
           visible={this.state.agregarClienteVisible}
           ocultar={this.ocultarModales.bind(this)}
+        />
+        <EditarCliente
+          visible={this.state.editarClienteVisible}
+          ocultar={this.ocultarModales.bind(this)}
+          cliente={this.state.clienteSeleccionado}
         />
         <div className="row ">
           <div className="col-md-6 mr-auto pl-0">
@@ -41,7 +96,6 @@ class Clientes extends Component {
                   className="form-control buscador"
                   aria-label="Busqueda"
                   placeholder="Busqueda..."
-                  aria-label="Busqueda"
                   value={this.state.buscador}
                   onChange={(e) => {
                     this.setState({ buscador: e.target.value });
@@ -67,14 +121,14 @@ class Clientes extends Component {
                     </a>
                     <a
                       className="dropdown-item"
-                      href="#"
+                      href="#AlDia"
                       onClick={() => this.mostrarAlDia()}
                     >
                       Al día
                     </a>
                     <a
                       className="dropdown-item"
-                      href="#"
+                      href="#EnMora"
                       onClick={() => this.mostrarEnMora()}
                     >
                       En mora
@@ -103,16 +157,26 @@ class Clientes extends Component {
               </tr>
             </thead>
             <tbody className="tableBody">
-              <tr>
-                <td>Julio Caceres</td>
-                <td>Encarnacion</td>
-                <td>50974651</td>
-
-                <td>
-                  <EditIcon />
-                  <DeleteIcon />
-                </td>
-              </tr>
+              {this.state.clientes.length !== 0
+                ? this.state.clientes
+                    .filter(
+                      (p) =>
+                        p.Name.toLowerCase().indexOf(
+                          this.state.buscador.toLowerCase()
+                        ) !== -1
+                    )
+                    .map((c) => (
+                      <tr key={c.Id}>
+                        <td>{c.Name}</td>
+                        <td>{c.Address}</td>
+                        <td>{c.RUC}</td>
+                        <td>
+                          <EditIcon onClick={()=>this.editarCliente(c)} />
+                          <DeleteIcon onClick={() => this.eliminarCliente(c)} />
+                        </td>
+                      </tr>
+                    ))
+                : null}
             </tbody>
           </table>
         </div>

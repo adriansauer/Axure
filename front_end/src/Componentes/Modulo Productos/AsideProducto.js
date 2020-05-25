@@ -22,26 +22,18 @@ class AsideProducto extends Component {
           <li className="nav-item">
             <a
               className="nav-link active"
-              href="#"
+              href="#Stock"
               onClick={() => this.selectTab(50, 0)}
             >
               Stock
             </a>
           </li>
+    
           <li className="nav-item">
             <a
               className="nav-link"
-              href="#"
-              onClick={() => this.selectTab(51, 1)}
-            >
-              Agregar Producto
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#"
-              onClick={() => this.selectTab(52, 2)}
+              href="#OrdenProduccion"
+              onClick={() => this.selectTab(52, 1)}
             >
               Orden de Produccion
             </a>
@@ -49,8 +41,8 @@ class AsideProducto extends Component {
           <li className="nav-item">
             <a
               className="nav-link"
-              href="#"
-              onClick={() => this.selectTab(55, 3)}
+              href="#Ingreso_Egreso"
+              onClick={() => this.selectTab(55, 2)}
             >
               Ingreso/Egreso
             </a>
@@ -58,8 +50,8 @@ class AsideProducto extends Component {
           <li className="nav-item">
             <a
               className="nav-link"
-              href="#"
-              onClick={() => this.selectTab(53, 4)}
+              href="#OrdenesProduccion"
+              onClick={() => this.selectTab(53, 3)}
             >
               Ordenes de Produccion
             </a>
@@ -67,8 +59,8 @@ class AsideProducto extends Component {
           <li className="nav-item">
             <a
               className="nav-link"
-              href="#"
-              onClick={() => this.selectTab(54, 5)}
+              href="#Movimientos"
+              onClick={() => this.selectTab(54, 4)}
             >
               Movimientos
             </a>

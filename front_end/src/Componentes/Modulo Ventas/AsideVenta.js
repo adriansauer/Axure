@@ -22,7 +22,7 @@ class AsideVenta extends Component {
           <li className="nav-item">
             <a
               className="nav-link active"
-              href="#"
+              href="#OrdenVenta"
               onClick={() => this.selectTab(60, 0)}
             >
              Orden de venta
@@ -31,7 +31,7 @@ class AsideVenta extends Component {
           <li className="nav-item">
             <a
               className="nav-link "
-              href="#"
+              href="#Clientes"
               onClick={() => this.selectTab(61, 1)}
             >
               Clientes
@@ -40,7 +40,7 @@ class AsideVenta extends Component {
           <li className="nav-item">
             <a
               className="nav-link"
-              href="#"
+              href="#Boton3"
               onClick={() => this.selectTab(62, 2)}
             >
               Boton 3
@@ -49,7 +49,7 @@ class AsideVenta extends Component {
           <li className="nav-item">
             <a
               className="nav-link "
-              href="#"
+              href="#Boton3"
               onClick={() => this.selectTab(63, 3)}
             >
               Boton 4
@@ -58,7 +58,7 @@ class AsideVenta extends Component {
           <li className="nav-item">
             <a
               className="nav-link "
-              href="#"
+              href="#Boton5"
               onClick={() => this.selectTab(64, 4)}
             >
               Boton 5

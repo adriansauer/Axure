@@ -118,8 +118,6 @@ ListDetails: productos,
     return true;
   }
   async cambiarDeposito(id, nombre) {
-    console.log(this.state.deposito);
-    console.log(id);
     if (id !== this.state.deposito) {
       const p = await api.productos.getDeposito(id);
       this.setState({
@@ -184,7 +182,7 @@ ListDetails: productos,
                             className="dropdown-item"
                             key={p.Id}
                             onClick={() => this.seleccionarEmpleado(p)}
-                            href="#"
+                            href="#selected"
                           >
                             {p.Name},{p.CI}
                           </a>
@@ -230,7 +228,7 @@ ListDetails: productos,
                       })
                     }
                     className="dropdown-item"
-                    href="#"
+                    href="#ingreso"
                   >
                     Ingreso
                   </a>
@@ -242,7 +240,7 @@ ListDetails: productos,
                       })
                     }
                     className="dropdown-item"
-                    href="#"
+                    href="#egreso"
                   >
                     Egreso
                   </a>
@@ -268,7 +266,7 @@ ListDetails: productos,
                       this.cambiarDeposito(3, "Deposito de productos terminados")
                     }
                     className="dropdown-item"
-                    href="#"
+                    href="#productosTerminados"
                   >
                     Deposito de productos terminados
                   </a>
@@ -277,7 +275,7 @@ ListDetails: productos,
                       this.cambiarDeposito(1, "Deposito de materia prima")
                     }
                     className="dropdown-item"
-                    href="#"
+                    href="#materiaPrima"
                   >
                     Deposito de materia prima
                   </a>

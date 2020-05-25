@@ -15,6 +15,7 @@ class GenerarOrdenProduccion extends Component {
       empleados: [],
       empleadoElegido: false,
       productos: [],
+      
     };
   }
   async componentDidMount() {
@@ -94,7 +95,6 @@ class GenerarOrdenProduccion extends Component {
       Observation: this.state.observacion,
       ListDetails: productos,
     };
-    console.log(envio);
     if (this.validarCampos()) {
       const request = await api.ordenProduccion.create(envio);
       if (request.status === 200) {
@@ -166,7 +166,7 @@ class GenerarOrdenProduccion extends Component {
                             className="dropdown-item"
                             key={p.Id}
                             onClick={() => this.seleccionarEmpleado(p)}
-                            href="#"
+                            href="#selected"
                           >
                             {p.Name},{p.CI}
                           </a>
@@ -209,16 +209,20 @@ class GenerarOrdenProduccion extends Component {
             <div className="col-sm-6">
               <div className="dropup">
                 <input
+                autoComplete="false"
                   type="text"
                   className="form-control form-control-sm buscador"
                   id="id1"
+                  
                   placeholder="Añadir producto"
                   required="required"
+                  
                   onChange={(e) => {
                     this.setState({ buscador: e.target.value });
                     this.toggleShow("dropdown-buscador");
                   }}
                   value={this.state.buscador}
+                  
                 />
                 <div className="dropdown-menu" id="dropdown-buscador">
                   {this.state.buscador !== ""
@@ -236,16 +240,14 @@ class GenerarOrdenProduccion extends Component {
                             ) === undefined
                         )
                         .map((p) => (
-                          <tr
+                          <p
                             key={p.Id}
                             onClick={() => this.seleccionarProducto(p)}
                           >
-                            <td>{p.Id}</td>
-                            <td>{p.Name}</td>
-                            <td>{p.Description}</td>
-                            <td>{p.Cost}</td>
-                            <td>{p.Barcode}</td>
-                          </tr>
+                          {p.Name},{p.Description},{p.Barcode}
+                            </p>
+                            
+                         
                         ))
                     : null}
                 </div>

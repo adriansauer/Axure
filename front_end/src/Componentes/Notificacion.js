@@ -7,8 +7,10 @@ export const notify = (msg,color) => {
   emitter.emit("notification", msg,color);
 };
 class Notifications extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
+    
     this.state = {
       top: -120,
       msg: "",
@@ -19,8 +21,9 @@ class Notifications extends Component {
         this.onShow(msg,color);
     });
   }
+ 
   onShow = (msg,color) => {
-      
+    this._isMounted = true;
     if (this.timeout) {
       clearTimeout(this.timeout);
       this.setState({ top: -100 }, () => {
@@ -31,6 +34,7 @@ class Notifications extends Component {
     } else {
       this.showNotification(msg,color);
     }
+    this._isMounted = false;
   };
   showNotification = (msg,color) => {
     this.setState(
