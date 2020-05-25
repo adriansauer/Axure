@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import "./styleMProductos.css";
 import api from "../../Axios/Api.js";
 import TablaProductoSelector from "./TablaProductoSelector.js";
-import Notificacion,{notify} from "../Notificacion.js";
+import Notificacion, { notify } from "../Notificacion.js";
 class GenerarOrdenProduccion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
       buscador: "",
       productosSeleccionados: [],
       observacion: "",
@@ -15,12 +14,13 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: "",
       empleados: [],
       empleadoElegido: false,
-      productos:[],
+      productos: [],
+      
     };
   }
   async componentDidMount() {
-    const empleados=await api.empleados.get();
-    const productos=await api.productos.getProductosDeVenta();
+    const empleados = await api.empleados.get();
+    const productos = await api.productos.getProductosDeVenta();
     const f = new Date();
 
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -31,7 +31,7 @@ class GenerarOrdenProduccion extends Component {
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
     this.setState({
       empleados: empleados.data,
-      productos:productos.data,
+      productos: productos.data,
     });
   }
   delete(id) {
@@ -47,6 +47,10 @@ class GenerarOrdenProduccion extends Component {
       encargadoNombre: empleado.Name,
       empleadoElegido: true,
     });
+    
+    this.toggleShow("dropdown-encargado");
+  
+    
   }
   seleccionarProducto(producto) {
     this.setState({
@@ -57,8 +61,8 @@ class GenerarOrdenProduccion extends Component {
         Description: producto.Description,
         Barcode: producto.Barcode,
         Cantidad: "1",
-        Cost:producto.Cost,
-        QuantityMin:producto.QuantityMin,
+        Cost: producto.Cost,
+        QuantityMin: producto.QuantityMin,
       }),
     });
     this.setState({ buscador: "" });
@@ -69,7 +73,7 @@ class GenerarOrdenProduccion extends Component {
       this.state.encargadoNombre === "" ||
       document.getElementById("fecha").value === ""
     ) {
-      notify("Rellene todos los campos!","warning");
+      notify("Rellene todos los campos!", "warning");
       return false;
     }
     return true;
@@ -82,15 +86,15 @@ class GenerarOrdenProduccion extends Component {
         Quantity: parseInt(p.Cantidad),
       };
     });
-const envio={
-  ProductionStateId: 1,
-  EmployeeId: this.state.encargado.Id,
-  Day: date.getDate() + 1,
-  Month: date.getMonth() + 1,
-  Year: date.getFullYear(),
-  Observation: this.state.observacion,
-  ListDetails: productos,
-}
+    const envio = {
+      ProductionStateId: 1,
+      EmployeeId: this.state.encargado.Id,
+      Day: date.getDate() + 1,
+      Month: date.getMonth() + 1,
+      Year: date.getFullYear(),
+      Observation: this.state.observacion,
+      ListDetails: productos,
+    };
     if (this.validarCampos()) {
       const request = await api.ordenProduccion.create(envio);
       if (request.status === 200) {
@@ -102,10 +106,9 @@ const envio={
           encargadoNombre: "",
           empleadoElegido: false,
         });
-        notify("Orden guardada exitosamente!","success");
-      }else{
-        notify("Error al intentar guardar la orden!","danger");
-
+        notify("Orden guardada exitosamente!", "success");
+      } else {
+        notify("Error al intentar guardar la orden!", "danger");
       }
     }
   }
@@ -163,7 +166,7 @@ const envio={
                             className="dropdown-item"
                             key={p.Id}
                             onClick={() => this.seleccionarEmpleado(p)}
-                            href="#"
+                            href="#selected"
                           >
                             {p.Name},{p.CI}
                           </a>
@@ -206,16 +209,20 @@ const envio={
             <div className="col-sm-6">
               <div className="dropup">
                 <input
+                autoComplete="false"
                   type="text"
                   className="form-control form-control-sm buscador"
                   id="id1"
+                  
                   placeholder="Añadir producto"
                   required="required"
+                  
                   onChange={(e) => {
                     this.setState({ buscador: e.target.value });
                     this.toggleShow("dropdown-buscador");
                   }}
                   value={this.state.buscador}
+                  
                 />
                 <div className="dropdown-menu" id="dropdown-buscador">
                   {this.state.buscador !== ""
@@ -233,16 +240,14 @@ const envio={
                             ) === undefined
                         )
                         .map((p) => (
-                          <tr
+                          <p
                             key={p.Id}
                             onClick={() => this.seleccionarProducto(p)}
                           >
-                            <td>{p.Id}</td>
-                            <td>{p.Name}</td>
-                            <td>{p.Description}</td>
-                            <td>{p.Cost}</td>
-                            <td>{p.Barcode}</td>
-                          </tr>
+                          {p.Name},{p.Description},{p.Barcode}
+                            </p>
+                            
+                         
                         ))
                     : null}
                 </div>
@@ -265,6 +270,5 @@ const envio={
     );
   }
 }
-
 
 export default GenerarOrdenProduccion;

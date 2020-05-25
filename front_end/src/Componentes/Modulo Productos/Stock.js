@@ -5,6 +5,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DetallesModal from "./Modales/ProductoDetalles.js";
 import EditarModal from "./Modales/EditarProducto.js";
 import EliminarModal from "./Modales/EliminarProducto.js";
+import AgregarModal from "./Modales/AgregarProducto";
 import api from "../../Axios/Api.js";
 class Stock extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class Stock extends Component {
       editarModalVisible: false,
       eliminarModalVisible: false,
       detallesModalVisible: false,
+      agregarModalVisible:false,
     };
   }
   async componentDidMount() {
@@ -62,7 +64,9 @@ class Stock extends Component {
       detallesModalVisible: false,
       editarModalVisible: false,
       eliminarModalVisible: false,
+      agregarModalVisible:false,
     });
+    this.actualizar();
   }
 
   async actualizar() {
@@ -171,6 +175,10 @@ class Stock extends Component {
           visible={this.state.detallesModalVisible}
           ocultar={this.ocultarModals.bind(this)}
         />
+        <AgregarModal
+        visible={this.state.agregarModalVisible}
+        ocultar={this.ocultarModals.bind(this)}
+        />
         <EditarModal
           producto={this.state.productoActual}
           visible={this.state.editarModalVisible}
@@ -188,7 +196,6 @@ class Stock extends Component {
                   className="form-control buscador"
                   aria-label="Busqueda"
                   placeholder="Busqueda..."
-                  aria-label="Busqueda"
                   value={this.state.buscador}
                   onChange={(e) => {
                     this.setState({ buscador: e.target.value });
@@ -214,20 +221,23 @@ class Stock extends Component {
                     </a>
                     <a
                       className="dropdown-item"
-                      href="#"
+                      href="#materiaPrima"
                       onClick={() => this.mostrarMateriaPrima()}
                     >
                       Materia Prima
                     </a>
                     <a
                       className="dropdown-item"
-                      href="#"
+                      href="#productosTerminados"
                       onClick={() => this.mostrarProductosTerminados()}
                     >
                       Productos Terminados
                     </a>
                   </div>
                 </div>
+                <button className="btn btn-primary"
+                onClick={()=>this.setState({agregarModalVisible:true})}
+                >Agregar Producto</button>
               </div>
             </div>
           </div>
