@@ -199,7 +199,7 @@ class OrdenesProduccionProductos extends Component {
                       </button>
                     ) : null}
                     {o.ProductionState.State === "Pendiente" ||
-                    o.ProductionState.State == "En Proceso" ? (
+                    o.ProductionState.State === "En Proceso" ? (
                       <button
                         onClick={() =>
                           this.cambiarEstado(

@@ -3,6 +3,11 @@ import './styleMProductos.css'
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DetallesModal from "./Modales/ProductoDetalles.js";
+/**
+ * Propiedades
+ * productos:[{},...]
+ * delete(id)
+ */
 class TablaProductoSelector extends Component{
     
     constructor(props){

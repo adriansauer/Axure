@@ -109,6 +109,41 @@ export default {
         method: "get",
       }),
   },
+  clientes: {
+    create: (data) =>
+      requestHelper({
+        url: "Clients/Create",
+        method: "post",
+        data:data,
+      }),
+      get: () =>
+      requestHelper({
+        url: "Clients/List",
+        method: "get",
+       
+      }),
+      delete: (id) =>
+      requestHelper({
+        url: "Clients/Delete/"+id,
+        method: "post",
+       
+      }),
+      edit: (id,data) =>
+      requestHelper({
+        url: "Clients/Edit/"+id,
+        method: "post",
+        data:data
+       
+      }),
+  },
+  ordenes_venta: {
+    create: (data) =>
+      requestHelper({
+        url: "OrderSales/Add ",
+        method: "post",
+        data:data,
+      }),
+  },
   ingreso_egreso: {
     create: (data) =>
       requestHelper({

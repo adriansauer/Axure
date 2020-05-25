@@ -7,7 +7,7 @@ class EliminarProducto extends Component {
     this.state = {};
   }
   async eliminarProducto() {
-    const request =await api.productos.delete(this.props.producto.Id);
+    await api.productos.delete(this.props.producto.Id);
     /**actualizo los datos */
     this.props.actualizar();
     this.props.ocultar();

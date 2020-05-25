@@ -104,12 +104,17 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
+<<<<<<< HEAD:back_end/Axure/Migrations/202005121704297_Initial.cs
+                .ForeignKey("dbo.MovementTypes", t => t.MovementTypeId, cascadeDelete: true)
+                .Index(t => t.MovementTypeId);
+=======
                 .ForeignKey("dbo.Clients", t => t.ClientId)
                 .ForeignKey("dbo.Employees", t => t.EmployeeId)
                 .ForeignKey("dbo.StateOrderSales", t => t.StateOrderSaleId)
                 .Index(t => t.ClientId)
                 .Index(t => t.StateOrderSaleId)
                 .Index(t => t.EmployeeId);
+>>>>>>> master:back_end/Axure/Migrations/202005121132267_Initial.cs
             
             CreateTable(
                 "dbo.StateOrderSales",

@@ -23,7 +23,7 @@ class ProductosFaltantes extends Component {
     return (
       <Modal isOpen={this.props.visible} centered>
         <ModalHeader>
-            Faltan componentes para productir los siguientes productos.    
+            Faltan componentes para producir los siguientes productos.    
         </ModalHeader>
         <ModalBody>
           <div className="row">
