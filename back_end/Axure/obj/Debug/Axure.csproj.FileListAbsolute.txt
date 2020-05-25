@@ -116,3 +116,6 @@ C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\obj\Debug\Axure.cspr
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\obj\Debug\Axure.pdb
+C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\log4net.config
+C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\log4net.dll
+C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\log4net.xml

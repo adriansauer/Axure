@@ -12,6 +12,8 @@ namespace Axure.DataBase.Module_Sale
 {
     public class OrderSaleDetailDAO
     {
+        private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public bool Add(OrderSaleDetailDTO sod, AxureContext db)
         {
             try
@@ -25,7 +27,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al agregar detalle de la orden con Id "+ sod.OrderSaleId +" OrderSaleDetailDAO"+ e.Message + e.StackTrace);
                 return false;
             }
         }
@@ -56,12 +58,12 @@ namespace Axure.DataBase.Module_Sale
                             QuantityPending = y.QuantityPending
                         })
                         .ToList();
-                    return lista;
+                        return lista;
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al obtener listado de detalles de Ordenes de venta OrderSaleDetailDAO" + e.Message + e.StackTrace);
                 return null;
             }
         }
@@ -81,7 +83,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al actualizar la cantidad de articulos en el detalle de la orden de venta con Id "+ osId +" OrderSaleDetailDAO" + e.Message + e.StackTrace);
                 return false;
             }
         }
@@ -101,7 +103,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al actualizar la cantidad pendiente de articulos en el detalle de la orden de venta con Id " + osId + " OrderSaleDetailDAO" + e.Message + e.StackTrace);
                 return false;
             }
         }
@@ -121,7 +123,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al remover el detalle de la orden de venta con Id " + id +" OrderSaleDetailDAO" + e.Message + e.StackTrace);
                 return false;
             }
         }
