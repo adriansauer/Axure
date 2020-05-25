@@ -1,0 +1,1 @@
+2020-05-22 15:27:26,872 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al Mostrar orden de venta por numero de orden. Referencia a objeto no establecida como instancia de un objeto.   en Axure.DataBase.Module_Sale.OrderSaleDAO.GetByNumber(String number) en C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\DataBase\Module_Sale\OrderSaleDAO.cs:línea 160
