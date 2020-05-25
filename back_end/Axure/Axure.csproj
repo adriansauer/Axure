@@ -352,6 +352,7 @@
     <Folder Include="Views\MovementDetails\" />
     <Folder Include="Views\MovementMotives\" />
     <Folder Include="Views\Movements\" />
+    <Folder Include="Views\OrderSaleDetails\" />
     <Folder Include="Views\OrderSales\" />
     <Folder Include="Views\ProductComponents\" />
     <Folder Include="Views\ProductionOrderDetails\" />
