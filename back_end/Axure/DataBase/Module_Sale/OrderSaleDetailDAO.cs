@@ -14,13 +14,13 @@ namespace Axure.DataBase.Module_Sale
     {
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public bool Add(OrderSaleDetailDTO sod, AxureContext db)
+        public bool Add(OrderSaleDetailDTO sod)//, AxureContext db)
         {
             try
             {
-                using (db)
+                using (var db = new AxureContext())
                 {
-                    db.OrderSaleDetails.Add(new OrderSaleDetail { ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0, Deleted = false });
+                    db.OrderSaleDetails.Add(new OrderSaleDetail() {SaleOrderId = sod.OrderSaleId, ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0, Deleted = false });
                     db.SaveChanges();
                     return true;
                 }
