@@ -3,6 +3,11 @@ import './styleMProductos.css'
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DetallesModal from "./Modales/ProductoDetalles.js";
+/**
+ * Propiedades
+ * productos:[{},...]
+ * delete(id)
+ */
 class TablaProductoSelector extends Component{
     
     constructor(props){
@@ -34,13 +39,13 @@ class TablaProductoSelector extends Component{
         const productos=this.props.productos;
      
         return(
-            <div className="row">
+            <div className="row p-3">
                 <DetallesModal
                 producto={this.state.productoSeleccionado}
                 visible={this.state.detallesModalVisible}
                 ocultar={this.ocultarModal.bind(this)}
                 />
-            <table className="table table-hover table" style={{ marginTop: 50 }}>
+            <table className="table table-hover table">
               <thead className="tableHeader">
                 <tr>
                   <th scope="col">#</th>

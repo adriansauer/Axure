@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Axure.DTO.Module_Sale;
+using Axure.Models;
+using Axure.Models.Module_Sale;
+using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,137 +11,208 @@ namespace Axure.DataBase.Module_Sale
 {
     public class OrderSaleDAO
     {
-       /* ProductDAO productDAO;
+        public OrderSaleDAO() { }
 
-        public ProductionOrderDAO()
-        {
-            this.productDAO = new ProductDAO();
-        }
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public List<ProductionOrderReportDTO> GetAll()
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    ProductionOrderDetailDAO productionOrderDetailDB = new ProductionOrderDetailDAO();
-                    var opList = db.ProductionOrders.Include("ProductionStates").Where(x => x.Deleted == false)
-                           .Select(x => new { Id = x.Id, ProductionState = x.ProductionState, EmployeeId = x.EmployeeId, Date = x.Date, Observation = x.Observation })
-                           .ToList()
-                           .Select(y => new ProductionOrderReportDTO() { Id = y.Id, ProductionState = y.ProductionState, EmployeeId = y.EmployeeId, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Observation = y.Observation })
-                           .ToList();
-                    //opList.ForEach(x => x.ListDetails = productionOrderDetailDB.GetAllProductionOrderDetails(x.Id));
-                    return opList;
-                    return null;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        OrderSaleDetailDAO osdDAO = new OrderSaleDetailDAO();
 
-        public ProductionOrderReportDTO Detail(int id)
+        public bool Add(OrderSaleListDTO so)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
-                    var po = db.ProductionOrders.Include("ProductionState").FirstOrDefault(x => x.Id == id && x.Deleted == false);
-                    return new ProductionOrderReportDTO() { Id = po.Id, ProductionState = po.ProductionState, EmployeeId = po.EmployeeId, Day = po.Date.Day, Month = po.Date.Month, Year = po.Date.Year, Observation = po.Observation, ListDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(id) };
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
-        }
-
-        public bool Add(ProductionOrderDTO orden)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    ProductionOrder nuevo = new ProductionOrder() { ProductionStateId = orden.ProductionStateId, Observation = orden.Observation, Date = new DateTime(orden.Year, orden.Month, orden.Day), Deleted = false };
-                    db.ProductionOrders.Add(nuevo);
-                    db.SaveChanges();
-                    ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
-                    if (null != orden.ListDetails)
+                    var state = db.Settings.SingleOrDefault(x => x.Key == "ID_PRODUCTION_STATE_PENDING");
+                    OrderSale soC = new OrderSale()
                     {
-                        for (int i = 0; i < orden.ListDetails.Count; i++)
+                        ClientId = so.ClientId,
+                        StateOrderSaleId = int.Parse(state.Value),
+                        OrderNumber = so.OrderNumber,
+                        Date = new DateTime(so.Year, so.Month, so.Day),
+                        EmployeeId = so.EmployeeId,
+                        Deleted = false
+                    };
+
+                    db.OrderSales.Add(soC);
+                    db.SaveChanges();
+
+                    OrderSaleDetailDAO soD = new OrderSaleDetailDAO();
+                    if (null != so.ListDetails)
+                    {
+                        for (int i = 0; i < so.ListDetails.Count; i++)
                         {
-                            orden.ListDetails[i].ProductionOrderId = nuevo.Id;
-                            productionOrderDetailDAO.Add(orden.ListDetails[i]);
+                            so.ListDetails[i].OrderSaleId = soC.Id;
+                            soD.Add(so.ListDetails[i]);
                         }
                     }
-                    return false;
+                    return true;
                 }
             }
-            catch
+            catch(Exception e)
             {
-                return true;
+                log.Error("Error al agregar orden de venta " + so.OrderNumber + " Add OrderSaleDAO");
+                return false;
             }
         }
 
-        public bool Edit(int id, ProductionOrderDTO po)
+        public List<OrderSaleDTO> List()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrder poEditado = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
-                    poEditado.ProductionStateId = po.ProductionStateId;
-                    poEditado.EmployeeId = po.EmployeeId;
-                    poEditado.Observation = po.Observation;
-                    poEditado.Date = new DateTime(po.Year, po.Month, po.Day);
-                    db.SaveChanges();
-                    return false;
+                    var ls = db.OrderSales.Where(x => x.Deleted == false)
+                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year, SellerId = x.EmployeeId, Deleted = x.Deleted })
+                        .ToList()
+                        .Select(y => new OrderSaleDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, EmployeeId = y.SellerId })
+                        .ToList();
+                        return ls;
+
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return true;
+                log.Error("Error al obtener listado de ordenes List OrderSaleDAO");
+                return null;
             }
         }
 
+        //Ordenes por cliente
+        public List<OrderSaleListDTO> ListByClient(int clId)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var os = db.OrderSales.Where(x => x.ClientId == clId && x.Deleted == false).ToList();
+                    List<OrderSale> osList = new List<OrderSale>();
+                        os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+                        var osR = osList
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .ToList()
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .ToList();
+
+                        return osR;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al obtener listado de ordenes ListByClient " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //Ordenes por la cabecera
+        public List<OrderSaleListDTO> ListByState(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var os = db.OrderSales.Where(x => x.StateOrderSaleId == id && x.Deleted == false).ToList();
+                    List<OrderSale> osList = new List<OrderSale>();
+                        os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+
+                        var osR = osList
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .ToList()
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .ToList();
+
+                        return osR;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al obtener listado de ordenes ListByState " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //orden por id
+        public OrderSaleListDTO GetById(int Id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    OrderSale y = db.OrderSales.Find(Id);// Single(x => x.Id == Id && x.Deleted == false);
+                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al mostrar el listado de orden de venta por Id. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //orden por numero de orden
+        public OrderSaleListDTO GetByNumber(string number)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {//preguntar por este comparacion entre cadenas de string
+                    OrderSale y = db.OrderSales.FirstOrDefault(x => x.OrderNumber == number && x.Deleted == false);
+                        return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al Mostrar orden de venta por numero de orden. "+ e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //borrado ocioso
         public bool Remove(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrder bajar = db.ProductionOrders.FirstOrDefault(x => x.Id == id);
+                    OrderSale bajar = db.OrderSales.FirstOrDefault(x => x.Id == id);
                     bajar.Deleted = true;
+                    var osD = db.OrderSaleDetails.Where(x => x.SaleOrderId == id && x.Deleted == false).ToList();
+
+                    for (int i = 0; i < osD.Count; i++)
+                    {
+                        osD[i].Deleted = true;
+                    }
+
                     db.SaveChanges();
-                    return false;
+                    return true;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return true;
+                log.Error("No se puedo borrar la orden de venta de id "+ id + e.Message + e.StackTrace);
+                return false;
             }
         }
 
-        public bool Delete(int id)
+        //cambiar estado
+        public bool UpdateState(int osId, int stId)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    ProductionOrder po = db.ProductionOrders.Single(x => x.Id == id);
-                    if (null == po) { return true; }
-                    db.ProductionOrders.Remove(po);
+                    OrderSale os = db.OrderSales.FirstOrDefault(x => x.Id == osId);
+                    os.StateOrderSaleId = stId;
                     db.SaveChanges();
-                    return false;
+                    return true;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return true;
+                log.Error("No se puede modificar el estado de la orden. " + e.Message + e.StackTrace);
+                return false;
             }
-        }*/
+        }
     }
 }

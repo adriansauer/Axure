@@ -10,7 +10,7 @@ class ordenDetalles extends Component {
     };
   }
  
-  async componentWillReceiveProps() {
+  async UNSAFE_componentWillReceiveProps() {
     
       const request = await api.productos.get();
       this.setState({ productos: request.data });
