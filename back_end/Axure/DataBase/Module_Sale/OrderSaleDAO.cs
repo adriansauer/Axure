@@ -13,11 +13,13 @@ namespace Axure.DataBase.Module_Sale
     {
         public OrderSaleDAO() { }
 
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         OrderSaleDetailDAO osdDAO = new OrderSaleDetailDAO();
 
-        public bool Add(OrderSaleListDTO so) //recibe la lista detalles, 
+        public bool Add(OrderSaleListDTO so)
         {
-            try//investigar sobre find --- log net
+            try
             {
                 using (var db = new AxureContext())
                 {
@@ -36,7 +38,6 @@ namespace Axure.DataBase.Module_Sale
                     db.SaveChanges();
 
                     OrderSaleDetailDAO soD = new OrderSaleDetailDAO();
-
                     if (null != so.ListDetails)
                     {
                         for (int i = 0; i < so.ListDetails.Count; i++)
@@ -50,7 +51,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al agregar orden de venta " + so.OrderNumber + " Add OrderSaleDAO");
                 return false;
             }
         }
@@ -66,12 +67,13 @@ namespace Axure.DataBase.Module_Sale
                         .ToList()
                         .Select(y => new OrderSaleDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, EmployeeId = y.SellerId })
                         .ToList();
-                    return ls;
+                        return ls;
+
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al obtener listado de ordenes List OrderSaleDAO");
                 return null;
             }
         }
@@ -85,19 +87,19 @@ namespace Axure.DataBase.Module_Sale
                 {
                     var os = db.OrderSales.Where(x => x.ClientId == clId && x.Deleted == false).ToList();
                     List<OrderSale> osList = new List<OrderSale>();
-                    os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
-                    var osR = osList
-                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
-                        .ToList()
-                        .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
-                        .ToList();
+                        os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+                        var osR = osList
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .ToList()
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .ToList();
 
-                    return osR;
+                        return osR;
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al obtener listado de ordenes ListByClient " + e.Message + e.StackTrace);
                 return null;
             }
         }
@@ -111,20 +113,20 @@ namespace Axure.DataBase.Module_Sale
                 {
                     var os = db.OrderSales.Where(x => x.StateOrderSaleId == id && x.Deleted == false).ToList();
                     List<OrderSale> osList = new List<OrderSale>();
-                    os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+                        os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
 
-                    var osR = osList
-                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
-                        .ToList()
-                        .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
-                        .ToList();
+                        var osR = osList
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .ToList()
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .ToList();
 
-                    return osR;
+                        return osR;
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al obtener listado de ordenes ListByState " + e.Message + e.StackTrace);
                 return null;
             }
         }
@@ -138,11 +140,12 @@ namespace Axure.DataBase.Module_Sale
                 {
                     OrderSale y = db.OrderSales.Find(Id);// Single(x => x.Id == Id && x.Deleted == false);
                     return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                    
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("Error al mostrar el listado de orden de venta por Id. " + e.Message + e.StackTrace);
                 return null;
             }
         }
@@ -154,14 +157,13 @@ namespace Axure.DataBase.Module_Sale
             {
                 using (var db = new AxureContext())
                 {//preguntar por este comparacion entre cadenas de string
-                    OrderSale y = db.OrderSales.Find(1,number);// .Single(x => x.OrderNumber.Equals(number) && x.Deleted == false);
-                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                    OrderSale y = db.OrderSales.FirstOrDefault(x => x.OrderNumber == number && x.Deleted == false);
+                        return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
-                //throw new Exception(e.Message);
+                log.Error("Error al Mostrar orden de venta por numero de orden. "+ e.Message + e.StackTrace);
                 return null;
             }
         }
@@ -188,7 +190,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("No se puedo borrar la orden de venta de id "+ id + e.Message + e.StackTrace);
                 return false;
             }
         }
@@ -208,7 +210,7 @@ namespace Axure.DataBase.Module_Sale
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
+                log.Error("No se puede modificar el estado de la orden. " + e.Message + e.StackTrace);
                 return false;
             }
         }

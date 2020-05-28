@@ -119,6 +119,7 @@ namespace Axure.Controllers.Module_Sale
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 return new HttpStatusCodeResult(406);
             }
         }
@@ -139,6 +140,7 @@ namespace Axure.Controllers.Module_Sale
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 return new HttpStatusCodeResult(406);
             }
         }
