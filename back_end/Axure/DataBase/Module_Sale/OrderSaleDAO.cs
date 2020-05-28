@@ -42,7 +42,7 @@ namespace Axure.DataBase.Module_Sale
                         for (int i = 0; i < so.ListDetails.Count; i++)
                         {
                             so.ListDetails[i].OrderSaleId = soC.Id;
-                            soD.Add(so.ListDetails[i],db);
+                            soD.Add(so.ListDetails[i]);
                         }
                     }
                     return true;

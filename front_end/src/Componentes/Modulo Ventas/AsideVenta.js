@@ -43,7 +43,7 @@ class AsideVenta extends Component {
               href="#Boton3"
               onClick={() => this.selectTab(62, 2)}
             >
-              Boton 3
+              Facturar
             </a>
           </li>
           <li className="nav-item">

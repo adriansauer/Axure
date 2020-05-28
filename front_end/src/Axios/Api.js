@@ -143,6 +143,15 @@ export default {
         method: "post",
         data:data,
       }),
+      get:()=>requestHelper({
+        url:"OrderSales/List ",
+        method:"get",
+
+      }),
+      getDetalles:(id)=>requestHelper({
+        url:"OrderSales/GetById/"+id,
+        method:"get",
+      }),
   },
   ingreso_egreso: {
     create: (data) =>

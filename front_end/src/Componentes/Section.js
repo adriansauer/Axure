@@ -9,13 +9,14 @@ import ProductosBaja from './Modulo Productos/Movimientos';
 import DarDeBaja from './Modulo Productos/Ingreso_Egreso.js';
 import PedidoVenta from './Modulo Ventas/OrdenVenta.js';
 import Clientes from './Modulo Ventas/Clientes.js';
+import Facturar from './Modulo Ventas/Facturar.js';
 
 class Section extends Component{
  
     render(){ 
         
         return (
-            <div id="Section" className='Section'>
+            <div id="Section" className='Section' style={{height:"100%"}}>
                 {(() => {
                     switch(this.props.sectionShow[0]) {
                         case 50:return <Stock/>
@@ -25,6 +26,7 @@ class Section extends Component{
                         case 55:return <DarDeBaja/>
                         case 60:return <PedidoVenta/>
                         case 61:return <Clientes/>
+                        case 62:return <Facturar/>
                         default: return <Stock/>
                         
                     }
