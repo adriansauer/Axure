@@ -28,7 +28,7 @@ namespace Axure.Models.Module_Stock.Models
         public int Cost { get; set; }
 
         //IVA percentage of a product.
-        public int IVAId { get; set; }
+        public int TaxId { get; set; }
 
         //Minimum quantity of the product.
         public int QuantityMin { get; set; }

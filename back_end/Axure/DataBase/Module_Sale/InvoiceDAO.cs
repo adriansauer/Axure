@@ -1,0 +1,299 @@
+﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO.Module_Sale;
+using Axure.DTO.Module_Sale.InvoiceIn;
+using Axure.DTO.Module_Stock;
+using Axure.Models;
+using Axure.Models.Module_Sale;
+using Axure.Models.Module_Stock;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Axure.DataBase.Module_Sale
+{
+    public class InvoiceDAO
+    {
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public List<InvoiceDTO> List()
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var ls = db.Invoices.Include("OrderSales")
+                        .Select(x => new { Id = x.Id, OrderSale = x.OrderSale, SaleCondition = x.SaleCondition, Status = x.Status, InvoiceNumber = x.InvoiceNumber, ClientName = x.ClientName, ClientRUC = x.ClientRUC, ClientAddress = x.ClientAddress, Date = x.Date, Total = x.Total, TaxTotal = x.TaxTotal })
+                        .ToList()
+                        .Select(y => new InvoiceDTO { Id = y.Id, OrderNumber = y.OrderSale.OrderNumber, SaleCondition = y.SaleCondition, Status = y.Status, InvoiceNumber = y.InvoiceNumber, ClientName = y.ClientName, ClientRUC = y.ClientRUC, ClientAddress = y.ClientAddress, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Total = y.Total, TaxTotal = y.TaxTotal })
+                        .ToList();
+                    return ls;
+
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al obtener listado de ordenes List OrderSaleDAO");
+                return null;
+            }
+        }
+
+        //Ordenes por cliente
+        /*public List<OrderSaleListDTO> ListByClient(int clId)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var os = db.OrderSales.Where(x => x.ClientId == clId && x.Deleted == false).ToList();
+                    List<OrderSale> osList = new List<OrderSale>();
+                    os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+                    var osR = osList
+                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                        .ToList()
+                        .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                        .ToList();
+
+                    return osR;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al obtener listado de ordenes ListByClient " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //Ordenes por la cabecera
+        public List<OrderSaleListDTO> ListByStatus(string status)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var os = db.OrderSales.Where(x => x.Status.Equals(status) && x.Deleted == false).ToList();
+                    List<OrderSale> osList = new List<OrderSale>();
+                    os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
+
+                    var osR = osList
+                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                        .ToList()
+                        .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                        .ToList();
+
+                    return osR;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al obtener listado de ordenes ListByState " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //orden por id
+        public OrderSaleListDTO GetById(int Id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    OrderSale y = db.OrderSales.Find(Id);// Single(x => x.Id == Id && x.Deleted == false);
+                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al mostrar el listado de orden de venta por Id. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        //orden por numero de orden
+        public OrderSaleListDTO GetByNumber(string number)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {//preguntar por este comparacion entre cadenas de string
+                    OrderSale y = db.OrderSales.FirstOrDefault(x => x.OrderNumber == number && x.Deleted == false);
+                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al Mostrar orden de venta por numero de orden. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }*/
+
+        public List<string> GetAllStatus()
+        {
+            try
+            {
+                List<string> status = new List<string>();
+                foreach (string i in Enum.GetNames(typeof(StatusInvoice)))
+                    status.Add(i);
+                return status;
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al Mostrar los estados de una factura. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        public List<string> GetAllSaleCondition()
+        {
+            try
+            {
+                List<string> status = new List<string>();
+                foreach (string i in Enum.GetNames(typeof(SaleCondition)))
+                    status.Add(i);
+                return status;
+            }
+            catch (Exception e)
+            {
+                log.Error("Error al Mostrar las condiciones de venta de una factura. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        public bool Add(InvoiceInDTO data)
+        {
+
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ClientDAO clientDAO = new ClientDAO();
+                        ProductDAO productDAO = new ProductDAO();
+                        ClientDTO client = clientDAO.Detail(data.ClientId);
+
+                        //Create the invoice.
+                        Invoice invoice = new Invoice(){ 
+                            OrderSaleId = data.OrderSaleId,
+                            EmployeeId = data.EmployeeId,
+                            ClientId = data.ClientId, 
+                            SaleCondition = data.SaleCondition,
+                            Status = data.Status,
+                            InvoiceNumber = data.InvoiceNumber,
+                            ClientName = client.Name,
+                            ClientRUC = client.RUC,
+                            ClientAddress = client.Address,
+                            Date = new DateTime(data.Year, data.Month, data.Day),
+                            Total = 0,
+                            TaxTotal = 0};
+                        db.Invoices.Add(invoice);
+                        db.SaveChanges();
+
+                        //Add details.
+                        if (null != data.ListItems)
+                        {
+                            List<InvoiceTax> invoiceTaxes = new List<InvoiceTax>();
+                            for (int i = 0; i < data.ListItems.Count; i++)
+                            {
+                                int productId = data.ListItems[i].ProductId;
+                                var producto = db.Products.Include("Tax").FirstOrDefault(x => x.Id == productId && x.Deleted == false);
+                                InvoiceItem invoiceItem = new InvoiceItem()
+                                {
+                                    InvoiceId = invoice.Id,
+                                    ProductId = data.ListItems[i].ProductId,
+                                    ProductName = producto.Name,
+                                    PriceUnit = producto.Price,
+                                    Quantity = data.ListItems[i].Quantity,
+                                    Total = data.ListItems[i].Quantity * producto.Price,
+                                    TaxQuantity = producto.Tax.Quantity,
+                                    TaxTotal = 1
+                                };
+                                db.InvoiceItems.Add(invoiceItem);
+                                db.SaveChanges();
+
+                                invoice.Total += invoiceItem.Total;
+
+                                int index = searchTax(invoiceTaxes, producto.Tax.Quantity);
+                                if(-1 == index)
+                                {
+                                    invoiceTaxes.Add(new InvoiceTax() { InvoiceId = invoice.Id, TaxId = producto.TaxId, Amount = invoiceItem.Total, TaxPercentage = producto.Tax.Quantity });
+                                }
+                                else
+                                {
+                                    invoiceTaxes[index].Amount += invoiceItem.Total;
+                                }
+                            }
+
+                            for(int i = 0; i < invoiceTaxes.Count; i++){
+                                db.InvoiceTaxes.Add(invoiceTaxes[i]);
+                                invoice.TaxTotal += invoiceTaxes[i].Amount;
+                            }                           
+                        }
+                        db.SaveChanges();
+
+                        //Everything went well.
+                        dbContextTransaction.Commit();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        dbContextTransaction.Rollback();
+                        log.Error("Error al agregar una factura!!!");
+                        return false;
+                    }
+                }
+            }
+
+        }
+
+        private int searchTax(List<InvoiceTax> invoiceTaxes, int percentage)
+        {
+            for(int i = 0; i < invoiceTaxes.Count; i++)
+            {
+                if(percentage == invoiceTaxes[i].TaxPercentage)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        //cambiar estado
+       /* public bool UpdateState(int osId, string status)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    OrderSale os = db.OrderSales.FirstOrDefault(x => x.Id == osId);
+                    os.Status = status;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("No se puede modificar el estado de la orden. " + e.Message + e.StackTrace);
+                return false;
+            }
+        }
+        */
+
+    }
+
+    public enum StatusInvoice
+    {
+        Pagada,
+        Cancelada,
+        Pendiente,
+        Retrasada
+    }
+
+    public enum SaleCondition
+    {
+        Contado,
+        Credito
+    }
+}

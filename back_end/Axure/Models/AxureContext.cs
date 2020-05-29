@@ -31,7 +31,7 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductType> ProductTypes { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.IVA> IVAs { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Tax> Taxes { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Product> Products { get; set; }
 
@@ -67,19 +67,15 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Client> Clients { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Credit> Credits { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Debt> Debts { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.StateInvoice> StateInvoices { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.StateOrderSale> StateOrderSales { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.FeeCredit> FeeCredits { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Fee> Fees { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Income> Incomes { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.IncomeDeadline> IncomeDeadlines { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.InvoiceTax> InvoiceTaxes { get; set; }
 
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.IncomeDetail> IncomeDetails { get; set; }
+        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.IncomeFee> IncomeFees { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.IncomeType> IncomeTypes { get; set; }
 
@@ -90,8 +86,6 @@ namespace Axure.Models
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.OrderSale> OrderSales { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.OrderSaleDetail> OrderSaleDetails { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Sale.PaymentTerm> PaymentTerms { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.Receipt> Receipts { get; set; }
 

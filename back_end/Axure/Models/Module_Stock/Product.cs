@@ -25,9 +25,9 @@ namespace Axure.Models.Module_Stock
 
         //IVA porcentage of a product.
         [Required]
-        public int IVAId { get; set; }
-        [ForeignKey("IVAId")]
-        public IVA IVA { get; set; }
+        public int TaxId { get; set; }
+        [ForeignKey("TaxId")]
+        public Tax Tax { get; set; }
 
         //Product name.
         [Required]
@@ -42,6 +42,10 @@ namespace Axure.Models.Module_Stock
         //Product cost.
         [Required]
         public int Cost { get; set; }
+
+        //Product price.
+        [Required]
+        public int Price { get; set; }
 
         //Minimum quantity of the product.
         [Required]

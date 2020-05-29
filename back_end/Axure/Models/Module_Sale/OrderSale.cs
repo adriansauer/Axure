@@ -24,17 +24,16 @@ namespace Axure.Models.Module_Sale
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
 
-        //Order state.
-        [Required]
-        public int StateOrderSaleId { get; set; }
-        [ForeignKey("StateOrderSaleId")]
-        public StateOrderSale StateOrderSale { get; set; }
-
         //Employee responsible for the order sale.
         [Required]
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
+
+        //Order status.
+        [Required]
+        [StringLength(20)]
+        public string Status { get; set; }
 
         //Order number.
         [Required]

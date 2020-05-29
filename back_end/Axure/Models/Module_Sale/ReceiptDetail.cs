@@ -25,14 +25,18 @@ namespace Axure.Models.Module_Sale
 
         //Fee being paid.
         [Required]
-        public int FeeCreditId { get; set; }
-        [ForeignKey("FeeCreditId")]
-        public FeeCredit IncomeCredit { get; set; }
+        public int FeeId { get; set; }
+        [ForeignKey("FeeId")]
+        public Fee Fee { get; set; }
 
         //Invoice to which the payment belongs.
         [Required]
         public int InvoiceId { get; set; }
         [ForeignKey("InvoiceId")]
         public Invoice Invoice { get; set; }
+
+        //Amount of the fee.
+        [Required]
+        public int Amount { get; set; }
     }
 }
