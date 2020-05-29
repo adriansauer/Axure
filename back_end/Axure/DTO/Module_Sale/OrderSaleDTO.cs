@@ -14,9 +14,8 @@ namespace Axure.DTO.Module_Sale
         //Client who placed the order.
         public int ClientId { get; set; }
 
-        //Order state.
-        //public StateOrderSale StateOrderSale { get; set; }
-        public int StateOrderSaleId { get; set; }
+        //Order status.
+        public string Status { get; set; }
 
         //Employee responsible for the order sale.
         public int EmployeeId { get; set; }

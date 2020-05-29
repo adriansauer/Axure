@@ -18,18 +18,6 @@ namespace Axure.Models.Module_Sale
         //Unique identifier.
         public int Id { get; set; }
 
-        //Invoice state.
-        [Required]
-        public int StateInvoiceId { get; set; }
-        [ForeignKey("StateInvoiceId")]
-        public StateInvoice StateInvoice { get; set; }
-
-        //Invoice payment term
-        [Required]
-        public int PaymentTermId { get; set; }
-        [ForeignKey("PaymentTermId")]
-        public PaymentTerm PaymentTerm { get; set; }
-
         //Orden sale.
         [Required]
         public int OrderSaleId { get; set; }
@@ -47,6 +35,14 @@ namespace Axure.Models.Module_Sale
         public int ClientId { get; set; }
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
+
+        //Invoice sale condition. 
+        [StringLength(20)]
+        public string SaleCondition { get; set; }
+
+        //Invoice status 
+        [StringLength(20)]
+        public string Status { get; set; }
 
         //Invoice number 
         [StringLength(20)]
@@ -67,20 +63,16 @@ namespace Axure.Models.Module_Sale
         [StringLength(200)]
         public string ClientAddress { get; set; }
 
+        //Create date.
+        [Required]
+        public DateTime Date { get; set; }
+
         //Total amount with IVA.
         [Required]
         public int Total { get; set; }
 
-        //Total amount of IVA 10%.
+        //Invoice tax total.
         [Required]
-        public int TotalIVA10 { get; set; }
-
-        //Total amount of IVA 5%.
-        [Required]
-        public int TotalIVA5 { get; set; }
-
-        //Total amount exempt from tax. 
-        [Required]
-        public string TotalExempt { get; set; }
+        public int TaxTotal { get; set; }
     }
 }
