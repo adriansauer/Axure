@@ -12,15 +12,7 @@ namespace Axure.DataBase.Module_Sale
 {
     public class OrderSaleDetailDAO
     {
-<<<<<<< HEAD
-        public bool Add(OrderSaleDetailDTO sod)//,AxureContext db)
-        {
-            try
-            {
-                using (var db =new AxureContext())
-                {
-                    db.OrderSaleDetails.Add(new OrderSaleDetail {SaleOrderId=sod.OrderSaleId, ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0, Deleted = false });
-=======
+
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public bool Add(OrderSaleDetailDTO sod)//, AxureContext db)
@@ -30,7 +22,6 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {
                     db.OrderSaleDetails.Add(new OrderSaleDetail() {SaleOrderId = sod.OrderSaleId, ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0, Deleted = false });
->>>>>>> master
                     db.SaveChanges();
                     return true;
                 }

@@ -69,7 +69,6 @@ class Facturar extends Component {
       const orden = await api.ordenes_venta.getDetalles(o.Id);
       await this.setState({ ordenSeleccionada: orden.data });
       this.setState({ facturarModalVisible: true });
-      console.log(orden.data);
     } catch (error) {
       notify("Error al intentar conectar con la base de datos", "danger");
     }
