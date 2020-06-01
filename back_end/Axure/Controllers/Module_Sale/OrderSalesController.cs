@@ -18,24 +18,8 @@ namespace Axure.Controllers.Module_Sale
         public OrderSalesController()
         {
             this.osDAO = new OrderSaleDAO();
-        }
-
-        [HttpPost]
-        [Route("Add")]
-        public ActionResult Add(OrderSaleListDTO os)
-        {
-            try
-            {
-                if (this.osDAO.Add(os) == true) return new HttpStatusCodeResult(200);
-                else return new HttpStatusCodeResult(406);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return new HttpStatusCodeResult(406);
-            }
-        }
-
+        }      
+        
         [HttpGet]
         [Route("List")]
         public ActionResult List()
@@ -79,12 +63,12 @@ namespace Axure.Controllers.Module_Sale
 
         //por estado
         [HttpGet]
-        [Route("ListByState/{id}")]
-        public ActionResult ListByState(int id)
+        [Route("ListByStatus")]
+        public ActionResult ListByStatus(string Status)
         {
             try
             {
-                var lista = this.osDAO.ListByState(id);
+                var lista = this.osDAO.ListByStatus(Status);
                 if (null != lista)
                 {
                     return Json(lista, JsonRequestBehavior.AllowGet);
@@ -100,7 +84,7 @@ namespace Axure.Controllers.Module_Sale
 
         //por numero
         [HttpGet]
-        [Route("GetByNumber/{number}")]
+        [Route("GetByNumber")]
         public ActionResult GetByNumber(String number)
         {
             try
@@ -145,20 +129,42 @@ namespace Axure.Controllers.Module_Sale
             }
         }
 
-       /*[HttpPut]
-        [Route("UpdateState")]
-        public ActionResult UpdateState(int osId, int stId)
+        //todos los estados posibles.
+        [HttpGet]
+        [Route("GetAllStatus")]
+        public ActionResult GetAllStatus()
         {
             try
             {
-                if (this.osDAO.UpdateState(osId, stId) == true) return new HttpStatusCodeResult(200);
-                else return new HttpStatusCodeResult(406);
+                var lista = this.osDAO.GetAllStatus();
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
             }
-            catch
+            catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 return new HttpStatusCodeResult(406);
             }
-        }*/
+        }
+
+        [HttpPost]
+        [Route("Add")]
+        public ActionResult Add(OrderSaleListDTO os)
+        {
+            try
+            {
+                if (this.osDAO.Add(os) == true) return new HttpStatusCodeResult(200);
+                else return new HttpStatusCodeResult(406);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
+            }
+        }
 
         [HttpDelete]
         [Route("Delete/{id}")]

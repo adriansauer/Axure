@@ -12,16 +12,16 @@ using System.Web;
  */
 namespace Axure.Models.Module_Sale
 {
-    public class FeeCredit
+    public class Fee
     {
         //Unique identifier.
         public int Id { get; set; }
 
         //Credit of a invoice.
         [Required]
-        public int CreditId { get; set; }
-        [ForeignKey("CreditId")]
-        public Credit Credit { get; set; }
+        public int DebtId { get; set; }
+        [ForeignKey("DebtId")]
+        public Debt Debt { get; set; }
 
         //Fee number.
         [Required]
@@ -38,6 +38,10 @@ namespace Axure.Models.Module_Sale
         //Expiration date.
         [Required]
         public DateTime ExpirationDate { get; set; }
+
+        //Fee status
+        [Required]
+        public string Status { get; set; }
 
 
 

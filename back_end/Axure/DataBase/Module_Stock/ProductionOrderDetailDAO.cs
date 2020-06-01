@@ -1,4 +1,5 @@
-﻿using Axure.DTO.Module_Stock;
+﻿using Axure.DTO;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using System;
@@ -58,7 +59,7 @@ namespace Axure.DataBase.Module_Stock
 
         }
 
-        public List<ProductionOrderDetailDTO> GetAllProductionOrderDetails(int id)
+        public List<ProductQuantityDTO> GetAllProductionOrderDetails(int id)
         {
             try
             {
@@ -67,7 +68,7 @@ namespace Axure.DataBase.Module_Stock
                     var listado = db.ProductionOrderDetails.Where(x => x.ProductionOrderId == id && x.Deleted == false)
                         .Select(x => new { Id = x.Id, ProductionOrderId = x.ProductionOrderId, ProductId = x.ProductId, Quantity = x.Quantity })
                         .ToList()
-                        .Select(y => new ProductionOrderDetailDTO() { Id = y.Id, ProductionOrderId = y.ProductionOrderId, ProductId = y.ProductId, Quantity = y.Quantity })
+                        .Select(y => new ProductQuantityDTO() { Id = y.Id, ProductId = y.ProductId, Quantity = y.Quantity })
                         .ToList();
                     return listado;
                 }
@@ -75,23 +76,6 @@ namespace Axure.DataBase.Module_Stock
             catch
             {
                 return null;
-            }
-        }
-
-        public bool Add (ProductionOrderDetailDTO pod)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    db.ProductionOrderDetails.Add(new ProductionOrderDetail { ProductionOrderId = pod.ProductionOrderId, ProductId = pod.ProductId, Quantity = pod.Quantity, Deleted = false });
-                    db.SaveChanges();
-                    return false;
-                }
-            }
-            catch
-            {
-                return true;
             }
         }
 

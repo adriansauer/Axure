@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Axure.DataBase.Module_Stock;
+using Axure.DTO;
 using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
@@ -76,10 +77,10 @@ namespace Axure.DataBase.Module_Stock
                     ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
                     if(null != orden.ListDetails)
                     {
-                        for (int i = 0; i < orden.ListDetails.Count; i++)
-                        {
-                            orden.ListDetails[i].ProductionOrderId = nuevo.Id;
-                            productionOrderDetailDAO.Add(orden.ListDetails[i]);
+                        foreach (ProductQuantityDTO item in orden.ListDetails)
+                        {                        
+                            db.ProductionOrderDetails.Add(new ProductionOrderDetail { ProductionOrderId = nuevo.Id, ProductId = item.ProductId, Quantity = item.Quantity, Deleted = false });
+                            db.SaveChanges();
                         }
                     }
                     return false;
@@ -210,7 +211,7 @@ namespace Axure.DataBase.Module_Stock
                 ProductionOrderDetailDAO productionOrderDetailDAO = new ProductionOrderDetailDAO();
                 StockDAO stockDAO = new StockDAO();
                 SettingDAO settingDAO = new SettingDAO();
-                List<ProductionOrderDetailDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
+                List<ProductQuantityDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
                 List<int> notStock = stockDAO.CheckStock(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL")));
                 if (null == notStock)
                 {

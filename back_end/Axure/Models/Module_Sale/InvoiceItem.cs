@@ -35,10 +35,6 @@ namespace Axure.Models.Module_Sale
         [StringLength(100)]
         public string ProductName { get; set; }
 
-        //Unit purchase price of the product.
-        [Required]
-        public int PricePurchase { get; set; }
-
         //Product unit price.
         [Required]
         public int PriceUnit { get; set; }
@@ -53,11 +49,11 @@ namespace Axure.Models.Module_Sale
 
         //IVA percentage.
         [Required]
-        public int IVAQuantity { get; set; }
+        public int TaxQuantity { get; set; }
 
         //Total amount IVA.
         [Required]
-        public int IVATotal { get; set; }
+        public int TaxTotal { get; set; }
 
     }
 }

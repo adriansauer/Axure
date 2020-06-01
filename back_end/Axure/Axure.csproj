@@ -187,8 +187,8 @@
     <Compile Include="Controllers\CodeHTTP.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Module_Sale\ClientsController.cs" />
+    <Compile Include="Controllers\Module_Sale\InvoicesController.cs" />
     <Compile Include="Controllers\Module_Sale\OrderSalesController.cs" />
-    <Compile Include="Controllers\Module_Sale\StateOrderSalesController.cs" />
     <Compile Include="Controllers\Module_Stock\MovementProductDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\MovementProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
@@ -204,9 +204,11 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\Module_Sale\ClientDAO.cs" />
+    <Compile Include="DataBase\Module_Sale\DebtDAO.cs" />
+    <Compile Include="DataBase\Module_Sale\FeeDAO.cs" />
+    <Compile Include="DataBase\Module_Sale\InvoiceDAO.cs" />
     <Compile Include="DataBase\Module_Sale\OrderSaleDAO.cs" />
     <Compile Include="DataBase\Module_Sale\OrderSaleDetailDAO.cs" />
-    <Compile Include="DataBase\Module_Sale\StateOrderSaleDAO.cs" />
     <Compile Include="DataBase\Module_Stock\ComponentDAO.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDAO.cs" />
     <Compile Include="DataBase\Module_Stock\MovementProductDetailDAO.cs" />
@@ -222,10 +224,14 @@
     <Compile Include="DataBase\Module_Stock\TransferDetailDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
     <Compile Include="DTO\Module_Sale\ClientDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoiceDetailsDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoiceDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoiceIn\InvoiceInDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoiceItemsDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoiceTaxDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDetailDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleListDTO.cs" />
-    <Compile Include="DTO\Module_Sale\StateOrderSaleDTO.cs" />
     <Compile Include="DTO\Module_Stock\ComponentDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\MovementProductDTO.cs" />
@@ -243,32 +249,30 @@
     <Compile Include="DTO\Module_Stock\StockDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDTO.cs" />
+    <Compile Include="DTO\ProductQuantityDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005221302527_Initial.cs" />
-    <Compile Include="Migrations\202005221302527_Initial.Designer.cs">
-      <DependentUpon>202005221302527_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202006010344249_Initial.cs" />
+    <Compile Include="Migrations\202006010344249_Initial.Designer.cs">
+      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
     <Compile Include="Models\Module_Sale\Client.cs" />
-    <Compile Include="Models\Module_Sale\Credit.cs" />
+    <Compile Include="Models\Module_Sale\Debt.cs" />
     <Compile Include="Models\Module_Sale\Income.cs" />
-    <Compile Include="Models\Module_Sale\FeeCredit.cs" />
-    <Compile Include="Models\Module_Sale\IncomeDeadline.cs" />
-    <Compile Include="Models\Module_Sale\IncomeDetail.cs" />
+    <Compile Include="Models\Module_Sale\Fee.cs" />
+    <Compile Include="Models\Module_Sale\IncomeFee.cs" />
     <Compile Include="Models\Module_Sale\IncomeType.cs" />
     <Compile Include="Models\Module_Sale\Invoice.cs" />
     <Compile Include="Models\Module_Sale\InvoiceItem.cs" />
+    <Compile Include="Models\Module_Sale\InvoiceTax.cs" />
     <Compile Include="Models\Module_Sale\OrderSale.cs" />
     <Compile Include="Models\Module_Sale\OrderSaleDetail.cs" />
-    <Compile Include="Models\Module_Sale\PaymentTerm.cs" />
     <Compile Include="Models\Module_Sale\Receipt.cs" />
     <Compile Include="Models\Module_Sale\ReceiptDetail.cs" />
-    <Compile Include="Models\Module_Sale\StateInvoice.cs" />
-    <Compile Include="Models\Module_Sale\StateOrderSale.cs" />
-    <Compile Include="Models\Module_Stock\IVA.cs" />
+    <Compile Include="Models\Module_Stock\Tax.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
     <Compile Include="Models\Module_Stock\PurchaseOrder.cs" />
     <Compile Include="Models\Module_Stock\PurchaseOrderDetail.cs" />
@@ -349,6 +353,7 @@
     <Folder Include="Views\Employees\" />
     <Folder Include="Views\EntSalProductDetails\" />
     <Folder Include="Views\EntSalProducts\" />
+    <Folder Include="Views\Invoices\" />
     <Folder Include="Views\MovementDetails\" />
     <Folder Include="Views\MovementMotives\" />
     <Folder Include="Views\Movements\" />
@@ -399,8 +404,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005221302527_Initial.resx">
-      <DependentUpon>202005221302527_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006010344249_Initial.resx">
+      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

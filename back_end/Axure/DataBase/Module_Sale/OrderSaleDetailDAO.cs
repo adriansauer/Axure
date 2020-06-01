@@ -21,7 +21,7 @@ namespace Axure.DataBase.Module_Sale
             {
                 using (var db = new AxureContext())
                 {
-                    db.OrderSaleDetails.Add(new OrderSaleDetail() {SaleOrderId = sod.OrderSaleId, ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0, Deleted = false });
+                    db.OrderSaleDetails.Add(new OrderSaleDetail() {SaleOrderId = sod.OrderSaleId, ProductId = sod.ProductId, Quantity = sod.Quantity, QuantityPending = 0 });
                     db.SaveChanges();
                     return true;
                 }
@@ -105,26 +105,6 @@ namespace Axure.DataBase.Module_Sale
             catch (Exception e)
             {
                 log.Error("Error al actualizar la cantidad pendiente de articulos en el detalle de la orden de venta con Id " + osId + " OrderSaleDetailDAO" + e.Message + e.StackTrace);
-                return false;
-            }
-        }
-
-        //borrado ocioso
-        public bool Remove(int id)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    OrderSaleDetail bajar = db.OrderSaleDetails.FirstOrDefault(x => x.Id == id);
-                    bajar.Deleted = true;
-                    db.SaveChanges();
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                log.Error("Error al remover el detalle de la orden de venta con Id " + id +" OrderSaleDetailDAO" + e.Message + e.StackTrace);
                 return false;
             }
         }
