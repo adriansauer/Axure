@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Axure.DTO.Module_Sale.InvoiceIn
+namespace Axure.DTO
 {
-    public class ItemInDTO
+    public class ProductQuantityDTO
     {
-        //Product
+        //Unique identifier.
+        public int Id { get; set; }
+
+        //Product to be produced
         public int ProductId { get; set; }
 
-        //Product quantity.
+        //Quantity to be produced.
         public int Quantity { get; set; }
     }
 }

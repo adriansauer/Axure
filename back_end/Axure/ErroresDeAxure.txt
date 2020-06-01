@@ -116,3 +116,18 @@
 2020-05-27 15:51:34,121 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 100-00-09999 Add OrderSaleDAO
 2020-05-28 23:15:06,927 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
 2020-05-28 23:19:08,596 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:46:49,733 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:48:17,906 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:48:41,824 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:49:09,009 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:52:28,661 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:53:01,367 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:53:18,396 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 21:59:52,907 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:21:17,571 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:21:23,940 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:21:54,812 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:21:58,794 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:22:34,853 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:24:35,558 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-05-31 22:26:07,024 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!

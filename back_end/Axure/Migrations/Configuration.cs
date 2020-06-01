@@ -141,7 +141,8 @@ namespace Axure.Migrations
                 new Stock { Id = 19, ProductId = 2, DepositId = 3, Quantity = 3 },
                 new Stock { Id = 20, ProductId = 3, DepositId = 3, Quantity = 3 },
                 new Stock { Id = 21, ProductId = 5, DepositId = 3, Quantity = 2 },
-                new Stock { Id = 22, ProductId = 9, DepositId = 3, Quantity = 2 }
+                new Stock { Id = 22, ProductId = 9, DepositId = 3, Quantity = 2 },
+                new Stock { Id = 23, ProductId = 22, DepositId = 3, Quantity = 2 }
                 );
 
             //Providers the raw material.

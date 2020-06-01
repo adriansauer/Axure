@@ -57,7 +57,9 @@ namespace Axure.Controllers.Module_Sale
         {
             try
             {
-                if (this.invoiceDAO.Add(invoiceDTO) == true) return new HttpStatusCodeResult(200);
+                List<int> listProduct= this.invoiceDAO.Add(invoiceDTO);
+                if (listProduct.Count != null) 
+                    return Json(listProduct, JsonRequestBehavior.AllowGet);
                 else return new HttpStatusCodeResult(406);
             }
             catch (Exception e)

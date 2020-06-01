@@ -1,4 +1,5 @@
 ﻿using Axure.DataBase.Module_Stock;
+using Axure.DTO;
 using Axure.DTO.Module_Sale;
 using Axure.DTO.Module_Sale.InvoiceIn;
 using Axure.DTO.Module_Stock;
@@ -161,15 +162,25 @@ namespace Axure.DataBase.Module_Sale
             }
         }
 
-        public bool Add(InvoiceInDTO data)
+        public List<int> Add(InvoiceInDTO data)
         {
 
             using (var db = new AxureContext())
             {
                 using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
+                    List<int> ListProductError = new List<int>();
                     try
                     {
+                        //Verifications.
+                        OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
+                        List<int> listNotExitentProducts = verficationProducts(orderSaleDetailDAO.ListByMaster(data.OrderSaleId),data.ListItems);
+                        if(listNotExitentProducts.Count > 0)
+                        {
+                            ListProductError = listNotExitentProducts;
+                            throw new System.IndexOutOfRangeException();
+                        }
+
                         ClientDAO clientDAO = new ClientDAO();
                         ProductDAO productDAO = new ProductDAO();
                         ClientDTO client = clientDAO.Detail(data.ClientId);
@@ -208,44 +219,91 @@ namespace Axure.DataBase.Module_Sale
                                     Quantity = data.ListItems[i].Quantity,
                                     Total = data.ListItems[i].Quantity * producto.Price,
                                     TaxQuantity = producto.Tax.Quantity,
-                                    TaxTotal = 1
+                                    TaxTotal = 0
                                 };
+                                double tax = invoiceItem.Total - ((double)invoiceItem.Total / (((double)producto.Tax.Quantity / 100) + 1));
+                                invoiceItem.TaxTotal = (int)tax;
+
                                 db.InvoiceItems.Add(invoiceItem);
                                 db.SaveChanges();
 
+                                //Head modify.
                                 invoice.Total += invoiceItem.Total;
+                                invoice.TaxTotal += invoiceItem.TaxTotal;
 
+                                //Tax creation.
                                 int index = searchTax(invoiceTaxes, producto.Tax.Quantity);
                                 if(-1 == index)
                                 {
-                                    invoiceTaxes.Add(new InvoiceTax() { InvoiceId = invoice.Id, TaxId = producto.TaxId, Amount = invoiceItem.Total, TaxPercentage = producto.Tax.Quantity });
+                                    invoiceTaxes.Add(new InvoiceTax() { InvoiceId = invoice.Id, TaxId = producto.TaxId, Amount = invoiceItem.TaxTotal, TaxPercentage = producto.Tax.Quantity });
                                 }
                                 else
                                 {
-                                    invoiceTaxes[index].Amount += invoiceItem.Total;
+                                    invoiceTaxes[index].Amount += invoiceItem.TaxTotal;
                                 }
                             }
 
-                            for(int i = 0; i < invoiceTaxes.Count; i++){
+                            //Modified of the order sale.
+                            OrderSaleDAO orderSaleDAO = new OrderSaleDAO();
+                            if (!orderSaleDAO.ModifyProductsQuantity(invoice.OrderSaleId, data.ListItems))
+                            {
+                                throw new System.Exception();
+                            }
+
+                            for (int i = 0; i < invoiceTaxes.Count; i++){
                                 db.InvoiceTaxes.Add(invoiceTaxes[i]);
-                                invoice.TaxTotal += invoiceTaxes[i].Amount;
-                            }                           
+                            }
+
+                            //Modification of the stock.
+                            StockDAO stockDAO = new StockDAO();
+                            SettingDAO settingDAO = new SettingDAO();
+                            if (stockDAO.DecreaseProductsQuantity(data.ListItems, int.Parse(settingDAO.Get("ID_DEPOSIT_SALE"))))
+                            {
+                                throw new System.Exception();
+                            }
                         }
                         db.SaveChanges();
 
                         //Everything went well.
                         dbContextTransaction.Commit();
-                        return true;
+                        return ListProductError;
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return ListProductError;
                     }
                     catch (Exception e)
                     {
                         dbContextTransaction.Rollback();
                         log.Error("Error al agregar una factura!!!");
-                        return false;
+                        return null;
                     }
                 }
             }
 
+        }
+
+        private List<int> verficationProducts(List<OrderSaleDetailDTO> listOrderDetails, List<ProductQuantityDTO> listInvoiceItems)
+        {
+            try
+            {
+                //Verifier in the order sale.
+                OrderSaleDAO orderSaleDAO = new OrderSaleDAO();
+                List<int> listNotExitentProducts;
+                listNotExitentProducts = orderSaleDAO.verificationProductQuantity(listOrderDetails, listInvoiceItems);
+                if (listNotExitentProducts.Count > 0)
+                {
+                    return listNotExitentProducts;
+                }
+                //Verifier in the deposit sale.
+                StockDAO stockDAO = new StockDAO();
+                SettingDAO settingDAO = new SettingDAO();
+                listNotExitentProducts = stockDAO.CheckStock(listInvoiceItems, int.Parse(settingDAO.Get("ID_DEPOSIT_SALE")));
+                return listNotExitentProducts;               
+            }catch(Exception e)
+            {
+                return null;
+            }         
         }
 
         private int searchTax(List<InvoiceTax> invoiceTaxes, int percentage)
@@ -259,6 +317,7 @@ namespace Axure.DataBase.Module_Sale
             }
             return -1;
         }
+
 
         //cambiar estado
        /* public bool UpdateState(int osId, string status)

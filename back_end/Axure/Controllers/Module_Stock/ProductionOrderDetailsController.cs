@@ -79,28 +79,6 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
-        // POST: ProductionOrderDetails/Create
-        [HttpPost]
-        [Route("Create")]
-        public ActionResult Create(ProductionOrderDetailDTO pod)
-        {
-            try
-            {
-                if (this.productionOrderDetailDAO.Add(pod))
-                {
-                    return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
-                }
-                else
-                {
-                    return new HttpStatusCodeResult(CodeHTTP.OK);
-                }
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
-            }
-        }
-
         // POST: ProductionOrderDetails/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]

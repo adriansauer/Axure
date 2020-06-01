@@ -30,6 +30,6 @@ namespace Axure.DTO.Module_Stock
         //Observations.
         public string Observation { get; set; }
        
-        public List<ProductionOrderDetailDTO> ListDetails { get; set; }
+        public List<ProductQuantityDTO> ListDetails { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Axure.DTO.Module_Stock;
+﻿using Axure.DTO;
+using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
 using System;
@@ -126,15 +127,14 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
-        public List<int> CheckStock (List<ProductionOrderDetailDTO> listDetails, int idDeposit)
+        public List<int> CheckStock (List<ProductQuantityDTO> listDetails, int idDeposit)
         {
             try
             {
                 List<int> notStock = new List<int>();
                 SettingDAO settingDAO = new SettingDAO();
                 for (int i = 0; i < listDetails.Count; i++)
-                {
-                    
+                {                   
                     int cant = ProductQuantity(listDetails[i].ProductId, new Deposit{ Id = idDeposit });
                     if (listDetails[i].Quantity > cant) { notStock.Add(listDetails[i].ProductId); }
                 }
@@ -162,6 +162,37 @@ namespace Axure.DataBase.Module_Stock
             catch
             {
                 return false;//retorna false si no pudo realizar la actualizacion
+            }
+        }
+
+        public bool DecreaseProductsQuantity(List<ProductQuantityDTO> listItems, int idDeposit)
+        {
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach(ProductQuantityDTO product in listItems)
+                        {
+                            Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == product.ProductId && x.DepositId == idDeposit);
+                            int newQuantity = st.Quantity - product.Quantity;
+                            if(newQuantity < 0)
+                            {
+                                throw new System.Exception();
+                            }
+                            st.Quantity = newQuantity;
+                            db.SaveChanges();
+                        }
+                        dbContextTransaction.Commit();
+                        return false;
+                    }
+                    catch (Exception e)
+                    {
+                        dbContextTransaction.Rollback();
+                        return true;
+                    }
+                }
             }
         }
     }
