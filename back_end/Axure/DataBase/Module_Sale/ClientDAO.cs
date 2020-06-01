@@ -25,9 +25,9 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {
                     var respuesta = db.Clients.Where(x => x.Deleted == false)
-                        .Select(x => new { Id = x.Id, Name = x.Name, Address = x.Address, RUC = x.RUC, CreditMaximum = x.CreditMaximum, CreditPending = x.CreditPending })
+                        .Select(x => new { Id = x.Id, Name = x.Name, Address = x.Address, Phone = x.Phone, RUC = x.RUC, CreditMaximum = x.CreditMaximum, CreditPending = x.CreditPending })
                         .ToList()
-                        .Select(y => new ClientDTO() { Id = y.Id, Name = y.Name, Address = y.Address, RUC = y.RUC, CreditMaximum = y.CreditMaximum, CreditPending = y.CreditPending })
+                        .Select(y => new ClientDTO() { Id = y.Id, Name = y.Name, Address = y.Address, Phone = y.Phone, RUC = y.RUC, CreditMaximum = y.CreditMaximum, CreditPending = y.CreditPending })
                         .ToList();
                     return respuesta;
                 }
@@ -45,7 +45,7 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {
                     var client = db.Clients.FirstOrDefault(x => x.Id == id && x.Deleted == false);
-                    return new ClientDTO() { Id = client.Id, Name = client.Name, Address = client.Address, RUC = client.RUC, CreditMaximum = client.CreditMaximum, CreditPending = client.CreditPending };
+                    return new ClientDTO() { Id = client.Id, Name = client.Name, Address = client.Address, Phone = client.Phone, RUC = client.RUC, CreditMaximum = client.CreditMaximum, CreditPending = client.CreditPending };
                 }
             }
             catch
@@ -60,7 +60,7 @@ namespace Axure.DataBase.Module_Sale
             {
                 using (var db = new AxureContext())
                 {
-                    db.Clients.Add(new Client { Name = c.Name, Address = c.Address, RUC = c.RUC, CreditMaximum = c.CreditMaximum, CreditPending = 0, Deleted = false });
+                    db.Clients.Add(new Client { Name = c.Name, Address = c.Address,Phone = c.Phone, RUC = c.RUC, CreditMaximum = c.CreditMaximum, CreditPending = 0, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -82,6 +82,7 @@ namespace Axure.DataBase.Module_Sale
                     clienEditado.Address = c.Address;
                     clienEditado.RUC = c.RUC;
                     clienEditado.CreditMaximum = c.CreditMaximum;
+                    clienEditado.Phone = c.Phone;
                     db.SaveChanges();
                     return false;
                 }
