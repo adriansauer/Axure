@@ -20,6 +20,9 @@ namespace Axure.DTO.Module_Sale
         //Client address.
         public string Address { get; set; }
 
+        //Client phone.
+        public string Phone { get; set; }
+
         //Client number RUC.
         public string RUC { get; set; }
 
