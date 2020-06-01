@@ -1,4 +1,6 @@
-﻿using Axure.DTO.Module_Sale;
+﻿using Axure.DTO;
+using Axure.DTO.Module_Sale;
+using Axure.DTO.Module_Sale.InvoiceIn;
 using Axure.Models;
 using Axure.Models.Module_Sale;
 using Microsoft.Ajax.Utilities;
@@ -221,6 +223,119 @@ namespace Axure.DataBase.Module_Sale
             {
                 log.Error("No se puede modificar el estado de la orden. " + e.Message + e.StackTrace);
                 return false;
+            }
+        }
+
+        ///<summary>
+        ///Verifies of product quantity for the sale and creation the invoice.
+        ///</summary>
+        ///<param name="listInvoiceItems">List of invoice items</param>
+        ///<param name="listOrderDetails">List of order sale details</param>
+        ///<returns></returns>
+        public List<int> verificationProductQuantity(List<OrderSaleDetailDTO> listOrderDetails, List<ProductQuantityDTO> listInvoiceItems)
+        {
+            try
+            {
+                List<int> listNotExitentProducts = new List<int>();
+                foreach(ProductQuantityDTO item in listInvoiceItems)
+                {
+                    bool exists = false; 
+                    foreach(OrderSaleDetailDTO orderItem in listOrderDetails)
+                    {
+                        if(orderItem.ProductId == item.ProductId)
+                        {
+                            if(orderItem.QuantityPending >= item.Quantity)
+                            {
+                                exists = true;
+                            }
+                            else
+                            {
+                                listNotExitentProducts.Add(item.ProductId);
+                                exists = true;
+                            }
+                        }
+                    }
+                    if (!exists)
+                    {
+                        return null;
+                    }
+                }
+                return listNotExitentProducts;
+            }catch(Exception e)
+            {
+                log.Error("Error. No se pudo controlar la cantidad de los productos de una orden de venta" + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        public bool ModifyProductsQuantity(int idOrder, List<ProductQuantityDTO> listItems)
+        {      
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
+                        List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
+                        foreach (ProductQuantityDTO listItem in listItems)
+                        {
+                            foreach (OrderSaleDetailDTO orderItem in orderItems)
+                            {
+                                if (listItem.ProductId == orderItem.ProductId)
+                                {
+                                    int newQuantity = orderItem.QuantityPending - listItem.Quantity;
+                                    if (newQuantity < 0)
+                                    {
+                                        return false;
+                                    }
+                                    OrderSaleDetail os = db.OrderSaleDetails.FirstOrDefault(x => x.Id == orderItem.Id);
+                                    os.QuantityPending = newQuantity;
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        //Everything went well.
+                        dbContextTransaction.Commit();
+
+                        if (CheckStatusProcess(idOrder))
+                        {
+                            throw new System.Exception();
+                        }
+                        return true;
+                    }
+                    catch (Exception e) { 
+                        dbContextTransaction.Rollback();
+                        log.Error("Error al agregar una factura!!!");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        private bool CheckStatusProcess(int idOrder)
+        {
+            using (var db = new AxureContext())
+            {
+                try
+                {
+                    OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
+                    List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
+                    foreach (OrderSaleDetailDTO orderItem in orderItems)
+                    { 
+                        if(orderItem.QuantityPending > 0)
+                        {
+                            UpdateState(idOrder, StatusOrderSale.Procesando.ToString());
+                            return false;
+                        }
+                    }
+                    UpdateState(idOrder, StatusOrderSale.Completado.ToString());
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    return true;
+                }
             }
         }
     }

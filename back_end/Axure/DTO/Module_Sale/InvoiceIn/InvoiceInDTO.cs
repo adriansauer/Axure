@@ -30,7 +30,7 @@ namespace Axure.DTO.Module_Sale.InvoiceIn
         public int Month { get; set; }
         public int Year { get; set; }
 
-        public List<ItemInDTO> ListItems { get; set; }
+        public List<ProductQuantityDTO> ListItems { get; set; }
 
     }
 }

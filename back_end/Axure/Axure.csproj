@@ -227,7 +227,6 @@
     <Compile Include="DTO\Module_Sale\InvoiceDetailsDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceIn\InvoiceInDTO.cs" />
-    <Compile Include="DTO\Module_Sale\InvoiceIn\ItemInDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceItemsDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceTaxDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDTO.cs" />
@@ -250,12 +249,13 @@
     <Compile Include="DTO\Module_Stock\StockDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDetailDTO.cs" />
     <Compile Include="DTO\Module_Stock\TransferDTO.cs" />
+    <Compile Include="DTO\ProductQuantityDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005290251295_Initial.cs" />
-    <Compile Include="Migrations\202005290251295_Initial.Designer.cs">
-      <DependentUpon>202005290251295_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202006010344249_Initial.cs" />
+    <Compile Include="Migrations\202006010344249_Initial.Designer.cs">
+      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -404,8 +404,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005290251295_Initial.resx">
-      <DependentUpon>202005290251295_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006010344249_Initial.resx">
+      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
