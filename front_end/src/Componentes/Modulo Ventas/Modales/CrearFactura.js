@@ -75,7 +75,7 @@ printDiv(nombreDiv) {
                             {p.ProductName} {p.ProductDescription}
                           </td>
                         
-                    <td>{p.Cost}</td>
+                    <td>{p.Price}</td>
                           
                         </tr>
                       ))

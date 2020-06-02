@@ -40,6 +40,7 @@ class AgregarCliente extends Component {
         Address: this.state.direccion,
         RUC: this.state.ruc,
         CreditMaximum:parseInt(this.state.creditomax) ,
+        Phone:this.state.telefono
       };
       try {
         const request = await api.clientes.create(cliente);

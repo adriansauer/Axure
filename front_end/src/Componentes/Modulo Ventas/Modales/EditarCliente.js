@@ -49,6 +49,7 @@ class EditarCliente extends Component {
           /* Phone: document.getElementById("phone").value,*/
           RUC: document.getElementById("ruc").value,
           CreditMaximum: document.getElementById("creditomax").value,
+          Phone:document.getElementById("telefono").value,
         });
         if (request.status === 200) {
           notify("Cliente editado exitosamente", "success");
@@ -58,6 +59,7 @@ class EditarCliente extends Component {
             ruc: "",
             direccion: "",
             creditomax: "",
+            
           });
           this.props.ocultar();
         } else {
@@ -114,6 +116,7 @@ class EditarCliente extends Component {
                   className="form-control"
                   placeholder="Telefono"
                   maxLength="200"
+                  defaultValue={this.props.cliente.Phone}
                   /* defaultValue={this.props.cliente.Phone}*/
                 />
               </div>

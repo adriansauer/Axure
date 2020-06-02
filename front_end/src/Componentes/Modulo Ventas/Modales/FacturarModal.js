@@ -45,9 +45,9 @@ class FacturarModal extends Component {
             IVAid:this.state.productos
             .filter((p) => p.Id === d.ProductId)
             .map((p) => p.IVAid)[0],
-            Cost:this.state.productos
+            Price:this.state.productos
             .filter((p) => p.Id === d.ProductId)
-            .map((p) => p.Cost)[0],
+            .map((p) => p.Price)[0],
             Cantidad: "0",
             ProductName: this.state.productos
               .filter((p) => p.Id === d.ProductId)
@@ -69,7 +69,7 @@ class FacturarModal extends Component {
         QuantityPending: d.QuantityPending,
         ProductId: d.ProductId,
         IVAid:d.IVAid,
-        Cost:d.Cost,
+        Price:d.Price,
         Cantidad: e.target.value,
         ProductName: this.state.productos
           .filter((p) => p.Id === d.ProductId)
@@ -85,7 +85,7 @@ class FacturarModal extends Component {
   }
   validar(){
     const detalles=this.state.detalles.map(p=>{
-      if((p.Quantity - p.QuantityPending)>=p.Cantidad){
+      if((p.QuantityPending)>=p.Cantidad){
         return true;
       }else{
         return false;
@@ -118,7 +118,6 @@ if(detalles2.indexOf(true)>-1){
  async  facturar() {
     if(this.validar()){
        const productos=await this.state.detalles.filter(p=>p.Cantidad!=="0");
-       console.log(productos);
       const clientes=await api.clientes.get();
       await this.setState({productosSeleccionados:productos,cliente:clientes.data.filter(c=>c.Id===this.props.orden.ClientId).map(c=>c)[0]})
       this.props.ocultar();
@@ -162,7 +161,7 @@ if(detalles2.indexOf(true)>-1){
                             {p.ProductName} {p.ProductDescription}
                           </td>
                           <td>{p.Quantity}</td>
-                          <td>{p.Quantity - p.QuantityPending}</td>
+                          <td>{p.QuantityPending}</td>
                           <td>
                             <input
                               type="text"
