@@ -228,6 +228,9 @@
     <Compile Include="DTO\Module_Sale\InvoiceDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceIn\InvoiceInDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceItemsDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoicePreCreation\IncoiceItemPreCreationDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoicePreCreation\InvoiceInPreCreationDTO.cs" />
+    <Compile Include="DTO\Module_Sale\InvoicePreCreation\InvoiceOutPreCreationDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceTaxDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDTO.cs" />
     <Compile Include="DTO\Module_Sale\OrderSaleDetailDTO.cs" />

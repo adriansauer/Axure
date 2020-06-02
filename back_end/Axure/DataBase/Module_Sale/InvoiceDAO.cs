@@ -2,6 +2,7 @@
 using Axure.DTO;
 using Axure.DTO.Module_Sale;
 using Axure.DTO.Module_Sale.InvoiceIn;
+using Axure.DTO.Module_Sale.InvoicePreCreation;
 using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Sale;
@@ -161,6 +162,109 @@ namespace Axure.DataBase.Module_Sale
                 return null;
             }
         }
+
+        public InvoiceOutPreCreationDTO Validate(InvoiceInPreCreationDTO inData)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    OrderSaleDAO orderSaleDAO = new OrderSaleDAO();
+                    ClientDAO clientDAO = new ClientDAO();
+                    EmployeeDAO employeeDAO = new EmployeeDAO();
+                    OrderSaleListDTO orderSaleDTO = orderSaleDAO.GetById(inData.OrderSaleId);
+                    ClientDTO clientDTO = clientDAO.Detail(orderSaleDTO.ClientId);
+                    EmployeeDTO employeeDTO = employeeDAO.Detail(inData.EmployeeId);
+
+                    InvoiceOutPreCreationDTO invoiceOutPreCreationDTO = new InvoiceOutPreCreationDTO()
+                    {
+                        OrderSaleNumber = orderSaleDTO.OrderNumber,
+                        EmployeeDTO = employeeDTO,
+                        ClientDTO = clientDTO,
+                        SaleCondition = inData.SaleCondition,
+                        InvoiceNumber = "",
+                        ValidationCode = 0,
+                        Day = inData.Day,
+                        Month = inData.Month,
+                        Year = inData.Year,
+                        TaxTotal = 0,
+                        Total = 0
+                    };
+
+                    //Verifier in the deposit sale.
+                    StockDAO stockDAO = new StockDAO();
+                    SettingDAO settingDAO = new SettingDAO();
+                    List<int> notStockProduct = stockDAO.CheckStock(inData.ListItems, int.Parse(settingDAO.Get("ID_DEPOSIT_SALE")));
+
+                    List<IncoiceItemPreCreationDTO> listItems = new List<IncoiceItemPreCreationDTO>();
+                    ProductDAO productDAO = new ProductDAO();
+
+                    foreach(ProductQuantityDTO item in inData.ListItems)
+                    {
+                        IncoiceItemPreCreationDTO invoiceItem = new IncoiceItemPreCreationDTO();
+                        //Product exists in the order sale.
+                        if (orderSaleDTO.ListDetails.Exists(x => x.ProductId == item.ProductId))
+                        {
+                            ProductDTO product = productDAO.Detail(item.ProductId);
+                            invoiceItem.Name = product.Name;
+                            invoiceItem.Description = product.Description;
+                            invoiceItem.QuantitySale = item.Quantity;
+                            invoiceItem.UnitPrice = product.Price;
+                            invoiceItem.Total = item.Quantity * product.Price;
+                            invoiceItem.TaxPercentage = product.TaxPercentage;
+                            double tax = invoiceItem.Total - ((double)invoiceItem.Total / (((double)product.TaxPercentage / 100) + 1));
+                            invoiceItem.Tax = (int)tax;
+                            invoiceItem.Barcode = product.Barcode;
+                            invoiceItem.CodeStatus = 0;
+
+                            //Head modify.
+                            invoiceOutPreCreationDTO.TaxTotal += invoiceItem.Tax;
+                            invoiceOutPreCreationDTO.Total += invoiceItem.Total;
+
+                            //Quantity order sale.
+                            foreach (OrderSaleDetailDTO productOrder in orderSaleDTO.ListDetails)
+                            {
+                                if (productOrder.ProductId == item.ProductId)
+                                {
+                                    if(productOrder.QuantityPending < item.Quantity || item.Quantity < 0)
+                                    {
+                                        invoiceItem.CodeStatus = 2;
+                                        invoiceOutPreCreationDTO.ValidationCode = 2;
+                                    }
+                                }
+                            }
+
+                            //Quantity in stock sale.
+                            if(notStockProduct.Exists(x => x == item.ProductId))
+                            {
+                                invoiceItem.CodeStatus = 3;
+                                invoiceOutPreCreationDTO.ValidationCode = 2;
+                            }
+                        }
+                        else
+                        {
+                            invoiceItem.CodeStatus = 1;
+                        }
+                        listItems.Add(invoiceItem);
+                    }
+
+                    invoiceOutPreCreationDTO.ListItems = listItems;
+
+                    if(invoiceOutPreCreationDTO.SaleCondition.Equals(SaleCondition.Credito.ToString()) && invoiceOutPreCreationDTO.Total > (clientDTO.CreditMaximum - clientDTO.CreditPending))
+                    {
+                        invoiceOutPreCreationDTO.ValidationCode = 1;
+                    }
+                    return invoiceOutPreCreationDTO;
+                }
+                
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
 
         public List<int> Add(InvoiceInDTO data)
         {
