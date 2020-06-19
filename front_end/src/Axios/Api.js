@@ -176,6 +176,23 @@ export default {
         method: "delete",
       }),
   },
+  factura:{
+    validate:(data)=>requestHelper({
+      url:"Invoices/Validate",
+      method:"post",
+      data:data,
+    }),
+    create:(data)=>requestHelper({
+      url:"Invoices/Create",
+      method:"post",
+      data
+    }),
+    get:()=>requestHelper({
+      url:"Invoices/List",
+      method:"get",
+    
+    })
+  },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL
 -	ID_DEPOSIT_PRODUCTION
