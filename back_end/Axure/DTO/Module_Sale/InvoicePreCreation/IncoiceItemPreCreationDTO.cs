@@ -11,6 +11,9 @@ namespace Axure.DTO.Module_Sale.InvoicePreCreation
         //Unique identifier
         public int Id { get; set; }
 
+        //Product Id
+        public int ProductId { get; set; }
+
         //Product name.
         public string Name { get; set; }
 
