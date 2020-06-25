@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {setSectionShow} from '../Redux/actions';
 import AsideProducto from './Modulo Productos/AsideProducto.js';
 import AsideVenta from './Modulo Ventas/AsideVenta.js';
+import AsideCompras from './Modulo Compras/AsideCompra.js';
 
 import './style.css';
 class Aside extends Component{
@@ -16,6 +17,7 @@ class Aside extends Component{
                     switch(this.props.modulo[0]) {
                         case 1:return <AsideProducto/>
                         case 2:return <AsideVenta/>
+                        case 3:return <AsideCompras/>
 
                         default: return <AsideProducto/>    
                         
