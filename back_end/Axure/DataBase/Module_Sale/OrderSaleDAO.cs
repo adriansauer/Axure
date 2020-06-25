@@ -1,4 +1,6 @@
-﻿using Axure.DTO.Module_Sale;
+﻿using Axure.DTO;
+using Axure.DTO.Module_Sale;
+using Axure.DTO.Module_Sale.InvoiceIn;
 using Axure.Models;
 using Axure.Models.Module_Sale;
 using Microsoft.Ajax.Utilities;
@@ -17,45 +19,6 @@ namespace Axure.DataBase.Module_Sale
 
         OrderSaleDetailDAO osdDAO = new OrderSaleDetailDAO();
 
-        public bool Add(OrderSaleListDTO so)
-        {
-            try
-            {
-                using (var db = new AxureContext())
-                {
-                    var state = db.Settings.SingleOrDefault(x => x.Key == "ID_PRODUCTION_STATE_PENDING");
-                    OrderSale soC = new OrderSale()
-                    {
-                        ClientId = so.ClientId,
-                        StateOrderSaleId = int.Parse(state.Value),
-                        OrderNumber = so.OrderNumber,
-                        Date = new DateTime(so.Year, so.Month, so.Day),
-                        EmployeeId = so.EmployeeId,
-                        Deleted = false
-                    };
-
-                    db.OrderSales.Add(soC);
-                    db.SaveChanges();
-
-                    OrderSaleDetailDAO soD = new OrderSaleDetailDAO();
-                    if (null != so.ListDetails)
-                    {
-                        for (int i = 0; i < so.ListDetails.Count; i++)
-                        {
-                            so.ListDetails[i].OrderSaleId = soC.Id;
-                            soD.Add(so.ListDetails[i]);
-                        }
-                    }
-                    return true;
-                }
-            }
-            catch(Exception e)
-            {
-                log.Error("Error al agregar orden de venta " + so.OrderNumber + " Add OrderSaleDAO");
-                return false;
-            }
-        }
-
         public List<OrderSaleDTO> List()
         {
             try
@@ -63,9 +26,9 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {
                     var ls = db.OrderSales.Where(x => x.Deleted == false)
-                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year, SellerId = x.EmployeeId, Deleted = x.Deleted })
+                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year, SellerId = x.EmployeeId })
                         .ToList()
-                        .Select(y => new OrderSaleDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, EmployeeId = y.SellerId })
+                        .Select(y => new OrderSaleDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, EmployeeId = y.SellerId })
                         .ToList();
                         return ls;
 
@@ -89,9 +52,9 @@ namespace Axure.DataBase.Module_Sale
                     List<OrderSale> osList = new List<OrderSale>();
                         os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
                         var osR = osList
-                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
                             .ToList()
-                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
                             .ToList();
 
                         return osR;
@@ -103,22 +66,22 @@ namespace Axure.DataBase.Module_Sale
                 return null;
             }
         }
-
+        
         //Ordenes por la cabecera
-        public List<OrderSaleListDTO> ListByState(int id)
+        public List<OrderSaleListDTO> ListByStatus(string status)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var os = db.OrderSales.Where(x => x.StateOrderSaleId == id && x.Deleted == false).ToList();
+                    var os = db.OrderSales.Where(x => x.Status.Equals(status) && x.Deleted == false).ToList();
                     List<OrderSale> osList = new List<OrderSale>();
                         os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
 
                         var osR = osList
-                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, StateOrderSaleId = x.StateOrderSaleId, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
+                            .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, EmployeeId = x.EmployeeId, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
                             .ToList()
-                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
+                            .Select(y => new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, ListDetails = osdDAO.ListByMaster(y.Id) })
                             .ToList();
 
                         return osR;
@@ -139,7 +102,7 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {
                     OrderSale y = db.OrderSales.Find(Id);// Single(x => x.Id == Id && x.Deleted == false);
-                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
                     
                 }
             }
@@ -158,7 +121,7 @@ namespace Axure.DataBase.Module_Sale
                 using (var db = new AxureContext())
                 {//preguntar por este comparacion entre cadenas de string
                     OrderSale y = db.OrderSales.FirstOrDefault(x => x.OrderNumber == number && x.Deleted == false);
-                        return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, StateOrderSaleId = y.StateOrderSaleId, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
+                        return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
                 }
             }
             catch (Exception e)
@@ -166,6 +129,61 @@ namespace Axure.DataBase.Module_Sale
                 log.Error("Error al Mostrar orden de venta por numero de orden. "+ e.Message + e.StackTrace);
                 return null;
             }
+        }
+
+        public List<string> GetAllStatus()
+        {
+            try
+            {
+                List<string> status = new List<string>();
+                foreach (string i in Enum.GetNames(typeof(StatusOrderSale)))
+                    status.Add(i);
+                return status;
+            }catch(Exception e)
+            {
+                log.Error("Error al Mostrar los estados de una orden de venta. " + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        public bool Add(OrderSaleListDTO so)
+        {
+
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        //Create the order sale.
+                        OrderSale soC = new OrderSale()
+                        { ClientId = so.ClientId, EmployeeId = so.EmployeeId, OrderNumber = so.OrderNumber, Date = new DateTime(so.Year, so.Month, so.Day), Status = StatusOrderSale.Pendiente.ToString(), Deleted = false };
+                        db.OrderSales.Add(soC);
+                        db.SaveChanges();
+
+                        //Add details.
+                        if (null != so.ListDetails)
+                        {
+                            for (int i = 0; i < so.ListDetails.Count; i++)
+                            {
+                                db.OrderSaleDetails.Add(new OrderSaleDetail() { SaleOrderId = soC.Id, ProductId = so.ListDetails[i].ProductId, Quantity = so.ListDetails[i].Quantity, QuantityPending = so.ListDetails[i].Quantity });
+                            }
+                        }
+                        db.SaveChanges();
+
+                        //Everything went well.
+                        dbContextTransaction.Commit();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        dbContextTransaction.Rollback();
+                        log.Error("Error al agregar orden de venta " + so.OrderNumber + " Add OrderSaleDAO");
+                        return false;
+                    }
+                }
+            }
+
         }
 
         //borrado ocioso
@@ -177,13 +195,6 @@ namespace Axure.DataBase.Module_Sale
                 {
                     OrderSale bajar = db.OrderSales.FirstOrDefault(x => x.Id == id);
                     bajar.Deleted = true;
-                    var osD = db.OrderSaleDetails.Where(x => x.SaleOrderId == id && x.Deleted == false).ToList();
-
-                    for (int i = 0; i < osD.Count; i++)
-                    {
-                        osD[i].Deleted = true;
-                    }
-
                     db.SaveChanges();
                     return true;
                 }
@@ -196,14 +207,14 @@ namespace Axure.DataBase.Module_Sale
         }
 
         //cambiar estado
-        public bool UpdateState(int osId, int stId)
+        public bool UpdateState(int osId, string status)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
                     OrderSale os = db.OrderSales.FirstOrDefault(x => x.Id == osId);
-                    os.StateOrderSaleId = stId;
+                    os.Status = status;
                     db.SaveChanges();
                     return true;
                 }
@@ -214,5 +225,126 @@ namespace Axure.DataBase.Module_Sale
                 return false;
             }
         }
+
+        ///<summary>
+        ///Verifies of product quantity for the sale and creation the invoice.
+        ///</summary>
+        ///<param name="listInvoiceItems">List of invoice items</param>
+        ///<param name="listOrderDetails">List of order sale details</param>
+        ///<returns></returns>
+        public List<int> verificationProductQuantity(List<OrderSaleDetailDTO> listOrderDetails, List<ProductQuantityDTO> listInvoiceItems)
+        {
+            try
+            {
+                List<int> listNotExitentProducts = new List<int>();
+                foreach(ProductQuantityDTO item in listInvoiceItems)
+                {
+                    bool exists = false; 
+                    foreach(OrderSaleDetailDTO orderItem in listOrderDetails)
+                    {
+                        if(orderItem.ProductId == item.ProductId)
+                        {
+                            if(orderItem.QuantityPending >= item.Quantity)
+                            {
+                                exists = true;
+                            }
+                            else
+                            {
+                                listNotExitentProducts.Add(item.ProductId);
+                                exists = true;
+                            }
+                        }
+                    }
+                    if (!exists)
+                    {
+                        return null;
+                    }
+                }
+                return listNotExitentProducts;
+            }catch(Exception e)
+            {
+                log.Error("Error. No se pudo controlar la cantidad de los productos de una orden de venta" + e.Message + e.StackTrace);
+                return null;
+            }
+        }
+
+        public bool ModifyProductsQuantity(int idOrder, List<ProductQuantityDTO> listItems)
+        {      
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
+                        List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
+                        foreach (ProductQuantityDTO listItem in listItems)
+                        {
+                            foreach (OrderSaleDetailDTO orderItem in orderItems)
+                            {
+                                if (listItem.ProductId == orderItem.ProductId)
+                                {
+                                    int newQuantity = orderItem.QuantityPending - listItem.Quantity;
+                                    if (newQuantity < 0)
+                                    {
+                                        return false;
+                                    }
+                                    OrderSaleDetail os = db.OrderSaleDetails.FirstOrDefault(x => x.Id == orderItem.Id);
+                                    os.QuantityPending = newQuantity;
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        //Everything went well.
+                        dbContextTransaction.Commit();
+
+                        if (CheckStatusProcess(idOrder))
+                        {
+                            throw new System.Exception();
+                        }
+                        return true;
+                    }
+                    catch (Exception e) { 
+                        dbContextTransaction.Rollback();
+                        log.Error("Error al agregar una factura!!!");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        private bool CheckStatusProcess(int idOrder)
+        {
+            using (var db = new AxureContext())
+            {
+                try
+                {
+                    OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
+                    List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
+                    foreach (OrderSaleDetailDTO orderItem in orderItems)
+                    { 
+                        if(orderItem.QuantityPending > 0)
+                        {
+                            UpdateState(idOrder, StatusOrderSale.Procesando.ToString());
+                            return false;
+                        }
+                    }
+                    UpdateState(idOrder, StatusOrderSale.Completado.ToString());
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    public enum StatusOrderSale
+    {
+        Pendiente,
+        Procesando,
+        Completado,
+        Cancelado
     }
 }

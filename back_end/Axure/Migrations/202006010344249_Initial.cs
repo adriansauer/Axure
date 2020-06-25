@@ -14,6 +14,7 @@ namespace Axure.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
                         Address = c.String(nullable: false, maxLength: 200),
+                        Phone = c.String(nullable: false, maxLength: 20),
                         RUC = c.String(nullable: false, maxLength: 20),
                         CreditMaximum = c.Int(nullable: false),
                         CreditPending = c.Int(nullable: false),
@@ -22,57 +23,41 @@ namespace Axure.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Credits",
+                "dbo.Debts",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         InvoiceId = c.Int(nullable: false),
-                        IncomeDeadlineId = c.Int(nullable: false),
                         FeeQuantity = c.Int(nullable: false),
+                        RemainingDebt = c.Int(nullable: false),
+                        FeeType = c.String(nullable: false, maxLength: 20),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.IncomeDeadlines", t => t.IncomeDeadlineId)
                 .ForeignKey("dbo.Invoices", t => t.InvoiceId)
-                .Index(t => t.InvoiceId)
-                .Index(t => t.IncomeDeadlineId);
-            
-            CreateTable(
-                "dbo.IncomeDeadlines",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        MonthsQuantity = c.Int(nullable: false),
-                        Description = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+                .Index(t => t.InvoiceId);
             
             CreateTable(
                 "dbo.Invoices",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        StateInvoiceId = c.Int(nullable: false),
-                        PaymentTermId = c.Int(nullable: false),
                         OrderSaleId = c.Int(nullable: false),
                         EmployeeId = c.Int(nullable: false),
                         ClientId = c.Int(nullable: false),
+                        SaleCondition = c.String(maxLength: 20),
+                        Status = c.String(maxLength: 20),
                         InvoiceNumber = c.String(maxLength: 20),
                         ClientName = c.String(nullable: false, maxLength: 100),
                         ClientRUC = c.String(nullable: false, maxLength: 20),
                         ClientAddress = c.String(nullable: false, maxLength: 200),
+                        Date = c.DateTime(nullable: false),
                         Total = c.Int(nullable: false),
-                        TotalIVA10 = c.Int(nullable: false),
-                        TotalIVA5 = c.Int(nullable: false),
-                        TotalExempt = c.String(nullable: false),
+                        TaxTotal = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Clients", t => t.ClientId)
                 .ForeignKey("dbo.Employees", t => t.EmployeeId)
                 .ForeignKey("dbo.OrderSales", t => t.OrderSaleId)
-                .ForeignKey("dbo.PaymentTerms", t => t.PaymentTermId)
-                .ForeignKey("dbo.StateInvoices", t => t.StateInvoiceId)
-                .Index(t => t.StateInvoiceId)
-                .Index(t => t.PaymentTermId)
                 .Index(t => t.OrderSaleId)
                 .Index(t => t.EmployeeId)
                 .Index(t => t.ClientId);
@@ -97,8 +82,8 @@ namespace Axure.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ClientId = c.Int(nullable: false),
-                        StateOrderSaleId = c.Int(nullable: false),
                         EmployeeId = c.Int(nullable: false),
+                        Status = c.String(nullable: false, maxLength: 20),
                         OrderNumber = c.String(nullable: false, maxLength: 20),
                         Date = c.DateTime(nullable: false),
                         Deleted = c.Boolean(nullable: false),
@@ -106,39 +91,8 @@ namespace Axure.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Clients", t => t.ClientId)
                 .ForeignKey("dbo.Employees", t => t.EmployeeId)
-                .ForeignKey("dbo.StateOrderSales", t => t.StateOrderSaleId)
                 .Index(t => t.ClientId)
-                .Index(t => t.StateOrderSaleId)
                 .Index(t => t.EmployeeId);
-            
-            CreateTable(
-                "dbo.StateOrderSales",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Description = c.String(nullable: false, maxLength: 50),
-                        Deleted = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.PaymentTerms",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Description = c.String(nullable: false, maxLength: 20),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.StateInvoices",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Description = c.String(nullable: false, maxLength: 50),
-                        Deleted = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Deposits",
@@ -150,33 +104,34 @@ namespace Axure.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.FeeCredits",
+                "dbo.Fees",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        CreditId = c.Int(nullable: false),
+                        DebtId = c.Int(nullable: false),
                         FeeNumber = c.Int(nullable: false),
                         Amount = c.Int(nullable: false),
                         PaymentDate = c.DateTime(nullable: false),
                         ExpirationDate = c.DateTime(nullable: false),
+                        Status = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Credits", t => t.CreditId)
-                .Index(t => t.CreditId);
+                .ForeignKey("dbo.Debts", t => t.DebtId)
+                .Index(t => t.DebtId);
             
             CreateTable(
-                "dbo.IncomeDetails",
+                "dbo.IncomeFees",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FeeCreditId = c.Int(nullable: false),
+                        FeeId = c.Int(nullable: false),
                         IncomeTypeId = c.Int(nullable: false),
                         Amount = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.FeeCredits", t => t.FeeCreditId)
+                .ForeignKey("dbo.Fees", t => t.FeeId)
                 .ForeignKey("dbo.IncomeTypes", t => t.IncomeTypeId)
-                .Index(t => t.FeeCreditId)
+                .Index(t => t.FeeId)
                 .Index(t => t.IncomeTypeId);
             
             CreateTable(
@@ -212,12 +167,11 @@ namespace Axure.Migrations
                         InvoiceId = c.Int(nullable: false),
                         ProductId = c.Int(nullable: false),
                         ProductName = c.String(nullable: false, maxLength: 100),
-                        PricePurchase = c.Int(nullable: false),
                         PriceUnit = c.Int(nullable: false),
                         Quantity = c.Int(nullable: false),
                         Total = c.Int(nullable: false),
-                        IVAQuantity = c.Int(nullable: false),
-                        IVATotal = c.Int(nullable: false),
+                        TaxQuantity = c.Int(nullable: false),
+                        TaxTotal = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Invoices", t => t.InvoiceId)
@@ -231,30 +185,20 @@ namespace Axure.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ProductTypeId = c.Int(nullable: false),
-                        IVAId = c.Int(nullable: false),
+                        TaxId = c.Int(nullable: false),
                         Name = c.String(nullable: false, maxLength: 100),
                         Description = c.String(nullable: false, maxLength: 200),
                         Cost = c.Int(nullable: false),
+                        Price = c.Int(nullable: false),
                         QuantityMin = c.Int(nullable: false),
                         Barcode = c.String(maxLength: 20),
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.IVAs", t => t.IVAId)
                 .ForeignKey("dbo.ProductTypes", t => t.ProductTypeId)
+                .ForeignKey("dbo.Taxes", t => t.TaxId)
                 .Index(t => t.ProductTypeId)
-                .Index(t => t.IVAId);
-            
-            CreateTable(
-                "dbo.IVAs",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Quantity = c.Int(nullable: false),
-                        Description = c.String(nullable: false, maxLength: 10),
-                        Deleted = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+                .Index(t => t.TaxId);
             
             CreateTable(
                 "dbo.ProductTypes",
@@ -265,6 +209,33 @@ namespace Axure.Migrations
                         Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Taxes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Quantity = c.Int(nullable: false),
+                        Description = c.String(nullable: false, maxLength: 10),
+                        Deleted = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.InvoiceTaxes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        InvoiceId = c.Int(nullable: false),
+                        TaxId = c.Int(nullable: false),
+                        TaxPercentage = c.Int(nullable: false),
+                        Amount = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Invoices", t => t.InvoiceId)
+                .ForeignKey("dbo.Taxes", t => t.TaxId)
+                .Index(t => t.InvoiceId)
+                .Index(t => t.TaxId);
             
             CreateTable(
                 "dbo.MovementMotives",
@@ -336,7 +307,6 @@ namespace Axure.Migrations
                         ProductId = c.Int(nullable: false),
                         Quantity = c.Int(nullable: false),
                         QuantityPending = c.Int(nullable: false),
-                        Deleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.OrderSales", t => t.SaleOrderId)
@@ -454,15 +424,16 @@ namespace Axure.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ReceiptId = c.Int(nullable: false),
-                        FeeCreditId = c.Int(nullable: false),
+                        FeeId = c.Int(nullable: false),
                         InvoiceId = c.Int(nullable: false),
+                        Amount = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.FeeCredits", t => t.FeeCreditId)
+                .ForeignKey("dbo.Fees", t => t.FeeId)
                 .ForeignKey("dbo.Invoices", t => t.InvoiceId)
                 .ForeignKey("dbo.Receipts", t => t.ReceiptId)
                 .Index(t => t.ReceiptId)
-                .Index(t => t.FeeCreditId)
+                .Index(t => t.FeeId)
                 .Index(t => t.InvoiceId);
             
             CreateTable(
@@ -569,7 +540,7 @@ namespace Axure.Migrations
             DropForeignKey("dbo.ReceiptDetails", "ReceiptId", "dbo.Receipts");
             DropForeignKey("dbo.Receipts", "ClientId", "dbo.Clients");
             DropForeignKey("dbo.ReceiptDetails", "InvoiceId", "dbo.Invoices");
-            DropForeignKey("dbo.ReceiptDetails", "FeeCreditId", "dbo.FeeCredits");
+            DropForeignKey("dbo.ReceiptDetails", "FeeId", "dbo.Fees");
             DropForeignKey("dbo.PurchaseOrderDetails", "PurchaseOrderId", "dbo.PurchaseOrders");
             DropForeignKey("dbo.PurchaseOrders", "ProviderId", "dbo.Providers");
             DropForeignKey("dbo.PurchaseOrders", "EmployeeId", "dbo.Employees");
@@ -588,25 +559,23 @@ namespace Axure.Migrations
             DropForeignKey("dbo.MovementProducts", "EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.MovementProducts", "DepositId", "dbo.Deposits");
             DropForeignKey("dbo.MovementMotives", "MovementTypeId", "dbo.MovementTypes");
+            DropForeignKey("dbo.InvoiceTaxes", "TaxId", "dbo.Taxes");
+            DropForeignKey("dbo.InvoiceTaxes", "InvoiceId", "dbo.Invoices");
             DropForeignKey("dbo.InvoiceItems", "ProductId", "dbo.Products");
+            DropForeignKey("dbo.Products", "TaxId", "dbo.Taxes");
             DropForeignKey("dbo.Products", "ProductTypeId", "dbo.ProductTypes");
-            DropForeignKey("dbo.Products", "IVAId", "dbo.IVAs");
             DropForeignKey("dbo.InvoiceItems", "InvoiceId", "dbo.Invoices");
             DropForeignKey("dbo.Incomes", "InvoiceId", "dbo.Invoices");
             DropForeignKey("dbo.Incomes", "IncomeTypeId", "dbo.IncomeTypes");
-            DropForeignKey("dbo.IncomeDetails", "IncomeTypeId", "dbo.IncomeTypes");
-            DropForeignKey("dbo.IncomeDetails", "FeeCreditId", "dbo.FeeCredits");
-            DropForeignKey("dbo.FeeCredits", "CreditId", "dbo.Credits");
-            DropForeignKey("dbo.Credits", "InvoiceId", "dbo.Invoices");
-            DropForeignKey("dbo.Invoices", "StateInvoiceId", "dbo.StateInvoices");
-            DropForeignKey("dbo.Invoices", "PaymentTermId", "dbo.PaymentTerms");
+            DropForeignKey("dbo.IncomeFees", "IncomeTypeId", "dbo.IncomeTypes");
+            DropForeignKey("dbo.IncomeFees", "FeeId", "dbo.Fees");
+            DropForeignKey("dbo.Fees", "DebtId", "dbo.Debts");
+            DropForeignKey("dbo.Debts", "InvoiceId", "dbo.Invoices");
             DropForeignKey("dbo.Invoices", "OrderSaleId", "dbo.OrderSales");
-            DropForeignKey("dbo.OrderSales", "StateOrderSaleId", "dbo.StateOrderSales");
             DropForeignKey("dbo.OrderSales", "EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.OrderSales", "ClientId", "dbo.Clients");
             DropForeignKey("dbo.Invoices", "EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.Invoices", "ClientId", "dbo.Clients");
-            DropForeignKey("dbo.Credits", "IncomeDeadlineId", "dbo.IncomeDeadlines");
             DropIndex("dbo.Users", new[] { "IdEmployee" });
             DropIndex("dbo.Transfers", new[] { "DepositDestinationId" });
             DropIndex("dbo.Transfers", new[] { "DepositOriginId" });
@@ -616,7 +585,7 @@ namespace Axure.Migrations
             DropIndex("dbo.Stocks", new[] { "DepositId" });
             DropIndex("dbo.Receipts", new[] { "ClientId" });
             DropIndex("dbo.ReceiptDetails", new[] { "InvoiceId" });
-            DropIndex("dbo.ReceiptDetails", new[] { "FeeCreditId" });
+            DropIndex("dbo.ReceiptDetails", new[] { "FeeId" });
             DropIndex("dbo.ReceiptDetails", new[] { "ReceiptId" });
             DropIndex("dbo.PurchaseOrders", new[] { "EmployeeId" });
             DropIndex("dbo.PurchaseOrders", new[] { "ProviderId" });
@@ -636,25 +605,23 @@ namespace Axure.Migrations
             DropIndex("dbo.MovementProductDetails", new[] { "MovementProductId" });
             DropIndex("dbo.MovementProductDetails", new[] { "ProductId" });
             DropIndex("dbo.MovementMotives", new[] { "MovementTypeId" });
-            DropIndex("dbo.Products", new[] { "IVAId" });
+            DropIndex("dbo.InvoiceTaxes", new[] { "TaxId" });
+            DropIndex("dbo.InvoiceTaxes", new[] { "InvoiceId" });
+            DropIndex("dbo.Products", new[] { "TaxId" });
             DropIndex("dbo.Products", new[] { "ProductTypeId" });
             DropIndex("dbo.InvoiceItems", new[] { "ProductId" });
             DropIndex("dbo.InvoiceItems", new[] { "InvoiceId" });
             DropIndex("dbo.Incomes", new[] { "InvoiceId" });
             DropIndex("dbo.Incomes", new[] { "IncomeTypeId" });
-            DropIndex("dbo.IncomeDetails", new[] { "IncomeTypeId" });
-            DropIndex("dbo.IncomeDetails", new[] { "FeeCreditId" });
-            DropIndex("dbo.FeeCredits", new[] { "CreditId" });
+            DropIndex("dbo.IncomeFees", new[] { "IncomeTypeId" });
+            DropIndex("dbo.IncomeFees", new[] { "FeeId" });
+            DropIndex("dbo.Fees", new[] { "DebtId" });
             DropIndex("dbo.OrderSales", new[] { "EmployeeId" });
-            DropIndex("dbo.OrderSales", new[] { "StateOrderSaleId" });
             DropIndex("dbo.OrderSales", new[] { "ClientId" });
             DropIndex("dbo.Invoices", new[] { "ClientId" });
             DropIndex("dbo.Invoices", new[] { "EmployeeId" });
             DropIndex("dbo.Invoices", new[] { "OrderSaleId" });
-            DropIndex("dbo.Invoices", new[] { "PaymentTermId" });
-            DropIndex("dbo.Invoices", new[] { "StateInvoiceId" });
-            DropIndex("dbo.Credits", new[] { "IncomeDeadlineId" });
-            DropIndex("dbo.Credits", new[] { "InvoiceId" });
+            DropIndex("dbo.Debts", new[] { "InvoiceId" });
             DropTable("dbo.Users");
             DropTable("dbo.Transfers");
             DropTable("dbo.TransferDetails");
@@ -674,23 +641,20 @@ namespace Axure.Migrations
             DropTable("dbo.MovementProductDetails");
             DropTable("dbo.MovementTypes");
             DropTable("dbo.MovementMotives");
+            DropTable("dbo.InvoiceTaxes");
+            DropTable("dbo.Taxes");
             DropTable("dbo.ProductTypes");
-            DropTable("dbo.IVAs");
             DropTable("dbo.Products");
             DropTable("dbo.InvoiceItems");
             DropTable("dbo.Incomes");
             DropTable("dbo.IncomeTypes");
-            DropTable("dbo.IncomeDetails");
-            DropTable("dbo.FeeCredits");
+            DropTable("dbo.IncomeFees");
+            DropTable("dbo.Fees");
             DropTable("dbo.Deposits");
-            DropTable("dbo.StateInvoices");
-            DropTable("dbo.PaymentTerms");
-            DropTable("dbo.StateOrderSales");
             DropTable("dbo.OrderSales");
             DropTable("dbo.Employees");
             DropTable("dbo.Invoices");
-            DropTable("dbo.IncomeDeadlines");
-            DropTable("dbo.Credits");
+            DropTable("dbo.Debts");
             DropTable("dbo.Clients");
         }
     }

@@ -13,8 +13,8 @@ namespace Axure.DTO.Module_Sale
         //Client who placed the order.
         public int ClientId { get; set; }
 
-        //Order state.
-        public int StateOrderSaleId { get; set; }
+        //Order status.
+        public string Status { get; set; }
 
         //Employee responsible for the order sale.
         public int EmployeeId { get; set; }
@@ -25,8 +25,6 @@ namespace Axure.DTO.Module_Sale
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-
-        public bool Deleted { get; set; }
 
 
         public List<OrderSaleDetailDTO> ListDetails { get; set; }

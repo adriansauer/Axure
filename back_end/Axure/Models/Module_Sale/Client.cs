@@ -26,6 +26,11 @@ namespace Axure.Models.Module_Sale
         [StringLength(200)]
         public string Address { get; set; }
 
+        //Client phone.
+        [Required]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
         //Client number RUC.
         [Required]
         [StringLength(20)]

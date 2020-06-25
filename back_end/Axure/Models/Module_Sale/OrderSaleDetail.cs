@@ -37,9 +37,5 @@ namespace Axure.Models.Module_Sale
         //Pending amount to invoice.
         [Required]
         public int QuantityPending { get; set; }
-
-        //Used to remove ilde.
-        [Required]
-        public bool Deleted { get; set; }
     }
 }

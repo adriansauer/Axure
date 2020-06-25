@@ -6,22 +6,22 @@ using System.Linq;
 using System.Web;
 
 /*
- * IncomeDetail class
+ * IncomeFee class
  * Created May 13, 2020 by Victor Ciceia.
  * Income detail of a fee.
  */
 namespace Axure.Models.Module_Sale
 {
-    public class IncomeDetail
+    public class IncomeFee
     {
         //Unique identifier.
         public int Id { get; set; }
 
         //Payment of a fee.
         [Required]
-        public int FeeCreditId { get; set; }
-        [ForeignKey("FeeCreditId")]
-        public FeeCredit FeeCredit { get; set; }
+        public int FeeId { get; set; }
+        [ForeignKey("FeeId")]
+        public Fee Fee { get; set; }
 
         //Type of payment.
         [Required]

@@ -5,20 +5,24 @@ using System.Linq;
 using System.Web;
 
 /*
- * StateOrderSale class
+ * IVA class
  * Created May 13, 2020 by Victor Ciceia.
- * State order sale.
+ * Amount of tax a product has.
  */
-namespace Axure.Models.Module_Sale
+namespace Axure.Models.Module_Stock
 {
-    public class StateOrderSale
+    public class Tax
     {
         //Unique identifier.
         public int Id { get; set; }
 
-        //State description.
+        //Percentage.
         [Required]
-        [StringLength(50)]
+        public int Quantity { get; set; }
+
+        //IVA description.
+        [Required]
+        [StringLength(10)]
         public string Description { get; set; }
 
         //Used to remove ilde.
