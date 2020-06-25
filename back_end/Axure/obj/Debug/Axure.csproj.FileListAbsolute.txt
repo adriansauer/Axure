@@ -237,5 +237,3 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
-C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
-C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache

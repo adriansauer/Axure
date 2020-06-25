@@ -33,6 +33,8 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Tax> Taxes { get; set; }
 
+        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductCategory> ProductCategories { get; set; }
+
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Product> Products { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.TransferDetail> TransferDetails { get; set; }
@@ -42,12 +44,6 @@ namespace Axure.Models
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.MovementMotive> MovementMotives { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Employee> Employees { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.Provider> Providers { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.PurchaseOrder> ProofPurchases { get; set; }
-
-        public System.Data.Entity.DbSet<Axure.Models.Module_Stock.PurchaseOrderDetail> ProofPurchaseDetails { get; set; }
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Stock.ProductionState> ProductionStates { get; set; }
 
@@ -91,6 +87,33 @@ namespace Axure.Models
 
         public System.Data.Entity.DbSet<Axure.Models.Module_Sale.ReceiptDetail> ReceiptDetails { get; set; }
 
-       
+        //Module Purchase
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.Provider> Providers { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.ProviderDetail> ProviderDetails { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PurchaseRequest> PurchaseRequests { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.CreditNote> CreditNotes { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PriceRequest> PriceRequests { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PriceRequestDetail> PriceRequestDetails { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.ProviderInvoice> ProviderInvoices { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.ProviderInvoiceItem> ProviderInvoiceItems { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PurchaseOrder> PurchaseOrders { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.ReturnOrder> ReturnOrders { get; set; }
+
+        public System.Data.Entity.DbSet<Axure.Models.Module_Purchase.ReturnOrderDetail> ReturnOrderDetails { get; set; }
+
     }
 }

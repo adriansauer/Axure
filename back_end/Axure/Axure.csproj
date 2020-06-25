@@ -256,12 +256,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006010344249_Initial.cs" />
-    <Compile Include="Migrations\202006010344249_Initial.Designer.cs">
-      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
+    <Compile Include="Models\Module_Purchase\CreditNote.cs" />
+    <Compile Include="Models\Module_Purchase\PriceRequest.cs" />
+    <Compile Include="Models\Module_Purchase\PriceRequestDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderInvoice.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderInvoiceItem.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseOrder.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseOrderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ReturnOrder.cs" />
+    <Compile Include="Models\Module_Purchase\ReturnOrderDetail.cs" />
     <Compile Include="Models\Module_Sale\Client.cs" />
     <Compile Include="Models\Module_Sale\Debt.cs" />
     <Compile Include="Models\Module_Sale\Income.cs" />
@@ -275,10 +281,11 @@
     <Compile Include="Models\Module_Sale\OrderSaleDetail.cs" />
     <Compile Include="Models\Module_Sale\Receipt.cs" />
     <Compile Include="Models\Module_Sale\ReceiptDetail.cs" />
+    <Compile Include="Models\Module_Stock\ProductCategory.cs" />
     <Compile Include="Models\Module_Stock\Tax.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
-    <Compile Include="Models\Module_Stock\PurchaseOrder.cs" />
-    <Compile Include="Models\Module_Stock\PurchaseOrderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseRequest.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseRequestDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
     <Compile Include="Models\Module_Stock\MovementProduct.cs" />
@@ -292,7 +299,7 @@
     <Compile Include="Models\Module_Stock\ProductionOrderDetail.cs" />
     <Compile Include="Models\Module_Stock\ProductionState.cs" />
     <Compile Include="Models\Module_Stock\ProductType.cs" />
-    <Compile Include="Models\Module_Stock\Provider.cs" />
+    <Compile Include="Models\Module_Purchase\Provider.cs" />
     <Compile Include="Models\Module_Stock\Stock.cs" />
     <Compile Include="Models\Module_Stock\Transfer.cs" />
     <Compile Include="Models\Module_Stock\TransferDetail.cs" />
@@ -405,11 +412,6 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006010344249_Initial.resx">
-      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
