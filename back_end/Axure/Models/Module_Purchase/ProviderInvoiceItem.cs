@@ -54,5 +54,9 @@ namespace Axure.Models.Module_Purchase
         //Total amount IVA.
         [Required]
         public int TaxTotal { get; set; }
+
+        //Returnd quantity
+        [Required]
+        public int ReturndQuantity { get; set; }
     }
 }
