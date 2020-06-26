@@ -3,11 +3,11 @@ import "../Modulo Productos/styleMProductos.css";
 import TablaProductoSelector from "../Modulo Productos/TablaProductoSelector";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
+import AgregarProveedor from "./Modales/AgregarProveedor.js";
 class ComprasP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      agregarClienteVisible: false,
       productosSeleccionados: [],
       buscador: "",
       empleados: [],
@@ -20,6 +20,8 @@ class ComprasP extends Component {
       clienteNombre: "",
       cliente: {},
       clienteElegido: false,
+      agregarProveedorVisible:false,
+
     };
   }
   async componentDidMount() {
@@ -33,6 +35,9 @@ class ComprasP extends Component {
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
 
     await this.actualizar();
+  }
+  ocultar(){
+    this.setState({agregarProveedorVisible:false});
   }
   async actualizar() {
     try {
@@ -173,7 +178,10 @@ return false;
     return (
       <div className="Container">
         <Notificacion />
-        
+        <AgregarProveedor
+        visible={this.state.agregarProveedorVisible}
+        ocultar={this.ocultar.bind(this)}
+        />
         <div className="row">
           <div className="col-md-4">
             <div className="dropdown">
@@ -188,7 +196,9 @@ return false;
             </div>
           </div>
           <div className="col-md-2">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary"
+            onClick={()=>this.setState({agregarProveedorVisible:true})}
+            >
               Agregar Proveedor
             </button>
           </div>
