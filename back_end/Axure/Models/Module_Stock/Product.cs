@@ -29,6 +29,12 @@ namespace Axure.Models.Module_Stock
         [ForeignKey("TaxId")]
         public Tax Tax { get; set; }
 
+        //Product categorie.
+        [Required]
+        public int ProductCategoryId { get; set; }
+        [ForeignKey("ProductCategoryId")]
+        public ProductCategory ProductCategory { get; set; }
+
         //Product name.
         [Required]
         [StringLength(100)]
