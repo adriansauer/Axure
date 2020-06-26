@@ -33,6 +33,7 @@ class Menu extends Component {
   clickCompra() {
     this.props.homeVisible(false);
     this.props.setModulo(3);
+    this.props.setSectionShow(70);
 
     document.getElementsByClassName("Body")[0].classList.add("compra");
   }
@@ -109,7 +110,7 @@ class Menu extends Component {
                 <a
                   className="nav-link"
                   href="#!"
-                  onClick={() => this.props.homeVisible(true)}
+                  onClick={() => this.clickCompra()}
                 >
                   <i className="ico buys"></i>
                   <p>Compras</p>
