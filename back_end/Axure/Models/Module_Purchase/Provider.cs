@@ -9,7 +9,7 @@ using System.Web;
  * Created march 1, 2020 by Victor Ciceia.
  * Raw material suppliers.
  */
-namespace Axure.Models.Module_Stock
+namespace Axure.Models.Module_Purchase
 {
     public class Provider
     {
