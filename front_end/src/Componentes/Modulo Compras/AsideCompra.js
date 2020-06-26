@@ -30,10 +30,11 @@ class AsideCompras extends Component {
           </li>
           <li className="nav-item">
             <a
-              className="nav-link "
-              href="#Boton2"
+              className="nav-link"
+              href="#Ordenes"
+              onClick={() => this.selectTab(71, 1)}
             >
-              Boton 2
+             Ordenes
             </a>
           </li>
           <li className="nav-item">

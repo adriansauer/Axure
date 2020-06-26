@@ -14,6 +14,8 @@ class CrearFactura extends Component {
       condicion: 1,
       facturaVisible: false,
       factura: null,
+      cuotas:1,
+      numFactura:"",
     };
   }
   async componentDidMount() {
@@ -76,7 +78,7 @@ class CrearFactura extends Component {
         Day: this.props.orden.Day,
         Month: this.props.orden.Month,
         Year: this.props.orden.Year,
-        ListItems: this.state.detalles.filter(p=>p.Cantidad!==0).map((p) => {
+        ListItems: this.state.detalles.filter(p=>parseInt(p.Cantidad)!==0).map((p) => {
           return {
             ProductId: p.ProductId,
             Quantity: p.Cantidad,
@@ -112,7 +114,7 @@ class CrearFactura extends Component {
         <div className="CrearFactura">
           <Notificacion />
           <div className="CrearFacturaHeader row">
-            <div className="col-md-3">
+            <div className="col-md-1">
               <ArrowBackIcon
                 onClick={() => this.props.retroceder()}
                 style={{ height: "50px", width: "50px" }}
@@ -130,7 +132,7 @@ class CrearFactura extends Component {
                 {orden.Day}/{orden.Month}/{orden.Year}
               </h4>
             </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
               <div className="dropdown">
                 <button
                   className="btn btn-secondary btn-sm dropdown-toggle"
@@ -169,6 +171,162 @@ class CrearFactura extends Component {
                     href="#credito"
                   >
                    
+                  </a>
+                </div>
+              </div>
+            </div>
+           
+            <div className="col-md-2">
+      <label>Cantidad de cuotas(Credito):</label>
+            </div>
+            <div className="col-md-2">
+              
+              <div className="dropdown">
+                <button
+                  className="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.cuotas}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:1
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                    1
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:2
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   2
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:3
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   3
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:4
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   4
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:5
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   5
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:6
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   6
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:7
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   7
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:8
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   8
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:9
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   9
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:10
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   10
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:11
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   11
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        cuotas:12
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#"
+                  >
+                   12
                   </a>
                 </div>
               </div>

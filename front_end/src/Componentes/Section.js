@@ -13,7 +13,7 @@ import Clientes from "./Modulo Ventas/Clientes.js";
 import Facturar from "./Modulo Ventas/Facturar.js";
 import ListadoFacturas from "./Modulo Ventas/ListadoFacturas.js";
 import ComprasP from "./Modulo Compras/ComprasP.js";
-
+import Ordenes from "./Modulo Compras/Ordenes.js";
 class Section extends Component {
   render() {
     return (
@@ -40,6 +40,8 @@ class Section extends Component {
               return <ListadoFacturas />;
             case 70:
               return <ComprasP />;
+            case 71:
+              return <Ordenes />;
             default:
               return <Stock />;
           }

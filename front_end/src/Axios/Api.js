@@ -193,6 +193,22 @@ export default {
     
     })
   },
+  categoria:{
+    get:(data)=>requestHelper({
+      url:"ProductCategories/List",
+      method:"post",
+      data:data,
+    }),
+    
+   
+  },
+  proveedor:{
+    create:(data)=>requestHelper({
+      url:"Provider/Create",
+      method:"post",
+      data,
+    }),
+  },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL
 -	ID_DEPOSIT_PRODUCTION

@@ -6,7 +6,9 @@ import Notificacion, { notify } from "../../Notificacion";
 class Factura extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      InvoiceNumber: "",
+    };
   }
   componentDidMount() {
     document.getElementById("imprimirbtn").style.display = "none";
@@ -15,11 +17,11 @@ class Factura extends Component {
     var contenido = document.getElementById(nombreDiv).innerHTML;
     var contenidoOriginal = document.body.innerHTML;
 
-    document.body.innerHTML = contenido;
+    //document.body.innerHTML = contenido;
 
-    window.print();
+    //window.print();
 
-    document.body.innerHTML = contenidoOriginal;
+    //document.body.innerHTML = contenidoOriginal;
   }
   format(n, sep, decimals) {
     sep = sep || "."; // Default to period as decimal separator
@@ -35,7 +37,7 @@ class Factura extends Component {
       EmployeeId: this.props.factura.EmployeeDTO.Id,
       ClientId: this.props.factura.ClientDTO.Id,
       SaleCondition: this.props.factura.SaleCondition,
-      InvoiceNumber: this.props.factura.InvoiceNumber,
+      InvoiceNumber: this.state.InvoiceNumber,
       Day: this.props.factura.Day,
       Month: this.props.factura.Month,
       Year: this.props.factura.Year,
@@ -46,23 +48,27 @@ class Factura extends Component {
         };
       }),
     };
-    if (this.props.factura.ValidationCode === 0) {
-      try {
-        const request = await api.factura.create(factura);
-        if (request.status === 200) {
-        //  document.getElementById("facturarbtn").style.display = "none";
-         // document.getElementById("imprimirbtn").style.display = "hidden";
-          notify("Factura creada exitosamente", "success");
-        } else {
+    if (this.state.InvoiceNumber === "") {
+      notify("Rellene el numero de factura", "warning");
+    } else {
+      if (this.props.factura.ValidationCode === 0) {
+        try {
+          const request = await api.factura.create(factura);
+          if (request.status === 200) {
+            document.getElementById("facturarbtn").style.display = "none";
+            document.getElementById("imprimirbtn").style.display = "inline";
+            notify("Factura creada exitosamente", "success");
+          } else {
+            notify("Error al intentar crear la factura", "warning");
+          }
+        } catch (error) {
           notify("Error al intentar crear la factura", "danger");
         }
-      } catch (error) {
-        notify("Error al intentar crear la factura", "danger");
+      } else if (this.props.factura.ValidationCode === 1) {
+        notify("El cliente no cuenta con credito disponible", "warning");
+      } else if (this.props.factura.ValidationCode === 2) {
+        notify("No hay productos suficientes en stock", "warning");
       }
-    } else if (this.props.factura.ValidationCode === 1) {
-      notify("No hay productos suficientes en stock", "warning");
-    } else if (this.props.factura.ValidationCode === 2) {
-      notify("El cliente no cuenta con credito disponible", "warning");
     }
   }
 
@@ -78,24 +84,56 @@ class Factura extends Component {
             />
           </div>
         </div>
-        <div className="row" id="imprimir">
-          <div className="col-md-6">
-            <label style={{ marginLeft: "100px" }}>
-              NOMBRE O RAZON SOCIAL:{this.props.factura.ClientDTO.Name}
-            </label>
+        <div id="imprimir">
+          <div className="row">
+            <div className="col-md-2">
+              <b>Numero de factura:</b>
+            </div>
+
+            <div className="col-md-2">
+              <input
+                autoComplete="off"
+                type="text"
+                id="numFactura"
+                className="form-control"
+                placeholder={this.state.InvoiceNumber}
+                maxLength="100"
+                onChange={(e) =>
+                  this.setState({ InvoiceNumber: e.target.value })
+                }
+              />
+            </div>
           </div>
-          <div className="col-md-6">
-            <label>CONDICION DE VENTA:{this.props.factura.SaleCondition}</label>
+
+          <div className="row">
+            <div className="col-md-6">
+              <label>
+                <b>NOMBRE O RAZON SOCIAL</b>:{this.props.factura.ClientDTO.Name}
+              </label>
+            </div>
           </div>
-          <div className="col-md-6">
-            <label style={{ marginLeft: "100px" }}>
-              DIRECCION:{this.props.factura.ClientDTO.Address}
-            </label>
+          <div className="row">
+            <div className="col-md-6">
+              <label>
+                <b>CONDICION DE VENTA</b> :{this.props.factura.SaleCondition}
+              </label>
+            </div>
           </div>
-          <div className="col-md-6">
-            <label>RUC:{this.props.factura.ClientDTO.RUC}</label>
+          <div className="row">
+            <div className="col-md-6">
+              <label>
+                <b> DIRECCION</b>:{this.props.factura.ClientDTO.Address}
+              </label>
+            </div>
           </div>
-          <div className="col-md-12">
+          <div className="row">
+            <div className="col-md-10">
+              <label>
+                <b>RUC</b>:{this.props.factura.ClientDTO.RUC}
+              </label>
+            </div>
+          </div>
+          <div className="row">
             <table className="table table-hover table">
               <thead className="tableHeader">
                 <tr>
@@ -148,7 +186,7 @@ class Factura extends Component {
             </button>
             <button
               className="btn-primary"
-              name="facturarbtn"
+              id="facturarbtn"
               onClick={() => this.facturar()}
             >
               Facturar
