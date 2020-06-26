@@ -186,12 +186,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CodeHTTP.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Module_Purchase\ProvidersController.cs" />
     <Compile Include="Controllers\Module_Sale\ClientsController.cs" />
     <Compile Include="Controllers\Module_Sale\InvoicesController.cs" />
     <Compile Include="Controllers\Module_Sale\OrderSalesController.cs" />
     <Compile Include="Controllers\Module_Stock\MovementProductDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\MovementProductsController.cs" />
     <Compile Include="Controllers\Module_Stock\EmployeesController.cs" />
+    <Compile Include="Controllers\Module_Stock\ProductCategoriesController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductComponentsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductionOrderDetailsController.cs" />
     <Compile Include="Controllers\Module_Stock\ProductionOrdersController.cs" />
@@ -203,6 +205,9 @@
     <Compile Include="Controllers\Module_Stock\TransfersController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DataBase\Module_Purchase\ProviderDAO.cs" />
+    <Compile Include="DataBase\Module_Purchase\PurchaseOrderDAO.cs" />
+    <Compile Include="DataBase\Module_Purchase\PurchaseOrderDetailDAO.cs" />
     <Compile Include="DataBase\Module_Sale\ClientDAO.cs" />
     <Compile Include="DataBase\Module_Sale\DebtDAO.cs" />
     <Compile Include="DataBase\Module_Sale\FeeDAO.cs" />
@@ -214,6 +219,7 @@
     <Compile Include="DataBase\Module_Stock\MovementProductDetailDAO.cs" />
     <Compile Include="DataBase\Module_Stock\DepositDAO.cs" />
     <Compile Include="DataBase\Module_Stock\EmployeeDAO.cs" />
+    <Compile Include="DataBase\Module_Stock\ProductCategoryDAO.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDAO.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionOrderDetailDAO.cs" />
     <Compile Include="DataBase\Module_Stock\ProductionStateDAO.cs" />
@@ -223,6 +229,13 @@
     <Compile Include="DataBase\Module_Stock\TransferDAO.cs" />
     <Compile Include="DataBase\Module_Stock\TransferDetailDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
+    <Compile Include="DTO\Module_Purchase\ProviderDetailDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\PurchaseOrderDetailDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\PurchaseOrderDetailsDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\PurchaseOrderDTO.cs" />
+    <Compile Include="DTO\Module_Stock\ProductCategoryDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\ProviderListDetailDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\ProviderDTO.cs" />
     <Compile Include="DTO\Module_Sale\ClientDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceDetailsDTO.cs" />
     <Compile Include="DTO\Module_Sale\InvoiceDTO.cs" />
@@ -256,12 +269,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006010344249_Initial.cs" />
-    <Compile Include="Migrations\202006010344249_Initial.Designer.cs">
-      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202006260307587_Initial.cs" />
+    <Compile Include="Migrations\202006260307587_Initial.Designer.cs">
+      <DependentUpon>202006260307587_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
+    <Compile Include="Models\Module_Purchase\CreditNote.cs" />
+    <Compile Include="Models\Module_Purchase\PriceRequest.cs" />
+    <Compile Include="Models\Module_Purchase\PriceRequestDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderInvoice.cs" />
+    <Compile Include="Models\Module_Purchase\ProviderInvoiceItem.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseOrder.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseOrderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\ReturnOrder.cs" />
+    <Compile Include="Models\Module_Purchase\ReturnOrderDetail.cs" />
     <Compile Include="Models\Module_Sale\Client.cs" />
     <Compile Include="Models\Module_Sale\Debt.cs" />
     <Compile Include="Models\Module_Sale\Income.cs" />
@@ -275,10 +298,11 @@
     <Compile Include="Models\Module_Sale\OrderSaleDetail.cs" />
     <Compile Include="Models\Module_Sale\Receipt.cs" />
     <Compile Include="Models\Module_Sale\ReceiptDetail.cs" />
+    <Compile Include="Models\Module_Stock\ProductCategory.cs" />
     <Compile Include="Models\Module_Stock\Tax.cs" />
     <Compile Include="Models\Module_Stock\Models\PcComponent.cs" />
-    <Compile Include="Models\Module_Stock\PurchaseOrder.cs" />
-    <Compile Include="Models\Module_Stock\PurchaseOrderDetail.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseRequest.cs" />
+    <Compile Include="Models\Module_Purchase\PurchaseRequestDetail.cs" />
     <Compile Include="Models\Module_Stock\Deposit.cs" />
     <Compile Include="Models\Module_Stock\Employee.cs" />
     <Compile Include="Models\Module_Stock\MovementProduct.cs" />
@@ -292,7 +316,7 @@
     <Compile Include="Models\Module_Stock\ProductionOrderDetail.cs" />
     <Compile Include="Models\Module_Stock\ProductionState.cs" />
     <Compile Include="Models\Module_Stock\ProductType.cs" />
-    <Compile Include="Models\Module_Stock\Provider.cs" />
+    <Compile Include="Models\Module_Purchase\Provider.cs" />
     <Compile Include="Models\Module_Stock\Stock.cs" />
     <Compile Include="Models\Module_Stock\Transfer.cs" />
     <Compile Include="Models\Module_Stock\TransferDetail.cs" />
@@ -362,6 +386,8 @@
     <Folder Include="Views\Movements\" />
     <Folder Include="Views\OrderSaleDetails\" />
     <Folder Include="Views\OrderSales\" />
+    <Folder Include="Views\ProductCategories\" />
+    <Folder Include="Views\ProductCategory\" />
     <Folder Include="Views\ProductComponents\" />
     <Folder Include="Views\ProductionOrderDetails\" />
     <Folder Include="Views\ProductionOrders\" />
@@ -407,8 +433,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006010344249_Initial.resx">
-      <DependentUpon>202006010344249_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006260307587_Initial.resx">
+      <DependentUpon>202006260307587_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
