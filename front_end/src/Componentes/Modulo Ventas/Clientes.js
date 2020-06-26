@@ -154,6 +154,8 @@ class Clientes extends Component {
                 <th scope="col">Direccion</th>
                 <th scope="col">Ruc</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Credito total</th>
+                <th scope="col">Credito pendiente</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -172,6 +174,8 @@ class Clientes extends Component {
                         <td>{c.Address}</td>
                         <td>{c.RUC}</td>
                         <td>{c.Phone}</td>
+                        <td>{c.CreditMaximum}</td>
+                        <td>{c.CreditPending}</td>
                         <td>
                           <EditIcon onClick={()=>this.editarCliente(c)} />
                           <DeleteIcon onClick={() => this.eliminarCliente(c)} />

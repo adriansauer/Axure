@@ -55,10 +55,9 @@ class ListadoFacturas extends Component {
           <table className="table table-hover table" style={{ marginTop: 50 }}>
             <thead className="tableHeader">
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">Fecha</th>
-                <th scope="col">Numero</th>
                 <th scope="col">Cliente</th>
+                <th scope="col">RUC</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Condicion de venta</th>
                 <th scope="col">Total</th>
@@ -78,11 +77,8 @@ class ListadoFacturas extends Component {
                           {f.Day}/{f.Month}/{f.Year}
                         </td>
 
-                        <td>{f.InvoiceNumber}</td>
-                        <td>
-                          {f.ClientName}-{f.ClientRUC}
-                        </td>
-
+                        <td>{f.ClientName}</td>
+                        <td>{f.ClientRUC}</td>
                         <td>{f.Status}</td>
                         <td>{f.SaleCondition}</td>
                         <td>{f.Total}</td>

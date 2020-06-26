@@ -143,3 +143,4 @@
 2020-06-19 14:57:22,984 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
 2020-06-19 14:59:40,642 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
 2020-06-19 15:02:47,303 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 15:23:50,593 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!

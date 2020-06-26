@@ -8,6 +8,9 @@ class Factura extends Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+    document.getElementById("imprimirbtn").style.display = "none";
+  }
   printDiv(nombreDiv) {
     var contenido = document.getElementById(nombreDiv).innerHTML;
     var contenidoOriginal = document.body.innerHTML;
@@ -18,8 +21,15 @@ class Factura extends Component {
 
     document.body.innerHTML = contenidoOriginal;
   }
+  format(n, sep, decimals) {
+    sep = sep || "."; // Default to period as decimal separator
+    decimals = decimals || 2; // Default to 2 decimals
+
+    return (
+      n.toLocaleString().split(sep)[0] + sep + n.toFixed(decimals).split(sep)[1]
+    );
+  }
   async facturar() {
-   
     const factura = {
       OrderSaleId: this.props.orden.Id,
       EmployeeId: this.props.factura.EmployeeDTO.Id,
@@ -31,28 +41,35 @@ class Factura extends Component {
       Year: this.props.factura.Year,
       ListItems: this.props.factura.ListItems.map((p) => {
         return {
-          ProductId: p.Id,
+          ProductId: p.ProductId,
           Quantity: p.QuantitySale,
         };
       }),
     };
-console.log(factura);
-    try {
-      const request = await api.factura.create(factura);
-      console.log(request);
-      if (request.status === 200) {
-        notify("Factura creada exitosamente", "success");
-      } else {
+    if (this.props.factura.ValidationCode === 0) {
+      try {
+        const request = await api.factura.create(factura);
+        if (request.status === 200) {
+        //  document.getElementById("facturarbtn").style.display = "none";
+         // document.getElementById("imprimirbtn").style.display = "hidden";
+          notify("Factura creada exitosamente", "success");
+        } else {
+          notify("Error al intentar crear la factura", "danger");
+        }
+      } catch (error) {
         notify("Error al intentar crear la factura", "danger");
       }
-    } catch (error) {
-      notify("Error al intentar crear la factura", "danger");
+    } else if (this.props.factura.ValidationCode === 1) {
+      notify("No hay productos suficientes en stock", "warning");
+    } else if (this.props.factura.ValidationCode === 2) {
+      notify("El cliente no cuenta con credito disponible", "warning");
     }
   }
 
   render() {
     return (
       <div className="Factura">
+        <Notificacion />
         <div className="CrearFacturaHeader row">
           <div className="col-md-12">
             <ArrowBackIcon
@@ -63,7 +80,7 @@ console.log(factura);
         </div>
         <div className="row" id="imprimir">
           <div className="col-md-6">
-            <label>
+            <label style={{ marginLeft: "100px" }}>
               NOMBRE O RAZON SOCIAL:{this.props.factura.ClientDTO.Name}
             </label>
           </div>
@@ -71,7 +88,9 @@ console.log(factura);
             <label>CONDICION DE VENTA:{this.props.factura.SaleCondition}</label>
           </div>
           <div className="col-md-6">
-            <label>DIRECCION:{this.props.factura.ClientDTO.Address}</label>
+            <label style={{ marginLeft: "100px" }}>
+              DIRECCION:{this.props.factura.ClientDTO.Address}
+            </label>
           </div>
           <div className="col-md-6">
             <label>RUC:{this.props.factura.ClientDTO.RUC}</label>
@@ -95,10 +114,10 @@ console.log(factura);
                     <td>
                       {i.Name} {i.Description}
                     </td>
-                    <td>{i.UnitPrice}</td>
+                    <td>{this.format(i.UnitPrice)}GS</td>
                     <td></td>
                     <td></td>
-                    <td>{i.Tax}</td>
+                    <td>{this.format(i.Total)}GS</td>
                   </tr>
                 ))}
                 <tr>
@@ -107,7 +126,7 @@ console.log(factura);
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>{this.props.factura.TaxTotal}</td>
+                  <td>{this.format(this.props.factura.TaxTotal)}GS</td>
                 </tr>
                 <tr>
                   <td>TOTAL A PAGAR</td>
@@ -115,7 +134,7 @@ console.log(factura);
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>{this.props.factura.Total}</td>
+                  <td>{this.format(this.props.factura.Total)}GS</td>
                 </tr>
               </tbody>
             </table>
@@ -124,8 +143,16 @@ console.log(factura);
         <div className="row">
           <div className="col-md-8"></div>
           <div className="col-md-2">
-            <button onClick={() => this.printDiv("imprimir")}>Imprimir</button>
-            <button onClick={() => this.facturar()}>Facturar</button>
+            <button id="imprimirbtn" onClick={() => this.printDiv("imprimir")}>
+              Imprimir
+            </button>
+            <button
+              className="btn-primary"
+              name="facturarbtn"
+              onClick={() => this.facturar()}
+            >
+              Facturar
+            </button>
           </div>
         </div>
       </div>

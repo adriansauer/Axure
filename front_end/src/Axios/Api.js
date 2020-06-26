@@ -141,7 +141,7 @@ export default {
       requestHelper({
         url: "OrderSales/Add ",
         method: "post",
-        data:data,
+        data,
       }),
       get:()=>requestHelper({
         url:"OrderSales/List ",

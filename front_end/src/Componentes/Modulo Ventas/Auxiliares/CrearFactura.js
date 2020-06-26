@@ -76,7 +76,12 @@ class CrearFactura extends Component {
         Day: this.props.orden.Day,
         Month: this.props.orden.Month,
         Year: this.props.orden.Year,
-        ListItems: this.state.detalles,
+        ListItems: this.state.detalles.filter(p=>p.Cantidad!==0).map((p) => {
+          return {
+            ProductId: p.ProductId,
+            Quantity: p.Cantidad,
+          };
+        }),
       };
 
       try {
@@ -94,7 +99,6 @@ class CrearFactura extends Component {
   }
   render() {
     const orden = this.props.orden;
-  
     if (this.state.facturaVisible) {
       return (
         <Factura
@@ -150,7 +154,7 @@ class CrearFactura extends Component {
                       })
                     }
                     className="dropdown-item"
-                    href="#ingreso"
+                    href="#contado"
                   >
                     Contado
                   </a>
@@ -162,9 +166,9 @@ class CrearFactura extends Component {
                       })
                     }
                     className="dropdown-item"
-                    href="#egreso"
+                    href="#credito"
                   >
-                    Credito
+                   
                   </a>
                 </div>
               </div>
