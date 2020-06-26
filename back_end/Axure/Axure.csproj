@@ -187,6 +187,7 @@
     <Compile Include="Controllers\CodeHTTP.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Module_Purchase\ProvidersController.cs" />
+    <Compile Include="Controllers\Module_Purchase\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\Module_Sale\ClientsController.cs" />
     <Compile Include="Controllers\Module_Sale\InvoicesController.cs" />
     <Compile Include="Controllers\Module_Sale\OrderSalesController.cs" />
@@ -269,9 +270,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\202006261435155_Initial.cs" />
     <Compile Include="Migrations\202006261435155_Initial.Designer.cs">
       <DependentUpon>202006261435155_Initial.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\202006261751166_Initial.cs" />
+    <Compile Include="Migrations\202006261751166_Initial.Designer.cs">
+      <DependentUpon>202006261751166_Initial.cs</DependentUpon>
+>>>>>>> master
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -396,6 +403,7 @@
     <Folder Include="Views\Products\" />
     <Folder Include="Views\ProductTypes\" />
     <Folder Include="Views\Providers\" />
+    <Folder Include="Views\PurchaseOrders\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Views\Setting\" />
     <Folder Include="Views\StateOrderSales\" />
@@ -433,8 +441,13 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\202006261435155_Initial.resx">
       <DependentUpon>202006261435155_Initial.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\202006261751166_Initial.resx">
+      <DependentUpon>202006261751166_Initial.cs</DependentUpon>
+>>>>>>> master
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

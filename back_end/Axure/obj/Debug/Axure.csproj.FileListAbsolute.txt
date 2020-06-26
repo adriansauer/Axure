@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\log4net.config
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\Axure.dll.config
 C:\Users\Usuario\Desktop\Modulo_Ventas\Axure\back_end\Axure\bin\Axure.dll
@@ -238,6 +239,8 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.resources.dl
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
+=======
+>>>>>>> master
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\log4net.config
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\Axure.dll.config
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\Axure.dll
@@ -353,12 +356,11 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
-C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
-C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CoreCompileInputs.cache
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.pdb
+<<<<<<< HEAD
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.pdb
@@ -481,3 +483,7 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axu
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+=======
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+>>>>>>> master
