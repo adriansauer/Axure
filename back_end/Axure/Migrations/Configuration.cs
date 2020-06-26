@@ -8,6 +8,8 @@ namespace Axure.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Axure.DataBase.Module_Sale;
+    using Axure.Models.Module_Purchase;
+    using Axure.DataBase.Module_Purchase;
 
     /* 
      * Configuration.cs
@@ -17,7 +19,7 @@ namespace Axure.Migrations
      * 
      * Database configuration file.
      */
-    internal sealed class Configuration : DbMigrationsConfiguration<Axure.Models.AxureContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AxureContext>
     {
         public Configuration()
         {
@@ -78,32 +80,42 @@ namespace Axure.Migrations
                 new Tax { Id = 3, Quantity = 10, Description = "Tasa 10%", Deleted = false }
                 );
 
+            //Taxes of a product.
+            context.ProductCategories.AddOrUpdate(x => x.Id,
+                new ProductCategory { Id = 1, Description = "Monitores"},
+                new ProductCategory { Id = 2, Description = "Teclados" },
+                new ProductCategory { Id = 3, Description = "Mouses" },
+                new ProductCategory { Id = 4, Description = "Placas" },
+                new ProductCategory { Id = 5, Description = "Procesadores" },
+                new ProductCategory { Id = 6, Description = "Computadoras de mesa" }
+                );
+
             //Products 
-           context.Products.AddOrUpdate(x => x.Id,
-                new Product { Id = 1, Name = "Monitor 22", Description = "22 pulg. ACER", Cost = 700000, Price = 770000, TaxId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "001", Deleted = false },
-                new Product { Id = 2, Name = "Monitor 12", Description = "12 pulg. ACER", Cost = 300000, Price = 330000, TaxId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "002", Deleted = false },
-                new Product { Id = 3, Name = "Monitor 42", Description = "42 pulg. ACER", Cost = 1500000, Price = 1650000, TaxId = 3, ProductTypeId = 1, QuantityMin = 3, Barcode = "003", Deleted = false },
-                new Product { Id = 4, Name = "Teclado", Description = "Gammer", Cost = 150000, Price = 165000, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "004", Deleted = false },
-                new Product { Id = 5, Name = "Teclado", Description = "ACER", Cost = 50000, Price = 55000, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "005", Deleted = false },
-                new Product { Id = 6, Name = "Mouse", Description = "Logitech B100", Cost = 45000, Price = 49500, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "006", Deleted = false },
-                new Product { Id = 7, Name = "Mouse", Description = "Inalambrico Logitech M185", Cost = 75000, Price = 82500, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "007", Deleted = false },
-                new Product { Id = 8, Name = "Teclado", Description = "Convencional", Cost = 50000, Price = 55000, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "008", Deleted = false },
-                new Product { Id = 9, Name = "Teclado", Description = "Inalambrico", Cost = 80000, Price = 88000, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "009", Deleted = false },
-                new Product { Id = 10, Name = "Mouse", Description = "Inalambrico Logitech M220 Silent", Cost = 120000, Price = 132000, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "010", Deleted = false },
-                new Product { Id = 11, Name = "Placa Principal", Description = "ASUS", Cost = 350000, Price = 385000, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "011", Deleted = false },
-                new Product { Id = 12, Name = "Microprocesador", Description = "Intel Core i5-9400F", Cost = 1000000, Price = 1100000, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "012", Deleted = false },
-                new Product { Id = 13, Name = "Placa Principal", Description = "MSI", Cost = 338000, Price = 376000, TaxId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "013", Deleted = false },
-                new Product { Id = 14, Name = "Microprocesador", Description = "Intel Core i7-9700", Cost = 2174000, Price = 2391400, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "014", Deleted = false },
-                new Product { Id = 15, Name = "Microprocesador", Description = "Intel Core i3-9100F", Cost = 539895, Price = 600000, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "015", Deleted = false },
-                new Product { Id = 16, Name = "Placa Principal", Description = "MSI B360M Gaming", Cost = 545000, Price = 600000, TaxId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "016", Deleted = false },
-                new Product { Id = 17, Name = "Placa Principal", Description = "ASUS Prime H310M-D", Cost = 445000, Price = 490000, TaxId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "017", Deleted = false },
-                new Product { Id = 18, Name = "Microprocesador", Description = "AMD ATHLON", Cost = 500000, Price = 550000, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "018", Deleted = false },
-                new Product { Id = 19, Name = "Microprocesador", Description = "AMD Ryzen", Cost = 250000, Price = 275000, TaxId = 3, ProductTypeId = 2, QuantityMin = 2, Barcode = "019", Deleted = false },
-                new Product { Id = 20, Name = "Placa Principal", Description = "MSI PRO-VH", Cost = 443000, Price = 487300, TaxId = 3, ProductTypeId = 2, QuantityMin = 1, Barcode = "020", Deleted = false },
+            context.Products.AddOrUpdate(x => x.Id,
+                new Product { Id = 1, Name = "Monitor 22", Description = "22 pulg. ACER", Cost = 700000, Price = 770000, TaxId = 3, ProductCategoryId = 1, ProductTypeId = 1, QuantityMin = 3, Barcode = "001", Deleted = false },
+                new Product { Id = 2, Name = "Monitor 12", Description = "12 pulg. ACER", Cost = 300000, Price = 330000, TaxId = 3, ProductCategoryId = 1, ProductTypeId = 1, QuantityMin = 3, Barcode = "002", Deleted = false },
+                new Product { Id = 3, Name = "Monitor 42", Description = "42 pulg. ACER", Cost = 1500000, Price = 1650000, TaxId = 3, ProductCategoryId = 1, ProductTypeId = 1, QuantityMin = 3, Barcode = "003", Deleted = false },
+                new Product { Id = 4, Name = "Teclado", Description = "Gammer", Cost = 150000, Price = 165000, TaxId = 3, ProductCategoryId = 2, ProductTypeId = 1, QuantityMin = 2, Barcode = "004", Deleted = false },
+                new Product { Id = 5, Name = "Teclado", Description = "ACER", Cost = 50000, Price = 55000, TaxId = 3, ProductCategoryId = 2, ProductTypeId = 1, QuantityMin = 2, Barcode = "005", Deleted = false },
+                new Product { Id = 6, Name = "Mouse", Description = "Logitech B100", Cost = 45000, Price = 49500, TaxId = 3, ProductCategoryId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "006", Deleted = false },
+                new Product { Id = 7, Name = "Mouse", Description = "Inalambrico Logitech M185", Cost = 75000, Price = 82500, ProductCategoryId = 3, TaxId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "007", Deleted = false },
+                new Product { Id = 8, Name = "Teclado", Description = "Convencional", Cost = 50000, Price = 55000, TaxId = 3, ProductCategoryId = 2, ProductTypeId = 1, QuantityMin = 2, Barcode = "008", Deleted = false },
+                new Product { Id = 9, Name = "Teclado", Description = "Inalambrico", Cost = 80000, Price = 88000, TaxId = 3, ProductCategoryId = 2, ProductTypeId = 1, QuantityMin = 2, Barcode = "009", Deleted = false },
+                new Product { Id = 10, Name = "Mouse", Description = "Inalambrico Logitech M220 Silent", Cost = 120000, Price = 132000, TaxId = 3, ProductCategoryId = 3, ProductTypeId = 1, QuantityMin = 2, Barcode = "010", Deleted = false },
+                new Product { Id = 11, Name = "Placa Principal", Description = "ASUS", Cost = 350000, Price = 385000, TaxId = 3, ProductCategoryId = 4, ProductTypeId = 2, QuantityMin = 2, Barcode = "011", Deleted = false },
+                new Product { Id = 12, Name = "Microprocesador", Description = "Intel Core i5-9400F", Cost = 1000000, Price = 1100000, TaxId = 3, ProductCategoryId = 5, ProductTypeId = 2, QuantityMin = 2, Barcode = "012", Deleted = false },
+                new Product { Id = 13, Name = "Placa Principal", Description = "MSI", Cost = 338000, Price = 376000, TaxId = 3, ProductCategoryId = 4, ProductTypeId = 2, QuantityMin = 1, Barcode = "013", Deleted = false },
+                new Product { Id = 14, Name = "Microprocesador", Description = "Intel Core i7-9700", Cost = 2174000, Price = 2391400, TaxId = 3, ProductCategoryId = 5, ProductTypeId = 2, QuantityMin = 2, Barcode = "014", Deleted = false },
+                new Product { Id = 15, Name = "Microprocesador", Description = "Intel Core i3-9100F", Cost = 539895, Price = 600000, TaxId = 3, ProductCategoryId = 5, ProductTypeId = 2, QuantityMin = 2, Barcode = "015", Deleted = false },
+                new Product { Id = 16, Name = "Placa Principal", Description = "MSI B360M Gaming", Cost = 545000, Price = 600000, TaxId = 3, ProductCategoryId = 4, ProductTypeId = 2, QuantityMin = 1, Barcode = "016", Deleted = false },
+                new Product { Id = 17, Name = "Placa Principal", Description = "ASUS Prime H310M-D", Cost = 445000, Price = 490000, TaxId = 3, ProductCategoryId = 4, ProductTypeId = 2, QuantityMin = 1, Barcode = "017", Deleted = false },
+                new Product { Id = 18, Name = "Microprocesador", Description = "AMD ATHLON", Cost = 500000, Price = 550000, TaxId = 3, ProductCategoryId = 5, ProductTypeId = 2, QuantityMin = 2, Barcode = "018", Deleted = false },
+                new Product { Id = 19, Name = "Microprocesador", Description = "AMD Ryzen", Cost = 250000, Price = 275000, TaxId = 3, ProductCategoryId = 5, ProductTypeId = 2, QuantityMin = 2, Barcode = "019", Deleted = false },
+                new Product { Id = 20, Name = "Placa Principal", Description = "MSI PRO-VH", Cost = 443000, Price = 487300, TaxId = 3, ProductCategoryId = 4, ProductTypeId = 2, QuantityMin = 1, Barcode = "020", Deleted = false },
                 //PC creation. 
-                new Product { Id = 21, Name = "Computadora PC1", Description = "Gama Baja", Cost = 2000000, Price = 2200000, TaxId = 3, ProductTypeId = 3, QuantityMin = 1, Barcode = "021", Deleted = false },
-                new Product { Id = 22, Name = "Computadora PC2", Description = "Gama Media", Cost = 2500000, Price = 2750000, TaxId = 3, ProductTypeId = 3, QuantityMin = 1, Barcode = "022", Deleted = false },
-                new Product { Id = 23, Name = "Computadora PC3", Description = "Gama Alta", Cost = 3000000, Price = 3300000, TaxId = 3, ProductTypeId = 3, QuantityMin = 2, Barcode = "023", Deleted = false }
+                new Product { Id = 21, Name = "Computadora PC1", Description = "Gama Baja", Cost = 2000000, Price = 2200000, TaxId = 3, ProductCategoryId = 6, ProductTypeId = 3, QuantityMin = 1, Barcode = "021", Deleted = false },
+                new Product { Id = 22, Name = "Computadora PC2", Description = "Gama Media", Cost = 2500000, Price = 2750000, TaxId = 3, ProductCategoryId = 6, ProductTypeId = 3, QuantityMin = 1, Barcode = "022", Deleted = false },
+                new Product { Id = 23, Name = "Computadora PC3", Description = "Gama Alta", Cost = 3000000, Price = 3300000, TaxId = 3, ProductCategoryId = 6, ProductTypeId = 3, QuantityMin = 2, Barcode = "023", Deleted = false }
                 );
 
             //Transfers the products.
@@ -145,13 +157,7 @@ namespace Axure.Migrations
                 new Stock { Id = 23, ProductId = 22, DepositId = 3, Quantity = 2 }
                 );
 
-            //Providers the raw material.
-            context.Providers.AddOrUpdate(x => x.Id,
-                new Provider { Id = 1, Name = "Maria Paredes", Address = "La Paz", Phone = "0985 758 239", Credit = 10000000, RUC = "5.563.547-5", Deleted = false },
-                new Provider { Id = 2, Name = "Jorge Miranda", Address = "Ciudad del Este", Phone = "0991 566 143", Credit = 8000000, RUC = "1.348.376-1", Deleted = false },
-                new Provider { Id = 3, Name = "Mauricio Rojas", Address = "Pilar", Phone = "0993 555 987", Credit = 6000000, RUC = "8.547.631-0", Deleted = false });
             //Parts the PC.
-
             context.ProductComponents.AddOrUpdate(x => x.Id,
                 //Low range
                 new ProductComponent { Id = 1, ProductId = 21, ProductComponentId = 2, Quantity = 1 },
@@ -206,11 +212,7 @@ namespace Axure.Migrations
                 new ProductionOrderDetail { Id = 3, ProductionOrderId = 1, ProductId = 1, Quantity = 1, Deleted = false }
                 );
 
-            //It is used when products are missing from the raw material deposit. 
-            //context.PurchaseOrders.AddOrUpdate(x => x.Id);
-
-            //Purchase details.
-            //context.PurchaseOrderDetails.AddOrUpdate(x => x.Id);
+            
 
             //context.MovementProducts.AddOrUpdate(x => x.Id);
 
@@ -278,6 +280,50 @@ namespace Axure.Migrations
             context.Receipts.AddOrUpdate(x => x.Id);
             //
             context.ReceiptDetails.AddOrUpdate(x => x.Id);
+
+
+            //--------------------------------------------------------------------------------------------------------------//
+            //                                              Module Purchase                                                 //
+            //--------------------------------------------------------------------------------------------------------------//
+
+            //Providers the raw material.
+            context.Providers.AddOrUpdate(x => x.Id,
+                new Provider { Id = 1, Name = "PC Stock", Address = "La Paz", Phone = "0985 758 239", Credit = 10000000, RUC = "5.563.547-5", Deleted = false },
+                new Provider { Id = 2, Name = "Jorge Miranda", Address = "Ciudad del Este", Phone = "0991 566 143", Credit = 8000000, RUC = "1.348.376-1", Deleted = false },
+                new Provider { Id = 3, Name = "My PC", Address = "Pilar", Phone = "0993 555 987", Credit = 6000000, RUC = "8.547.631-0", Deleted = false });
+
+            context.ProviderDetails.AddOrUpdate(x => x.Id,
+                new ProviderDetail { Id = 1, ProviderId = 1, ProductCategoryId = 1 },
+                new ProviderDetail { Id = 2, ProviderId = 1, ProductCategoryId = 2 },
+                new ProviderDetail { Id = 3, ProviderId = 1, ProductCategoryId = 3 },
+                new ProviderDetail { Id = 4, ProviderId = 1, ProductCategoryId = 4 },
+                new ProviderDetail { Id = 5, ProviderId = 1, ProductCategoryId = 5 },
+                new ProviderDetail { Id = 6, ProviderId = 2, ProductCategoryId = 1 },
+                new ProviderDetail { Id = 7, ProviderId = 2, ProductCategoryId = 3 },
+                new ProviderDetail { Id = 8, ProviderId = 3, ProductCategoryId = 5 }
+                );
+
+            context.PurchaseOrders.AddOrUpdate(x => x.Id,
+                new PurchaseOrder { Id = 1, ProviderId = 1, Date = new DateTime(2020, 05, 11), Number = 1, Status = StatusOrderPurchase.Pendiente.ToString() },
+                new PurchaseOrder { Id = 2, ProviderId = 2, Date = new DateTime(2020, 05, 11), Number = 2, Status = StatusOrderPurchase.Pendiente.ToString() },
+                new PurchaseOrder { Id = 3, ProviderId = 3, Date = new DateTime(2020, 05, 11), Number = 3, Status = StatusOrderPurchase.Pendiente.ToString() }
+                );
+
+            context.PurchaseOrderDetails.AddOrUpdate(x => x.Id,
+                new PurchaseOrderDetail { Id= 1, PurchaseOrderId =1, ProductId =1, Quantity= 1, QuantityPending = 1, Price = 700000 },
+                new PurchaseOrderDetail { Id = 2, PurchaseOrderId = 1, ProductId = 5, Quantity = 3, QuantityPending = 3, Price = 50000 },
+                new PurchaseOrderDetail { Id = 3, PurchaseOrderId = 1, ProductId = 7, Quantity = 2, QuantityPending = 2, Price = 75000 },
+                new PurchaseOrderDetail { Id = 4, PurchaseOrderId = 1, ProductId = 11, Quantity = 1, QuantityPending = 1, Price = 350000 },
+                new PurchaseOrderDetail { Id = 5, PurchaseOrderId = 1, ProductId = 14, Quantity = 1, QuantityPending = 1, Price = 2174000 },
+                new PurchaseOrderDetail { Id = 6, PurchaseOrderId = 1, ProductId = 15, Quantity = 2, QuantityPending = 2, Price = 539895 },
+                new PurchaseOrderDetail { Id = 7, PurchaseOrderId = 1, ProductId = 20, Quantity = 1, QuantityPending = 1, Price = 443000 },
+                new PurchaseOrderDetail { Id = 8, PurchaseOrderId = 2, ProductId = 2, Quantity = 2, QuantityPending = 2, Price = 300000 },
+                new PurchaseOrderDetail { Id = 9, PurchaseOrderId = 2, ProductId = 3, Quantity = 1, QuantityPending = 1, Price = 1500000 },
+                new PurchaseOrderDetail { Id = 10, PurchaseOrderId = 2, ProductId = 6, Quantity = 3, QuantityPending = 3, Price = 45000 },
+                new PurchaseOrderDetail { Id = 11, PurchaseOrderId = 3, ProductId = 18, Quantity = 1, QuantityPending = 1, Price = 550000 },
+                new PurchaseOrderDetail { Id = 12, PurchaseOrderId = 3, ProductId = 19, Quantity = 2, QuantityPending = 2, Price = 275000 }
+                );
+
         }
     }
 }

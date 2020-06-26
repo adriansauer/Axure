@@ -296,7 +296,7 @@ namespace Axure.DataBase.Module_Sale
                             EmployeeId = data.EmployeeId,
                             ClientId = data.ClientId, 
                             SaleCondition = data.SaleCondition,
-                            Status = (data.SaleCondition.Equals(SaleCondition.Contado))? StatusInvoice.Pagada.ToString() : StatusInvoice.Pendiente.ToString(),
+                            Status = StatusInvoice.Pendiente.ToString(),
                             InvoiceNumber = data.InvoiceNumber,
                             ClientName = client.Name,
                             ClientRUC = client.RUC,
