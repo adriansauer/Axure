@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Axure.DTO.Module_Purchase;
+using Axure.Models;
+using Axure.Models.Module_Purchase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,21 +14,20 @@ namespace Axure.DataBase.Module_Purchase
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        /*OrderSaleDetailDAO osdDAO = new OrderSaleDetailDAO();
+        PurchaseOrderDetailDAO purchaseOrderDetailDAO = new PurchaseOrderDetailDAO();
 
-        public List<OrderSaleDTO> List()
+        public List<PurchaseOrderDTO> List()
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var ls = db.OrderSales.Where(x => x.Deleted == false)
-                        .Select(x => new { Id = x.Id, ClientId = x.ClientId, Status = x.Status, OrderNumber = x.OrderNumber, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year, SellerId = x.EmployeeId })
+                    var ls = db.PurchaseOrders.Include("Provider")
+                        .Select(x => new { Id = x.Id, Provider = x.Provider, Status = x.Status, Number = x.Number, Day = x.Date.Day, Month = x.Date.Month, Year = x.Date.Year })
                         .ToList()
-                        .Select(y => new OrderSaleDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, OrderNumber = y.OrderNumber, Day = y.Day, Month = y.Month, Year = y.Year, EmployeeId = y.SellerId })
+                        .Select(y => new PurchaseOrderDTO { Id = y.Id, ProviderId = y.Provider.Id, ProviderName = y.Provider.Name, Status = y.Status, Number = y.Number, Day = y.Day, Month = y.Month, Year = y.Year })
                         .ToList();
                     return ls;
-
                 }
             }
             catch (Exception e)
@@ -36,13 +38,13 @@ namespace Axure.DataBase.Module_Purchase
         }
 
         //Ordenes por cliente
-        public List<OrderSaleListDTO> ListByClient(int clId)
+        /*public List<PurchaseOrderDetailsDTO> ListByClient(int clId)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    var os = db.OrderSales.Where(x => x.ClientId == clId && x.Deleted == false).ToList();
+                    var os = db.OrderSales.Where(x => x.ClientId == clId).ToList();
                     List<OrderSale> osList = new List<OrderSale>();
                     os.ForEach(x => osList.Add(db.OrderSales.Single(y => y.Id == x.Id)));
                     var osR = osList
@@ -59,8 +61,8 @@ namespace Axure.DataBase.Module_Purchase
                 log.Error("Error al obtener listado de ordenes ListByClient " + e.Message + e.StackTrace);
                 return null;
             }
-        }
-
+        }*/
+        /*
         //Ordenes por la cabecera
         public List<OrderSaleListDTO> ListByStatus(string status)
         {
@@ -86,18 +88,27 @@ namespace Axure.DataBase.Module_Purchase
                 log.Error("Error al obtener listado de ordenes ListByState " + e.Message + e.StackTrace);
                 return null;
             }
-        }
-
+        }*/
+        
         //orden por id
-        public OrderSaleListDTO GetById(int Id)
+        public PurchaseOrderDetailsDTO GetById(int Id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    OrderSale y = db.OrderSales.Find(Id);// Single(x => x.Id == Id && x.Deleted == false);
-                    return new OrderSaleListDTO { Id = y.Id, ClientId = y.ClientId, Status = y.Status, EmployeeId = y.EmployeeId, OrderNumber = y.OrderNumber, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, ListDetails = osdDAO.ListByMaster(y.Id) };
-
+                    PurchaseOrder po = db.PurchaseOrders.Include("Provider").FirstOrDefault(x => x.Id == Id);
+                    return new PurchaseOrderDetailsDTO {
+                        Id = po.Id,
+                        ProviderId = po.Provider.Id,
+                        ProviderName = po.Provider.Name,
+                        Status = po.Status,
+                        Number = po.Number,
+                        Day = po.Date.Day,
+                        Month = po.Date.Month,
+                        Year = po.Date.Year,
+                        ListDetails = this.purchaseOrderDetailDAO.ListByMaster(Id)
+                    };
                 }
             }
             catch (Exception e)
@@ -107,6 +118,7 @@ namespace Axure.DataBase.Module_Purchase
             }
         }
 
+        /*
         //orden por numero de orden
         public OrderSaleListDTO GetByNumber(string number)
         {
@@ -140,10 +152,9 @@ namespace Axure.DataBase.Module_Purchase
                 return null;
             }
         }
-
-        public bool Add(OrderSaleListDTO so)
+        */
+        public bool Add(PurchaseOrderDetailsDTO pOD)
         {
-
             using (var db = new AxureContext())
             {
                 using (var dbContextTransaction = db.Database.BeginTransaction())
@@ -151,36 +162,40 @@ namespace Axure.DataBase.Module_Purchase
                     try
                     {
                         //Create the order sale.
-                        OrderSale soC = new OrderSale()
-                        { ClientId = so.ClientId, EmployeeId = so.EmployeeId, OrderNumber = so.OrderNumber, Date = new DateTime(so.Year, so.Month, so.Day), Status = StatusOrderSale.Pendiente.ToString(), Deleted = false };
-                        db.OrderSales.Add(soC);
+                        PurchaseOrder pO = new PurchaseOrder(){
+                            ProviderId = pOD.ProviderId,
+                            Date = new DateTime(pOD.Year, pOD.Month, pOD.Day), 
+                            Status = StatusOrderPurchase.Pendiente.ToString()
+                        };
+                        db.PurchaseOrders.Add(pO);
                         db.SaveChanges();
 
+                        pO.Number = pO.Id;
+
                         //Add details.
-                        if (null != so.ListDetails)
+                        if (null != pOD.ListDetails)
                         {
-                            for (int i = 0; i < so.ListDetails.Count; i++)
+                            for (int i = 0; i < pOD.ListDetails.Count; i++)
                             {
-                                db.OrderSaleDetails.Add(new OrderSaleDetail() { SaleOrderId = soC.Id, ProductId = so.ListDetails[i].ProductId, Quantity = so.ListDetails[i].Quantity, QuantityPending = so.ListDetails[i].Quantity });
+                                db.PurchaseOrderDetails.Add(new PurchaseOrderDetail() { PurchaseOrderId = pO.Id, ProductId = pOD.ListDetails[i].ProductId, Quantity = pOD.ListDetails[i].Quantity, QuantityPending = pOD.ListDetails[i].Quantity, Price = pOD.ListDetails[i].Price });
                             }
                         }
                         db.SaveChanges();
 
                         //Everything went well.
                         dbContextTransaction.Commit();
-                        return true;
+                        return false;
                     }
                     catch (Exception e)
                     {
                         dbContextTransaction.Rollback();
-                        log.Error("Error al agregar orden de venta " + so.OrderNumber + " Add OrderSaleDAO");
-                        return false;
+                        log.Error("Error al agregar orden de compra");
+                        return true;
                     }
                 }
             }
-
         }
-
+        /*
 
         //cambiar estado
         public bool UpdateState(int osId, string status)

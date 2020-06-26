@@ -58,24 +58,52 @@ namespace Axure.DataBase.Module_Purchase
                 return null;
             }
         }
-        /*
-                public bool Add(ClientDTO c)
+
+
+        public bool Add(ProviderListDetailDTO providerDTO)
+        {
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        using (var db = new AxureContext())
+                        //Create the order sale.
+                        Provider p = new Provider()
                         {
-                            db.Clients.Add(new Client { Name = c.Name, Address = c.Address, Phone = c.Phone, RUC = c.RUC, CreditMaximum = c.CreditMaximum, CreditPending = 0, Deleted = false });
-                            db.SaveChanges();
-                            return false;
+                            Name = providerDTO.Name,
+                            Address = providerDTO.Address,
+                            Phone = providerDTO.Phone,
+                            Credit = 0,
+                            RUC = providerDTO.RUC,
+                            Deleted = false
+                        };
+                        db.Providers.Add(p);
+                        db.SaveChanges();
+
+                        //Add details.
+                        if (null != providerDTO.ListCategories)
+                        {
+                            for (int i = 0; i < providerDTO.ListCategories.Count; i++)
+                            {
+                                db.ProviderDetails.Add(new ProviderDetail() { ProviderId = p.Id, ProductCategoryId = providerDTO.ListCategories[i].Category.Id });
+                            }
                         }
+                        db.SaveChanges();
+
+                        //Everything went well.
+                        dbContextTransaction.Commit();
+                        return false;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        dbContextTransaction.Rollback();
                         return true;
                     }
                 }
-
+            }
+        }
+        /*
                 public bool Edit(int id, ClientDTO c)
                 {
                     try
