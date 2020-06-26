@@ -1,4 +1,5 @@
 ﻿using Axure.DataBase.Module_Purchase;
+using Axure.DTO.Module_Purchase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,15 +63,15 @@ namespace Axure.Controllers.Module_Purchase
                 return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
-        /*
-        // POST: Employees/Create
+
+        // POST: Providers/Create
         [HttpPost]
         [Route("Create")]
-        public ActionResult Create(EmployeeDTO e)
+        public ActionResult Create(ProviderListDetailDTO p)
         {
             try
             {
-                if (this.employeeDAO.Add(e))
+                if (this.providerDAO.Add(p))
                 {
                     return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
                 }
@@ -84,7 +85,7 @@ namespace Axure.Controllers.Module_Purchase
                 return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
             }
         }
-
+        /*
         // PUT: Employees/Edit/5
         [HttpPut]
         [Route("Edit/{id}")]

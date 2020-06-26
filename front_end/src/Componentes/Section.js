@@ -10,6 +10,7 @@ import DarDeBaja from './Modulo Productos/Ingreso_Egreso.js';
 import PedidoVenta from './Modulo Ventas/OrdenVenta.js';
 import Clientes from './Modulo Ventas/Clientes.js';
 import ComprasP from './Modulo Compras/ComprasP.js';
+import Proveedor from './Modulo Compras/Proveedor.js';
 class Section extends Component{
  
     render(){ 
@@ -26,6 +27,7 @@ class Section extends Component{
                         case 60:return <PedidoVenta/>
                         case 61:return <Clientes/>
                         case 70:return <ComprasP/>
+                        case 71:return <Proveedor/>
                         default: return <Stock/>
                         
                     }

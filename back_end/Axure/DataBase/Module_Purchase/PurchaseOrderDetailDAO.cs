@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Axure.DTO.Module_Purchase;
+using Axure.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,34 +28,19 @@ namespace Axure.DataBase.Module_Purchase
                 return false;
             }
         }
-
-        public List<OrderSaleDetailDTO> ListByMaster(int id)
+        */
+        public List<PurchaseOrderDetailDTO> ListByMaster(int id)
         {
             try
             {
                 using (var db = new AxureContext())
                 {
-                    Product pd = db.Products.SingleOrDefault(x => x.Id == id);
-                    var lista = db.OrderSaleDetails.Where(x => x.SaleOrderId == id)
-                        .Select(x => new
-                        {
-                            Id = x.Id,
-                            OrderSaleId = x.SaleOrderId,
-                            ProductId = x.ProductId,
-                            Quantity = x.Quantity,
-                            QuantityPending = x.QuantityPending
-                        })
-                        .ToList()
-                        .Select(y => new OrderSaleDetailDTO()
-                        {
-                            Id = y.Id,
-                            OrderSaleId = y.OrderSaleId,
-                            ProductId = y.ProductId,
-                            Quantity = y.Quantity,
-                            QuantityPending = y.QuantityPending
-                        })
-                        .ToList();
-                    return lista;
+                    var ls = db.PurchaseOrderDetails.Include("Provider").Where(x => x.PurchaseOrderId == id)
+                       .Select(x => new { Id = x.Id, Product = x.Product, Quantity = x.Quantity, QuantityPending = x.QuantityPending, Price = x.Price })
+                       .ToList()
+                       .Select(y => new PurchaseOrderDetailDTO { Id = y.Id, ProductId = y.Product.Id, ProductName = y.Product.Name, Quantity = y.Quantity, QuantityPending = y.QuantityPending, Price = y.Price })
+                       .ToList();
+                    return ls;
                 }
             }
             catch (Exception e)
@@ -63,6 +50,7 @@ namespace Axure.DataBase.Module_Purchase
             }
         }
 
+        /*
         //cambiar cantidad
         public bool UpdateQuantity(int osId, int qt)
         {
