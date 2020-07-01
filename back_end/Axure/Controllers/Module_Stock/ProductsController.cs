@@ -80,6 +80,26 @@ namespace Axure.Controllers.Module_Stock
             
         }
 
+        // GET: Products/OfProvider/1
+        [Route("OfProvider/{id}")]
+        public ActionResult OfProvider(int id)
+        {
+            try
+            {
+                var lista = this.productDAO.ProductByProvider(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(CodeHTTP.ACCEPTED);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+            }
+
+        }
+
         // GET: Products/OfType/1
         [Route("OfType/{id}")]
         public ActionResult OfType(int id)
