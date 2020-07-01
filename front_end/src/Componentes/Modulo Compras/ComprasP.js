@@ -3,14 +3,12 @@ import "../Modulo Productos/styleMProductos.css";
 import TablaProductoSelectorPrecio from "../Modulo Productos/TablaProductoSelectorPrecio";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
+import AgregarProveedor from "./Modales/AgregarProveedor.js";
 import AgregarProducto from "../Modulo Productos/Modales/AgregarProducto";
-
 class ComprasP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      agregarProveedorVisible: false,
-      agregarModalVisible:false,
       productosSeleccionados: [],
       buscador: "",
       empleados: [],
@@ -20,9 +18,11 @@ class ComprasP extends Component {
       encargadoNombre: "",
       encargado: {},
       encargadoElegido: false,
-      proveedorNombre: "",
-      proveedor: {},
-      proveedorElegido: false,
+      clienteNombre: "",
+      cliente: {},
+      clienteElegido: false,
+      agregarProveedorVisible:false,
+
     };
   }
   async componentDidMount() {
@@ -36,6 +36,9 @@ class ComprasP extends Component {
     document.getElementById("fecha").value = ano + "-" + mes + "-" + dia;
 
     await this.actualizar();
+  }
+  ocultar(){
+    this.setState({agregarProveedorVisible:false});
   }
   async actualizar() {
     try {
@@ -179,9 +182,15 @@ return false;
     return (
       <div className="Container">
         <Notificacion />
+
+        <AgregarProveedor
+        visible={this.state.agregarProveedorVisible}
+        ocultar={this.ocultar.bind(this)}
+/>
         <AgregarProducto
         visible={this.state.agregarModalVisible}
         ocultar={this.ocultarModals.bind(this)}
+
         />
         <div className="row">
           <div className="col-md-4">
@@ -196,9 +205,9 @@ return false;
               </div>
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <button className="btn btn-primary"
-            onClick={() => this.setState({ agregarProveedorVisible: true })}
+            onClick={()=>this.setState({agregarProveedorVisible:true})}
             >
               Agregar Proveedor
             </button>
