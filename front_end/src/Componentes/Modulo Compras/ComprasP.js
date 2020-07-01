@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "../Modulo Productos/styleMProductos.css";
-import TablaProductoSelector from "../Modulo Productos/TablaProductoSelector";
+import TablaProductoSelectorPrecio from "../Modulo Productos/TablaProductoSelectorPrecio";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
+import AgregarProveedor from "./Modales/AgregarProveedor.js";
+import AgregarProducto from "../Modulo Productos/Modales/AgregarProducto";
 class ComprasP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      agregarClienteVisible: false,
       productosSeleccionados: [],
       buscador: "",
       empleados: [],
@@ -20,6 +21,8 @@ class ComprasP extends Component {
       clienteNombre: "",
       cliente: {},
       clienteElegido: false,
+      agregarProveedorVisible:false,
+
     };
   }
   async componentDidMount() {
@@ -34,13 +37,16 @@ class ComprasP extends Component {
 
     await this.actualizar();
   }
+  ocultar(){
+    this.setState({agregarProveedorVisible:false});
+  }
   async actualizar() {
     try {
-      const clientes = await Api.clientes.get();
+      const proveedores = await Api.clientes.get();
       const empleados = await Api.empleados.get();
       const productos = await Api.productos.getProductosDeVenta();
       this.setState({
-        clientes: clientes.data,
+        proveedores: proveedores.data,
         empleados: empleados.data,
         productos: productos.data,
       });
@@ -89,7 +95,7 @@ class ComprasP extends Component {
   }*/
   validarCampos(){
     if(
-      this.state.clienteElegido===false ||
+      this.state.proveedorElegido===false ||
       this.state.encargadoElegido===false ||
       this.state.productosSeleccionados.length===0
     ){
@@ -120,10 +126,13 @@ return false;
       ),
     });
   }
-  /*async ocultarModales() {
-    this.setState({ agregarClienteVisible: false });
-    await this.actualizar();
-  }*/
+  ocultarModals() {
+    this.setState({
+      agregarModalVisible:false,
+      agregarProveedorVisible: false,
+    });
+    this.actualizar();
+  }
   async enviar() {
     let date = new Date(document.getElementById("fecha").value);
     const productos = this.state.productosSeleccionados.map((p) => {
@@ -152,9 +161,9 @@ return false;
             encargadoNombre: "",
             encargado: {},
             encargadoElegido: false,
-            clienteNombre: "",
-            cliente: {},
-            clienteElegido: false,
+            proveedorNombre: "",
+            proveedor: {},
+            proveedorElegido: false,
           });
           notify("Orden guardada exitosamente!", "success");
         } else {
@@ -173,7 +182,16 @@ return false;
     return (
       <div className="Container">
         <Notificacion />
-        
+
+        <AgregarProveedor
+        visible={this.state.agregarProveedorVisible}
+        ocultar={this.ocultar.bind(this)}
+/>
+        <AgregarProducto
+        visible={this.state.agregarModalVisible}
+        ocultar={this.ocultarModals.bind(this)}
+
+        />
         <div className="row">
           <div className="col-md-4">
             <div className="dropdown">
@@ -188,7 +206,9 @@ return false;
             </div>
           </div>
           <div className="col-md-2">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary"
+            onClick={()=>this.setState({agregarProveedorVisible:true})}
+            >
               Agregar Proveedor
             </button>
           </div>
@@ -243,9 +263,14 @@ return false;
             </div>
           </div>
 
-          <div className = 'col-md-2'/>
+          <div className = 'col-md-3'>
+            <button className="btn btn-primary"
+                onClick={()=>this.setState({agregarModalVisible:true})}>
+              Agregar Producto
+            </button>
+          </div>
 
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="dropdown">
               <input
                 type="number"
@@ -258,16 +283,21 @@ return false;
               </div>
             </div>
           </div>
+          
+          <div className="col-md-3 form-state text-center">
+              <label>Estado: Pendiente</label>
+          </div>
         </div>
 
         <div className="row">
           <div className="col">
-            <TablaProductoSelector
+          <TablaProductoSelectorPrecio
               productos={this.state.productosSeleccionados}
               delete={this.delete.bind(this)}
             />
           </div>
         </div>
+
         <div className="row">
           <div className="col-md-4">
             <div className="dropup">
