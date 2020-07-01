@@ -12,6 +12,7 @@ namespace Axure.DataBase.Module_Sale
 {
     public class OrderSaleDetailDAO
     {
+
         private readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public bool Add(OrderSaleDetailDTO sod)//, AxureContext db)

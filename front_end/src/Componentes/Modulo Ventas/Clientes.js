@@ -7,6 +7,7 @@ import "./style.css"
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
 
+
 class Clientes extends Component {
   constructor(props) {
     super(props);
@@ -153,6 +154,9 @@ class Clientes extends Component {
                 <th scope="col">Nombre</th>
                 <th scope="col">Direccion</th>
                 <th scope="col">Ruc</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Credito total</th>
+                <th scope="col">Credito disponible</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -170,6 +174,9 @@ class Clientes extends Component {
                         <td>{c.Name}</td>
                         <td>{c.Address}</td>
                         <td>{c.RUC}</td>
+                        <td>{c.Phone}</td>
+                        <td>{c.CreditMaximum}</td>
+                        <td>{c.CreditPending}</td>
                         <td>
                           <EditIcon onClick={()=>this.editarCliente(c)} />
                           <DeleteIcon onClick={() => this.eliminarCliente(c)} />

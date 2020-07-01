@@ -1,4 +1,5 @@
 ﻿using Axure.Controllers;
+using Axure.DataBase.Module_Purchase;
 using Axure.DataBase.Module_Stock;
 using Axure.DTO.Module_Stock;
 using Axure.Models;
@@ -132,6 +133,28 @@ namespace Axure.DataBase.Module_Stock
                           .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, Price = y.Price, TaxPercentage = y.Tax.Quantity, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
                           .ToList();
                     return respuesta;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        public List<ProductDTO> ProductByProvider(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    ProviderDAO providerDAO = new ProviderDAO();
+                    List<ProductCategoryDTO> lisCategories = providerDAO.ListCategories(id);
+                    List<Product> listProducts = new List<Product>();
+                    lisCategories.ForEach(c => db.Products.Include("Tax").Include("ProductType").Where(x => x.Deleted == false && x.ProductCategoryId == c.Id).ToList().ForEach(w => listProducts.Add(w)));
+                    List<ProductDTO> listProductDTO = new List<ProductDTO>();
+                    listProducts.ForEach(y => listProductDTO.Add(new ProductDTO { Id = y.Id, Name = y.Name, Description = y.Description, ProductType = y.ProductType, Cost = y.Cost, Price = y.Price, TaxPercentage = y.Tax.Quantity, QuantityMin = y.QuantityMin, Barcode = y.Barcode }));
+                    return listProductDTO;
                 }
             }
             catch

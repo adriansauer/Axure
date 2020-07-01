@@ -141,7 +141,16 @@ export default {
       requestHelper({
         url: "OrderSales/Add ",
         method: "post",
-        data:data,
+        data,
+      }),
+      get:()=>requestHelper({
+        url:"OrderSales/List ",
+        method:"get",
+
+      }),
+      getDetalles:(id)=>requestHelper({
+        url:"OrderSales/GetById/"+id,
+        method:"get",
       }),
   },
   ingreso_egreso: {
@@ -167,6 +176,7 @@ export default {
         method: "delete",
       }),
   },
+
   ordenes_compra: {
     create: (data) =>
       requestHelper({
@@ -181,6 +191,39 @@ export default {
         url: "Providers/List",
         method: "get",
       }),
+    },
+  factura:{
+    validate:(data)=>requestHelper({
+      url:"Invoices/Validate",
+      method:"post",
+      data:data,
+    }),
+    create:(data)=>requestHelper({
+      url:"Invoices/Create",
+      method:"post",
+      data
+    }),
+    get:()=>requestHelper({
+      url:"Invoices/List",
+      method:"get",
+    
+    })
+  },
+  categoria:{
+    get:(data)=>requestHelper({
+      url:"ProductCategories/List",
+      method:"post",
+      data:data,
+    }),
+    
+   
+  },
+  proveedor:{
+    create:(data)=>requestHelper({
+      url:"Providers/Create",
+      method:"post",
+      data,
+    }),
   },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL
