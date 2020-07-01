@@ -167,6 +167,21 @@ export default {
         method: "delete",
       }),
   },
+  ordenes_compra: {
+    create: (data) =>
+      requestHelper({
+        url: "PurchaseOrders/Create",
+        method: "post",
+        data: data
+      }),
+  },
+  proveedores: {
+    get: () =>
+      requestHelper({
+        url: "Providers/List",
+        method: "get",
+      }),
+  },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL
 -	ID_DEPOSIT_PRODUCTION
