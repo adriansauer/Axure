@@ -3,21 +3,12 @@ import "../Modulo Productos/styleMProductos.css";
 import TablaProductoSelectorPrecio from "../Modulo Productos/TablaProductoSelectorPrecio";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
-<<<<<<< HEAD
 import AgregarProveedor from "./Modales/AgregarProveedor.js";
-=======
 import AgregarProducto from "../Modulo Productos/Modales/AgregarProducto";
-
->>>>>>> master
 class ComprasP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
-=======
-      agregarProveedorVisible: false,
-      agregarModalVisible:false,
->>>>>>> master
       productosSeleccionados: [],
       buscador: "",
       empleados: [],
@@ -27,17 +18,11 @@ class ComprasP extends Component {
       encargadoNombre: "",
       encargado: {},
       encargadoElegido: false,
-<<<<<<< HEAD
       clienteNombre: "",
       cliente: {},
       clienteElegido: false,
       agregarProveedorVisible:false,
 
-=======
-      proveedorNombre: "",
-      proveedor: {},
-      proveedorElegido: false,
->>>>>>> master
     };
   }
   async componentDidMount() {
@@ -197,15 +182,15 @@ return false;
     return (
       <div className="Container">
         <Notificacion />
-<<<<<<< HEAD
+
         <AgregarProveedor
         visible={this.state.agregarProveedorVisible}
         ocultar={this.ocultar.bind(this)}
-=======
+/>
         <AgregarProducto
         visible={this.state.agregarModalVisible}
         ocultar={this.ocultarModals.bind(this)}
->>>>>>> master
+
         />
         <div className="row">
           <div className="col-md-4">
@@ -220,15 +205,9 @@ return false;
               </div>
             </div>
           </div>
-<<<<<<< HEAD
           <div className="col-md-2">
             <button className="btn btn-primary"
             onClick={()=>this.setState({agregarProveedorVisible:true})}
-=======
-          <div className="col-md-3">
-            <button className="btn btn-primary"
-            onClick={() => this.setState({ agregarProveedorVisible: true })}
->>>>>>> master
             >
               Agregar Proveedor
             </button>

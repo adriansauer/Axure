@@ -17,11 +17,11 @@ class Factura extends Component {
     var contenido = document.getElementById(nombreDiv).innerHTML;
     var contenidoOriginal = document.body.innerHTML;
 
-    //document.body.innerHTML = contenido;
+    document.body.innerHTML = contenido;
 
-    //window.print();
+    window.print();
 
-    //document.body.innerHTML = contenidoOriginal;
+    document.body.innerHTML = contenidoOriginal;
   }
   format(n, sep, decimals) {
     sep = sep || "."; // Default to period as decimal separator

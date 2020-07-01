@@ -204,7 +204,7 @@ export default {
   },
   proveedor:{
     create:(data)=>requestHelper({
-      url:"Provider/Create",
+      url:"Providers/Create",
       method:"post",
       data,
     }),

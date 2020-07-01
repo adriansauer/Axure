@@ -57,7 +57,7 @@ class AsideCompras extends Component {
             <a
               className="nav-link "
               href="#Proveedor"
-              onClick={() => this.selectTab(71, 0)}
+              onClick={() => this.selectTab(72, 4)}
             >
               Proveedores
             </a>

@@ -7,6 +7,7 @@ import "./style.css"
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
 
+
 class Clientes extends Component {
   constructor(props) {
     super(props);
@@ -155,7 +156,7 @@ class Clientes extends Component {
                 <th scope="col">Ruc</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Credito total</th>
-                <th scope="col">Credito pendiente</th>
+                <th scope="col">Credito disponible</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>

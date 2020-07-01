@@ -16,7 +16,6 @@ class AgregarProveedor extends Component {
       nombre: "",
       ruc: "",
       direccion: "",
-      creditomax: "",
       categorias: null,
     };
   }
@@ -34,11 +33,12 @@ class AgregarProveedor extends Component {
       this.state.nombre === "" ||
       this.state.ruc === "" ||
       this.state.direccion === "" ||
-      this.state.creditomax === ""||
-      this.state.categorias.filter(c=>document.getElementById(c.Id).checked).map(c=>c.Id).length===0
+      this.state.creditomax === "" ||
+      this.state.categorias
+        .filter((c) => document.getElementById(c.Id).checked)
+        .map((c) => c.Id).length === 0
     ) {
-     
-     return false;
+      return false;
     } else {
       return true;
     }
@@ -46,16 +46,23 @@ class AgregarProveedor extends Component {
 
   async enviar() {
     if (this.validarCampos) {
-      const categoriasSeleccionadas=this.state.categorias.filter(c=>document.getElementById(c.Id).checked).map(c=>c.Id);
-      console.log(categoriasSeleccionadas);
+      const categoriasSeleccionadas = this.state.categorias
+        .filter((c) => document.getElementById(c.Id).checked)
+        .map((c) => {
+          return {
+            Category: {
+              Id: c.Id,
+            },
+          };
+        });
       const proveedor = {
         Name: this.state.nombre,
         Address: this.state.direccion,
         RUC: this.state.ruc,
-        CreditMaximum: parseInt(this.state.creditomax),
         Phone: this.state.telefono,
-        ListCategories:categoriasSeleccionadas,
+        ListCategories: categoriasSeleccionadas,
       };
+      console.log(proveedor);
       try {
         const request = await api.proveedor.create(proveedor);
         if (request.status === 200) {
@@ -72,15 +79,16 @@ class AgregarProveedor extends Component {
           notify("No se pudo cargar el proveedor", "danger");
         }
       } catch (error) {
-       
         notify("Error al intentar crear el proveedor", "danger");
       }
     } else {
-      notify("Rellene todos los campos o seleccione al menos una categoria!", "warning");
+      notify(
+        "Rellene todos los campos o seleccione al menos una categoria!",
+        "warning"
+      );
     }
   }
   render() {
-    
     return (
       <div>
         <Notificacion />
@@ -142,31 +150,17 @@ class AgregarProveedor extends Component {
                     onChange={(e) => this.setState({ ruc: e.target.value })}
                   />
                 </div>
-                <div className="col-md-12">
-                  {/**CREDITO   DEL PROVEEDOR*/}
-                  <input
-                    autoComplete="off"
-                    type="text"
-                    id="creditomax"
-                    className="form-control"
-                    placeholder="Credito"
-                    onChange={(e) =>
-                      this.setState({ creditomax: e.target.value })
-                    }
-                  />
-                </div>
+               
               </div>
               <div
                 className="col-md-7"
                 style={{
                   overflowY: "scroll",
-                  overflowX:"hidden",
+                  overflowX: "hidden",
                   height: "200px",
                 }}
               >
-                <table
-                  className="table table-hover table"                
-                >
+                <table className="table table-hover table">
                   <thead className="tableHeader">
                     <tr>
                       <th scope="col">Categoria</th>
@@ -179,9 +173,8 @@ class AgregarProveedor extends Component {
                           <tr key={c.Id}>
                             <td>{c.Description}</td>
                             <td>
-                              <input type="checkbox" id={c.Id}/>
+                              <input type="checkbox" id={c.Id} />
                             </td>
-                            
                           </tr>
                         ))
                       : null}
