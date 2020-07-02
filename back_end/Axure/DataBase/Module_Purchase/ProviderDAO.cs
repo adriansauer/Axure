@@ -59,6 +59,25 @@ namespace Axure.DataBase.Module_Purchase
             }
         }
 
+        public List<ProductCategoryDTO> ListCategories(int id)
+        {
+            try
+            {
+                using(var db = new AxureContext())
+                {
+                    var provider = db.Providers.FirstOrDefault(x => x.Id == id && x.Deleted == false);
+                    List<ProviderDetail> listDetails = db.ProviderDetails.Include("ProductCategory").Where(x => x.ProviderId == provider.Id).ToList();
+                    List<ProductCategoryDTO> ListCategories = new List<ProductCategoryDTO>();
+                    listDetails.ForEach(x => ListCategories.Add(new ProductCategoryDTO { Id = x.ProductCategory.Id, Description = x.ProductCategory.Description } ));
+                    return ListCategories;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         public bool Add(ProviderListDetailDTO providerDTO)
         {

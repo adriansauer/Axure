@@ -131,5 +131,21 @@
 2020-05-31 22:22:34,853 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
 2020-05-31 22:24:35,558 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
 2020-05-31 22:26:07,024 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+<<<<<<< HEAD
+2020-06-01 15:50:20,624 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-01 15:51:36,364 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-01 15:51:44,012 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-01 15:52:32,843 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-01 15:56:43,932 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-01 15:56:46,999 ERROR Axure.DataBase.Module_Sale.OrderSaleDAO - Error al agregar orden de venta 2 Add OrderSaleDAO
+2020-06-02 14:48:03,041 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-02 14:52:16,786 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 14:38:34,535 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 14:57:22,984 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 14:59:40,642 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 15:02:47,303 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+2020-06-19 15:23:50,593 ERROR Axure.DataBase.Module_Sale.InvoiceDAO - Error al agregar una factura!!!
+=======
 2020-06-26 10:24:11,001 ERROR Axure.DataBase.Module_Purchase.PurchaseOrderDAO - Error al mostrar el listado de orden de venta por Id. Referencia a objeto no establecida como instancia de un objeto.   en Axure.DataBase.Module_Purchase.PurchaseOrderDAO.GetById(Int32 Id) en C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\DataBase\Module_Purchase\PurchaseOrderDAO.cs:línea 101
 2020-06-26 10:24:21,823 ERROR Axure.DataBase.Module_Purchase.PurchaseOrderDAO - Error al mostrar el listado de orden de venta por Id. Referencia a objeto no establecida como instancia de un objeto.   en Axure.DataBase.Module_Purchase.PurchaseOrderDAO.GetById(Int32 Id) en C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\DataBase\Module_Purchase\PurchaseOrderDAO.cs:línea 101
+>>>>>>> master

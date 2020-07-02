@@ -3,18 +3,16 @@ import "../Modulo Productos/styleMProductos.css";
 import TablaProductoSelectorPrecio from "../Modulo Productos/TablaProductoSelectorPrecio";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
+import AgregarProveedor from "./Modales/AgregarProveedor.js";
 import AgregarProducto from "../Modulo Productos/Modales/AgregarProducto";
-
 class ComprasP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      agregarProveedorVisible: false,
-      agregarModalVisible:false,
       productosSeleccionados: [],
       buscador: "",
       empleados: [],
-      clientes: [],
+      proveedores: [],
       productos: [],
       productosSeleccionado: [],
       encargadoNombre: "",
@@ -23,6 +21,8 @@ class ComprasP extends Component {
       proveedorNombre: "",
       proveedor: {},
       proveedorElegido: false,
+      agregarProveedorVisible:false,
+
     };
   }
   async componentDidMount() {
@@ -37,9 +37,12 @@ class ComprasP extends Component {
 
     await this.actualizar();
   }
+  ocultar(){
+    this.setState({agregarProveedorVisible:false});
+  }
   async actualizar() {
     try {
-      const proveedores = await Api.clientes.get();
+      const proveedores = await Api.proveedores.get();
       const empleados = await Api.empleados.get();
       const productos = await Api.productos.getProductosDeVenta();
       this.setState({
@@ -60,15 +63,15 @@ class ComprasP extends Component {
 
     this.toggleShow("dropdown-encargado");
   }
-  /*seleccionarCliente(cliente) {
+  seleccionarProveedor(cliente) {
     this.setState({
-      cliente: cliente,
-      clienteNombre: cliente.Name,
-      clienteElegido: true,
+      proveedor: cliente,
+      proveedorNombre: cliente.Name,
+      proveedorElegido: true,
     });
 
-    this.toggleShow("dropdown-cliente");
-  }*/
+    this.toggleShow("dropdown-proveedor");
+  }
   toggleShow(param) {
     if (document.getElementById(param) !== null) {
       document.getElementById(param).classList.toggle("show");
@@ -82,18 +85,18 @@ class ComprasP extends Component {
 
     this.toggleShow("dropdown-encargado");
   }
-  /*buscarCliente(e) {
+  buscarProveedor(e) {
     this.setState({
-      clienteNombre: e.target.value,
-      clienteElegido: false,
+      proveedorNombre: e.target.value,
+      proveedorElegido: false,
     });
 
-    this.toggleShow("dropdown-cliente");
-  }*/
+    this.toggleShow("dropdown-proveedor");
+  }
   validarCampos(){
     if(
       this.state.proveedorElegido===false ||
-      this.state.encargadoElegido===false ||
+      /*this.state.encargadoElegido===false ||*/
       this.state.productosSeleccionados.length===0
     ){
 return false;
@@ -136,28 +139,29 @@ return false;
       return {
         ProductId: p.Id,
         Quantity: parseInt(p.Cantidad),
+        Price: p.price,
       };
     });
     const envio = {
-      ClientId: this.state.cliente.Id,
+      ProviderId: this.state.proveedor.Id,
       Day: date.getDate() + 1,
       Month: date.getMonth() + 1,
       Year: date.getFullYear(),
-      EmployeeId: this.state.encargado.Id,
-      OrderNumber: 2,
+      /*EmployeeId: this.state.encargado.Id,
+      OrderNumber: 2,*/
       ListDetails: productos,
     };
     if (this.validarCampos()) {
       try {
-        const request = await Api.ordenes_venta.create(envio);
+        const request = await Api.ordenes_compra.create(envio);
         if (request.status === 200) {
           this.setState({
             productosSeleccionados: [],
             buscador: "",
             productosSeleccionado: [],
-            encargadoNombre: "",
+            /*encargadoNombre: "",
             encargado: {},
-            encargadoElegido: false,
+            encargadoElegido: false,*/
             proveedorNombre: "",
             proveedor: {},
             proveedorElegido: false,
@@ -179,30 +183,60 @@ return false;
     return (
       <div className="Container">
         <Notificacion />
+
+        <AgregarProveedor
+        visible={this.state.agregarProveedorVisible}
+        ocultar={this.ocultar.bind(this)}
+/>
         <AgregarProducto
         visible={this.state.agregarModalVisible}
         ocultar={this.ocultarModals.bind(this)}
+
         />
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <div className="dropdown">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Proveedor"
                 required="required"
+                value={this.state.proveedorNombre}
+                onChange={(e) => this.buscarProveedor(e)}
               />
-              <div className="dropdown-menu" id="dropdown-Proveedor">
+              <div className="dropdown-menu" id="dropdown-proveedor">
+                {this.state.proveedorNombre !== "" && !this.state.proveedorElegido
+                  ? this.state.proveedores
+                      .filter(
+                        (prov) =>
+                          prov.Name.toLowerCase().indexOf(
+                            this.state.proveedorNombre.toLowerCase()
+                          ) !== -1
+                      )
+                      .map((p) => (
+                        <a
+                          className="dropdown-item"
+                          key={p.Id}
+                          onClick={() => this.seleccionarProveedor(p)}
+                          href="#selected"
+                        >
+                          {p.Name},{p.RUC}
+                        </a>
+                      ))
+                      : null}
               </div>
             </div>
           </div>
-          <div className="col-md-3">
-            <button className="btn btn-primary"
+          {<div className="col-md-2">
+            {/*<button className="btn btn-primary"
             onClick={() => this.setState({ agregarProveedorVisible: true })}
+          <div className="col-md-2">
+            <button className="btn btn-primary"
+            onClick={()=>this.setState({agregarProveedorVisible:true})}
             >
               Agregar Proveedor
-            </button>
-          </div>
+                      </button>*/}
+          </div>}
           <div className="col-md-4">
             <div className="form-group">
               <input
@@ -219,7 +253,7 @@ return false;
         </div>
 
         <div className="row">
-          <div className="col-md-4">
+          {/*<div className="col-md-4">
             <div className="dropdown">
               <input
                 type="text"
@@ -252,7 +286,7 @@ return false;
                   : null}
               </div>
             </div>
-          </div>
+          </div>*/}
 
           <div className = 'col-md-3'>
             <button className="btn btn-primary"
@@ -260,6 +294,8 @@ return false;
               Agregar Producto
             </button>
           </div>
+
+          <div className = 'col-md-2'/>
 
           <div className="col-md-2">
             <div className="dropdown">
