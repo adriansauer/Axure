@@ -153,6 +153,12 @@ export default {
         method:"get",
       }),
   },
+  ordenes_compra:{
+    get:()=>requestHelper({
+      url:"PurchaseOrders/List",
+      method:"get",
+    }),
+  },
   ingreso_egreso: {
     create: (data) =>
       requestHelper({

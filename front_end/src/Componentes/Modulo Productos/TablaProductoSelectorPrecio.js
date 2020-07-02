@@ -103,7 +103,7 @@ class TablaProductoSelector extends Component{
                         type="Number"
                         className="form-control"
                         placeholder="Total"
-                        value={p.Cost * this.state.cant}
+                        value={p.Cost * (p.Cantidad!==null? 0 : parseInt(p.Cantidad))}
                         disabled
                       />
                     </td>

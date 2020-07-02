@@ -89,7 +89,7 @@ class Clientes extends Component {
         />
         <div className="row ">
           <div className="col-md-6 mr-auto pl-0">
-            {/**Un buscador de productos */}
+            {/**Un buscador de clientes */}
             <div className="col-sm-12 pl-0">
               <div className="input-group mb-3">
                 <input
