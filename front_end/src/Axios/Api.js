@@ -182,6 +182,22 @@ export default {
         method: "delete",
       }),
   },
+
+  ordenes_compra: {
+    create: (data) =>
+      requestHelper({
+        url: "PurchaseOrders/Create",
+        method: "post",
+        data: data
+      }),
+  },
+  proveedores: {
+    get: () =>
+      requestHelper({
+        url: "Providers/List",
+        method: "get",
+      }),
+    },
   factura:{
     validate:(data)=>requestHelper({
       url:"Invoices/Validate",

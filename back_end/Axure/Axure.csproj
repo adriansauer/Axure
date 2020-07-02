@@ -270,10 +270,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
- 
-    <Compile Include="Migrations\202006261751166_Initial.cs" />
-    <Compile Include="Migrations\202006261751166_Initial.Designer.cs">
-      <DependentUpon>202006261751166_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202007011811501_Initial.cs" />
+    <Compile Include="Migrations\202007011811501_Initial.Designer.cs">
+      <DependentUpon>202007011811501_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -375,38 +374,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Logs\" />
-    <Folder Include="Views\Client\" />
-    <Folder Include="Views\ComprobantePurchaseDetails\" />
-    <Folder Include="Views\ComprobantePurchases\" />
-    <Folder Include="Views\Deposits\" />
-    <Folder Include="Views\Employees\" />
-    <Folder Include="Views\EntSalProductDetails\" />
-    <Folder Include="Views\EntSalProducts\" />
-    <Folder Include="Views\Invoices\" />
-    <Folder Include="Views\MovementDetails\" />
-    <Folder Include="Views\MovementMotives\" />
-    <Folder Include="Views\Movements\" />
-    <Folder Include="Views\OrderSaleDetails\" />
-    <Folder Include="Views\OrderSales\" />
-    <Folder Include="Views\ProductCategories\" />
-    <Folder Include="Views\ProductCategory\" />
-    <Folder Include="Views\ProductComponents\" />
-    <Folder Include="Views\ProductionOrderDetails\" />
-    <Folder Include="Views\ProductionOrders\" />
-    <Folder Include="Views\ProductionStates\" />
-    <Folder Include="Views\ProductionState\" />
-    <Folder Include="Views\Products\" />
-    <Folder Include="Views\ProductTypes\" />
-    <Folder Include="Views\Providers\" />
-    <Folder Include="Views\PurchaseOrders\" />
-    <Folder Include="Views\Settings\" />
-    <Folder Include="Views\Setting\" />
-    <Folder Include="Views\StateOrderSales\" />
-    <Folder Include="Views\Stocks\" />
-    <Folder Include="Views\TranferDetails\" />
-    <Folder Include="Views\TransferDetails\" />
-    <Folder Include="Views\Transfers\" />
-    <Folder Include="Views\TransferTypes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -436,10 +403,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    
-
-    <EmbeddedResource Include="Migrations\202006261751166_Initial.resx">
-      <DependentUpon>202006261751166_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007011811501_Initial.resx">
+      <DependentUpon>202007011811501_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
