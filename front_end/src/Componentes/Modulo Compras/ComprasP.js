@@ -295,24 +295,6 @@ return false;
             </button>
           </div>
 
-<<<<<<< HEAD
-=======
-          <div className = 'col-md-2'/>
-
-          <div className="col-md-2">
-            <div className="dropdown">
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Total"
-                required="required" disabled
-              />
-              <div className="dropdown-menu" id="dropdown-total">
-
-              </div>
-            </div>
-          </div>
->>>>>>> master
           
           <div className="col-md-2">
               <label>Estado: Pendiente</label>

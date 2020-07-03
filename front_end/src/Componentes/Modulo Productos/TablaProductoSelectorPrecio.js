@@ -95,7 +95,6 @@ class TablaProductoSelector extends Component{
                         className="form-control"
                         placeholder="Precio"
                         value={p.Cost}
-<<<<<<< HEAD
                       />
                     </td>
                     <td> 
@@ -105,22 +104,6 @@ class TablaProductoSelector extends Component{
                         placeholder="Total"
                         value={p.Cost * (p.Cantidad!==null? 0 : parseInt(p.Cantidad))}
                         disabled
-=======
-                        onChange={(e) => {
-                          const arreglo = productos;
-                          arreglo[arreglo.indexOf(p)] = {
-                            Name: p.Name,
-                            Id: p.Id,
-                            Description: p.Description,
-                            Barcode: p.Barcode,
-                            Cantidad: p.Cantidad,
-                            Price: e.target.value,
-                          };
-                          this.setState({
-                            productos: arreglo,
-                          });
-                        }}
->>>>>>> master
                       />
                     </td>
                     {/**Boton para sacar de la lista el producto */}
