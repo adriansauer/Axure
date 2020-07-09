@@ -195,7 +195,7 @@ namespace Axure.DataBase.Module_Purchase
                 }
             }
         }
-        /*
+        
 
         //cambiar estado
         public bool UpdateState(int osId, string status)
@@ -204,7 +204,7 @@ namespace Axure.DataBase.Module_Purchase
             {
                 using (var db = new AxureContext())
                 {
-                    OrderSale os = db.OrderSales.FirstOrDefault(x => x.Id == osId);
+                    PurchaseOrder os = db.PurchaseOrders.FirstOrDefault(x => x.Id == osId);
                     os.Status = status;
                     db.SaveChanges();
                     return true;
@@ -216,7 +216,7 @@ namespace Axure.DataBase.Module_Purchase
                 return false;
             }
         }
-
+        /*
         public List<int> verificationProductQuantity(List<OrderSaleDetailDTO> listOrderDetails, List<ProductQuantityDTO> listInvoiceItems)
         {
             try
@@ -253,8 +253,8 @@ namespace Axure.DataBase.Module_Purchase
                 return null;
             }
         }
-
-        public bool ModifyProductsQuantity(int idOrder, List<ProductQuantityDTO> listItems)
+        */
+        public bool ModifyProductsQuantity(int idOrder, List<PurchaseInvoiceItemDTO> listItems)
         {
             using (var db = new AxureContext())
             {
@@ -262,11 +262,11 @@ namespace Axure.DataBase.Module_Purchase
                 {
                     try
                     {
-                        OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
-                        List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
-                        foreach (ProductQuantityDTO listItem in listItems)
+                        PurchaseOrderDetailDAO purchaseOrderDetailDAO = new PurchaseOrderDetailDAO();
+                        List<PurchaseOrderDetailDTO> orderItems = purchaseOrderDetailDAO.ListByMaster(idOrder);
+                        foreach (PurchaseInvoiceItemDTO listItem in listItems)
                         {
-                            foreach (OrderSaleDetailDTO orderItem in orderItems)
+                            foreach (PurchaseOrderDetailDTO orderItem in orderItems)
                             {
                                 if (listItem.ProductId == orderItem.ProductId)
                                 {
@@ -275,7 +275,7 @@ namespace Axure.DataBase.Module_Purchase
                                     {
                                         return false;
                                     }
-                                    OrderSaleDetail os = db.OrderSaleDetails.FirstOrDefault(x => x.Id == orderItem.Id);
+                                    PurchaseOrderDetail os = db.PurchaseOrderDetails.FirstOrDefault(x => x.Id == orderItem.Id);
                                     os.QuantityPending = newQuantity;
                                     db.SaveChanges();
                                 }
@@ -299,24 +299,24 @@ namespace Axure.DataBase.Module_Purchase
                 }
             }
         }
-
+        
         private bool CheckStatusProcess(int idOrder)
         {
             using (var db = new AxureContext())
             {
                 try
                 {
-                    OrderSaleDetailDAO orderSaleDetailDAO = new OrderSaleDetailDAO();
-                    List<OrderSaleDetailDTO> orderItems = orderSaleDetailDAO.ListByMaster(idOrder);
-                    foreach (OrderSaleDetailDTO orderItem in orderItems)
+                    PurchaseOrderDetailDAO purchaseOrderDetailDAO = new PurchaseOrderDetailDAO();
+                    List<PurchaseOrderDetailDTO> orderItems = purchaseOrderDetailDAO.ListByMaster(idOrder);
+                    foreach (PurchaseOrderDetailDTO orderItem in orderItems)
                     {
                         if (orderItem.QuantityPending > 0)
                         {
-                            UpdateState(idOrder, StatusOrderSale.Procesando.ToString());
+                            UpdateState(idOrder, StatusOrderPurchase.Procesando.ToString());
                             return false;
                         }
                     }
-                    UpdateState(idOrder, StatusOrderSale.Completado.ToString());
+                    UpdateState(idOrder, StatusOrderPurchase.Completado.ToString());
                     return false;
                 }
                 catch (Exception e)
@@ -324,7 +324,7 @@ namespace Axure.DataBase.Module_Purchase
                     return true;
                 }
             }
-        }*/
+        }
     }
 
     public enum StatusOrderPurchase

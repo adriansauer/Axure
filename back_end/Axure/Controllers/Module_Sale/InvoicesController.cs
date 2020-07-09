@@ -40,12 +40,6 @@ namespace Axure.Controllers.Module_Sale
             }
         }
 
-        // GET: Invoices
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // GET: Invoices/Details/5
         public ActionResult Details(int id)
         {
