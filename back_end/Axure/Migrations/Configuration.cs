@@ -148,7 +148,7 @@ namespace Axure.Migrations
                 new Stock { Id = 15, ProductId = 17, DepositId = 1, Quantity = 10 },
                 new Stock { Id = 16, ProductId = 18, DepositId = 1, Quantity = 10 },
                 new Stock { Id = 17, ProductId = 20, DepositId = 1, Quantity = 10 },
-                new Stock { Id = 18, ProductId = 18, DepositId = 1, Quantity = 2 },
+                new Stock { Id = 18, ProductId = 19, DepositId = 1, Quantity = 2 },
                 //Deposit sales
                 new Stock { Id = 19, ProductId = 1, DepositId = 3, Quantity = 3 },
                 new Stock { Id = 20, ProductId = 2, DepositId = 3, Quantity = 3 },
@@ -336,6 +336,15 @@ namespace Axure.Migrations
                 new PurchaseOrderDetail { Id = 20, PurchaseOrderId = 6, ProductId = 6, Quantity = 3, QuantityPending = 3, Price = 45000 }
                 );
 
+            context.ProviderInvoices.AddOrUpdate(x => x.Id,
+                new ProviderInvoice { Id = 1, ProviderId = 1, PurchaseOrderId = 5, Status = StatusOrderSale.Completado.ToString(), InvoiceNumber = "100-000-001-00001", ProviderName = "PC Stock", ProviderAddress = "La Paz", ProviderRUC = "5.563.547-5", Date = new DateTime(2020, 07, 01), Total = 4750000, TaxTotal =431819 }
+                );
+
+            context.ProviderInvoiceItems.AddOrUpdate(x => x.Id,
+                new ProviderInvoiceItem { Id = 1, ProviderInvoiceId = 1, ProductId = 5, ProductName = "Teclado", PriceUnit = 50000, Quantity  = 10, Total = 500000, TaxQuantity = 10, TaxTotal = 45455, ReturndQuantity = 0 },
+                new ProviderInvoiceItem { Id = 2, ProviderInvoiceId = 1, ProductId = 7, ProductName = "Mouse", PriceUnit = 75000, Quantity = 10, Total = 750000, TaxQuantity = 10, TaxTotal = 68182, ReturndQuantity = 0 },
+                new ProviderInvoiceItem { Id = 3, ProviderInvoiceId = 1, ProductId = 11, ProductName = "Placa Principal", PriceUnit = 350000, Quantity = 10, Total = 3500000, TaxQuantity = 10, TaxTotal = 318182, ReturndQuantity = 0 }
+                );                
         }
     }
 }
