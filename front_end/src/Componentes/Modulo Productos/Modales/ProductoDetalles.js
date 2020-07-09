@@ -18,6 +18,16 @@ class ProductoDetalles extends Component {
       this.setState({ componentes: request.data, productos: request2.data });
     }
   }
+  
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.visible} centered>
@@ -31,7 +41,7 @@ class ProductoDetalles extends Component {
           <br />
           <b>Codigo de Barra:</b> {this.props.producto.Barcode}
           <br />
-          <b>Costo:</b> {this.props.producto.Cost}
+          <b>Costo:</b> {this.formato("es-PY","PYG",this.props.producto.Cost)}
           <br />
             {this.state.componentes.lenght!==[]?
             <div>

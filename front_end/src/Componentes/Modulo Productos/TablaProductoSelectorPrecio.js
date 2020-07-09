@@ -24,7 +24,7 @@ class TablaProductoSelector extends Component{
         },
         Barcode: "",
         QuantityMin: "",
-
+        Price: "",
       },
         }
        
@@ -35,7 +35,7 @@ class TablaProductoSelector extends Component{
         detallesModalVisible:false,
       })
     }
-
+    
     render(){
         const productos=this.props.productos;
      
@@ -70,7 +70,7 @@ class TablaProductoSelector extends Component{
                     <td>
                       <input
                         id = "idCant"
-                        type="text"
+                        type="number"
                         className="form-control"
                         placeholder="Cantidad"
                         value={p.Cantidad}
@@ -82,19 +82,22 @@ class TablaProductoSelector extends Component{
                             Description: p.Description,
                             Barcode: p.Barcode,
                             Cantidad: e.target.value,
+                            Price: p.Price,
                           };
                           this.setState({
                             productos: arreglo,
                           });
-                        }}
+                        }
+                      }
                       />
                     </td>
                     <td>
                       <input
-                        type="text"
+                        id= "montoT"
+                        type="number"
                         className="form-control"
                         placeholder="Precio"
-                        value={p.Cost}
+                        value={p.Price}
                         onChange={(e) => {
                           const arreglo = productos;
                           arreglo[arreglo.indexOf(p)] = {
@@ -108,7 +111,8 @@ class TablaProductoSelector extends Component{
                           this.setState({
                             productos: arreglo,
                           });
-                        }}
+                        }
+                      }
                       />
                     </td>
                     {/**Boton para sacar de la lista el producto */}

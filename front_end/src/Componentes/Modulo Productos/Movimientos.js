@@ -52,6 +52,15 @@ class Movimientos extends Component {
     const request2 = await api.ingreso_egreso.get();
     this.setState({ movimientos: request2.data });
   }
+  
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
+  }
   render() {
     return (
       <div className="productosBaja">
@@ -121,7 +130,7 @@ class Movimientos extends Component {
                       ))}
 
                     <td>{p.DepositId}</td>
-                    <td>{p.TotalCost}</td>
+                    <td>{this.formato("es-PY","PYG",p.TotalCost)}</td>
                     <td>
                       <VisibilityIcon
                         onClick={() => this.mostrarDetalles(p)}
