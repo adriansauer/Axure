@@ -21,6 +21,8 @@ class ComprasP extends Component {
       proveedorNombre: "",
       proveedor: {},
       proveedorElegido: false,
+      proveedorCategoria: {},
+      total: 0,
       agregarProveedorVisible:false,
 
     };
@@ -43,11 +45,11 @@ class ComprasP extends Component {
   async actualizar() {
     try {
       const proveedores = await Api.proveedores.get();
-      const empleados = await Api.empleados.get();
-      const productos = await Api.productos.getProductosDeVenta();
+      //const empleados = await Api.empleados.get();
+      const productos = await Api.productos.getProductosDeCompra();
       this.setState({
         proveedores: proveedores.data,
-        empleados: empleados.data,
+        //empleados: empleados.data,
         productos: productos.data,
       });
     } catch (error) {
@@ -60,18 +62,30 @@ class ComprasP extends Component {
       encargadoNombre: empleado.Name,
       encargadoElegido: true,
     });
-
+    
     this.toggleShow("dropdown-encargado");
   }
-  seleccionarProveedor(cliente) {
+  
+  async categoriaProv(prov) {
+    const request = await Api.productos.getCategoriaPorveedor(prov);
+
     this.setState({
-      proveedor: cliente,
-      proveedorNombre: cliente.Name,
+      productos: request.data,
+    });
+  }
+
+  seleccionarProveedor(prov) {
+    this.setState({
+      proveedor: prov,
+      proveedorNombre: prov.Name,
       proveedorElegido: true,
     });
 
+    this.categoriaProv(prov.Id);
+
     this.toggleShow("dropdown-proveedor");
   }
+
   toggleShow(param) {
     if (document.getElementById(param) !== null) {
       document.getElementById(param).classList.toggle("show");
@@ -96,7 +110,6 @@ class ComprasP extends Component {
   validarCampos(){
     if(
       this.state.proveedorElegido===false ||
-      /*this.state.encargadoElegido===false ||*/
       this.state.productosSeleccionados.length===0
     ){
 return false;
@@ -115,7 +128,10 @@ return false;
         Cantidad: "1",
         Cost: producto.Cost,
         QuantityMin: producto.QuantityMin,
+        ProductCategoryId: producto.ProductCategoryId,
+        Price: producto.Price,
       }),
+      total: this.state.total + producto.Price
     });
     this.setState({ buscador: "" });
   }
@@ -139,7 +155,7 @@ return false;
       return {
         ProductId: p.Id,
         Quantity: parseInt(p.Cantidad),
-        Price: p.price,
+        Price: parseInt(p.Price),
       };
     });
     const envio = {
@@ -147,8 +163,6 @@ return false;
       Day: date.getDate() + 1,
       Month: date.getMonth() + 1,
       Year: date.getFullYear(),
-      /*EmployeeId: this.state.encargado.Id,
-      OrderNumber: 2,*/
       ListDetails: productos,
     };
     if (this.validarCampos()) {
@@ -159,12 +173,10 @@ return false;
             productosSeleccionados: [],
             buscador: "",
             productosSeleccionado: [],
-            /*encargadoNombre: "",
-            encargado: {},
-            encargadoElegido: false,*/
             proveedorNombre: "",
             proveedor: {},
             proveedorElegido: false,
+            total: 0,
           });
           notify("Orden guardada exitosamente!", "success");
         } else {
@@ -177,6 +189,14 @@ return false;
       notify("Rellene todos los campos!", "warning");
 
     }
+  }
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
   }
   render() {
 
@@ -227,16 +247,7 @@ return false;
               </div>
             </div>
           </div>
-          {<div className="col-md-2">
-            {/*<button className="btn btn-primary"
-            onClick={() => this.setState({ agregarProveedorVisible: true })}
-          <div className="col-md-2">
-            <button className="btn btn-primary"
-            onClick={()=>this.setState({agregarProveedorVisible:true})}
-            >
-              Agregar Proveedor
-                      </button>*/}
-          </div>}
+          <div className="col-md-2"/>
           <div className="col-md-4">
             <div className="form-group">
               <input
@@ -253,63 +264,33 @@ return false;
         </div>
 
         <div className="row">
-          {/*<div className="col-md-4">
-            <div className="dropdown">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Encargado"
-                required="required"
-                value={this.state.encargadoNombre}
-                onChange={(e) => this.buscarEncargado(e)}
-              />
-              <div className="dropdown-menu" id="dropdown-encargado">
-                {this.state.encargadoNombre !== "" &&
-                !this.state.empleadoElegido
-                  ? this.state.empleados
-                      .filter(
-                        (empleado) =>
-                          empleado.Name.toLowerCase().indexOf(
-                            this.state.encargadoNombre.toLowerCase()
-                          ) !== -1
-                      )
-                      .map((p) => (
-                        <a
-                          className="dropdown-item"
-                          key={p.Id}
-                          onClick={() => this.seleccionarEmpleado(p)}
-                          href="#selected"
-                        >
-                          {p.Name},{p.CI}
-                        </a>
-                      ))
-                  : null}
-              </div>
-            </div>
-          </div>*/}
-
-          <div className = 'col-md-3'>
+          <div className = 'col-md-2'>
             <button className="btn btn-primary"
                 onClick={()=>this.setState({agregarModalVisible:true})}>
               Agregar Producto
             </button>
           </div>
 
-          <div className = 'col-md-2'/>
+          <div className="col-md-3">
+            <button className="btn btn-primary"
+            onClick={()=>this.setState({agregarProveedorVisible:true})}
+            >
+              Agregar Proveedor
+            </button>
+          </div>
 
-          <div className="col-md-2">
+          {/*<div className="col-md-2">
             <div className="dropdown">
               <input
+                id = "total" 
                 type="number"
                 className="form-control"
                 placeholder="Total"
                 required="required" disabled
+                value= {this.formato("es-PY","PYG",this.state.total)}
               />
-              <div className="dropdown-menu" id="dropdown-total">
-
-              </div>
             </div>
-          </div>
+                      </div>*/}
           
           <div className="col-md-3 form-state text-center">
               <label>Estado: Pendiente</label>
@@ -348,12 +329,12 @@ return false;
                         (producto) =>
                           producto.Name.toLowerCase().indexOf(
                             this.state.buscador.toLowerCase()
-                          ) !== -1
+                          ) !== -1 
                       )
                       .filter(
                         (producto) =>
                           this.state.productosSeleccionados.find(
-                            (e) => e.Id === producto.Id
+                            (e) => e.Id === producto.Id 
                           ) === undefined
                       )
                       .map((p) => (

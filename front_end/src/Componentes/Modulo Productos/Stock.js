@@ -161,6 +161,15 @@ class Stock extends Component {
     this.setState({ eliminarModalVisible: true });
   }
 
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
+  }
+
   render() {
     return (
       <div className="stock">
@@ -275,7 +284,7 @@ class Stock extends Component {
                       {p.Description}
                     </td>
                     <td onClick={() => this.mostrarDetallesProducto(p)}>
-                      {p.Cost}
+                      {this.formato("es-PY","PYG",p.Cost)}
                     </td>
                     <td onClick={() => this.mostrarDetallesProducto(p)}>
                       {p.QuantityMin}
@@ -308,7 +317,7 @@ class Stock extends Component {
                 Capital Total:
               </span>
             </div>
-            <span className="form-control">{this.state.capital}</span>
+            <span className="form-control">{this.formato("es-PY","PYG",this.state.capital)}</span>
             <div className="input-group-append">
               <span className="input-group-text" id="basic-addon1">
                 GS
