@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import api from "../../../Axios/Api.js";
 import Notificacion, { notify } from "../../Notificacion";
-import Factura from "./Factura.js";
+//import Factura from "./Factura.js";
 class CrearFactura extends Component {
   constructor(props) {
     super(props);
@@ -71,9 +71,9 @@ class CrearFactura extends Component {
   async enviar() {
     if (this.validarCantidades()) {
       const factura = {
-        OrderSaleId: this.props.orden.Id,
-        //EmployeeId: this.props.orden.EmployeeId,
-        SaleCondition: "Contado",
+        ProviderId: this.props.orden.ProviderId,
+        PurchaseOrderId: this.props.orden.Id,
+        InvoiceNumber:"000-001-00"+this.props.orden.Id,
         Day: this.props.orden.Day,
         Month: this.props.orden.Month,
         Year: this.props.orden.Year,
@@ -86,12 +86,24 @@ class CrearFactura extends Component {
       };
 
       try {
-        const request = await api.factura.validate(factura);
+        const request = await api.factura_compra.create(factura);
         if (request.status === 200) {
-          await this.setState({ factura: request.data });
-          await this.setState({ facturaVisible: true });
+          /*await this.setState({ factura: factura });
+          await this.setState({ facturaVisible: true });*/
+          this.setState({
+            detalles: null,
+            productos: null,
+            proveedores: null,
+            condicionNombre: "Contado",
+            condicion: 1,
+            facturaVisible: false,
+            factura: null,
+            cuotas:1,
+            numFactura:""
+          });
+          notify("Factura creada exitosamente!", "success");
         } else {
-          notify("No hay suficiente stock para generar la factura", "warning");
+          notify("No se puede generar la factura", "warning");
         }
       } catch (error) {
         notify("Error al intentar conectarse con la base de datos", "danger");
@@ -101,16 +113,7 @@ class CrearFactura extends Component {
 
   render() {
     const orden = this.props.orden;
-    if (this.state.facturaVisible) {
-      return (
-        <Factura
-          retroceder={this.ocultar.bind(this)}
-          factura={this.state.factura}
-          orden={this.props.orden}
-        />
-      );
-    } else {
-      return (
+    return (
         <div className="CrearFactura">
           <Notificacion />
           <div className="CrearFacturaHeader row">
@@ -176,7 +179,7 @@ class CrearFactura extends Component {
               </div>
             </div>
             <div className="col-md-2">
-      <label>Cantidad de cuotas(Credito):</label>
+              <label>Cantidad de cuotas(Credito):</label>
             </div>
             <div className="col-md-2">
               
@@ -354,7 +357,7 @@ class CrearFactura extends Component {
                               type="number"
                               className="form-control"
                               placeholder="Cantidad"
-                              value={0/*p.Cantidad*/}
+                              value={p.Cantidad}
                               onChange={(e) => {
                                 const arreglo = this.state.detalles;
                                 arreglo[arreglo.indexOf(p)] = {
@@ -364,7 +367,7 @@ class CrearFactura extends Component {
                                   Description: p.Description,
                                   Quantity: p.Quantity,
                                   QuantityPending: p.QuantityPending,
-                                  //Cantidad: e.target.value,
+                                  Cantidad: e.target.value,
                                 };
                                 this.setState({
                                   productos: arreglo,
@@ -377,12 +380,12 @@ class CrearFactura extends Component {
                     : null}
                 </tbody>
               </table>
-              {/*<button onClick={() => this.enviar()}>Facturar</button>*/}
+              {<button className="btn btn-primary" onClick={() => this.enviar()}>Facturar</button>}
             </div>
           </div>
         </div>
       );
-    }
+    
   }
 }
 
