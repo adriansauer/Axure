@@ -60,10 +60,10 @@ class BuscarOrden extends Component {
     this.toggleShow("dropdown-cliente");
   }
   crearFactura(orden){
-        this.setState({
-            ordenSeleccionada:orden,
-            crearFacturaVisible:true
-        })
+      this.setState({
+        ordenSeleccionada:orden,
+        crearFacturaVisible:true
+      })
   }
   render() {
     if (this.state.crearFacturaVisible) {
@@ -134,7 +134,7 @@ class BuscarOrden extends Component {
                 <tbody className="tableBody">
                   {this.state.proveedorElegido
                     ? this.state.ordenes
-                        .filter((o) => o.ProviderId === this.state.proveedor.Id)
+                        .filter((o) => o.ProviderId === this.state.proveedor.Id && o.Status === "Pendiente")
                         .map((o) => (
                           <tr key={o.Id}>
                             <td>{o.Number}</td>

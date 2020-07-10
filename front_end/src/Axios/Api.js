@@ -202,6 +202,16 @@ export default {
         method: "get",
       }),
   },
+
+  factura_compra: {
+    create: (data)=>
+      requestHelper({
+        url: "ProviderInvoices/Create",
+        method: "post",
+        data: data,
+      })
+  },
+
   proveedores: {
     get: () =>
       requestHelper({
