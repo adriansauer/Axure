@@ -160,6 +160,7 @@ export default {
         method:"get",
       }),
   },
+  
   ingreso_egreso: {
     create: (data) =>
       requestHelper({
@@ -191,6 +192,12 @@ export default {
         method: "post",
         data: data
       }),
+
+      get:()=>requestHelper({
+        url:"PurchaseOrders/List",
+        method:"get",
+      }),
+
     get:() =>
       requestHelper({
         url: "PurchaseOrders/List",
@@ -210,6 +217,7 @@ export default {
         method: "post",
         data: data,
       })
+
   },
 
   proveedores: {

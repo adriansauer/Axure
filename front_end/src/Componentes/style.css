@@ -180,9 +180,9 @@ html {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -197,6 +197,7 @@ html {
           flex-direction: column;
   height: 12.5vh;
   padding: 1rem;
+  margin-bottom: 2rem;
   background-color: #fff;
   border-radius: 0.25rem;
   -webkit-box-shadow: inset 3px -3px 6px 0 #00000066, -5px 5px 20px 0 #00000066;
@@ -204,6 +205,10 @@ html {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+#Menu .navbar .navbar-collapse .navbar-nav .nav-item:last-child {
+  margin-bottom: 0;
 }
 
 #Menu .navbar .navbar-collapse .navbar-nav .nav-item .nav-link {

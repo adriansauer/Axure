@@ -119,7 +119,8 @@ html{
                 }
             }
             .navbar-collapse{
-                .navbar-nav{
+                .navbar-nav{  
+                    
                     .nav-item{
                         height: 9.5vh;
                         align-items: center;
@@ -173,12 +174,16 @@ html{
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-                justify-content: space-between;
+                justify-content: flex-start;
                 .nav-item{
                     display: flex;
                     flex-direction: column;
                     height: 12.5vh;
                     padding: 1rem;
+                    margin-bottom: 2rem;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
                     background-color: #fff;
                     border-radius: 0.25rem;
                     box-shadow: inset 3px -3px 6px 0 #00000066, -5px 5px 20px 0 #00000066;
