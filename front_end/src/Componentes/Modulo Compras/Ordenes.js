@@ -99,8 +99,7 @@ class Ordenes extends Component {
                 <th scope="col">Numero</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Proveedor</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Estado</th>                
               </tr>
             </thead>
             <tbody className="tableBody">
@@ -121,7 +120,6 @@ class Ordenes extends Component {
                         </td>
                         <td>{c.ProviderName}</td>
                         <td>{c.Status}</td>
-                        <td>procesar</td>
                       </tr>
                     ))
                 : null}

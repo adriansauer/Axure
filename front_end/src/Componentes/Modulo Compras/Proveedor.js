@@ -131,8 +131,6 @@ class Proveedor extends Component {
 
 export default Proveedor;*/
 import React, { Component } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import Api from "../../Axios/Api.js";
 import Notificacion, { notify } from "../Notificacion.js";
 

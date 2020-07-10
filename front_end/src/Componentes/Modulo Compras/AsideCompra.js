@@ -39,25 +39,9 @@ class AsideCompras extends Component {
           </li>
           <li className="nav-item">
             <a
-              className="nav-link"
-              href="#Boton3"
-            >
-              Boton 3
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link "
-              href="#Boton3"
-            >
-              Boton 4
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
               className="nav-link "
               href="#Proveedor"
-              onClick={() => this.selectTab(72, 4)}
+              onClick={() => this.selectTab(72, 2)}
             >
               Proveedores
             </a>
