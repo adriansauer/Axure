@@ -192,12 +192,12 @@ export default {
         method: "post",
         data: data
       }),
-<<<<<<< HEAD
+
       get:()=>requestHelper({
         url:"PurchaseOrders/List",
         method:"get",
       }),
-=======
+
     get:() =>
       requestHelper({
         url: "PurchaseOrders/List",
@@ -217,7 +217,7 @@ export default {
         method: "post",
         data: data,
       })
->>>>>>> master
+
   },
 
   proveedores: {
