@@ -1,5 +1,6 @@
 /**librerias de axios */
 import axios from "axios";
+import { get } from "jquery";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
 });
@@ -11,6 +12,12 @@ export default {
         url: "Products/List",
         method: "get",
       }),
+    getCategoriaPorveedor:(id)=>
+      requestHelper({
+        url: "Products/OfProvider/"+id,
+        method: "get",
+      }),
+
     getMateriasPrimas: () =>
       requestHelper({
         url: "Products/OfType/2",
@@ -184,12 +191,37 @@ export default {
         method: "post",
         data: data
       }),
+    get:() =>
+      requestHelper({
+        url: "PurchaseOrders/List",
+        method: "get",
+      }),
+    getDetalles:(id) =>
+      requestHelper({
+        url: "PurchaseOrders/Details/"+id,
+        method: "get",
+      }),
   },
+
+  factura_compra: {
+    create: (data)=>
+      requestHelper({
+        url: "ProviderInvoices/Create",
+        method: "post",
+        data: data,
+      })
+  },
+
   proveedores: {
     get: () =>
       requestHelper({
         url: "Providers/List",
         method: "get",
+      }),
+
+    getDetalles:(id)=>requestHelper({
+        url:"Providers/Details/"+id,
+        method:"get",
       }),
     },
   factura:{
@@ -215,7 +247,7 @@ export default {
       method:"post",
       data:data,
     }),
-    
+
    
   },
   proveedor:{
@@ -224,6 +256,7 @@ export default {
       method:"post",
       data,
     }),
+
   },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL

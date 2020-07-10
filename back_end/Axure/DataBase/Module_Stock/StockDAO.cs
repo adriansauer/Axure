@@ -1,4 +1,5 @@
 ﻿using Axure.DTO;
+using Axure.DTO.Module_Purchase;
 using Axure.DTO.Module_Stock;
 using Axure.Models;
 using Axure.Models.Module_Stock;
@@ -178,6 +179,37 @@ namespace Axure.DataBase.Module_Stock
                             Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == product.ProductId && x.DepositId == idDeposit);
                             int newQuantity = st.Quantity - product.Quantity;
                             if(newQuantity < 0)
+                            {
+                                throw new System.Exception();
+                            }
+                            st.Quantity = newQuantity;
+                            db.SaveChanges();
+                        }
+                        dbContextTransaction.Commit();
+                        return false;
+                    }
+                    catch (Exception e)
+                    {
+                        dbContextTransaction.Rollback();
+                        return true;
+                    }
+                }
+            }
+        }
+
+        public bool IncreaseProductsQuantity(List<PurchaseInvoiceItemDTO> listItems, int idDeposit)
+        {
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (PurchaseInvoiceItemDTO product in listItems)
+                        {
+                            Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == product.ProductId && x.DepositId == idDeposit);
+                            int newQuantity = st.Quantity + product.Quantity;
+                            if (newQuantity < 0)
                             {
                                 throw new System.Exception();
                             }
