@@ -117,7 +117,6 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.Cor
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.pdb
-<<<<<<< HEAD
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\log4net.config
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\Axure.dll.config
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\bin\Axure.dll
@@ -238,7 +237,6 @@ C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axu
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\VCiceia\Documents\DesarrolloSoftware\Axure\back_end\Axure\obj\Debug\Axure.pdb
-=======
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\log4net.config
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Axure.dll.config
 C:\Users\HP\Desktop\Axure\back_end\Axure\bin\Axure.dll
