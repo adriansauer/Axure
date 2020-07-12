@@ -53,6 +53,7 @@ ListDetails: productos,
         encargadoNombre: "",
         empleadoElegido: false,
       });
+     
       notify("Orden guardada con exito!","success");
     }else{
       notify("Error al intentar guardar la orden!","danger")
@@ -63,7 +64,7 @@ ListDetails: productos,
     const empleados= await api.empleados.get();
     const p = await api.productos.getDeposito(this.state.deposito);
     const f = new Date();
-
+    console.log(p.data);
     let mes = f.getMonth() + 1; //obteniendo mes
     let dia = f.getDate(); //obteniendo dia
     let ano = f.getFullYear(); //obteniendo año
@@ -144,6 +145,7 @@ ListDetails: productos,
       this.toggleShow("dropdown-encargado");
   }
   render() {
+    
     return (
       <div className="darDeBaja ingreso-egreso">
         <Notificacion/>

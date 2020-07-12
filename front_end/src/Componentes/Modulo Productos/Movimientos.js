@@ -135,7 +135,7 @@ class Movimientos extends Component {
                       <VisibilityIcon
                         onClick={() => this.mostrarDetalles(p)}
                       />
-                      <DeleteIcon onClick={() => this.delete(p.Id)} />
+                      
                     </td>
                   </tr>
                 ))}
