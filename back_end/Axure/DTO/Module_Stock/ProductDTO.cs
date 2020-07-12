@@ -41,5 +41,7 @@ namespace Axure.DTO.Module_Stock
 
         //Product barcode.
         public string Barcode { get; set; }
+
+        public int ProductCategoryId { get; set; }
     }
 }

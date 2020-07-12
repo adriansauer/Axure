@@ -83,9 +83,9 @@ namespace Axure.DataBase.Module_Stock
                     int rawMaterial = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_RAW_MATERIAL"));
                     int both = int.Parse(settingDAO.Get("ID_TYPE_OF_PRODUCT_RAW_MATERIAL_AND_FINISHED"));
                     var respuesta = db.Products.Include("Taxes").Where(x => x.Deleted == false && (x.ProductTypeId == rawMaterial || x.ProductTypeId == both))
-                           .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, Price = x.Price, Tax = x.Tax, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode })
+                           .Select(x => new { Id = x.Id, ProductType = x.ProductType, Name = x.Name, Description = x.Description, Costo = x.Cost, Price = x.Price, Tax = x.Tax, CantidadMinima = x.QuantityMin, CodigoBarra = x.Barcode, ProductCategoryId = x.ProductCategoryId })
                            .ToList()
-                           .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, Price = y.Price, TaxPercentage = y.Tax.Quantity, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra })
+                           .Select(y => new ProductDTO() { Id = y.Id, Name = y.Name, Description = y.Description, Cost = y.Costo, Price = y.Price, TaxPercentage = y.Tax.Quantity, QuantityMin = y.CantidadMinima, Barcode = y.CodigoBarra, ProductCategoryId = y.ProductCategoryId })
                            .ToList();
                     return respuesta;
                 }

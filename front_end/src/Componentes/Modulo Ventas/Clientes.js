@@ -74,6 +74,16 @@ class Clientes extends Component {
     await this.seleccionarCliente(cliente);
     this.setState({editarClienteVisible:true});
   }
+  
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
+  }
+
   render() {
     return (
       <div className="Container">
@@ -89,7 +99,7 @@ class Clientes extends Component {
         />
         <div className="row ">
           <div className="col-md-6 mr-auto pl-0">
-            {/**Un buscador de productos */}
+            {/**Un buscador de clientes */}
             <div className="col-sm-12 pl-0">
               <div className="input-group mb-3">
                 <input
@@ -175,8 +185,8 @@ class Clientes extends Component {
                         <td>{c.Address}</td>
                         <td>{c.RUC}</td>
                         <td>{c.Phone}</td>
-                        <td>{c.CreditMaximum}</td>
-                        <td>{c.CreditPending}</td>
+                        <td>{this.formato("es-PY","PYG",c.CreditMaximum)}</td>
+                        <td>{this.formato("es-PY","PYG",c.CreditPending)}</td>
                         <td>
                           <EditIcon onClick={()=>this.editarCliente(c)} />
                           <DeleteIcon onClick={() => this.eliminarCliente(c)} />

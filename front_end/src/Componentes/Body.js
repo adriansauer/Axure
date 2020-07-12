@@ -3,27 +3,25 @@ import Header from "./Header.js";
 import Menu from "./Menu.js";
 import Aside from "./Aside.js";
 import Section from "./Section.js";
-import Home from "./Home.js";
 import "./style.css";
 import { connect } from "react-redux";
 
 class Body extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+
+    }
+  }
   
+
   render() {
     
-    if (this.props.estado[0]) {
+   
+   
       return (
         <div className="Body">
-          <Header />
-          <div className="Body--Box">
-            <Menu />
-            <Home />
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="Body">
+         
           <Header />
           <div className="Body--Box">
             <Menu />
@@ -35,7 +33,7 @@ class Body extends Component {
         </div>
       );
     }
-  }
+ 
 }
 const mapStateToProps = state => {
   return {
