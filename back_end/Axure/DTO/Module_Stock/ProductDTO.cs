@@ -37,6 +37,8 @@ namespace Axure.DTO.Module_Stock
         //Minimum quantity of the product.
         public int QuantityMin { get; set; }
 
+        public int QuantityStock { get; set; }
+
         //Product barcode.
         public string Barcode { get; set; }
 
