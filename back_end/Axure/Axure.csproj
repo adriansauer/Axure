@@ -186,6 +186,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CodeHTTP.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Module_Purchase\ProviderInvoicesController.cs" />
     <Compile Include="Controllers\Module_Purchase\ProvidersController.cs" />
     <Compile Include="Controllers\Module_Purchase\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\Module_Sale\ClientsController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\Module_Purchase\ProviderDAO.cs" />
+    <Compile Include="DataBase\Module_Purchase\ProviderInvoiceDAO.cs" />
     <Compile Include="DataBase\Module_Purchase\PurchaseOrderDAO.cs" />
     <Compile Include="DataBase\Module_Purchase\PurchaseOrderDetailDAO.cs" />
     <Compile Include="DataBase\Module_Sale\ClientDAO.cs" />
@@ -231,6 +233,9 @@
     <Compile Include="DataBase\Module_Stock\TransferDetailDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderDetailDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\ProviderInvoiceDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\PurchaseInvoiceDetailsDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\PurchaseInvoiceItemDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseOrderDetailDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseOrderDetailsDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseOrderDTO.cs" />
@@ -270,9 +275,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007011811501_Initial.cs" />
-    <Compile Include="Migrations\202007011811501_Initial.Designer.cs">
-      <DependentUpon>202007011811501_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202007101805253_Initial.cs" />
+    <Compile Include="Migrations\202007101805253_Initial.Designer.cs">
+      <DependentUpon>202007101805253_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -374,6 +379,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Logs\" />
+    <Folder Include="Views\ProviderInvoices\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -403,8 +409,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007011811501_Initial.resx">
-      <DependentUpon>202007011811501_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007101805253_Initial.resx">
+      <DependentUpon>202007101805253_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

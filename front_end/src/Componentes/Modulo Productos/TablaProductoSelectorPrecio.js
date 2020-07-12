@@ -24,7 +24,7 @@ class TablaProductoSelector extends Component{
         },
         Barcode: "",
         QuantityMin: "",
-
+        Price: "",
       },
         }
        
@@ -35,7 +35,7 @@ class TablaProductoSelector extends Component{
         detallesModalVisible:false,
       })
     }
-
+    
     render(){
         const productos=this.props.productos;
      
@@ -70,7 +70,7 @@ class TablaProductoSelector extends Component{
                     <td>
                       <input
                         id = "idCant"
-                        type="text"
+                        type="number"
                         className="form-control"
                         placeholder="Cantidad"
                         value={p.Cantidad}
@@ -82,33 +82,31 @@ class TablaProductoSelector extends Component{
                             Description: p.Description,
                             Barcode: p.Barcode,
                             Cantidad: e.target.value,
+                            Price: p.Price,
                           };
                           this.setState({
                             productos: arreglo,
                           });
-                        }}
+                        }
+                      }
                       />
                     </td>
                     <td>
                       <input
-                        type="text"
+                        id= "montoT"
+                        type="number"
                         className="form-control"
                         placeholder="Precio"
                         value={p.Cost}
-                        onChange={(e) => {
-                          const arreglo = productos;
-                          arreglo[arreglo.indexOf(p)] = {
-                            Name: p.Name,
-                            Id: p.Id,
-                            Description: p.Description,
-                            Barcode: p.Barcode,
-                            Cantidad: p.Cantidad,
-                            Price: e.target.value,
-                          };
-                          this.setState({
-                            productos: arreglo,
-                          });
-                        }}
+                      />
+                    </td>
+                    <td> 
+                      <input
+                        type="Number"
+                        className="form-control"
+                        placeholder="Total"
+                        value={p.Cost * (p.Cantidad!==null? 0 : parseInt(p.Cantidad))}
+                        disabled
                       />
                     </td>
                     {/**Boton para sacar de la lista el producto */}

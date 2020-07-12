@@ -62,7 +62,7 @@ class AgregarProveedor extends Component {
         Phone: this.state.telefono,
         ListCategories: categoriasSeleccionadas,
       };
-      console.log(proveedor);
+     
       try {
         const request = await api.proveedor.create(proveedor);
         if (request.status === 200) {

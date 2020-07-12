@@ -26,7 +26,6 @@ namespace Axure.DTO.Module_Sale
         public int Month { get; set; }
         public int Year { get; set; }
 
-
         public List<OrderSaleDetailDTO> ListDetails { get; set; }
     }
 }

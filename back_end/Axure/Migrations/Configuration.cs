@@ -148,13 +148,14 @@ namespace Axure.Migrations
                 new Stock { Id = 15, ProductId = 17, DepositId = 1, Quantity = 10 },
                 new Stock { Id = 16, ProductId = 18, DepositId = 1, Quantity = 10 },
                 new Stock { Id = 17, ProductId = 20, DepositId = 1, Quantity = 10 },
+                new Stock { Id = 18, ProductId = 19, DepositId = 1, Quantity = 2 },
                 //Deposit sales
-                new Stock { Id = 18, ProductId = 1, DepositId = 3, Quantity = 3 },
-                new Stock { Id = 19, ProductId = 2, DepositId = 3, Quantity = 3 },
-                new Stock { Id = 20, ProductId = 3, DepositId = 3, Quantity = 3 },
-                new Stock { Id = 21, ProductId = 5, DepositId = 3, Quantity = 2 },
-                new Stock { Id = 22, ProductId = 9, DepositId = 3, Quantity = 2 },
-                new Stock { Id = 23, ProductId = 22, DepositId = 3, Quantity = 2 }
+                new Stock { Id = 19, ProductId = 1, DepositId = 3, Quantity = 3 },
+                new Stock { Id = 20, ProductId = 2, DepositId = 3, Quantity = 3 },
+                new Stock { Id = 21, ProductId = 3, DepositId = 3, Quantity = 3 },
+                new Stock { Id = 22, ProductId = 5, DepositId = 3, Quantity = 2 },
+                new Stock { Id = 23, ProductId = 9, DepositId = 3, Quantity = 2 },
+                new Stock { Id = 24, ProductId = 22, DepositId = 3, Quantity = 2 }
                 );
 
             //Parts the PC.
@@ -304,9 +305,12 @@ namespace Axure.Migrations
                 );
 
             context.PurchaseOrders.AddOrUpdate(x => x.Id,
-                new PurchaseOrder { Id = 1, ProviderId = 1, Date = new DateTime(2020, 05, 11), Number = 1, Status = StatusOrderPurchase.Pendiente.ToString() },
-                new PurchaseOrder { Id = 2, ProviderId = 2, Date = new DateTime(2020, 05, 11), Number = 2, Status = StatusOrderPurchase.Pendiente.ToString() },
-                new PurchaseOrder { Id = 3, ProviderId = 3, Date = new DateTime(2020, 05, 11), Number = 3, Status = StatusOrderPurchase.Pendiente.ToString() }
+                new PurchaseOrder { Id = 1, ProviderId = 1, Date = new DateTime(2020, 03, 12), Number = 1, Status = StatusOrderPurchase.Pendiente.ToString() },
+                new PurchaseOrder { Id = 2, ProviderId = 2, Date = new DateTime(2020, 04, 22), Number = 2, Status = StatusOrderPurchase.Pendiente.ToString() },
+                new PurchaseOrder { Id = 3, ProviderId = 3, Date = new DateTime(2020, 05, 14), Number = 3, Status = StatusOrderPurchase.Pendiente.ToString() },
+                new PurchaseOrder { Id = 4, ProviderId = 3, Date = new DateTime(2020, 06, 29), Number = 4, Status = StatusOrderPurchase.Procesando.ToString() },
+                new PurchaseOrder { Id = 5, ProviderId = 1, Date = new DateTime(2020, 06, 30), Number = 5, Status = StatusOrderPurchase.Completado.ToString() },
+                new PurchaseOrder { Id = 6, ProviderId = 2, Date = new DateTime(2020, 07, 01), Number = 6, Status = StatusOrderPurchase.Cancelado.ToString() }
                 );
 
             context.PurchaseOrderDetails.AddOrUpdate(x => x.Id,
@@ -321,9 +325,26 @@ namespace Axure.Migrations
                 new PurchaseOrderDetail { Id = 9, PurchaseOrderId = 2, ProductId = 3, Quantity = 1, QuantityPending = 1, Price = 1500000 },
                 new PurchaseOrderDetail { Id = 10, PurchaseOrderId = 2, ProductId = 6, Quantity = 3, QuantityPending = 3, Price = 45000 },
                 new PurchaseOrderDetail { Id = 11, PurchaseOrderId = 3, ProductId = 18, Quantity = 1, QuantityPending = 1, Price = 550000 },
-                new PurchaseOrderDetail { Id = 12, PurchaseOrderId = 3, ProductId = 19, Quantity = 2, QuantityPending = 2, Price = 275000 }
+                new PurchaseOrderDetail { Id = 12, PurchaseOrderId = 3, ProductId = 19, Quantity = 2, QuantityPending = 2, Price = 275000 },
+                new PurchaseOrderDetail { Id = 13, PurchaseOrderId = 4, ProductId = 18, Quantity = 3, QuantityPending = 1, Price = 500000 },
+                new PurchaseOrderDetail { Id = 14, PurchaseOrderId = 5, ProductId = 5, Quantity = 10, QuantityPending = 0, Price = 50000 },
+                new PurchaseOrderDetail { Id = 15, PurchaseOrderId = 5, ProductId = 7, Quantity = 10, QuantityPending = 0, Price = 75000 },
+                new PurchaseOrderDetail { Id = 16, PurchaseOrderId = 5, ProductId = 11, Quantity = 10, QuantityPending = 0, Price = 350000 },
+                new PurchaseOrderDetail { Id = 17, PurchaseOrderId = 5, ProductId = 14, Quantity = 10, QuantityPending = 0, Price = 2174000 },
+                new PurchaseOrderDetail { Id = 18, PurchaseOrderId = 6, ProductId = 2, Quantity = 3, QuantityPending = 3, Price = 300000 },
+                new PurchaseOrderDetail { Id = 19, PurchaseOrderId = 6, ProductId = 3, Quantity = 3, QuantityPending = 3, Price = 1500000 },
+                new PurchaseOrderDetail { Id = 20, PurchaseOrderId = 6, ProductId = 6, Quantity = 3, QuantityPending = 3, Price = 45000 }
                 );
 
+            context.ProviderInvoices.AddOrUpdate(x => x.Id,
+                new ProviderInvoice { Id = 1, ProviderId = 1, PurchaseOrderId = 5, Status = StatusOrderSale.Completado.ToString(), InvoiceNumber = "100-000-001-00001", ProviderName = "PC Stock", ProviderAddress = "La Paz", ProviderRUC = "5.563.547-5", Date = new DateTime(2020, 07, 01), Total = 4750000, TaxTotal =431819 }
+                );
+
+            context.ProviderInvoiceItems.AddOrUpdate(x => x.Id,
+                new ProviderInvoiceItem { Id = 1, ProviderInvoiceId = 1, ProductId = 5, ProductName = "Teclado", PriceUnit = 50000, Quantity  = 10, Total = 500000, TaxQuantity = 10, TaxTotal = 45455, ReturndQuantity = 0 },
+                new ProviderInvoiceItem { Id = 2, ProviderInvoiceId = 1, ProductId = 7, ProductName = "Mouse", PriceUnit = 75000, Quantity = 10, Total = 750000, TaxQuantity = 10, TaxTotal = 68182, ReturndQuantity = 0 },
+                new ProviderInvoiceItem { Id = 3, ProviderInvoiceId = 1, ProductId = 11, ProductName = "Placa Principal", PriceUnit = 350000, Quantity = 10, Total = 3500000, TaxQuantity = 10, TaxTotal = 318182, ReturndQuantity = 0 }
+                );                
         }
     }
 }
