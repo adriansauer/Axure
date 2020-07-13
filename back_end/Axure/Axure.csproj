@@ -233,6 +233,7 @@
     <Compile Include="DataBase\Module_Stock\TransferDAO.cs" />
     <Compile Include="DataBase\Module_Stock\TransferDetailDAO.cs" />
     <Compile Include="DataBase\SettingDAO.cs" />
+    <Compile Include="DataBase\UserDAO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderDetailDTO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderInvoiceDTO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderInvoiceItemDTO.cs" />
@@ -382,6 +383,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Logs\" />
     <Folder Include="Views\ProviderInvoices\" />
+    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
