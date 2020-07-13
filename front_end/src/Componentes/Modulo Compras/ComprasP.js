@@ -271,6 +271,7 @@ return false;
             </button>
           </div>
 
+
           <div className="col-md-3">
             <button className="btn btn-primary"
             onClick={()=>this.setState({agregarProveedorVisible:true})}
@@ -291,8 +292,9 @@ return false;
               />
             </div>
                       </div>*/}
+
           
-          <div className="col-md-3 form-state text-center">
+          <div className="col-md-2">
               <label>Estado: Pendiente</label>
           </div>
         </div>

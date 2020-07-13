@@ -37,12 +37,7 @@ class Menu extends Component {
 
     document.getElementsByClassName("Body")[0].classList.add("compra");
   }
-  clickContabilidad() {
-    this.props.homeVisible(false);
-    this.props.setModulo(4);
-
-    document.getElementsByClassName("Body")[0].classList.add("contabilidad");
-  }
+  
 
   //funcionalidad del menu
   toggleMenu(arg) {
@@ -76,16 +71,7 @@ class Menu extends Component {
 
           <div className="collapse navbar-collapse show" id="navbarContent">
             <ul className="navbar-nav mx-auto">
-              <li className="nav-item active">
-                <a
-                  className="nav-link"
-                  href="#home"
-                  onClick={() => this.props.homeVisible(true)}
-                >
-                  <i className="ico home"></i>
-                  <p>Home</p>
-                </a>
-              </li>
+              
               <li className="nav-item">
                 <a
                   className="nav-link"
@@ -114,16 +100,6 @@ class Menu extends Component {
                 >
                   <i className="ico buys"></i>
                   <p>Compras</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="#!"
-                  onClick={() => this.props.homeVisible(true)}
-                >
-                  <i className="ico account"></i>
-                  <p>Contabilidad</p>
                 </a>
               </li>
             </ul>

@@ -37,11 +37,24 @@ class AsideCompras extends Component {
              Ordenes
             </a>
           </li>
+          
           <li className="nav-item">
             <a
               className="nav-link "
-              href="#Facturar"
-              onClick={() => this.selectTab(73, 2)}
+              href="#Proveedor"
+              onClick={() => this.selectTab(72, 2)}
+
+            >
+              Proveedores
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+
+              className="nav-link "
+              href="#Facturas"
+              onClick={() => this.selectTab(73, 3)}
+
             >
               Facturar
             </a>
@@ -49,10 +62,11 @@ class AsideCompras extends Component {
           <li className="nav-item">
             <a
               className="nav-link "
-              href="#Proveedor"
-              onClick={() => this.selectTab(72, 3)}
+              href="#Facturas"
+              onClick={() => this.selectTab(74, 4)}
+
             >
-              Proveedores
+              Facturas
             </a>
           </li>
         </ul>

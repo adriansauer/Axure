@@ -1,6 +1,5 @@
 /**librerias de axios */
 import axios from "axios";
-import { get } from "jquery";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
 });
@@ -160,6 +159,7 @@ export default {
         method:"get",
       }),
   },
+  
   ingreso_egreso: {
     create: (data) =>
       requestHelper({
@@ -191,11 +191,12 @@ export default {
         method: "post",
         data: data
       }),
-    get:() =>
-      requestHelper({
-        url: "PurchaseOrders/List",
-        method: "get",
+
+      get:()=>requestHelper({
+        url:"PurchaseOrders/List",
+        method:"get",
       }),
+
     getDetalles:(id) =>
       requestHelper({
         url: "PurchaseOrders/Details/"+id,
@@ -209,6 +210,18 @@ export default {
         url: "ProviderInvoices/Create",
         method: "post",
         data: data,
+      }),
+      
+    get: ()=>
+      requestHelper({
+        url: "ProviderInvoices/List",
+        method: "get",
+      }),
+
+    getDetalles: (id)=>
+      requestHelper({
+        url: "ProviderInvoices/ListDetails/" + id,
+        method: "get",
       })
   },
 

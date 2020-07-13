@@ -37,6 +37,7 @@ class CrearFactura extends Component {
             Quantity: l.Quantity,
             QuantityPending: l.QuantityPending,
             Price: l.Price,
+            Cantidad: "1",
           };
         }),
       });
@@ -361,12 +362,12 @@ class CrearFactura extends Component {
                               onChange={(e) => {
                                 const arreglo = this.state.detalles;
                                 arreglo[arreglo.indexOf(p)] = {
-                                  ProductName: p.ProductName,
                                   Id: p.Id,
                                   ProductId: p.ProductId,
-                                  Description: p.Description,
+                                  ProductName: p.ProductName,
                                   Quantity: p.Quantity,
                                   QuantityPending: p.QuantityPending,
+                                  Price: p.Price,
                                   Cantidad: e.target.value,
                                 };
                                 this.setState({

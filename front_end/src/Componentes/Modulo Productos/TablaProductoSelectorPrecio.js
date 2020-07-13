@@ -38,7 +38,6 @@ class TablaProductoSelector extends Component{
     
     render(){
         const productos=this.props.productos;
-     
         return(
             <div className="row p-3">
                 <DetallesModal
@@ -77,12 +76,15 @@ class TablaProductoSelector extends Component{
                         onChange={(e) => {
                           const arreglo = productos;
                           arreglo[arreglo.indexOf(p)] = {
-                            Name: p.Name,
-                            Id: p.Id,
-                            Description: p.Description,
                             Barcode: p.Barcode,
                             Cantidad: e.target.value,
+                            Cost: p.Cost,
+                            Description: p.Description,
+                            Id: p.Id,
+                            Name: p.Name,
                             Price: p.Price,
+                            ProductCategory: p.ProductCategory,
+                            QuantityMin: p.QuantityMin,
                           };
                           this.setState({
                             productos: arreglo,
@@ -98,21 +100,23 @@ class TablaProductoSelector extends Component{
                         className="form-control"
                         placeholder="Precio"
                         value={p.Price}
-                        onChange={(e) => {
+                        onChange = {(e) => {
                           const arreglo = productos;
                           arreglo[arreglo.indexOf(p)] = {
-                            Name: p.Name,
-                            Id: p.Id,
-                            Description: p.Description,
                             Barcode: p.Barcode,
                             Cantidad: p.Cantidad,
+                            Cost: p.Cost,
+                            Description: p.Description,
+                            Id: p.Id,
+                            Name: p.Name,
                             Price: e.target.value,
+                            ProductCategory: p.ProductCategory,
+                            QuantityMin: p.QuantityMin,
                           };
                           this.setState({
                             productos: arreglo,
                           });
-                        }
-                      }
+                        }}
                       />
                     </td>
                     {/**Boton para sacar de la lista el producto */}

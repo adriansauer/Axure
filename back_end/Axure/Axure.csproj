@@ -209,6 +209,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DataBase\Module_Purchase\ProviderDAO.cs" />
     <Compile Include="DataBase\Module_Purchase\ProviderInvoiceDAO.cs" />
+    <Compile Include="DataBase\Module_Purchase\ProviderInvoiceItemDAO.cs" />
     <Compile Include="DataBase\Module_Purchase\PurchaseOrderDAO.cs" />
     <Compile Include="DataBase\Module_Purchase\PurchaseOrderDetailDAO.cs" />
     <Compile Include="DataBase\Module_Sale\ClientDAO.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="DataBase\SettingDAO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderDetailDTO.cs" />
     <Compile Include="DTO\Module_Purchase\ProviderInvoiceDTO.cs" />
+    <Compile Include="DTO\Module_Purchase\ProviderInvoiceItemDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseInvoiceDetailsDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseInvoiceItemDTO.cs" />
     <Compile Include="DTO\Module_Purchase\PurchaseOrderDetailDTO.cs" />
@@ -275,9 +277,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007092002106_Initial.cs" />
-    <Compile Include="Migrations\202007092002106_Initial.Designer.cs">
-      <DependentUpon>202007092002106_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202007101901572_Initial.cs" />
+    <Compile Include="Migrations\202007101901572_Initial.Designer.cs">
+      <DependentUpon>202007101901572_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -409,8 +411,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007092002106_Initial.resx">
-      <DependentUpon>202007092002106_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007101901572_Initial.resx">
+      <DependentUpon>202007101901572_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
