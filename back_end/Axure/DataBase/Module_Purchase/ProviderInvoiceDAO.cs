@@ -20,7 +20,7 @@ namespace Axure.DataBase.Module_Purchase
                     var ls = db.ProviderInvoiceItems.Where(x => x.ProviderInvoiceId == MasterId)
                         .Select(x => new { Id = x.Id, ProviderInvoiceId = x.ProviderInvoiceId, ProductId = x.ProductId, ProductName = x.ProductName, PriceUnit = x.PriceUnit, Quantity = x.Quantity, Total = x.Total, TaxQuantity = x.TaxQuantity, TaxTotal = x.TaxTotal, ReturndQuantity = x.ReturndQuantity })
                         .ToList()
-                        .Select(y => new ProviderInvoiceItemDTO { Id = y.Id, ProviderInvoiceId = y.ProviderInvoiceId, ProductId = y.ProductId, ProductName = y.ProductName, PriceUnit = y.PriceUnit, Quantity = y.Quantity, Total = y.Total, TaxQuantity = y.TaxQuantity, TaxTotal = y.TaxTotal, ReturndQuantity = y.ReturndQuantity })
+                        .Select(y => new ProviderInvoiceItemDTO { Id = y.Id, ProviderInvoiceId = y.ProviderInvoiceId, ProductId = y.ProductId, ProductName = y.ProductName, PriceUnit = y.PriceUnit, Quantity = y.Quantity, Total = y.Total, TaxQuantity = y.TaxQuantity, TaxTotal = y.TaxTotal, ReturndQuantity = y.ReturndQuantity})
                         .ToList();
                     return ls;
 
@@ -38,10 +38,11 @@ namespace Axure.DataBase.Module_Purchase
             {
                 using (var db = new AxureContext())
                 {
+                    ProviderInvoiceItemDAO iDAO = new ProviderInvoiceItemDAO();
                     var ls = db.ProviderInvoices
-                        .Select(x => new { Id = x.Id, ProviderId = x.ProviderId, PurchaseOrderId = x.PurchaseOrderId, Status = x.Status, InvoiceNumber = x.InvoiceNumber, ProviderName = x.ProviderName, ProviderRUC = x.ProviderRUC, ProviderAddress = x.ProviderAddress, Date = x.Date, Total = x.Total, TaxTotal = x.TaxTotal })
+                        .Select(x => new { Id = x.Id, ProviderId = x.ProviderId, PurchaseOrderId = x.PurchaseOrderId, Status = x.Status, InvoiceNumber = x.InvoiceNumber, ProviderName = x.ProviderName, ProviderRUC = x.ProviderRUC, ProviderAddress = x.ProviderAddress, Date = x.Date, Total = x.Total, TaxTotal = x.TaxTotal})
                         .ToList()
-                        .Select(y => new ProviderInvoiceDTO { Id = y.Id, ProviderId = y.ProviderId, PurchaseOrderId = y.PurchaseOrderId, Status = y.Status, InvoiceNumber = y.InvoiceNumber, ProviderName = y.ProviderName, ProviderRUC = y.ProviderRUC, ProviderAddress = y.ProviderAddress, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Total = y.Total, TaxTotal = y.TaxTotal })
+                        .Select(y => new ProviderInvoiceDTO { Id = y.Id, ProviderId = y.ProviderId, PurchaseOrderId = y.PurchaseOrderId, Status = y.Status, InvoiceNumber = y.InvoiceNumber, ProviderName = y.ProviderName, ProviderRUC = y.ProviderRUC, ProviderAddress = y.ProviderAddress, Day = y.Date.Day, Month = y.Date.Month, Year = y.Date.Year, Total = y.Total, TaxTotal = y.TaxTotal, ListItem = iDAO.ListByMaster(y.Id)})
                         .ToList();
                     return ls;
                 }

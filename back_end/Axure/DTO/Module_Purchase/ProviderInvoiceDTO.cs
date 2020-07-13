@@ -41,5 +41,8 @@ namespace Axure.DTO.Module_Purchase
 
         //Invoice tax total.
         public int TaxTotal { get; set; }
+
+        public List <ProviderInvoiceItemDTO> ListItem { get; set; }
+
     }
 }
