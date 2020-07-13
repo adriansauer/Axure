@@ -62,7 +62,7 @@ class Ordenes extends Component {
                       className="dropdown-item"
                       href="#enProceso"
                       onClick={() =>
-                        this.setState({ nombreSelector: "En Proceso" })
+                        this.setState({ nombreSelector: "Procesando" })
                       }
                     >
                       En Proceso
@@ -71,7 +71,7 @@ class Ordenes extends Component {
                       className="dropdown-item"
                       href="#terminado"
                       onClick={() =>
-                        this.setState({ nombreSelector: "Terminado" })
+                        this.setState({ nombreSelector: "Completado" })
                       }
                     >
                       Terminado

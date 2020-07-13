@@ -151,6 +151,7 @@ class Stock extends Component {
   mostrarDetallesProducto(p) {
     this.seleccionarProducto(p);
     this.setState({ detallesModalVisible: true });
+    console.log(this.state.productoActual);
   }
   editar(p) {
     this.seleccionarProducto(p);

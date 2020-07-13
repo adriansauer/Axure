@@ -52,11 +52,21 @@ class AsideCompras extends Component {
             <a
 
               className="nav-link "
-              href="#Proveedor"
+              href="#Facturas"
               onClick={() => this.selectTab(73, 3)}
 
             >
               Facturar
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link "
+              href="#Facturas"
+              onClick={() => this.selectTab(74, 4)}
+
+            >
+              Facturas
             </a>
           </li>
         </ul>

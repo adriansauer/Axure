@@ -11,7 +11,7 @@ class ProductoDetalles extends Component {
       productos: null,
     };
   }
-  async componentWillReceiveProps() {
+  async componentDidMount() {
     if (this.props.producto.Id !== "") {
       const request = await api.productos.getComponents(this.props.producto.Id);
       const request2 = await api.productos.get();

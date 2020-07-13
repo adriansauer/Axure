@@ -23,13 +23,13 @@ class Factura extends Component {
 
     document.body.innerHTML = contenidoOriginal;
   }
-  format(n, sep, decimals) {
-    sep = sep || "."; // Default to period as decimal separator
-    decimals = decimals || 2; // Default to 2 decimals
-
-    return (
-      n.toLocaleString().split(sep)[0] + sep + n.toFixed(decimals).split(sep)[1]
-    );
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
   }
   async facturar() {
     const factura = {
@@ -152,10 +152,10 @@ class Factura extends Component {
                     <td>
                       {i.Name} {i.Description}
                     </td>
-                    <td>{this.format(i.UnitPrice)}GS</td>
+                    <td>{this.formato("es-PY","PYG",i.UnitPrice)}</td>
                     <td></td>
                     <td></td>
-                    <td>{this.format(i.Total)}GS</td>
+                    <td>{this.formato("es-PY","PYG",i.Total)}</td>
                   </tr>
                 ))}
                 <tr>
@@ -164,7 +164,7 @@ class Factura extends Component {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>{this.format(this.props.factura.TaxTotal)}GS</td>
+                  <td>{this.formato("es-PY","PYG",this.props.factura.TaxTotal)}</td>
                 </tr>
                 <tr>
                   <td>TOTAL A PAGAR</td>
@@ -172,7 +172,7 @@ class Factura extends Component {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>{this.format(this.props.factura.Total)}GS</td>
+                  <td>{this.formato("es-PY","PYG",this.props.factura.Total)}</td>
                 </tr>
               </tbody>
             </table>

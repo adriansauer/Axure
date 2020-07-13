@@ -11,6 +11,26 @@ namespace Axure.DataBase.Module_Purchase
 {
     public class ProviderInvoiceDAO
     {
+        public List<ProviderInvoiceItemDTO> getDetails(int MasterId) 
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var ls = db.ProviderInvoiceItems.Where(x => x.ProviderInvoiceId == MasterId)
+                        .Select(x => new { Id = x.Id, ProviderInvoiceId = x.ProviderInvoiceId, ProductId = x.ProductId, ProductName = x.ProductName, PriceUnit = x.PriceUnit, Quantity = x.Quantity, Total = x.Total, TaxQuantity = x.TaxQuantity, TaxTotal = x.TaxTotal, ReturndQuantity = x.ReturndQuantity })
+                        .ToList()
+                        .Select(y => new ProviderInvoiceItemDTO { Id = y.Id, ProviderInvoiceId = y.ProviderInvoiceId, ProductId = y.ProductId, ProductName = y.ProductName, PriceUnit = y.PriceUnit, Quantity = y.Quantity, Total = y.Total, TaxQuantity = y.TaxQuantity, TaxTotal = y.TaxTotal, ReturndQuantity = y.ReturndQuantity })
+                        .ToList();
+                    return ls;
+
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
 
         public List<ProviderInvoiceDTO> List()
         {

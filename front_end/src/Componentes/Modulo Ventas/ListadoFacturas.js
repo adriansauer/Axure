@@ -24,6 +24,14 @@ class ListadoFacturas extends Component {
         fecha: new Date(1000, 1, 1),
       });
     }
+  }  
+  formato(locales, moneda, numero){
+    var format = new Intl.NumberFormat(locales,{
+      style: "currency",
+      currency: moneda,
+      minimumFractionDigits:0
+    }).format(numero);
+    return format;
   }
   render() {
     return (
@@ -81,8 +89,8 @@ class ListadoFacturas extends Component {
                         <td>{f.ClientRUC}</td>
                         <td>{f.Status}</td>
                         <td>{f.SaleCondition}</td>
-                        <td>{f.Total}</td>
-                        <td>{f.TaxTotal}</td>
+                        <td>{this.formato("es-PY","PYG",f.Total)}</td>
+                        <td>{this.formato("es-PY","PYG",f.TaxTotal)}</td>
                       </tr>
                     ))
                 : null}

@@ -18,6 +18,25 @@ namespace Axure.Controllers.Module_Purchase
             this.providerInvoiceDAO = new ProviderInvoiceDAO();
         }
 
+        [HttpGet]
+        [Route("ListDetails/{id}")]
+        public ActionResult ListDetails(int id)
+        {
+            try
+            {
+                var lista = this.providerInvoiceDAO.getDetails(id);
+                if (null != lista)
+                {
+                    return Json(lista, JsonRequestBehavior.AllowGet);
+                }
+                return new HttpStatusCodeResult(200);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return new HttpStatusCodeResult(406);
+            }
+        }
         // GET: ProviderInvoices
         [HttpGet]
         [Route("List")]
