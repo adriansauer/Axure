@@ -118,3 +118,4 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.Cor
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.pdb
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache

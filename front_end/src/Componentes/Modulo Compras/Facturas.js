@@ -10,20 +10,8 @@ class Facturas extends Component {
       nombreSelector: "Pagada",
       verDetalles: false,
       buscador: "",
-      facturas: null,
-      factura: {
-        Id: "",
-        ProviderId: "",
-        PurchaseOrderId: "",
-        Status: "",
-        InvoiceNumber: "",
-        ProviderName: "",
-        ProviderRUC: "",
-        ProviderAddress: "",
-        Total: 0,
-        TaxTotal: 0
-
-      },
+      facturas: [],
+      factura: null,
       fecha: new Date(1000, 1, 1),
     };
   }
@@ -56,15 +44,9 @@ class Facturas extends Component {
   }
 
   mostrarDetalle(fc){
-    const aux = this.state.factura;
-    if (aux.Id !== ""){
       this.setState({
         factura:fc,
         verDetalles:true
-      });
-    }
-      this.setState({
-        factura:fc,
       });
   }
 
