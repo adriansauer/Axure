@@ -357,6 +357,6 @@ C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.CoreCompileInput
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.dll
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.pdb
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
-C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache

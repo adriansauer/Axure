@@ -7,12 +7,14 @@ class EliminarProducto extends Component {
     this.state = {};
   }
   async eliminarProducto() {
+   
     await api.productos.delete(this.props.producto.Id);
     /**actualizo los datos */
     this.props.actualizar();
     this.props.ocultar();
   }
   render() {
+    
     return (
       <Modal isOpen={this.props.visible} centered>
         <ModalHeader>

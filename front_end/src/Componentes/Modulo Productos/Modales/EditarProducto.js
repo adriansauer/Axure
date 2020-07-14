@@ -8,13 +8,13 @@ class EditarProducto extends Component{
     }
 /**Edito el un producto y actualizo la tabla */
 async editarProducto() {
+  
   await api.productos.edit(this.props.producto.Id, {
       Name: document.getElementById("nombre").value,
       Description: document.getElementById("descripcion").value,
       Cost: document.getElementById("costo").value,
       QuantityMin: document.getElementById("cantidadMin").value,
       Barcode: document.getElementById("codigoBarra").value,
-      ProductTypeId: this.props.producto.ProductType.Id,
     });
     
     this.props.actualizar();
