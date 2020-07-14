@@ -213,37 +213,38 @@ namespace Axure.DataBase.Module_Stock
                 List<ProductQuantityDTO> listDetails = productionOrderDetailDAO.GetAllProductionOrderDetails(idOrden);
                 List<int> notStock = stockDAO.CheckStock(listDetails, int.Parse(settingDAO.Get("ID_DEPOSIT_RAW_MATERIAL")));
                 if (null == notStock)
-                {
-                    ProductionOrderReportDTO listado = this.Detail(idOrden);
-                    List<ProductQuantityDTO> listItems = new List<ProductQuantityDTO>();
-                    for (int i = 0; i > listado.ListDetails.Count; i++)
-                    {
-                        ProductDAO productDAO = new ProductDAO();
-                        ProductDTO prod = productDAO.Detail(listado.ListDetails[i].ProductId);
-                        if (prod.ProductType.Id == 3)
-                        {
-                            ComponentDAO componentDAO = new ComponentDAO();
-                            List<ProductComponentDTO> list = componentDAO.GetComponentOfProduct(listado.ListDetails[i].ProductId);
-                            for (int j = 0; j < list.Count; j++)
-                            {
-                                listItems.Add(new ProductQuantityDTO { ProductId = list[j].ProductComponentId, Quantity = list[j].ProductComponentId * listado.ListDetails[i].Quantity });
-                            }
-                        }
-                        else
-                        {
-                            listItems.Add(new ProductQuantityDTO { ProductId = listado.ListDetails[i].ProductId, Quantity = listado.ListDetails[i].Quantity });
-                        }
-
-                        }
-                        stockDAO.DecreaseProductsQuantity(listItems, 1);
+                {                  
                         return null;
                 }
                 else if (0 == notStock.Count())
                 {
                     if (!EditState(idOrden, int.Parse(settingDAO.Get("ID_PRODUCTION_STATE_PROGRESS")), employeId))
                     {
+                        ProductionOrderReportDTO listado = this.Detail(idOrden);
+                        List<ProductQuantityDTO> listItems = new List<ProductQuantityDTO>();
+                        for (int i = 0; i < listado.ListDetails.Count; i++)
+                        {
+                            ProductDAO productDAO = new ProductDAO();
+                            ProductDTO prod = productDAO.Detail(listado.ListDetails[i].ProductId);
+                            if (prod.ProductType.Id == 3)
+                            {
+                                ComponentDAO componentDAO = new ComponentDAO();
+                                List<ProductComponentDTO> list = componentDAO.GetComponentOfProduct(listado.ListDetails[i].ProductId);
+                                for (int j = 0; j < list.Count; j++)
+                                {
+                                    listItems.Add(new ProductQuantityDTO { ProductId = list[j].ProductComponentId, Quantity = list[j].ProductComponentId * listado.ListDetails[i].Quantity });
+                                }
+                            }
+                            else
+                            {
+                                listItems.Add(new ProductQuantityDTO { ProductId = listado.ListDetails[i].ProductId, Quantity = listado.ListDetails[i].Quantity });
+                            }
+
+                        }
+                        stockDAO.DecreaseProductsQuantity(listItems, 1);
                         return notStock;
                     }
+                    
                     return null;
                 }
                 else
@@ -272,7 +273,7 @@ namespace Axure.DataBase.Module_Stock
                         StockDAO stockDAO = new StockDAO();
                         ProductionOrderReportDTO listado = this.Detail(idOrden);
                         List<ProductQuantityDTO> listItems = new List<ProductQuantityDTO>();
-                        for (int i = 0; i > listado.ListDetails.Count; i++)
+                        for (int i = 0; i < listado.ListDetails.Count; i++)
                         {
                             ProductDAO productDAO = new ProductDAO();
                             ProductDTO prod = productDAO.Detail(listado.ListDetails[i].ProductId);
@@ -284,17 +285,18 @@ namespace Axure.DataBase.Module_Stock
                                 {
                                     listItems.Add(new ProductQuantityDTO { ProductId = list[j].ProductComponentId, Quantity = list[j].ProductComponentId * listado.ListDetails[i].Quantity });
 
-                                  }
                                 }
+                            }
                             else
                             {
-                                    listItems.Add(new ProductQuantityDTO { ProductId = listado.ListDetails[i].ProductId, Quantity = listado.ListDetails[i].Quantity });
-                                }
-
+                                listItems.Add(new ProductQuantityDTO { ProductId = listado.ListDetails[i].ProductId, Quantity = listado.ListDetails[i].Quantity });
                             }
-                            stockDAO.IncreaseProductsQuantity2(listItems, 3);
-                            return false;
+
+                        }
+                        stockDAO.IncreaseProductsQuantity2(listItems, 3);
+                        return false;
                     }
+                    
                 }
                 return true;
             }
