@@ -67,8 +67,9 @@ class OrdenesProduccionProductos extends Component {
     };
 
     const request = await api.ordenProduccion.cambiarEstado(ordenId, dato);
+
     if (nuevoEstado === "ID_PRODUCTION_STATE_PROGRESS") {
-      if (request.data !== "") {
+      if (request.status!==200) {
         notify("Error al intentar modificar el estado de la orden!", "danger");
         this.setState({
           productosFaltantes: request.data.listNotStock,
@@ -157,7 +158,7 @@ class OrdenesProduccionProductos extends Component {
                       <p className="card-text">
                         Estado: {o.ProductionState.State}
                       </p>
-                      <p className="card-text">Observacion: {o.Observation}</p>
+                      <p className="card-text">Observacion: {o.Observation!==undefined? o.Observation : " "}</p>
                     </div>
                   </div>
                   <div className="row">

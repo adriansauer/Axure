@@ -35,12 +35,12 @@ export default {
 
     getMateriasPrimas: () =>
       requestHelper({
-        url: "Products/OfType/2",
+        url: "Stocks/StockDeposit/1",
         method: "get",
       }),
     getProductosTerminados: () =>
       requestHelper({
-        url: "Products/OfType/3",
+        url: "Stocks/StockDeposit/3",
         method: "get",
       }),
     getMateriasPrimas_Terminados: () =>

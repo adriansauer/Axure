@@ -22,8 +22,8 @@ class Stock extends Component {
         Barcode: "",
         QuantityMin: "",
       },
-      selector: "TODOS",
-      nombreSelector: "Todos",
+      selector: "MATERIAPRIMA",
+      nombreSelector: "Materia Prima",
       productos: [],
       buscador: "",
       capital: 0,
@@ -34,7 +34,7 @@ class Stock extends Component {
     };
   }
   async componentDidMount() {
-    const request = await api.productos.get();
+    const request = await api.productos.getMateriasPrimas();
 
     const depositoProduccionId = await api.settings.get("ID_DEPOSIT_SALE");
     const depositoMateriaPrimaId = await api.settings.get(
@@ -70,28 +70,7 @@ class Stock extends Component {
   }
 
   async actualizar() {
-    if (this.state.selector === "TODOS") {
-      const request = await api.productos.get();
-
-      
-        const depositoProduccionId = await api.settings.get("ID_DEPOSIT_SALE");
-        const depositoMateriaPrimaId = await api.settings.get(
-          "ID_DEPOSIT_RAW_MATERIAL"
-        );
-        const capital1 = await api.productos.getCapital(
-          depositoProduccionId.data.Value
-        );
-        const capital2 = await api.productos.getCapital(
-          depositoMateriaPrimaId.data.Value
-        );
-
-        const capitalTotal = capital1.data.Sum + capital2.data.Sum;
-        this.setState({
-          productos: request.data,
-          capital: capitalTotal,
-        });
-      
-    } else if (this.state.selector === "MATERIAPRIMA") {
+     if (this.state.selector === "MATERIAPRIMA") {
       const depositoMateriaPrimaId = await api.settings.get(
         "ID_DEPOSIT_RAW_MATERIAL"
       );
@@ -99,9 +78,7 @@ class Stock extends Component {
       const capital2 = await api.productos.getCapital(
         depositoMateriaPrimaId.data.Value
       );
-      const request = await api.productos.getDeposito(
-        depositoMateriaPrimaId.data.Value
-      );
+      const request = await api.productos.getMateriasPrimas();
       const capitalTotal = capital2.data.Sum;
       this.setState({
         productos: request.data,
@@ -113,9 +90,7 @@ class Stock extends Component {
       const capital1 = await api.productos.getCapital(
         depositoProduccionId.data.Value
       );
-      const request = await api.productos.getDeposito(
-        depositoProduccionId.data.Value
-      );
+      const request = await api.productos.getProductosTerminados();
       const capitalTotal = capital1.data.Sum;
       this.setState({
         productos: request.data,
@@ -141,17 +116,11 @@ class Stock extends Component {
     });
     await this.actualizar();
   }
-  async mostrarTodos() {
-    await this.setState({
-      selector: "TODOS",
-      nombreSelector: "Todos",
-    });
-    await this.actualizar();
-  }
+  
   mostrarDetallesProducto(p) {
     this.seleccionarProducto(p);
     this.setState({ detallesModalVisible: true });
-    console.log(this.state.productoActual);
+  
   }
   editar(p) {
     this.seleccionarProducto(p);
@@ -222,13 +191,7 @@ class Stock extends Component {
                     {this.state.nombreSelector}
                   </button>
                   <div className="dropdown-menu">
-                    <a
-                      className="dropdown-item"
-                      href="#todos"
-                      onClick={() => this.mostrarTodos()}
-                    >
-                      Todos
-                    </a>
+                   
                     <a
                       className="dropdown-item"
                       href="#materiaPrima"
@@ -261,7 +224,7 @@ class Stock extends Component {
                 <th scope="col">Nombre</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Costo</th>
-                <th scope="col">Cantidad Minima</th>
+                <th scope="col">Stock</th>
                 <th scope="col">Codigo de barra</th>
                 <th scope="col">Acciones</th>
               </tr>
@@ -288,7 +251,7 @@ class Stock extends Component {
                       {this.formato("es-PY","PYG",p.Cost)}
                     </td>
                     <td onClick={() => this.mostrarDetallesProducto(p)}>
-                      {p.QuantityMin}
+                      {p.QuantityStock}
                     </td>
                     <td onClick={() => this.mostrarDetallesProducto(p)}>
                       {p.Barcode}

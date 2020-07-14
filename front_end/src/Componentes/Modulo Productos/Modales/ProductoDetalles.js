@@ -11,22 +11,12 @@ class ProductoDetalles extends Component {
       productos: null,
     };
   }
-<<<<<<< HEAD
 
-=======
-  async componentDidMount() {
-    if (this.props.producto.Id !== "") {
-      const request = await api.productos.getComponents(this.props.producto.Id);
-      const request2 = await api.productos.get();
-      this.setState({ componentes: request.data, productos: request2.data });
-    }
-  }
->>>>>>> master
-  
  async actualizar(){
   if (this.props.producto.Id !== "") {
     const request = await api.productos.getComponents(this.props.producto.Id);
     const request2 = await api.productos.get();
+ 
     await this.setState({ componentes: request.data, productos: request2.data });
   }
  }
