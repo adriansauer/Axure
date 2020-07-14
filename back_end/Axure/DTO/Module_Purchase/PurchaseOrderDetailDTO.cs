@@ -22,5 +22,6 @@ namespace Axure.DTO.Module_Purchase
 
         //Price product.
         public int Price { get; set; }
+
     }
 }

@@ -112,7 +112,8 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.Razor.re
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages.resources.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CoreCompileInputs.cache
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.dll
@@ -360,3 +361,4 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.Migrations
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
+C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csprojAssemblyReference.cache

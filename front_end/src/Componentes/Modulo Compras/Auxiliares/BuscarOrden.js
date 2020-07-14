@@ -134,7 +134,7 @@ class BuscarOrden extends Component {
                 <tbody className="tableBody">
                   {this.state.proveedorElegido
                     ? this.state.ordenes
-                        .filter((o) => o.ProviderId === this.state.proveedor.Id && o.Status === "Pendiente")
+                        .filter((o) => o.ProviderId === this.state.proveedor.Id && (o.Status === "Pendiente" || o.Status === "Procesando"))
                         .map((o) => (
                           <tr key={o.Id}>
                             <td>{o.Number}</td>
