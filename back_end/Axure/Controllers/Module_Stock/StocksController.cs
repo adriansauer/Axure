@@ -75,6 +75,20 @@ namespace Axure.Controllers.Module_Stock
             }
         }
 
+        // GET: Stocks/StockDeposit/1
+        [Route("StockDeposit/{id}")]
+        public ActionResult StockDeposit(int id)
+        {
+            try
+            {
+                return Json(this.stockDAO.StockDeposit(id), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(CodeHTTP.NOTACCEPTABLE);
+            }
+        }
+
         // POST: Stocks/Create
         [HttpPost]
         [Route("Create")]

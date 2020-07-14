@@ -18,10 +18,10 @@ namespace Axure.Controllers
             this.userDAO = new UserDAO();
         }
 
-        // POST: Users/Edit
+        // POST: Users/EditPassword
         [HttpPost]
-        [Route("Edit")]
-        public ActionResult Edit(User u)
+        [Route("EditPassword")]
+        public ActionResult EditPassword(User u)
         {
             try
             {
