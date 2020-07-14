@@ -1,9 +1,6 @@
 /**librerias de axios */
 import axios from "axios";
-<<<<<<< HEAD
 import  qs from "qs";
-=======
->>>>>>> master
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
 });
@@ -215,16 +212,8 @@ export default {
         method: "get",
       }),
 
-<<<<<<< HEAD
-    get: () =>
-      requestHelper({
-        url: "PurchaseOrders/List",
-        method: "get",
-      }),
+   
     getDetalles: (id) =>
-=======
-    getDetalles:(id) =>
->>>>>>> master
       requestHelper({
         url: "PurchaseOrders/Details/" + id,
         method: "get",
@@ -238,21 +227,6 @@ export default {
         method: "post",
         data: data,
       }),
-<<<<<<< HEAD
-=======
-      
-    get: ()=>
-      requestHelper({
-        url: "ProviderInvoices/List",
-        method: "get",
-      }),
-
-    getDetalles: (id)=>
-      requestHelper({
-        url: "ProviderInvoices/ListDetails/" + id,
-        method: "get",
-      })
->>>>>>> master
   },
 
   proveedores: {
