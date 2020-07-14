@@ -23,7 +23,7 @@ namespace Axure.Models.Module_Stock.Models
 
         //Product description.
         public string Description { get; set; }
-        
+        public int ProductCategoryId { get; set; }
         //Product cost.
         public int Cost { get; set; }
 

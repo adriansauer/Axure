@@ -209,7 +209,7 @@ namespace Axure.DataBase.Module_Stock
                 {
                     SettingDAO settingDAO = new SettingDAO();
                     int price = pc.Cost + (int.Parse(settingDAO.Get("PERCENTAGE_OF_PROFIT")) * pc.Cost); 
-                    db.Products.Add(new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, Price = price ,TaxId = pc.TaxId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false });
+                    db.Products.Add(new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description,ProductCategoryId=pc.ProductCategoryId ,Cost = pc.Cost, Price = price ,TaxId = pc.TaxId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false });
                     db.SaveChanges();
                     return false;
                 }
@@ -228,7 +228,7 @@ namespace Axure.DataBase.Module_Stock
                 {
                     SettingDAO settingDAO = new SettingDAO();
                     int price = pc.Cost + (int.Parse(settingDAO.Get("PERCENTAGE_OF_PROFIT")) * pc.Cost);
-                    Product nuevo = new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, Price = price, TaxId = pc.TaxId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false };
+                    Product nuevo = new Product() { Name = pc.Name, ProductTypeId = pc.ProductTypeId, Description = pc.Description, Cost = pc.Cost, ProductCategoryId = pc.ProductCategoryId, Price = price, TaxId = pc.TaxId, QuantityMin = pc.QuantityMin, Barcode = pc.Barcode, Deleted = false };
                     db.Products.Add(nuevo);
                     db.SaveChanges();
                     for (int i = 0; i < pc.ListComponents.Count; i++)

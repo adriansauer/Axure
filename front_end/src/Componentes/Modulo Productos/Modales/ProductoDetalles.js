@@ -11,14 +11,15 @@ class ProductoDetalles extends Component {
       productos: null,
     };
   }
-  async componentWillReceiveProps() {
-    if (this.props.producto.Id !== "") {
-      const request = await api.productos.getComponents(this.props.producto.Id);
-      const request2 = await api.productos.get();
-      this.setState({ componentes: request.data, productos: request2.data });
-    }
-  }
+
   
+ async actualizar(){
+  if (this.props.producto.Id !== "") {
+    const request = await api.productos.getComponents(this.props.producto.Id);
+    const request2 = await api.productos.get();
+    await this.setState({ componentes: request.data, productos: request2.data });
+  }
+ }
   formato(locales, moneda, numero){
     var format = new Intl.NumberFormat(locales,{
       style: "currency",
@@ -29,6 +30,7 @@ class ProductoDetalles extends Component {
   }
 
   render() {
+    this.actualizar();
     return (
       <Modal isOpen={this.props.visible} centered>
         <ModalHeader>Detalles del Producto</ModalHeader>
@@ -58,7 +60,7 @@ class ProductoDetalles extends Component {
                 </thead>
 
                 <tbody className="tableBody">
-                { this.state.componentes.map((p) => (
+                {(this.state.componentes!==null)? this.state.componentes.map((p) => (
                         <tr key={p.Id}>
                           {this.state.productos
                             .filter((e) => e.Id === p.ProductComponentId)
@@ -78,7 +80,7 @@ class ProductoDetalles extends Component {
                           <td>{p.Quantity}</td>
                         </tr>
                       ))
-                   }
+                   :null}
                 </tbody>
               </table>
             </div>

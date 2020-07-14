@@ -14,6 +14,13 @@ export default {
         data: qs.stringify(data),
       }),
   },
+  password:{
+    edit:(data)=>requestHelper({
+        url: "Users/EditPassword",
+        method: "post",
+        data: qs.stringify(data),
+    }),
+  },
   productos: {
     get: () =>
       requestHelper({

@@ -23,6 +23,8 @@ class AgregarProducto extends Component {
       componentesSeleccionados: [],
       listarMateriaPrimaVisible: false,
       productos: null,
+      categoria:"Monitor",
+      categoriaId:1,
     };
   }
   async componentDidMount() {
@@ -68,8 +70,9 @@ class AgregarProducto extends Component {
       Description: this.state.descripciontxt,
       Cost: this.state.costotxt,
       TaxId: 3,
-      QuantityMin: this.state.cantidadMintxt,
+      QuantityMin: parseInt(this.state.cantidadMintxt),
       Barcode: this.state.codigoBarratxt,
+      ProductCategoryId:1,
       ListComponents: this.state.componentesSeleccionados.map((p) => {
         return {
           ProductComponentId: p.Id,
@@ -147,6 +150,7 @@ class AgregarProducto extends Component {
                         }}
                       />
                     </div>
+              
                     <div className="form-group row mb-3">
                       <label htmlFor="" className="">
                         Descripcion del Producto
@@ -160,6 +164,96 @@ class AgregarProducto extends Component {
                         }}
                         rows="3"
                       ></textarea>
+                      <div className="dropdown">
+                <button
+                  className="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.categoria}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Monitores",
+                        categoriaId:1,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#ingreso"
+                  >
+                    Monitor
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Teclados",
+                        
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Teclados
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Mouses",
+                        categoriaId:3,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Mouses
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Placas",
+                        categoriaId:4,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Placas
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Procesadores",
+                        categoriaId:5,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Procesadores
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Computadoras de mesa",
+                        categoriaId:6,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Computadores de mesa
+                  </a>
+                </div>
+                
+              </div>
                     </div>
                     <div className="dropdown-divider"></div>
                     <div className="form-group row mb-2">
@@ -432,6 +526,96 @@ class AgregarProducto extends Component {
                     rows="3"
                   ></textarea>
                 </div>
+                <div className="dropdown">
+                <button
+                  className="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.categoria}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Monitores",
+                        categoriaId:1,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#ingreso"
+                  >
+                    Monitor
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Teclados",
+                        
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Teclados
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Mouses",
+                        categoriaId:3,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Mouses
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Placas",
+                        categoriaId:4,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Placas
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Procesadores",
+                        categoriaId:5,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Procesadores
+                  </a>
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        categoria: "Computadoras de mesa",
+                        categoriaId:6,
+                      })
+                    }
+                    className="dropdown-item"
+                    href="#egreso"
+                  >
+                    Computadores de mesa
+                  </a>
+                </div>
+                
+              </div>
                 <div className="dropdown-divider"></div>
                 <div className="form-group row mb-2">
                   <label htmlFor="" className="">

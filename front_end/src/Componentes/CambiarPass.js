@@ -15,15 +15,22 @@ class CambiarPass extends React.Component {
     this.state = {
       /**Almacenamiento del input text del componente de Login */
       userNametxt: "",
-      passwordtxt: "",
       nuevoPass:"",
     };
   }
-
+async enviar(){
+  try {
+    const request=await api.password.edit({UserName:this.state.userNametxt,Password:this.state.nuevoPass});
+    this.props.ocultar();
+  } catch (error) {
+    
+  }
+}
   
   render() {
     return (
       <div>
+        
 <Modal isOpen={this.props.visible} centered> 
 
         <ModalHeader>Login</ModalHeader>
@@ -39,14 +46,6 @@ class CambiarPass extends React.Component {
           <input
             autoComplete="false"
             type="password"
-            placeholder="Password"
-            required="required"
-            value={this.state.passwordtxt}
-            onChange={(e) => this.setState({ passwordtxt: e.target.value })}
-          />
-          <input
-            autoComplete="false"
-            type="password"
             placeholder="Nuevo password"
             required="required"
             value={this.state.nuevoPass}
@@ -54,8 +53,8 @@ class CambiarPass extends React.Component {
           />
         </ModalBody>
         <ModalFooter>
-          
-          <button onClick={()=>this.props.ocultar()}>Confirmar</button>
+          <button onClick={()=>this.props.ocultar()}>Cancelar</button>
+          <button onClick={()=>this.enviar()}>Confirmar</button>
         </ModalFooter>
       </Modal>
       </div>
