@@ -37,7 +37,7 @@ class CrearFactura extends Component {
             Quantity: l.Quantity,
             QuantityPending: l.QuantityPending,
             Price: l.Price,
-            Cantidad: "1",
+            Cantidad: 1,
           };
         }),
       });

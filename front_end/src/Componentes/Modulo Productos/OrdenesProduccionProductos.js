@@ -4,7 +4,7 @@ import api from "../../Axios/Api.js";
 import OrdenDetalles from "./Modales/ordenDetalles.js";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ProductosFaltantes from "./Modales/ProductosFaltantes.js";
-import Notificacion,{ notify } from "../Notificacion";
+import Notificacion, { notify } from "../Notificacion";
 class OrdenesProduccionProductos extends Component {
   constructor(props) {
     super(props);
@@ -50,12 +50,12 @@ class OrdenesProduccionProductos extends Component {
     const request2 = await api.empleados.get();
     this.setState({ ordenes: request.data, empleados: request2.data });
   }
-  async eliminarOrden(id){
-    const request =await api.ordenProduccion.delete(id);
-    if(request.status===200){
-      notify("La orden ha sido eliminada!","success");
-    }else{
-      notify("No es posible eliminar la orden","danger");
+  async eliminarOrden(id) {
+    const request = await api.ordenProduccion.delete(id);
+    if (request.status === 200) {
+      notify("La orden ha sido eliminada!", "success");
+    } else {
+      notify("No es posible eliminar la orden", "danger");
     }
     this.actualizar();
   }
@@ -67,29 +67,32 @@ class OrdenesProduccionProductos extends Component {
     };
 
     const request = await api.ordenProduccion.cambiarEstado(ordenId, dato);
-    if(nuevoEstado=== "ID_PRODUCTION_STATE_PROGRESS"){
-      if (request.data !== "") {
-        notify("Error al intentar modificar el estado de la orden!","danger");
-      this.setState({
-        productosFaltantes: request.data.listNotStock,
-        productosFaltantesVisible: true,
-      });
-    }else{
-      if(request.status===200){
-      notify("El estado de la orden ha sido actualizado!","success");
+
+    if (nuevoEstado === "ID_PRODUCTION_STATE_PROGRESS") {
+      if (request.status!==200) {
+        notify("Error al intentar modificar el estado de la orden!", "danger");
+        this.setState({
+          productosFaltantes: request.data.listNotStock,
+          productosFaltantesVisible: true,
+        });
+      } else {
+        if (request.status === 200) {
+          notify("El estado de la orden ha sido actualizado!", "success");
+        }
+      }
+    } else if (request.status === 200) {
+      notify("El estado de la orden ha sido actualizado!", "success");
     }
-    }
-    }else if(request.status ===200){
-      notify("El estado de la orden ha sido actualizado!","success");
-    }
-    
-    
+
     this.actualizar();
   }
   render() {
     return (
-      <div className="ordenesProduccionProducto">
-        <Notificacion/>
+      <div
+        className="ordenesProduccionProducto"
+        style={{ overflowY: "scroll" }}
+      >
+        <Notificacion />
         <OrdenDetalles
           orden={this.state.ordenSeleccionada}
           visible={this.state.detallesVisible}
@@ -138,91 +141,96 @@ class OrdenesProduccionProductos extends Component {
           </div>
         </div>
 
-        {this.state.ordenes
-          .filter((o) => this.state.filtro === o.ProductionState.State)
-          .filter(
-            (o) => new Date(o.Year, o.Month - 1, o.Day) >= this.state.fecha
-          )
-          .map((o) => (
-            <div className="card " key={o.Id}>
-              <div className="card-body carta">
-                <div className="row">
-                  <h5 className="card-title">Orden Numero: {o.Id}</h5>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="card-text">
-                      Estado: {o.ProductionState.State}
-                    </p>
-                    <p className="card-text">Observacion: {o.Observation}</p>
+        <div style={{ height: "600px", overflowY: "scroll" }}>
+          {this.state.ordenes
+            .filter((o) => this.state.filtro === o.ProductionState.State)
+            .filter(
+              (o) => new Date(o.Year, o.Month - 1, o.Day) >= this.state.fecha
+            )
+            .map((o) => (
+              <div className="card " key={o.Id}>
+                <div className="card-body carta">
+                  <div className="row">
+                    <h5 className="card-title">Orden Numero: {o.Id}</h5>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <p className="card-text ">
-                      Fecha: {o.Day}/{o.Month}/{o.Year}
-                    </p>
-                    <p className="card-text ">
-                      Encargado/a:{" "}
-                      {this.state.empleados
-                        .filter((e) => o.EmployeeId === e.Id)
-                        .map((e) => e.Name)}
-                    </p>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p className="card-text">
+                        Estado: {o.ProductionState.State}
+                      </p>
+                      <p className="card-text">Observacion: {o.Observation!==undefined? o.Observation : " "}</p>
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <button onClick={() => this.mostrarDetalles(o.Id)}>
-                      Detalles
-                    </button>
-                    {o.ProductionState.State === "Pendiente" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_PROGRESS",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Procesar orden
+                  <div className="row">
+                    <div className="col-md-6">
+                      <p className="card-text ">
+                        Fecha: {o.Day}/{o.Month}/{o.Year}
+                      </p>
+                      <p className="card-text ">
+                        Encargado/a:{" "}
+                        {this.state.empleados
+                          .filter((e) => o.EmployeeId === e.Id)
+                          .map((e) => e.Name)}
+                      </p>
+                    </div>
+                    <div className="col-md-4">
+                      <button onClick={() => this.mostrarDetalles(o.Id)}>
+                        Detalles
                       </button>
-                    ) : o.ProductionState.State === "En Proceso" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_FINALIZED",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Terminar orden
-                      </button>
-                    ) : null}
-                    {o.ProductionState.State === "Pendiente" ||
-                    o.ProductionState.State === "En Proceso" ? (
-                      <button
-                        onClick={() =>
-                          this.cambiarEstado(
-                            "ID_PRODUCTION_STATE_CANCELLED",
-                            o.EmployeeId,
-                            o.Id
-                          )
-                        }
-                      >
-                        Cancelar
-                      </button>
-                    ) : null}
-                  </div>
-                  <div className="col-md-2">
-                    {o.ProductionState.State === "Cancelado" ||
-                    o.ProductionState.State === "Terminado" ? (
-                      <DeleteIcon className="icono" onClick={()=>this.eliminarOrden(o.Id)}/>
-                    ) : null}
+                      {o.ProductionState.State === "Pendiente" ? (
+                        <button
+                          onClick={() =>
+                            this.cambiarEstado(
+                              "ID_PRODUCTION_STATE_PROGRESS",
+                              o.EmployeeId,
+                              o.Id
+                            )
+                          }
+                        >
+                          Procesar orden
+                        </button>
+                      ) : o.ProductionState.State === "En Proceso" ? (
+                        <button
+                          onClick={() =>
+                            this.cambiarEstado(
+                              "ID_PRODUCTION_STATE_FINALIZED",
+                              o.EmployeeId,
+                              o.Id
+                            )
+                          }
+                        >
+                          Terminar orden
+                        </button>
+                      ) : null}
+                      {o.ProductionState.State === "Pendiente" ||
+                      o.ProductionState.State === "En Proceso" ? (
+                        <button
+                          onClick={() =>
+                            this.cambiarEstado(
+                              "ID_PRODUCTION_STATE_CANCELLED",
+                              o.EmployeeId,
+                              o.Id
+                            )
+                          }
+                        >
+                          Cancelar
+                        </button>
+                      ) : null}
+                    </div>
+                    <div className="col-md-2">
+                      {o.ProductionState.State === "Cancelado" ||
+                      o.ProductionState.State === "Terminado" ? (
+                        <DeleteIcon
+                          className="icono"
+                          onClick={() => this.eliminarOrden(o.Id)}
+                        />
+                      ) : null}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     );
   }

@@ -27,7 +27,7 @@ class ProductosFaltantes extends Component {
         </ModalHeader>
         <ModalBody>
           <div className="row">
-            {this.props.lista !== null ? (
+            {this.props.lista !== undefined && this.props.lista !== null ? (
               <p>{this.props.lista.Observation}</p>
             ) : null}
           </div>
@@ -44,7 +44,7 @@ class ProductosFaltantes extends Component {
                 </thead>
                 {this.props.lista !== null ? (
                   <tbody className="tableBody">
-                    {this.props.lista.map((p) => (
+                    {(this.props.lista!==undefined && this.props.lista!==null)? this.props.lista.map((p) => (
                       <tr key={p}>
                         {this.state.productos
                           .filter((e) => e.Id === p)
@@ -63,7 +63,7 @@ class ProductosFaltantes extends Component {
                           ))}
                        
                       </tr>
-                    ))}
+                    )):null}
                   </tbody>
                 ) : null}
               </table>

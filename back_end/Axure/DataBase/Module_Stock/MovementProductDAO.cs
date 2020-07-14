@@ -46,8 +46,11 @@ namespace Axure.DataBase.Module_Stock
                     {
                         for (int i = 0; i < esp.ListDetails.Count; i++)
                         {
+                           
                             esp.ListDetails[i].MovementProductId = mvp.Id;
                             mvDDAO.Add(esp.ListDetails[i]);
+                            
+                            
                         }
                     }
 

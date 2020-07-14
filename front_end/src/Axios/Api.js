@@ -1,30 +1,46 @@
 /**librerias de axios */
 import axios from "axios";
+import  qs from "qs";
 const requestHelper = axios.create({
   baseURL: "http://localhost:53049/",
 });
 
 export default {
+  token: {
+    get: (data) =>
+      requestHelper({
+        url: "token",
+        method: "post",
+        data: qs.stringify(data),
+      }),
+  },
+  password:{
+    edit:(data)=>requestHelper({
+        url: "Users/EditPassword",
+        method: "post",
+        data: qs.stringify(data),
+    }),
+  },
   productos: {
     get: () =>
       requestHelper({
         url: "Products/List",
         method: "get",
       }),
-    getCategoriaPorveedor:(id)=>
+    getCategoriaPorveedor: (id) =>
       requestHelper({
-        url: "Products/OfProvider/"+id,
+        url: "Products/OfProvider/" + id,
         method: "get",
       }),
 
     getMateriasPrimas: () =>
       requestHelper({
-        url: "Products/OfType/2",
+        url: "Stocks/StockDeposit/1",
         method: "get",
       }),
     getProductosTerminados: () =>
       requestHelper({
-        url: "Products/OfType/3",
+        url: "Stocks/StockDeposit/3",
         method: "get",
       }),
     getMateriasPrimas_Terminados: () =>
@@ -101,11 +117,11 @@ export default {
         url: "ProductionOrders/ChangeState/" + id,
         method: "put",
         data,
-       
       }),
-      delete:(id)=>requestHelper({
-        url:"ProductionOrders/Delete/"+id,
-        method:"delete"
+    delete: (id) =>
+      requestHelper({
+        url: "ProductionOrders/Delete/" + id,
+        method: "delete",
       }),
   },
   empleados: {
@@ -120,26 +136,23 @@ export default {
       requestHelper({
         url: "Clients/Create",
         method: "post",
-        data:data,
+        data: data,
       }),
-      get: () =>
+    get: () =>
       requestHelper({
         url: "Clients/List",
         method: "get",
-       
       }),
-      delete: (id) =>
+    delete: (id) =>
       requestHelper({
-        url: "Clients/Delete/"+id,
+        url: "Clients/Delete/" + id,
         method: "post",
-       
       }),
-      edit: (id,data) =>
+    edit: (id, data) =>
       requestHelper({
-        url: "Clients/Edit/"+id,
+        url: "Clients/Edit/" + id,
         method: "post",
-        data:data
-       
+        data: data,
       }),
   },
   ordenes_venta: {
@@ -149,17 +162,18 @@ export default {
         method: "post",
         data,
       }),
-      get:()=>requestHelper({
-        url:"OrderSales/List ",
-        method:"get",
-
+    get: () =>
+      requestHelper({
+        url: "OrderSales/List ",
+        method: "get",
       }),
-      getDetalles:(id)=>requestHelper({
-        url:"OrderSales/GetById/"+id,
-        method:"get",
+    getDetalles: (id) =>
+      requestHelper({
+        url: "OrderSales/GetById/" + id,
+        method: "get",
       }),
   },
-  
+
   ingreso_egreso: {
     create: (data) =>
       requestHelper({
@@ -189,40 +203,30 @@ export default {
       requestHelper({
         url: "PurchaseOrders/Create",
         method: "post",
-        data: data
+        data: data,
       }),
 
-      get:()=>requestHelper({
-        url:"PurchaseOrders/List",
-        method:"get",
-      }),
-
-    getDetalles:(id) =>
+    get: () =>
       requestHelper({
-        url: "PurchaseOrders/Details/"+id,
+        url: "PurchaseOrders/List",
+        method: "get",
+      }),
+
+   
+    getDetalles: (id) =>
+      requestHelper({
+        url: "PurchaseOrders/Details/" + id,
         method: "get",
       }),
   },
 
   factura_compra: {
-    create: (data)=>
+    create: (data) =>
       requestHelper({
         url: "ProviderInvoices/Create",
         method: "post",
         data: data,
       }),
-      
-    get: ()=>
-      requestHelper({
-        url: "ProviderInvoices/List",
-        method: "get",
-      }),
-
-    getDetalles: (id)=>
-      requestHelper({
-        url: "ProviderInvoices/ListDetails/" + id,
-        method: "get",
-      })
   },
 
   proveedores: {
@@ -232,44 +236,46 @@ export default {
         method: "get",
       }),
 
-    getDetalles:(id)=>requestHelper({
-        url:"Providers/Details/"+id,
-        method:"get",
+    getDetalles: (id) =>
+      requestHelper({
+        url: "Providers/Details/" + id,
+        method: "get",
       }),
-    },
-  factura:{
-    validate:(data)=>requestHelper({
-      url:"Invoices/Validate",
-      method:"post",
-      data:data,
-    }),
-    create:(data)=>requestHelper({
-      url:"Invoices/Create",
-      method:"post",
-      data
-    }),
-    get:()=>requestHelper({
-      url:"Invoices/List",
-      method:"get",
-    
-    })
   },
-  categoria:{
-    get:(data)=>requestHelper({
-      url:"ProductCategories/List",
-      method:"post",
-      data:data,
-    }),
-
-   
+  factura: {
+    validate: (data) =>
+      requestHelper({
+        url: "Invoices/Validate",
+        method: "post",
+        data: data,
+      }),
+    create: (data) =>
+      requestHelper({
+        url: "Invoices/Create",
+        method: "post",
+        data,
+      }),
+    get: () =>
+      requestHelper({
+        url: "Invoices/List",
+        method: "get",
+      }),
   },
-  proveedor:{
-    create:(data)=>requestHelper({
-      url:"Providers/Create",
-      method:"post",
-      data,
-    }),
-
+  categoria: {
+    get: (data) =>
+      requestHelper({
+        url: "ProductCategories/List",
+        method: "post",
+        data: data,
+      }),
+  },
+  proveedor: {
+    create: (data) =>
+      requestHelper({
+        url: "Providers/Create",
+        method: "post",
+        data,
+      }),
   },
   settings: {
     /**-	ID_DEPOSIT_RAW_MATERIAL
@@ -286,10 +292,9 @@ export default {
  */
     get: (data) =>
       requestHelper({
-        url: "Settings/Get",       
-        method:"post",
-        data:{Key:data}
+        url: "Settings/Get",
+        method: "post",
+        data: { Key: data },
       }),
-        
   },
 };

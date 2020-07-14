@@ -48,7 +48,7 @@ namespace Axure.DataBase.Module_Stock
                         .Select(x => new { Id = x.Id, DepositId = x.DepositId, Product = x.Product, Quantity = x.Quantity })
                         .ToList();
                     List<ProductDTO> re = st.Select(y => new ProductDTO() { 
-                        Id = y.Id, 
+                        Id = y.Product.Id, 
                         Name = y.Product.Name, 
                         Description = y.Product.Description,                   
                         Cost = y.Product.Cost, 
@@ -166,10 +166,26 @@ namespace Axure.DataBase.Module_Stock
                 List<int> notStock = new List<int>();
                 SettingDAO settingDAO = new SettingDAO();
                 for (int i = 0; i < listDetails.Count; i++)
-                {                   
-                    int cant = ProductQuantity(listDetails[i].ProductId, new Deposit{ Id = idDeposit });
-                    if (listDetails[i].Quantity > cant) { notStock.Add(listDetails[i].ProductId); }
-                }
+                {
+                    ProductDAO productDAO = new ProductDAO();
+                    ProductDTO prod = productDAO.Detail(listDetails[i].ProductId);
+                    if (prod.ProductType.Id == 3)
+                    {
+                        ComponentDAO componentDAO = new ComponentDAO();
+                        List<ProductComponentDTO> list = componentDAO.GetComponentOfProduct(prod.Id);
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            int cant = ProductQuantity(list[i].ProductComponentId, new Deposit { Id = idDeposit });
+                            if (list[j].Quantity > cant*listDetails[i].Quantity) { notStock.Add(list[j].ProductComponentId); }
+                        }
+                    }
+                    else
+                    {
+                        int cant = ProductQuantity(listDetails[i].ProductId, new Deposit { Id = idDeposit });
+
+                        if (listDetails[i].Quantity > cant) { notStock.Add(listDetails[i].ProductId); }
+                    }
+                    }
                 return notStock;
             }
             catch
@@ -237,6 +253,36 @@ namespace Axure.DataBase.Module_Stock
                     try
                     {
                         foreach (PurchaseInvoiceItemDTO product in listItems)
+                        {
+                            Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == product.ProductId && x.DepositId == idDeposit);
+                            int newQuantity = st.Quantity + product.Quantity;
+                            if (newQuantity < 0)
+                            {
+                                throw new System.Exception();
+                            }
+                            st.Quantity = newQuantity;
+                            db.SaveChanges();
+                        }
+                        dbContextTransaction.Commit();
+                        return false;
+                    }
+                    catch (Exception e)
+                    {
+                        dbContextTransaction.Rollback();
+                        return true;
+                    }
+                }
+            }
+        }
+        public bool IncreaseProductsQuantity2(List<ProductQuantityDTO> listItems, int idDeposit)
+        {
+            using (var db = new AxureContext())
+            {
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (ProductQuantityDTO product in listItems)
                         {
                             Stock st = db.Stocks.FirstOrDefault(x => x.ProductId == product.ProductId && x.DepositId == idDeposit);
                             int newQuantity = st.Quantity + product.Quantity;
