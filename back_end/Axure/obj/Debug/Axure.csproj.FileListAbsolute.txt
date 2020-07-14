@@ -360,4 +360,3 @@ C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.Migrations
 C:\Users\Usuario\Desktop\Compras\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.Migrations.Initial.resources
 C:\Users\HP\Desktop\Axure\back_end\Axure\obj\Debug\Axure.csproj.GenerateResource.cache
->>>>>>> master

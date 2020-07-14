@@ -38,6 +38,37 @@ namespace Axure.DataBase.Module_Stock
             }
         }
 
+        public List<ProductDTO> StockDeposit(int id)
+        {
+            try
+            {
+                using (var db = new AxureContext())
+                {
+                    var st = db.Stocks.Include("Products").Where(x => x.DepositId == id && x.Deleted == false)
+                        .Select(x => new { Id = x.Id, DepositId = x.DepositId, Product = x.Product, Quantity = x.Quantity })
+                        .ToList();
+                    List<ProductDTO> re = st.Select(y => new ProductDTO() { 
+                        Id = y.Id, 
+                        Name = y.Product.Name, 
+                        Description = y.Product.Description,                   
+                        Cost = y.Product.Cost, 
+                        Price = y.Product.Price, 
+                        TaxPercentage = 10, 
+                        QuantityMin = y.Product.QuantityMin, 
+                        QuantityStock= y.Quantity, 
+                        Barcode = y.Product.Barcode, 
+                        ProductCategoryId = y.Product.ProductCategoryId 
+                    })
+                           .ToList();
+                    return re;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public int ProductQuantity(int ProductId, Deposit dep)
         {
             try
