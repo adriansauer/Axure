@@ -38,7 +38,6 @@ namespace Axure.DataBase.Module_Stock
                            .ToList();
                     //opList.ForEach(x => x.ListDetails = productionOrderDetailDB.GetAllProductionOrderDetails(x.Id));
                        return opList;
-                    return null;
                 }
             }
             catch
