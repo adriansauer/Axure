@@ -16,7 +16,9 @@ import ComprasP from "./Modulo Compras/ComprasP.js";
 import Ordenes from "./Modulo Compras/Ordenes.js";
 import Proveedor from "./Modulo Compras/Proveedor.js";
 import FacturarCompra from "./Modulo Compras/Facturar.js";
-import FacturasCompra from "./Modulo Compras/Facturas.js"
+import FacturasCompra from "./Modulo Compras/Facturas.js";
+import Facturacion from "./Modulo Compras/AsideFacturacion.js";
+import AsideOrdenes from "./Modulo Compras/AsideOrdenes.js"
 class Section extends Component {
   render() {
     return (
@@ -48,9 +50,13 @@ class Section extends Component {
             case 72:
               return <Proveedor />;
             case 73:
-              return <FacturarCompra />;
+              return <Facturacion/>;
             case 74:
+              return <FacturarCompra />;
+            case 75:
               return <FacturasCompra />;
+            case 76:
+              return <AsideOrdenes />;
             default:
               return <Stock />;
           }

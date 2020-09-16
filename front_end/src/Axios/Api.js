@@ -227,6 +227,18 @@ export default {
         method: "post",
         data: data,
       }),
+        
+    get: ()=>
+    requestHelper({
+      url: "ProviderInvoices/List",
+      method: "get",
+    }),
+
+  getDetalles: (id)=>
+    requestHelper({
+      url: "ProviderInvoices/ListDetails/" + id,
+      method: "get",
+    })
   },
 
   proveedores: {

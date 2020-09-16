@@ -3,6 +3,7 @@ import './styleMProductos.css'
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DetallesModal from "./Modales/ProductoDetalles.js";
+import NumberFormat from "react-number-format";
 /**
  * Propiedades
  * productos:[{},...]
@@ -94,7 +95,31 @@ class TablaProductoSelector extends Component{
                       />
                     </td>
                     <td>
-                      <input
+                    <NumberFormat 
+                        className="form-control" 
+                        value={p.Price}
+                        onChange = {(e) => {
+                          const arreglo = productos;
+                          arreglo[arreglo.indexOf(p)] = {
+                            Barcode: p.Barcode,
+                            Cantidad: p.Cantidad,
+                            Cost: p.Cost,
+                            Description: p.Description,
+                            Id: p.Id,
+                            Name: p.Name,
+                            Price: e.target.value,
+                            ProductCategory: p.ProductCategory,
+                            QuantityMin: p.QuantityMin,
+                          };
+                          this.setState({
+                            productos: arreglo,
+                          });
+                        }}
+                        decimalSeparator={","}
+                        thousandSeparator={"."} 
+                        prefix={'Gs. '} 
+                    />
+                      {/*<input
                         id= "montoT"
                         type="number"
                         className="form-control"
@@ -117,7 +142,7 @@ class TablaProductoSelector extends Component{
                             productos: arreglo,
                           });
                         }}
-                      />
+                      />*/}
                     </td>
                     {/**Boton para sacar de la lista el producto */}
                     <td>
