@@ -23,18 +23,9 @@ class AsideCompras extends Component {
             <a
               className="nav-link active"
               href="#Compra"
-              onClick={() => this.selectTab(70, 0)}
+              onClick={() => this.selectTab(76, 0)}
             >
              Orden de Compra
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#Ordenes"
-              onClick={() => this.selectTab(71, 1)}
-            >
-             Ordenes
             </a>
           </li>
           
@@ -42,7 +33,7 @@ class AsideCompras extends Component {
             <a
               className="nav-link "
               href="#Proveedor"
-              onClick={() => this.selectTab(72, 2)}
+              onClick={() => this.selectTab(72, 1)}
 
             >
               Proveedores
@@ -52,21 +43,11 @@ class AsideCompras extends Component {
             <a
 
               className="nav-link "
-              href="#Facturas"
-              onClick={() => this.selectTab(73, 3)}
+              href="#Factura"
+              onClick={() => this.selectTab(73, 2)}
 
             >
-              Facturar
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link "
-              href="#Facturas"
-              onClick={() => this.selectTab(74, 4)}
-
-            >
-              Facturas
+              Facturacion
             </a>
           </li>
         </ul>

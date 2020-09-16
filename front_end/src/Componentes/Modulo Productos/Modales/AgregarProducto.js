@@ -4,6 +4,7 @@ import api from "../../../Axios/Api.js";
 import Notificacion, { notify } from "../../Notificacion.js";
 import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import DeleteIcon from "@material-ui/icons/Delete";
+import NumberFormat from "react-number-format";
 
 /**Props
  * visible
@@ -157,7 +158,7 @@ class AgregarProducto extends Component {
                       </label>
                       <textarea
                         className="form-control"
-                        placeholder="Descripcion del producto"
+                        placeholder="Descripcion del productaaao"
                         value={this.state.descripciontxt}
                         onChange={(e) => {
                           this.setState({ descripciontxt: e.target.value });
@@ -260,14 +261,17 @@ class AgregarProducto extends Component {
                       <label htmlFor="" className="">
                         Costo{" "}
                       </label>
-                      <input
-                        type="text"
+                      
+                      <NumberFormat
                         className="form-control"
-                        placeholder="Costo"
                         value={this.state.costotxt}
                         onChange={(e) => {
                           this.setState({ costotxt: e.target.value });
                         }}
+                        placeholder="Costo"
+                        decimalSeparator={","}
+                        thousandSeparator={"."} 
+                        prefix={'Gs. '} 
                       />
                     </div>
                     <div className="form-group row mb-2">
@@ -621,15 +625,17 @@ class AgregarProducto extends Component {
                   <label htmlFor="" className="">
                     Costo{" "}
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Costo"
-                    value={this.state.costotxt}
-                    onChange={(e) => {
-                      this.setState({ costotxt: e.target.value });
-                    }}
-                  />
+                  <NumberFormat
+                        className="form-control"
+                        defaultValue={this.state.costotxt}
+                        onChange={(e) => {
+                          this.setState({ costotxt: e.target.value });
+                        }}
+                        placeholder="Costo"
+                        decimalSeparator={","}
+                        thousandSeparator={"."} 
+                        prefix={'Gs. '} 
+                      />
                 </div>
                 <div className="form-group row mb-2">
                   <label htmlFor="" className="">
