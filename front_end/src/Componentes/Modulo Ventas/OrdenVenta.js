@@ -186,6 +186,7 @@ return false;
                 className="form-control"
                 placeholder="Cliente"
                 required="required"
+                style={(this.state.clienteElegido)?{borderColor:"green"}:{borderColor:"red"}}
                 value={this.state.clienteNombre}
                 onChange={(e) => this.buscarCliente(e)}
               />
@@ -240,6 +241,7 @@ return false;
                 type="text"
                 className="form-control"
                 placeholder="Encargado"
+                style={(this.state.encargadoElegido)?{borderColor:"green"}:{borderColor:"red"}}
                 required="required"
                 value={this.state.encargadoNombre}
                 onChange={(e) => this.buscarEncargado(e)}

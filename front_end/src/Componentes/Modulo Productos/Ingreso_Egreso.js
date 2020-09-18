@@ -67,7 +67,7 @@ class DarDeBaja extends Component {
   }
   async componentDidMount() {
     const empleados = await api.empleados.get();
-    const p = await api.productos.getDeposito(this.state.deposito);
+    const p = await api.productos.get();
     const f = new Date();
     console.log(p.data);
     let mes = f.getMonth() + 1; //obteniendo mes
@@ -168,6 +168,7 @@ class DarDeBaja extends Component {
                   placeholder="Encargado"
                   required="required"
                   value={this.state.encargadoNombre}
+                  style={(this.state.empleadoElegido)?{borderColor:"green"}:{borderColor:"red"}}
                   onChange={(e) => this.buscarEncargado(e)}
                 />
                 <div className="dropdown-menu" id="dropdown-encargado">

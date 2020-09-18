@@ -62,7 +62,7 @@ class AgregarProveedor extends Component {
         Phone: this.state.telefono,
         ListCategories: categoriasSeleccionadas,
       };
-     
+
       try {
         const request = await api.proveedor.create(proveedor);
         if (request.status === 200) {
@@ -101,6 +101,11 @@ class AgregarProveedor extends Component {
                 <div className="col-md-12">
                   {/**NOMBRE DEL PROVEEDOR*/}
                   <input
+                    style={
+                      this.state.nombre === ""
+                        ? { borderColor: "red" }
+                        : { borderColor: "green" }
+                    }
                     autoComplete="off"
                     type="text"
                     id="nombre"
@@ -113,6 +118,11 @@ class AgregarProveedor extends Component {
                 <div className="col-md-12">
                   {/**DIRECCION DEL PROVEEDOR*/}
                   <input
+                    style={
+                      this.state.direccion === ""
+                        ? { borderColor: "red" }
+                        : { borderColor: "green" }
+                    }
                     autoComplete="off"
                     type="text"
                     id="direccion"
@@ -127,6 +137,11 @@ class AgregarProveedor extends Component {
                 <div className="col-md-12">
                   {/**TELEFONO DEL PROVEEDOR*/}
                   <input
+                    style={
+                      this.state.telefono === ""
+                        ? { borderColor: "red" }
+                        : { borderColor: "green" }
+                    }
                     autoComplete="off"
                     type="text"
                     id="telefono"
@@ -141,6 +156,11 @@ class AgregarProveedor extends Component {
                 <div className="col-md-12">
                   {/**RUC DEL PROVEEDOR*/}
                   <input
+                    style={
+                      this.state.ruc === ""
+                        ? { borderColor: "red" }
+                        : { borderColor: "green" }
+                    }
                     autoComplete="off"
                     type="text"
                     id="ruc"
@@ -150,7 +170,6 @@ class AgregarProveedor extends Component {
                     onChange={(e) => this.setState({ ruc: e.target.value })}
                   />
                 </div>
-               
               </div>
               <div
                 className="col-md-7"

@@ -77,6 +77,7 @@ class AgregarCliente extends Component {
               <div className="col-md-7">
                 {/**NOMBRE DEL CLIENTE*/}
                 <input
+                style={(this.state.nombre==="")?{borderColor:"red"}:{borderColor:"green"}}
                   autoComplete="off"
                   type="text"
                   id="nombre"
@@ -89,6 +90,7 @@ class AgregarCliente extends Component {
               <div className="col-md-7">
                 {/**DIRECCION DEL CLIENTE*/}
                 <input
+                style={(this.state.direccion==="")?{borderColor:"red"}:{borderColor:"green"}}
                   autoComplete="off"
                   type="text"
                   id="direccion"
@@ -101,6 +103,7 @@ class AgregarCliente extends Component {
               <div className="col-md-7">
                 {/**TELEFONO DEL CLIENTE*/}
                 <input
+                style={(this.state.telefono==="")?{borderColor:"red"}:{borderColor:"green"}}
                   autoComplete="off"
                   type="text"
                   id="telefono"
@@ -113,6 +116,7 @@ class AgregarCliente extends Component {
               <div className="col-md-7">
                 {/**RUC DEL CLIENTE*/}
                 <input
+                style={(this.state.ruc==="")?{borderColor:"red"}:{borderColor:"green"}}
                   autoComplete="off"
                   type="text"
                   id="ruc"
@@ -130,6 +134,7 @@ class AgregarCliente extends Component {
                   id="creditomax"
                   className="form-control"
                   placeholder="Credito maximo"
+                  style={(this.state.creditomax==="")?{borderColor:"red"}:{borderColor:"green"}}
                   onChange={(e)=>this.setState({creditomax:e.target.value})}
                 />
               </div>

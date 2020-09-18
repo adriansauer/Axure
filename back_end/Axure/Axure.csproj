@@ -278,15 +278,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-    <Compile Include="Migrations\202007142016560_Initial.cs" />
-    <Compile Include="Migrations\202007142016560_Initial.Designer.cs">
-      <DependentUpon>202007142016560_Initial.cs</DependentUpon>
-=======
-    <Compile Include="Migrations\202007142018286_Initial.cs" />
-    <Compile Include="Migrations\202007142018286_Initial.Designer.cs">
-      <DependentUpon>202007142018286_Initial.cs</DependentUpon>
->>>>>>> master
+    <Compile Include="Migrations\202007142205316_Initial.cs" />
+    <Compile Include="Migrations\202007142205316_Initial.Designer.cs">
+      <DependentUpon>202007142205316_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AxureContext.cs" />
@@ -419,13 +413,8 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <EmbeddedResource Include="Migrations\202007142016560_Initial.resx">
-      <DependentUpon>202007142016560_Initial.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Migrations\202007142018286_Initial.resx">
-      <DependentUpon>202007142018286_Initial.cs</DependentUpon>
->>>>>>> master
+    <EmbeddedResource Include="Migrations\202007142205316_Initial.resx">
+      <DependentUpon>202007142205316_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

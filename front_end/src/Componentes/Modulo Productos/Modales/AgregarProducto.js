@@ -23,13 +23,22 @@ class AgregarProducto extends Component {
       componentesSeleccionados: [],
       listarMateriaPrimaVisible: false,
       productos: null,
-      categoria:"Monitor",
-      categoriaId:1,
+      categoria: "Monitor",
+      categoriaId: 1,
     };
   }
   async componentDidMount() {
     const p = await api.productos.getProductosDeCompra();
     this.setState({ productos: p.data });
+  }
+  filtroDeLetras(texto){
+    if(texto==""){
+      return true;
+    }else if(!isNaN(texto[texto.length-1])){
+      return true;
+    }else{
+      return false;
+    }
   }
   seleccionarComponente(p) {
     this.setState({
@@ -55,49 +64,48 @@ class AgregarProducto extends Component {
 
     if (
       this.state.nombretxt !== "" &&
-      this.state.descripciontxt !== "" &&
       this.state.costotxt !== "" &&
-      this.state.codigoBarratxt !== ""
+      this.state.codigoBarratxt !== "" &&
+      this.state.descripciontxt !== ""
     ) {
       return true;
     }
     return false;
   }
   async enviarProducto() {
-    const paquete={
+    const paquete = {
       Name: this.state.nombretxt,
       ProductTypeId: this.state.tipoProducto,
       Description: this.state.descripciontxt,
       Cost: this.state.costotxt,
       TaxId: 3,
-      QuantityMin: parseInt(this.state.cantidadMintxt),
+      QuantityMin:
+        this.state.costotxt === "" ? 0 : parseInt(this.state.cantidadMintxt),
       Barcode: this.state.codigoBarratxt,
-      ProductCategoryId:1,
+      ProductCategoryId: this.state.categoriaId,
       ListComponents: this.state.componentesSeleccionados.map((p) => {
         return {
           ProductComponentId: p.Id,
           Quantity: parseInt(p.Cantidad),
         };
       }),
-    }
-    console.log(paquete);
+    };
+
     try {
       const request = await api.productos.create(paquete);
 
-      
-        notify("Producto creado exitosamente!", "success");
-        this.setState({
-          nombretxt: "",
-          descripciontxt: "",
-          costotxt: "",
-          codigoBarratxt: "",
-          cantidadMintxt: "",
-          tipoProducto: 1,
-          componentesSeleccionados: [],
-        });
-     
-        notify("Producto creado exitosamente", "success");
-     
+      notify("Producto creado exitosamente!", "success");
+      this.setState({
+        nombretxt: "",
+        descripciontxt: "",
+        costotxt: "",
+        codigoBarratxt: "",
+        cantidadMintxt: "",
+        tipoProducto: 1,
+        componentesSeleccionados: [],
+      });
+
+      notify("Producto creado exitosamente", "success");
     } catch (error) {
       notify("No se pudo crear el producto!", "danger");
     }
@@ -109,11 +117,10 @@ class AgregarProducto extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-
     if (this.verificarCampos()) {
       this.enviarProducto();
     } else {
-      notify("Rellene todos los campos!", "warning");
+      notify("Rellene todos los campos obligatorios", "warning");
     }
   };
   delete(id) {
@@ -131,6 +138,8 @@ class AgregarProducto extends Component {
             <Notificacion />
             <ModalHeader>
               <label className="m-auto title-label">Agregar Producto</label>
+              <label style={{ color: "red" }}> *</label>
+              <lable> Campos obligatorios</lable>
             </ModalHeader>
             <ModalBody>
               <div className="row">
@@ -139,24 +148,26 @@ class AgregarProducto extends Component {
                     <div className="form-group row mb-2">
                       <label htmlFor="" className="">
                         Nombre del Producto
+                        <input
+                          type="text"
+                          className="form-control"
+                          style={(this.state.nombretxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
+                          placeholder="Nombre del Producto"
+                          value={this.state.nombretxt}
+                          onChange={(e) => {
+                            this.setState({ nombretxt: e.target.value });
+                          }}
+                        />
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Nombre del Producto"
-                        value={this.state.nombretxt}
-                        onChange={(e) => {
-                          this.setState({ nombretxt: e.target.value });
-                        }}
-                      />
                     </div>
-              
+
                     <div className="form-group row mb-3">
                       <label htmlFor="" className="">
                         Descripcion del Producto
                       </label>
                       <textarea
                         className="form-control"
+                        style={(this.state.descripciontxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                         placeholder="Descripcion del producto"
                         value={this.state.descripciontxt}
                         onChange={(e) => {
@@ -165,95 +176,93 @@ class AgregarProducto extends Component {
                         rows="3"
                       ></textarea>
                       <div className="dropdown">
-                <button
-                  className="btn btn-secondary btn-sm dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {this.state.categoria}
-                </button>
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Monitores",
-                        categoriaId:1,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#ingreso"
-                  >
-                    Monitor
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Teclados",
-                        
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Teclados
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Mouses",
-                        categoriaId:3,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Mouses
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Placas",
-                        categoriaId:4,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Placas
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Procesadores",
-                        categoriaId:5,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Procesadores
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Computadoras de mesa",
-                        categoriaId:6,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Computadores de mesa
-                  </a>
-                </div>
-                
-              </div>
+                        <button
+                          className="btn btn-secondary btn-sm dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          {this.state.categoria}
+                        </button>
+                        <div
+                          className="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Monitores",
+                                categoriaId: 1,
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#ingreso"
+                          >
+                            Monitor
+                          </a>
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Teclados",
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#egreso"
+                          >
+                            Teclados
+                          </a>
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Mouses",
+                                categoriaId: 3,
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#egreso"
+                          >
+                            Mouses
+                          </a>
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Placas",
+                                categoriaId: 4,
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#egreso"
+                          >
+                            Placas
+                          </a>
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Procesadores",
+                                categoriaId: 5,
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#egreso"
+                          >
+                            Procesadores
+                          </a>
+                          <a
+                            onClick={() =>
+                              this.setState({
+                                categoria: "Computadoras de mesa",
+                                categoriaId: 6,
+                              })
+                            }
+                            className="dropdown-item"
+                            href="#egreso"
+                          >
+                            Computadores de mesa
+                          </a>
+                        </div>
+                      </div>
                     </div>
                     <div className="dropdown-divider"></div>
                     <div className="form-group row mb-2">
@@ -265,8 +274,9 @@ class AgregarProducto extends Component {
                         className="form-control"
                         placeholder="Costo"
                         value={this.state.costotxt}
+                        style={(this.state.costotxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                         onChange={(e) => {
-                          this.setState({ costotxt: e.target.value });
+                          this.setState({ costotxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.costotxt });                        
                         }}
                       />
                     </div>
@@ -280,8 +290,8 @@ class AgregarProducto extends Component {
                         placeholder="Cantidad Minima"
                         value={this.state.cantidadMintxt}
                         onChange={(e) => {
-                          this.setState({ cantidadMintxt: e.target.value });
-                        }}
+                          this.setState({ cantidadMintxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.cantidadMintxt });                    
+                            }}
                       />
                     </div>
                     <div className="form-group row mb-3">
@@ -291,10 +301,11 @@ class AgregarProducto extends Component {
                       <input
                         type="text"
                         className="form-control"
+                        style={(this.state.codigoBarratxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                         placeholder="Codigo de barra"
                         value={this.state.codigoBarratxt}
                         onChange={(e) => {
-                          this.setState({ codigoBarratxt: e.target.value });
+                          this.setState({ codigoBarratxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.codigoBarratxt });
                         }}
                       />
                     </div>
@@ -494,6 +505,8 @@ class AgregarProducto extends Component {
             <Notificacion />
             <ModalHeader>
               <label className="m-auto title-label">Agregar Producto</label>
+              <label style={{ color: "red" }}> *</label>
+              <lable> Campos obligatorios</lable>
             </ModalHeader>
             <ModalBody>
               {" "}
@@ -507,6 +520,11 @@ class AgregarProducto extends Component {
                     className="form-control"
                     placeholder="Nombre del Producto"
                     value={this.state.nombretxt}
+                    style={
+                      this.state.nombretxt !== ""
+                        ? { borderColor: "green" }
+                        : { borderColor: "red" }
+                    }
                     onChange={(e) => {
                       this.setState({ nombretxt: e.target.value });
                     }}
@@ -519,6 +537,11 @@ class AgregarProducto extends Component {
                   <textarea
                     className="form-control"
                     placeholder="Descripcion del producto"
+                    style={
+                      this.state.descripciontxt !== ""
+                        ? { borderColor: "green" }
+                        : { borderColor: "red" }
+                    }
                     value={this.state.descripciontxt}
                     onChange={(e) => {
                       this.setState({ descripciontxt: e.target.value });
@@ -527,95 +550,93 @@ class AgregarProducto extends Component {
                   ></textarea>
                 </div>
                 <div className="dropdown">
-                <button
-                  className="btn btn-secondary btn-sm dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {this.state.categoria}
-                </button>
-                <div
-                  className="dropdown-menu"
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Monitores",
-                        categoriaId:1,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#ingreso"
+                  <button
+                    className="btn btn-secondary btn-sm dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
-                    Monitor
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Teclados",
-                        
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
+                    {this.state.categoria}
+                  </button>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
                   >
-                    Teclados
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Mouses",
-                        categoriaId:3,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Mouses
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Placas",
-                        categoriaId:4,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Placas
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Procesadores",
-                        categoriaId:5,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Procesadores
-                  </a>
-                  <a
-                    onClick={() =>
-                      this.setState({
-                        categoria: "Computadoras de mesa",
-                        categoriaId:6,
-                      })
-                    }
-                    className="dropdown-item"
-                    href="#egreso"
-                  >
-                    Computadores de mesa
-                  </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Monitores",
+                          categoriaId: 1,
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#ingreso"
+                    >
+                      Monitor
+                    </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Teclados",
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#egreso"
+                    >
+                      Teclados
+                    </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Mouses",
+                          categoriaId: 3,
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#egreso"
+                    >
+                      Mouses
+                    </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Placas",
+                          categoriaId: 4,
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#egreso"
+                    >
+                      Placas
+                    </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Procesadores",
+                          categoriaId: 5,
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#egreso"
+                    >
+                      Procesadores
+                    </a>
+                    <a
+                      onClick={() =>
+                        this.setState({
+                          categoria: "Computadoras de mesa",
+                          categoriaId: 6,
+                        })
+                      }
+                      className="dropdown-item"
+                      href="#egreso"
+                    >
+                      Computadores de mesa
+                    </a>
+                  </div>
                 </div>
-                
-              </div>
                 <div className="dropdown-divider"></div>
                 <div className="form-group row mb-2">
                   <label htmlFor="" className="">
@@ -625,10 +646,14 @@ class AgregarProducto extends Component {
                     type="text"
                     className="form-control"
                     placeholder="Costo"
+                    style={
+                      this.state.costotxt !== ""
+                        ? { borderColor: "green" }
+                        : { borderColor: "red" }
+                    }
                     value={this.state.costotxt}
                     onChange={(e) => {
-                      this.setState({ costotxt: e.target.value });
-                    }}
+                      this.setState({ costotxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.costotxt });                    }}
                   />
                 </div>
                 <div className="form-group row mb-2">
@@ -640,8 +665,8 @@ class AgregarProducto extends Component {
                     className="form-control"
                     placeholder="Cantidad Minima"
                     value={this.state.cantidadMintxt}
-                    onChange={(e) => {
-                      this.setState({ cantidadMintxt: e.target.value });
+                    onChange={(e) => {  
+                      this.setState({ cantidadMintxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.cantidadMintxt });
                     }}
                   />
                 </div>
@@ -652,10 +677,11 @@ class AgregarProducto extends Component {
                   <input
                     type="text"
                     className="form-control"
+                    style={(this.state.codigoBarratxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                     placeholder="Codigo de barra"
                     value={this.state.codigoBarratxt}
                     onChange={(e) => {
-                      this.setState({ codigoBarratxt: e.target.value });
+                      this.setState({ codigoBarratxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.codigoBarratxt });
                     }}
                   />
                 </div>
