@@ -10,6 +10,7 @@ class Factura extends Component {
       InvoiceNumber: "",
     };
   }
+
   componentDidMount() {
     document.getElementById("imprimirbtn").style.display = "none";
   }
@@ -22,6 +23,15 @@ class Factura extends Component {
     window.print();
 
     document.body.innerHTML = contenidoOriginal;
+  }
+  filtroDeLetras(texto){
+    if(texto==""){
+      return true;
+    }else if(!isNaN(texto[texto.length-1])){
+      return true;
+    }else{
+      return false;
+    }
   }
   formato(locales, moneda, numero){
     var format = new Intl.NumberFormat(locales,{
@@ -96,10 +106,12 @@ class Factura extends Component {
                 type="text"
                 id="numFactura"
                 className="form-control"
-                placeholder={this.state.InvoiceNumber}
+                style={(this.state.InvoiceNumber==="")?{borderColor:"red"}:{borderColor:"green"}}
+                value={this.state.InvoiceNumber}
                 maxLength="100"
                 onChange={(e) =>
-                  this.setState({ InvoiceNumber: e.target.value })
+                  (this.filtroDeLetras(e.target.value))?
+                  this.setState({ InvoiceNumber: e.target.value }):null
                 }
               />
             </div>

@@ -44,7 +44,7 @@ namespace Axure.DataBase.Module_Stock
             {
                 using (var db = new AxureContext())
                 {
-                    var st = db.Stocks.Include("Products").Where(x => x.DepositId == id && x.Deleted == false)
+                    var st = db.Stocks.Include("Products").Where(x => x.DepositId == id && x.Deleted == false && x.Product.Deleted==false)
                         .Select(x => new { Id = x.Id, DepositId = x.DepositId, Product = x.Product, Quantity = x.Quantity })
                         .ToList();
                     List<ProductDTO> re = st.Select(y => new ProductDTO() { 

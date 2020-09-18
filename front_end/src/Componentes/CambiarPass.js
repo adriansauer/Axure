@@ -2,7 +2,7 @@ import React from "react";
 import api from "../Axios/Api.js"
 import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import Notificacion,{ notify } from "./Notificacion.js";
-
+import "../login.css"
 /**
  * propiedades
  * visible
@@ -29,35 +29,37 @@ async enviar(){
   
   render() {
     return (
-      <div>
-        
-<Modal isOpen={this.props.visible} centered> 
+      <Modal isOpen={this.props.visible} centered> 
 
-        <ModalHeader>Login</ModalHeader>
-        <ModalBody>
+      <div className="wrapper fadeInDown">
+      <div id="formContent">
+        <form>
           <input
-            autoComplete="false"
             type="text"
-            placeholder="Username"
-            required="required"
+            id="login"
+            className="fadeIn second"
+            name="login"
+            placeholder="login"
             value={this.state.userNametxt}
             onChange={(e) => this.setState({ userNametxt: e.target.value })}
           />
           <input
-            autoComplete="false"
             type="password"
-            placeholder="Nuevo password"
-            required="required"
+            id="password"
+            className="fadeIn third"
+            name="login"
+            placeholder="nuevo password"
             value={this.state.nuevoPass}
             onChange={(e) => this.setState({ nuevoPass: e.target.value })}
           />
-        </ModalBody>
-        <ModalFooter>
-          <button onClick={()=>this.props.ocultar()}>Cancelar</button>
-          <button onClick={()=>this.enviar()}>Confirmar</button>
-        </ModalFooter>
-      </Modal>
+          <input type="submit" onClick={()=>this.enviar()} className="fadeIn fourth" value="Cambiar" />
+          <input type="submit" onClick={()=>this.props.ocultar()} className="fadeIn fourth" value="Cancelar" />
+        </form>
+
+        
       </div>
+    </div>   
+      </Modal>
       
     );
   }

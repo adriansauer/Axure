@@ -78,11 +78,7 @@ export default {
       requestHelper({
         url: "Products/Edit/" + id,
         method: "put",
-        data: JSON.stringify(data),
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-          dataType: "json",
-        },
+        data
       }),
     getCapital: (deposito) =>
       requestHelper({

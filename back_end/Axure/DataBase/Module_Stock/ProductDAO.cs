@@ -259,7 +259,7 @@ namespace Axure.DataBase.Module_Stock
                 {
                     Product producto = db.Products.FirstOrDefault(x => x.Id == id && x.Deleted == false);
                     producto.Name = prod.Name;
-                    producto.ProductTypeId = prod.ProductTypeId;
+              
                     producto.Description = prod.Description;
                     producto.Cost = prod.Cost;
                     producto.QuantityMin = prod.QuantityMin;

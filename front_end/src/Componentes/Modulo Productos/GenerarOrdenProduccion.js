@@ -18,6 +18,15 @@ class GenerarOrdenProduccion extends Component {
       
     };
   }
+  filtroDeLetras(texto){
+    if(texto==""){
+      return true;
+    }else if(!isNaN(texto[texto.length-1])){
+      return true;
+    }else{
+      return false;
+    }
+  }
   async componentDidMount() {
     const empleados = await api.empleados.get();
     const productos = await api.productos.getProductosDeVenta();
@@ -146,6 +155,7 @@ class GenerarOrdenProduccion extends Component {
                   className="form-control"
                   placeholder="Encargado"
                   required="required"
+                  style={(this.state.empleadoElegido)?{borderColor:"green"}:{borderColor:"red"}}
                   value={this.state.encargadoNombre}
                   onChange={(e) =>
                     this.buscarEncargado(e)

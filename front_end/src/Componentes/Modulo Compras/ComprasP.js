@@ -217,6 +217,7 @@ return false;
           <div className="col-md-3">
             <div className="dropdown">
               <input
+              style={(this.state.proveedorElegido)?{borderColor:"green"}:{borderColor:"red"}}
                 type="text"
                 className="form-control"
                 placeholder="Proveedor"
