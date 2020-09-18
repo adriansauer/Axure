@@ -4,6 +4,7 @@ import api from "../../../Axios/Api.js";
 import Notificacion, { notify } from "../../Notificacion.js";
 import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import DeleteIcon from "@material-ui/icons/Delete";
+import NumberFormat from "react-number-format";
 
 /**Props
  * visible
@@ -167,8 +168,12 @@ class AgregarProducto extends Component {
                       </label>
                       <textarea
                         className="form-control"
+<<<<<<< HEAD
                         style={(this.state.descripciontxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                         placeholder="Descripcion del producto"
+=======
+                        placeholder="Descripcion del productaaao"
+>>>>>>> master
                         value={this.state.descripciontxt}
                         onChange={(e) => {
                           this.setState({ descripciontxt: e.target.value });
@@ -269,15 +274,18 @@ class AgregarProducto extends Component {
                       <label htmlFor="" className="">
                         Costo{" "}
                       </label>
-                      <input
-                        type="text"
+                      
+                      <NumberFormat
                         className="form-control"
-                        placeholder="Costo"
                         value={this.state.costotxt}
                         style={(this.state.costotxt!=="")?{borderColor:"green"}:{borderColor:"red"}}
                         onChange={(e) => {
                           this.setState({ costotxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.costotxt });                        
                         }}
+                        placeholder="Costo"
+                        decimalSeparator={","}
+                        thousandSeparator={"."} 
+                        prefix={'Gs. '} 
                       />
                     </div>
                     <div className="form-group row mb-2">
@@ -642,6 +650,7 @@ class AgregarProducto extends Component {
                   <label htmlFor="" className="">
                     Costo{" "}
                   </label>
+<<<<<<< HEAD
                   <input
                     type="text"
                     className="form-control"
@@ -655,6 +664,19 @@ class AgregarProducto extends Component {
                     onChange={(e) => {
                       this.setState({ costotxt:(this.filtroDeLetras(e.target.value))? e.target.value:this.state.costotxt });                    }}
                   />
+=======
+                  <NumberFormat
+                        className="form-control"
+                        defaultValue={this.state.costotxt}
+                        onChange={(e) => {
+                          this.setState({ costotxt: e.target.value });
+                        }}
+                        placeholder="Costo"
+                        decimalSeparator={","}
+                        thousandSeparator={"."} 
+                        prefix={'Gs. '} 
+                      />
+>>>>>>> master
                 </div>
                 <div className="form-group row mb-2">
                   <label htmlFor="" className="">

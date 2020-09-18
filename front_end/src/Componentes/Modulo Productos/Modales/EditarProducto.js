@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import { ModalFooter, ModalBody, Modal, ModalHeader } from "reactstrap";
 import api from "../../../Axios/Api.js";
+import NumberFormat from "react-number-format";
 class EditarProducto extends Component{
     constructor(props){
         super(props);
@@ -49,13 +50,22 @@ async editarProducto() {
               </div>
               <div className="col-md-6">
                 {/**COSTO DEL PRODUCTO*/}
-                <input
+                <NumberFormat
+                  className="form-control"
+                  id="costo"
+                  placeholder="Costo"
+                  defaultValue={this.props.producto.Cost}
+                  decimalSeparator={","}
+                  thousandSeparator={"."} 
+                  prefix={'Gs. '} 
+                />
+                {/*<input
                   type="text"
                   className="form-control"
                   id="costo"
                   placeholder="Costo"
                   defaultValue={this.props.producto.Cost}
-                />
+                />*/}
               </div>
               <div className="col-md-6">
                 {/**CANTIDAD MINIMA DEL PRODUCTO*/}

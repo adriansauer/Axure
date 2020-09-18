@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 /**importando acciones */
 import { setSectionShow } from "../../Redux/actions";
 import "../style.css";
-class AsideCompras extends Component {
+class AsideOrdenes extends Component {
   selectTab(args, trackNumber) {
     let selector = args;
-    var aux = document.getElementById("Aside").querySelectorAll(".nav-link");
+    var aux = document.getElementById("AsideA").querySelectorAll(".nav-link");
     for (let index = 0; index < aux.length; index++) {
       const element = aux[index];
       element.classList.remove("active");
@@ -17,37 +17,24 @@ class AsideCompras extends Component {
 
   render() {
     return (
-      <div id="Aside" className="Aside">
+      <div id="AsideA" className="Aside">
         <ul className="nav nav-tabs">
           <li className="nav-item">
             <a
               className="nav-link active"
               href="#Compra"
-              onClick={() => this.selectTab(76, 0)}
+              onClick={() => this.selectTab(70, 0)}
             >
-             Orden de Compra
-            </a>
-          </li>
-          
-          <li className="nav-item">
-            <a
-              className="nav-link "
-              href="#Proveedor"
-              onClick={() => this.selectTab(72, 1)}
-
-            >
-              Proveedores
+             Orden
             </a>
           </li>
           <li className="nav-item">
             <a
-
-              className="nav-link "
-              href="#Factura"
-              onClick={() => this.selectTab(73, 2)}
-
+              className="nav-link"
+              href="#Ordenes"
+              onClick={() => this.selectTab(71, 1)}
             >
-              Facturacion
+             Ordenes
             </a>
           </li>
         </ul>
@@ -64,4 +51,4 @@ const mapDispatchToProps = {
   setSectionShow,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsideCompras);
+export default connect(mapStateToProps, mapDispatchToProps)(AsideOrdenes);

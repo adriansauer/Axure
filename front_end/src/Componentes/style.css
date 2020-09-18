@@ -261,6 +261,50 @@ html {
   z-index: 950;
 }
 
+
+#Box--content #AsideA {
+  padding: 0.5rem 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#Box--content #AsideA .nav {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  border-bottom-width: 2px;
+}
+
+#Box--content #AsideA .nav .nav-item {
+  margin-bottom: -2px;
+}
+
+#Box--content #AsideA .nav .nav-item .nav-link {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #939393;
+  border-width: 2px;
+  background-color: transparent;
+  border-color: transparent;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+#Box--content #AsideA .nav .nav-item .nav-link.active {
+  background: -webkit-gradient(linear, left top, left bottom, from(0), color-stop(-50%, transparent), to(#00497bc9));
+  background: linear-gradient(0, transparent -50%, #00497bc9);
+  border-color: #dee2e6 #dee2e6 #fcfcfc;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+@media all and (max-width: 1366px) {
+  #Box--content #AsideA .nav .nav-item .nav-link {
+    font-size: 1.15rem;
+  }
+}
+
+
 #Box--content #Aside {
   padding: 0.5rem 0;
   -webkit-box-pack: center;
